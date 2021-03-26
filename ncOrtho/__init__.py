@@ -1,0 +1,3 @@
+name = 'ncortho'
+
+dependencies: 'biopython'
