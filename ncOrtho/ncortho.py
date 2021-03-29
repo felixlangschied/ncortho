@@ -78,6 +78,14 @@ def mirna_maker(mirpath, cmpath, output, msl):
 
     for mirna in mirna_data:
         mirid = mirna[0]
+        seq = mirna[5]
+        query = '{0}/{1}/{1}.fa'.format(output, mirid)
+        model = '{0}/{1}.cm'.format(cmpath, mirid)
+        # Check if the covariance model even exists, otherwise skip to
+        # the next miRNA.
+        if not os.path.isfile(model):
+            print('# No covariance model found for {}.'.format(mirid))
+            continue
         # Check if the output folder exists, otherwise create it.
         if not os.path.isdir('{}/{}'.format(output, mirid)):
             try:
@@ -93,15 +101,9 @@ def mirna_maker(mirpath, cmpath, output, msl):
         # Obtain the reference bit score for each miRNA by applying it
         # to its own covariance model.
         print('# Calculating reference bit score for {}.'.format(mirid))
-        seq = mirna[5]
-        query = '{0}/{1}/{1}.fa'.format(output, mirid)
-        model = '{0}/{1}.cm'.format(cmpath, mirid)
 
-        # Check if the covariance model even exists, otherwise skip to
-        # the next miRNA.
-        if not os.path.isfile(model):
-            print('# No covariance model found for {}.'.format(mirid))
-            continue
+
+
         
         # Create a temporary FASTA file with the miRNA sequence as
         # query for external search tool cmsearch to calculate the
@@ -354,7 +356,8 @@ def main():
     heuristic = args.heuristic
     msl = args.msl
     #blast_cutoff = args.blastc
-       
+
+
     # Create miRNA objects from the list of input miRNAs.
     mirna_dict = mirna_maker(mirnas, models, output, msl)
 
