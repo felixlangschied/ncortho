@@ -17,6 +17,7 @@ import glob
 from blastparser import BlastParser
 from blastparser import ReBlastParser
 from genparser import GenomeParser
+from cmsearch import cmsearcher
 
 ###############################################################################
 
@@ -144,107 +145,6 @@ def mirna_maker(mirpath, cmpath, output, msl):
         mmdict[mirna[0]] = Mirna(*mirna)
 
     return mmdict
-
-
-# cmsearch_parser: Parse the output of cmsearch while eliminating
-#                  duplicates and filtering entries according to the
-#                  defined cutoff.
-# Arguments:
-# cms: path to cmsearch output
-# cmc: cutoff to decide which candidate hits should be included for the
-#      reverse BLAST search
-# lc: length cutoff
-# mirid: name/id of the microRNA
-def cmsearch_parser(cms, cmc, lc, mirid):
-    """
-    Parse the output of cmsearch while eliminating duplicates and filtering 
-    entries according to the defined cutoff.
-
-    Parameters
-    ----------
-    cms : TYPE
-        DESCRIPTION.
-    cmc : TYPE
-        DESCRIPTION.
-    lc : TYPE
-        DESCRIPTION.
-    mirid : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    hits_dict : TYPE
-        DESCRIPTION.
-
-    """
-    # Output
-    hits_dict = {}
-    # Required for finding duplicates, stores hits per chromosome
-    chromo_dict = {}
-    cut_off = cmc
-
-    with open(cms) as cmsfile:
-        # Collect only the hits which satisfy the bit score cutoff.
-        hits = [
-            line.strip().split() for line in cmsfile
-            if not line.startswith('#')
-            and float(line.strip().split()[14]) >= cut_off
-            and abs(int(line.split()[7])-int(line.strip().split()[8])) >= lc
-        ]
-        # Add the hits to the return dictionary.
-        if hits:
-            for candidate_nr, hit in enumerate(hits, 1):
-                data = (
-                    '{0}_c{1}'.format(mirid, candidate_nr),
-                    hit[0], hit[7], hit[8], hit[9], hit[14]
-                )
-                hits_dict[data[0]] = data
-
-                # Store the hits that satisfy the bit score cutoff to filter
-                # duplicates.
-                try:
-                    chromo_dict[data[1]].append(data)
-                except:
-                    chromo_dict[data[1]] = [data]
-
-    # Loop over the candidate hits to eliminate duplicates.
-    for chromo in chromo_dict:
-                nrhits = len(chromo_dict[chromo])
-                if nrhits > 1:
-                    for hitnr in range(nrhits):
-                        start = int(chromo_dict[chromo][hitnr][2])
-                        stop = int(chromo_dict[chromo][hitnr][3])
-                        strand = chromo_dict[chromo][hitnr][4]
-                        score = float(chromo_dict[chromo][hitnr][5])
-                        for chitnr in range(hitnr+1, nrhits):
-                            if strand != chromo_dict[chromo][chitnr][4]:
-                                cstart = int(chromo_dict[chromo][chitnr][2])
-                                cstop = int(chromo_dict[chromo][chitnr][3])
-                                cscore = float(chromo_dict[chromo][chitnr][5])
-                                # Test if the two hits from opposite strands
-                                # overlap, which means one of them is
-                                # (probably) a false positive.
-                                # Out of two conflicting hits, the one with the
-                                # highest cmsearch bit score is retained.
-                                if (
-                                    start in range(cstart, cstop+1)
-                                    or stop in range(cstart, cstop+1)
-                                    or cstart in range(start, stop+1)
-                                    or cstop in range(start, stop+1)
-                                ):
-                                    if score > cscore:
-                                        try:
-                                            del hits_dict[chromo_dict[chromo]
-                                                [chitnr][0]]
-                                        except:
-                                            pass
-                                    else:
-                                        try:
-                                            del hits_dict[chromo_dict[chromo]
-                                                [hitnr][0]]
-                                        except:
-                                            pass
-    return hits_dict
 
 
 # blast_search: Perform a reverse BLAST search in the reference genome for a
@@ -392,6 +292,13 @@ def main():
     )
     # TODO: implement cleanup
     parser.add_argument(
+        '--heuristic', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
+        help=(
+            'Perform a BLAST search of the reference miRNA in the query genome to identify '
+            'candidate regions for the cmsearch. Majorly improves speed but might decrease accuracy'
+        )
+    )
+    parser.add_argument(
         '-x', '--cleanup', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Cleanup temporary files of the CM search.'
@@ -399,7 +306,7 @@ def main():
     )
     # check Co-ortholog-ref
     parser.add_argument(
-        '--checkCoorthologsRef', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
+        '--checkCoorthologsRef', type=str2bool, metavar='True/False', nargs='?', const=False, default=False,
         help=(
             'If the re-blast does not identify the original reference miRNA sequence as best hit,'
             'ncOrtho will check whether the best blast '
@@ -460,24 +367,26 @@ def main():
         # Create output folder, if not existent.
         if not os.path.isdir(outdir):
             sp.call('mkdir -p {}'.format(outdir), shell=True)
-        print('\n# Running covariance model search for {}.'.format(mirna_id))
-        cms_output = '{0}/cmsearch_{1}.out'.format(outdir, mirna_id)
-        # Calculate the bit score cutoff.
-        cut_off = mirna.bit*cm_cutoff
-        # Calculate the length cutoff.
-        len_cut = len(mirna.pre)*msl
-        # Perform covariance model search.
-        # Report and inclusion thresholds set according to cutoff.
-        cms_command = (
-            'cmsearch -T {5} --incT {5} --cpu {0} --noali '
-            '--tblout {1} {2}/{3}.cm {4}'
-            .format(cpu, cms_output, models, mirna_id, query, cut_off)
-        )
-        if not os.path.isfile(cms_output):
-            sp.call(cms_command, shell=True)
-        else:
-            print('# Found cm_search results at: {}. Using those'.format(cms_output))
-        cm_results = cmsearch_parser(cms_output, cut_off, len_cut, mirna_id)
+            cms_output = '{0}/cmsearch_{1}.out'.format(outdir, mirna_id)
+        cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, output,  cleanup, heuristic=True)
+        # print('\n# Running covariance model search for {}.'.format(mirna_id))
+
+        # # Calculate the bit score cutoff.
+        # cut_off = mirna.bit*cm_cutoff
+        # # Calculate the length cutoff.
+        # len_cut = len(mirna.pre)*msl
+        # # Perform covariance model search.
+        # # Report and inclusion thresholds set according to cutoff.
+        # cms_command = (
+        #     'cmsearch -T {5} --incT {5} --cpu {0} --noali '
+        #     '--tblout {1} {2}/{3}.cm {4}'
+        #     .format(cpu, cms_output, models, mirna_id, query, cut_off)
+        # )
+        # if not os.path.isfile(cms_output):
+        #     sp.call(cms_command, shell=True)
+        # else:
+        #     print('# Found cm_search results at: {}. Using those'.format(cms_output))
+        # cm_results = cmsearch_parser(cms_output, cut_off, len_cut, mirna_id)
         
         # Extract sequences for candidate hits (if any were found).
         if not cm_results:
