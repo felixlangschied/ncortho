@@ -351,6 +351,7 @@ def main():
     cm_cutoff = args.cutoff
     checkCoorthref = args.checkCoorthologsRef
     cleanup = args.cleanup
+    heuristic = args.heuristic
     # Not in use yet
     msl = args.msl
     #blast_cutoff = args.blastc
@@ -367,26 +368,9 @@ def main():
         # Create output folder, if not existent.
         if not os.path.isdir(outdir):
             sp.call('mkdir -p {}'.format(outdir), shell=True)
-            cms_output = '{0}/cmsearch_{1}.out'.format(outdir, mirna_id)
-        cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, output,  cleanup, heuristic=True)
-        # print('\n# Running covariance model search for {}.'.format(mirna_id))
+        # start cmsearch
+        cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, output,  cleanup, heuristic)
 
-        # # Calculate the bit score cutoff.
-        # cut_off = mirna.bit*cm_cutoff
-        # # Calculate the length cutoff.
-        # len_cut = len(mirna.pre)*msl
-        # # Perform covariance model search.
-        # # Report and inclusion thresholds set according to cutoff.
-        # cms_command = (
-        #     'cmsearch -T {5} --incT {5} --cpu {0} --noali '
-        #     '--tblout {1} {2}/{3}.cm {4}'
-        #     .format(cpu, cms_output, models, mirna_id, query, cut_off)
-        # )
-        # if not os.path.isfile(cms_output):
-        #     sp.call(cms_command, shell=True)
-        # else:
-        #     print('# Found cm_search results at: {}. Using those'.format(cms_output))
-        # cm_results = cmsearch_parser(cms_output, cut_off, len_cut, mirna_id)
         
         # Extract sequences for candidate hits (if any were found).
         if not cm_results:
