@@ -301,7 +301,7 @@ def main():
     parser.add_argument(
         '-x', '--cleanup', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
-            'Cleanup temporary files of the CM search.'
+            'Cleanup temporary files.'
         )
     )
     # check Co-ortholog-ref
@@ -352,7 +352,6 @@ def main():
     checkCoorthref = args.checkCoorthologsRef
     cleanup = args.cleanup
     heuristic = args.heuristic
-    # Not in use yet
     msl = args.msl
     #blast_cutoff = args.blastc
        

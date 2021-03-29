@@ -74,7 +74,7 @@ def ortho_search(r_gene, ortho_dict):
 
 
 # Perform reciprocal BLAST search and construct Stockholm alignment
-def blastsearch(m_path, r_path, o_path, c):
+def blastsearch(m_path, r_path, o_path, c, dust):
 
     core_set = {}
 
@@ -128,8 +128,8 @@ def blastsearch(m_path, r_path, o_path, c):
                 print('BLAST database already exists.')
 
         bit_check = (
-            'blastn -num_threads {0} -dust no -task megablast -db {1} '
-            '-outfmt \"6 bitscore\"'.format(c, r_path)
+            'blastn -num_threads {0} -dust {1} -task megablast -db {2} '
+            '-outfmt \"6 bitscore\"'.format(c, dust, r_path)
         )
         #print(bit_check)
         ref_bit_cmd = sp.Popen(
@@ -177,8 +177,8 @@ def blastsearch(m_path, r_path, o_path, c):
                 print('BLAST database already exists.')
 
             blastn_cmd = (
-                'blastn -num_threads {0} -task blastn -dust no -db {1} -outfmt \"6 '
-                'sseqid evalue bitscore sseq\"'.format(c, fasta)
+                'blastn -num_threads {0} -task blastn -dust {1} -db {2} -outfmt \"6 '
+                'sseqid evalue bitscore sseq\"'.format(c, dust, fasta)
             )
             blastn = sp.Popen(
                 blastn_cmd, shell=True, stdin=sp.PIPE,
@@ -216,9 +216,9 @@ def blastsearch(m_path, r_path, o_path, c):
                 # Make sure to eliminate gaps
                 candidate_seq = core_dict[species].split()[3].replace('-', '')
                 reblastn_cmd = (
-                    'blastn -num_threads {0} -task blastn -dust no -db {1} -outfmt \"6'
+                    'blastn -num_threads {0} -task blastn -dust {1} -db {2} -outfmt \"6'
                     ' sseqid sstart send evalue bitscore\"'
-                    .format(c, r_path)
+                    .format(c, dust, r_path)
                 )
                 reblastn = sp.Popen(
                     reblastn_cmd, shell=True, stdin=sp.PIPE,
@@ -384,6 +384,12 @@ def main():
         help='maximum number of gene insertions', nargs='?',
         const=3, default=3
     )
+    # Maximum gene insertions
+    parser.add_argument(
+        '--dust', metavar='yes/no', type=str,
+        help='Use BLASTn dust filter. Decreases number of models created but improves runtime and possibly specificity', nargs='?',
+        const='yes', default='yes'
+    )
 
 ###############################################################################
 
@@ -421,6 +427,7 @@ def main():
     core_gtf_paths = args.core
     core_fa_paths = args.query
     mgi = args.mgi
+    dust = args.dust
 
 ###############################################################################
 
@@ -752,8 +759,7 @@ def main():
     #fasta_path = '/home/andreas/Documents/Internship/ncOrtho_to_distribute/ncortho_python/test_core_set_construction/test_fasta'
     #blastsearch(mirna_path, fasta_path, ref_genome, output, cpu)
     print('# Starting reciprocal blast\n')
-    # TODO: Put this back in
-    blastsearch(mirna_path, ref_genome, output, cpu)
+    blastsearch(mirna_path, ref_genome, output, cpu, dust)
 
 if __name__ == '__main__':
     main()

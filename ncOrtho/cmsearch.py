@@ -38,7 +38,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
         )
         res = sp.run(blast_command, shell=True, capture_output=True)
         os.remove(tmp_out)
-        if res:
+        if res.stdout:
             print('Blast step finished')
         else:
             cm_results = False
@@ -79,7 +79,12 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
             '--tblout {1} {2}/{3}.cm {4}'
                 .format(cpu, heuristic_cms, models, mirna_id, heuristic_fa, cut_off)
         )
-        sp.call(cms_command, shell=True)
+        res = sp.run(cms_command, shell=True, capture_output=True)
+        if not res.stdout:
+            print('# cmsearch did not find anything')
+            cm_results = False
+            return cm_results
+
         # else:
         #     print('# Found cm_search results at: {}. Using those'.format(cms_output))
         #     cm_results = cmsearch_parser(cms_output, cut_off, len_cut, mirna_id)
@@ -105,6 +110,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
                     of.write('\n')
         cm_results = cmsearch_parser(heur_results, cut_off, len_cut, mirna_id)
         if cleanup:
+            os.remove(heuristic_fa)
             os.remove(heur_results)
             os.remove(heuristic_cms)
     else:
