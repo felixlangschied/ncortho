@@ -28,7 +28,10 @@ class Mirna(object):
         # miRNA identifier
         self.name = name
         # chromosome that the miRNA is located on
-        self.chromosome = chromosome
+        if chromosome.startswith('chr'):
+            self.chromosome = chromosome.split('chr')[1]
+        else:
+            self.chromosome = chromosome
         # start position of the pre-miRNA
         self.start = int(start)
         # end position of the pre-miRNA
