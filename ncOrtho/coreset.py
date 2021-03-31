@@ -90,7 +90,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
         # Ensure that output folder exists and change to this folder.
         out_folder = '{}/{}'.format(o_path, mirid)
         if not os.path.isdir(out_folder):
-            mkdir_cmd = 'mkdir {}'.format(out_folder)
+            mkdir_cmd = 'mkdir -p {}'.format(out_folder)
             sp.call(mkdir_cmd, shell=True)
         os.chdir('{}/{}'.format(o_path, mirid))
         print('### {} ###'.format(mirid))
@@ -209,8 +209,9 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                 #print(core_dict)
             #print(results.split('\n'))
             #print(results)
-##### Re-BLAST #####
+    ##### Re-BLAST #####
             #if core_dict:
+            accept_dict = {}
             for species in core_dict.keys():
                 print(species)
                 # Make sure to eliminate gaps
@@ -247,6 +248,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                     #print("yes")
                     #print(tophit)
                             print('Reciprocity fulfilled.')
+                            accept_dict[species] = core_dict[species]
                         elif (
                             (mstart <= rstart and rstart <= mend)
                             or (mstart <= rend and rend <= mend)
@@ -255,8 +257,9 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                     #print("yeah")
                     #print(tophit)
                             print('Reciprocity fulfilled.')
+                            accept_dict[species] = core_dict[species]
                 else:
-                    del core_dict[species]
+                    # del core_dict[species]
                     print(
                         'No reverse hit for {}. Reciprocity unfulfilled.'
                         .format(mirid)
@@ -275,11 +278,11 @@ def blastsearch(m_path, r_path, o_path, c, dust):
             outfile.write('>{}\n{}\n'.format(mirid, preseq))
             print('##### Core set for {}: #####'.format(mirid))
             #print('>{}\n{}'.format(mirid, preseq))
-            for accepted in core_dict:
+            for accepted in accept_dict:
                 #print('>{}\n{}'.format(accepted, core_dict[accepted].split('\t')[3]))
                 outfile.write(
                     '>{}\n{}\n'
-                    .format(accepted, core_dict[accepted].split('\t')[3])
+                    .format(accepted, accept_dict[accepted].split('\t')[3])
                     .replace('-', '')
                 )
         alignment = '{}/{}.aln'.format(out_folder, mirid)
@@ -461,7 +464,7 @@ def main():
         print('### {0} ###'.format(mirid))
 # Check if output folder exists or create it otherwise
         if not os.path.isdir('{}/{}'.format(output, mirid)):
-            sp.call('mkdir {}/{}'.format(output, mirid), shell=True)
+            sp.call('mkdir -p {}/{}'.format(output, mirid), shell=True)
 ### Workaround for differing naming conventions in miRBase and Ensembl
         if 'chr' in mirna[1]:
             chromo = mirna[1].split('chr')[1]

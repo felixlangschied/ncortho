@@ -49,7 +49,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
         genes = pyfaidx.Fasta(query)
         # collect heuristic sequences
         print('collecting sequences')
-        heuristic_fa = '{0}/{1}/heuristic.out'.format(out, mirna_id)
+        heuristic_fa = '{0}/heuristic_{1}.out'.format(out, mirna_id)
         with open(heuristic_fa, 'w') as of:
             for hit in hit_list:
                 chrom, start, end, strand = hit
@@ -71,7 +71,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
                 of.write(header)
                 of.write(f'{sequence}\n')
         # start the cmsearch with the heuristic candidates
-        heuristic_cms = '{0}/{1}/cmsearch_heuristic.out'.format(out, mirna_id)
+        heuristic_cms = '{0}/cmsearch_heuristic.out'.format(out, mirna_id)
         # if not os.path.isfile(cms_output):
         print('# Running covariance model search for {}'.format(mirna_id))
         cms_command = (
@@ -93,13 +93,14 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
             for line in inf:
                 if not line.startswith('#'):
                     data = line.strip().split()
-                    blast_chrom, blast_start, blast_end = map(int, data[0].split('|')[:-1])
-                    blast_strand = data[0].split('|')[-1]
+                    blast_chrom = data[0].split('|')[0]
+                    blast_start, blast_end = map(int, data[0].split('|')[1:3])
+                    # blast_strand = data[0].split('|')[-1]
                     cm_start, cm_end = map(int, data[7:9])
-                    cm_strand = data[9]
-                    if not cm_strand == blast_strand:
-                        print('Rejecting cmsearch hit. Not on same strand')
-                        break
+                    # cm_strand = data[9]
+                    # if not cm_strand == blast_strand:
+                    #     print('Rejecting cmsearch hit. Not on same strand as BLAST hit')
+                    #     break
                     hit_start = blast_start + (cm_start - 1000)
                     hit_end = blast_end + (cm_end - 1000)
                     data[0] = blast_chrom
@@ -114,7 +115,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
             os.remove(heur_results)
             os.remove(heuristic_cms)
     else:
-        cms_output = '{0}/{1}/cmsearch_{1}.out'.format(out, mirna_id)
+        cms_output = '{0}/cmsearch_{1}.out'.format(out, mirna_id)
         if not os.path.isfile(cms_output):
             print('# # Running covariance model search for {}'.format(mirna_id))
             cms_command = (

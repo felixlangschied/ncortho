@@ -79,7 +79,7 @@ def mirna_maker(mirpath, cmpath, output, msl):
     for mirna in mirna_data:
         mirid = mirna[0]
         seq = mirna[5]
-        query = '{0}/{1}/{1}.fa'.format(output, mirid)
+        query = '{0}/{1}.fa'.format(output, mirid)
         model = '{0}/{1}.cm'.format(cmpath, mirid)
         # Check if the covariance model even exists, otherwise skip to
         # the next miRNA.
@@ -87,9 +87,9 @@ def mirna_maker(mirpath, cmpath, output, msl):
             print('# No covariance model found for {}.'.format(mirid))
             continue
         # Check if the output folder exists, otherwise create it.
-        if not os.path.isdir('{}/{}'.format(output, mirid)):
+        if not os.path.isdir('{}'.format(output)):
             try:
-                mkdir = 'mkdir -p {}/{}'.format(output, mirid)
+                mkdir = 'mkdir -p {}'.format(output)
                 sp.call(mkdir, shell=True)
             except:
                 print(
@@ -110,8 +110,8 @@ def mirna_maker(mirpath, cmpath, output, msl):
         # reference bit score.
         with open(query, 'w') as tmpfile:
             tmpfile.write('>{0}\n{1}'.format(mirid, seq))
-        cms_output = '{0}/{1}/cmsearch_{1}_tmp.out'.format(output, mirid)
-        cms_log = '{0}/{1}/cmsearch_{1}.log'.format(output, mirid)
+        cms_output = '{0}/ref_cmsearch_{1}_tmp.out'.format(output, mirid)
+        cms_log = '{0}/ref_cmsearch_{1}.log'.format(output, mirid)
         if not os.path.isfile(cms_output):
             cms_command = (
                 'cmsearch -E 0.01 --noali -o {3} --tblout {0} {1} {2}'
@@ -366,7 +366,8 @@ def main():
         sys.stdout.flush()
         mirna = mirna_dict[mir_data]
         mirna_id = mirna.name
-        outdir = '{}/{}'.format(output, mirna_id)
+        # TODO: remove this, if working
+        outdir = '{}'.format(output)
         # Create output folder, if not existent.
         if not os.path.isdir(outdir):
             sp.call('mkdir -p {}'.format(outdir), shell=True)
