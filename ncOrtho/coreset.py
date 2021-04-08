@@ -95,7 +95,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
         os.chdir('{}/{}'.format(o_path, mirid))
         print('### {} ###'.format(mirid))
         # Coordinates of the ncRNA
-        mchr = mirna[1]
+        mchr = mirna[1].replace('chr', '')
         mstart = int(mirna[2])
         mend = int(mirna[3])
 
@@ -110,8 +110,9 @@ def blastsearch(m_path, r_path, o_path, c, dust):
         file_extensions = ['.nhr', '.nin', '.nsq']
         # file_extensions = ['.nhr']
         for fe in file_extensions:
-            checkpath = '{}{}'.format(r_path, fe)
-            if not os.path.isfile(checkpath):
+            files = glob.glob(f'{r_path}*{fe}')
+            # checkpath = '{}{}'.format(r_path, fe)
+            if not files:
                 print(
                     'BLAST database does not exist for reference genome.\n'
                     'Constructing BLAST database.'
@@ -144,20 +145,19 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                 of.write('>{}\n{}\n'.format(mirid, preseq))
             continue
         ref_bit_score = float(ref_results.split('\n')[0].split('\t')[0])
-        print(ref_bit_score)
+        print(f'reference bit score: {ref_bit_score}')
         # End of reference bit score computation.
-        print('Performing reciprocal BLAST search.')
-        # 
-        fasta = '{0}/{1}/{1}.fa'.format(o_path, mirid)
-        #print(fasta)
+        print('# Performing reciprocal BLAST search.')
 
+        # this fasta file is created by the the main() script
+        fasta = '{0}/{1}/{1}.fa'.format(o_path, mirid)
         if os.path.isfile(fasta):
             print('FASTA file found for {}.'.format(mirna[0]))
             print('Checking BLAST database.')
-# Check if BLAST database already exists, otherwise create it.
-    # Database files are ".nhr", ".nin", ".nsq".
+        # Check if BLAST database already exists, otherwise create it.
+        # Database files are ".nhr", ".nin", ".nsq".
             file_extensions = ['.nhr', '.nin', '.nsq']
-    #file_extensions = ['.nhr']
+
             for fe in file_extensions:
                 checkpath = '{}{}'.format(fasta, fe)
                 if not os.path.isfile(checkpath):
@@ -185,6 +185,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                 stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
             )
             results, err = blastn.communicate(preseq)
+            # print('blast results of reference miRNA against candidate regions:')
             # print(results)
 ##### Collect best hit for each core set species if it is within the accepted bit score range
             core_dict = {}
@@ -195,7 +196,8 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                 for hit in result_list:
                     if hit:
                         hit_data = hit.split()
-                        print(f'hit bitscore: {hit_data[2]}')
+                        # print(hit_data)
+                        # print(f'hit bitscore: {hit_data[2]}')
                         # print(f'you needed: {0.5*ref_bit_score}')
                         # print(f'and you got: {hit_data[2]}')
                         if (
@@ -206,7 +208,8 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                             core_dict[hit_data[0]] = hit
             if len(core_dict) == 0:
                 print('# No region in the core species scored above the reference bit score threshold')
-                #print(core_dict)
+            # print('core_dict:')
+            # print(core_dict)
             #print(results.split('\n'))
             #print(results)
     ##### Re-BLAST #####
@@ -226,9 +229,10 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                     stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
                 )
                 reresults, reerr = reblastn.communicate(candidate_seq)
-                print('Reverse search.')
+                # print('Reverse search.')
+                # print(reresults)
                 #print(reresults.split('\n')[0])
-##### Check if reverse hit overlaps with reference miRNA
+    ##### Check if reverse hit overlaps with reference miRNA
                 if reresults:
                     first_hit = reresults.split('\n')[0].split()
                     rchr = first_hit[0]
@@ -245,7 +249,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                             or (rstart <= mend and mend <= rend)
                         ):
                     #first within second
-                    #print("yes")
+                            print("first within second")
                     #print(tophit)
                             print('Reciprocity fulfilled.')
                             accept_dict[species] = core_dict[species]
@@ -258,6 +262,11 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                     #print(tophit)
                             print('Reciprocity fulfilled.')
                             accept_dict[species] = core_dict[species]
+                        print('Reciprocity unfulfilled.')
+                    else:
+                        print('Hit on chromosome {}, expected {}'.format(rchr, mchr))
+
+
                 else:
                     # del core_dict[species]
                     print(
@@ -273,6 +282,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
         else:
             print('FASTA file not found for {}.'.format(mirna[0]))
             continue
+        print(accept_dict)
         corefile = '{}/{}_core.fa'.format(out_folder, mirid) 
         with open(corefile, 'w') as outfile:
             outfile.write('>{}\n{}\n'.format(mirid, preseq))
@@ -387,7 +397,7 @@ def main():
         help='maximum number of gene insertions', nargs='?',
         const=3, default=3
     )
-    # Maximum gene insertions
+    # use dust filter?
     parser.add_argument(
         '--dust', metavar='yes/no', type=str,
         help='Use BLASTn dust filter. Decreases number of models created but improves runtime and possibly specificity', nargs='?',
@@ -460,6 +470,7 @@ def main():
 
 #Determine the position of each miRNA and its neighboring gene(s)
     for mirna in mirnas:
+        sys.stdout.flush()
         mirid = mirna[0]
         print('### {0} ###'.format(mirid))
 # Check if output folder exists or create it otherwise
@@ -589,8 +600,8 @@ def main():
                     )
                 #save only the hits where both genes have orthologs in a species
                     if left_hits:
-                        print(left_hits)
-                        print(right_hits)
+                        # print(left_hits)
+                        # print(right_hits)
                         for taxon in left_hits:
                             if taxon in right_hits:
                                 try:
@@ -615,13 +626,23 @@ def main():
             if not solved:
                 print('Unable to resolve synteny for {}.'.format(mirid))
 
-    print(neighbor_dict)
+    # print(neighbor_dict)
 
 ### Search for the coordinates of the orthologs and extract the sequences
     print('# starting now with coordinate search\n')
     for taxon in neighbor_dict:
         print('Starting synteny analysis for {}'.format(taxon))
-        gtf_path = '{0}/{1}.gtf'.format(core_gtf_paths, taxon)
+        print('Trying to parse GTF file for {}.'.format(taxon))
+        gtf_path_list = glob.glob('{0}/*{1}*.gtf'.format(core_gtf_paths, taxon))
+        if len(gtf_path_list) > 1:
+            print('ERROR: Ambigious core taxon annotation for {}'.format(taxon))
+            sys.exit()
+        elif len(gtf_path_list) == 0:
+            print('Unable to identify annotation file for {}'.format(taxon))
+        elif len(gtf_path_list) == 1:
+            gtf_path = gtf_path_list[0]
+            core_gtf_dict = gtf_parser(gtf_path)
+            # print(core_gtf_dict)
         fasta_path = glob.glob('{0}/{1}*.fa'.format(core_fa_paths, taxon))
         #print(gtf_path)
         #print(fasta_path)
@@ -629,16 +650,16 @@ def main():
             print('Unable to identify genome file for {}'.format(taxon))
             sys.exit()
         genome = pyfaidx.Fasta(fasta_path[0])
-        print('Trying to parse GTF file for {}.'.format(taxon))
-        try:
-            core_gtf_dict = gtf_parser(gtf_path)
-            print('Done')
-        except:
-            print('No GTF file found for {}'.format(taxon))
-            sys.exit()
+
+        # try:
+        #     core_gtf_dict = gtf_parser(gtf_path)
+        #     print('Done')
+        # except:
+        #     print('No GTF file found for {}'.format(taxon))
+        #     sys.exit()
         # print('YOU MADE IT THIS FAR.')
         for mirna in neighbor_dict[taxon]:
-            print(mirna)
+            # print(mirna)
             style = neighbor_dict[taxon][mirna][0]
             print(f'# style = {style}')
             if style == 'inside' or style == 'opposite':
@@ -663,20 +684,24 @@ def main():
                 except:
                     print('{} not found in GTF file.'.format(mirna[1]))
             elif style == 'in-between':
-                left_data = (
-                    core_gtf_dict[neighbor_dict[taxon][mirna][1][0]]
-                )
-                right_data = (
-                    core_gtf_dict[neighbor_dict[taxon][mirna][1][1]]
-                )
+                try:
+                    left_data = (
+                        core_gtf_dict[neighbor_dict[taxon][mirna][1][0]]
+                    )
+                    right_data = (
+                        core_gtf_dict[neighbor_dict[taxon][mirna][1][1]]
+                    )
+                except KeyError:
+                    print('{} not found in GTF file.'.format(mirna[1]))
+                    continue
                 print('#########################')
 # Test to see if the two orthologs are themselves neighbors where their
 # distance cannot be larger than the selected mgi value. This accounts
 # for insertions in the core species.
 # TODO: Apply mgi also to the reference species to account for insertions
 # in the reference.
-                print(f'left_data: {left_data}')
-                print(f'right_data: {right_data}')
+#                 print(f'left_data: {left_data}')
+#                 print(f'right_data: {right_data}')
                 if (
                     left_data[0] == right_data[0]
                     and abs(left_data[1] - right_data[1]) <= mgi
@@ -686,30 +711,30 @@ def main():
 # species might be inverted compared to that in the reference species.
 ###############################################################################
                     if left_data[1] < right_data[1]:
-                        print('left')
-                        print(core_gtf_dict[left_data[0]][left_data[1]])
-                        print(core_gtf_dict[right_data[0]][right_data[1]])
+                        # print('left')
+                        # print(core_gtf_dict[left_data[0]][left_data[1]])
+                        # print(core_gtf_dict[right_data[0]][right_data[1]])
                         contig = left_data[0]
-                        print(contig)
+                        # print(contig)
                         seq_start = int(
                             core_gtf_dict[left_data[0]][left_data[1]][2]
                         )
-                        print(seq_start)
+                        # print(seq_start)
                         seq_end = (
                             core_gtf_dict[right_data[0]][right_data[1]][1]
                         )
-                        print(seq_end)
+                        # print(seq_end)
                         seq = genome[contig][seq_start-1:seq_end].seq
                         try:
                             mirna_dict[mirna][taxon] = seq
                         except:
                             mirna_dict[mirna] = {taxon: seq}
                     elif right_data[1] < left_data[1]:
-                        print('right')
-                        print(core_gtf_dict[left_data[0]][left_data[1]])
-                        print(core_gtf_dict[right_data[0]][right_data[1]])
+                        # print('right')
+                        # print(core_gtf_dict[left_data[0]][left_data[1]])
+                        # print(core_gtf_dict[right_data[0]][right_data[1]])
                         contig = left_data[0]
-                        print(contig)
+                        # print(contig)
                         # seq_start = int(
                         #     core_gtf_dict[left_data[0]][left_data[1]][2]
                         # )
@@ -720,11 +745,11 @@ def main():
                         seq_start = int(
                             core_gtf_dict[right_data[0]][right_data[1]][2]
                         )
-                        print(seq_start)
+                        # print(seq_start)
                         seq_end = (
                             core_gtf_dict[left_data[0]][left_data[1]][1]
                         )
-                        print(seq_end)
+                        # print(seq_end)
                         seq = genome[contig][seq_start-1:seq_end].seq
                         try:
                             mirna_dict[mirna][taxon] = seq
@@ -736,8 +761,8 @@ def main():
                         'No shared synteny for {} in {}.'
                         .format(mirna, taxon)
                     )
-                    print(left_data)
-                    print(right_data)
+                    # print(left_data)
+                    # print(right_data)
             else:
                 print('## Neither inside, opposite, nor in-between')
                 print(neighbor_dict[taxon][mirna])
@@ -763,6 +788,7 @@ def main():
     #blastsearch(mirna_path, fasta_path, ref_genome, output, cpu)
     print('# Starting reciprocal blast\n')
     blastsearch(mirna_path, ref_genome, output, cpu, dust)
+    print('# Coreset construction finished')
 
 if __name__ == '__main__':
     main()
