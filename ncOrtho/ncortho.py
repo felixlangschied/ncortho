@@ -87,7 +87,7 @@ def mirna_maker(mirpath, cmpath, output, msl):
         # Check if the covariance model even exists, otherwise skip to
         # the next miRNA.
         if not os.path.isfile(model):
-            print('# No covariance model found for {}.'.format(mirid))
+            print('# No covariance model found for {}'.format(mirid))
             continue
         # Check if the output folder exists, otherwise create it.
         if not os.path.isdir('{}'.format(output)):
@@ -364,20 +364,26 @@ def main():
     # Create miRNA objects from the list of input miRNAs.
     mirna_dict = mirna_maker(mirnas, models, output, msl)
 
+    # Print out query
+    print('### Starting ncOrtho run for {}'.format(query))
+
     # Identify ortholog candidates.
     for mir_data in mirna_dict:
         sys.stdout.flush()
         mirna = mirna_dict[mir_data]
         mirna_id = mirna.name
-        # TODO: remove this, if working
-        outdir = '{}'.format(output)
+        if heuristic:
+            outdir = '{}'.format(output)
+        else:
+            outdir = '{}/{}'.format(output, mirna_id)
         # Create output folder, if not existent.
         if not os.path.isdir(outdir):
             sp.call('mkdir -p {}'.format(outdir), shell=True)
         # start cmsearch
         cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, output,  cleanup, heuristic)
 
-        
+        # print('cm_results:')
+        # print(cm_results)
         # Extract sequences for candidate hits (if any were found).
         if not cm_results:
             print('# No hits found for {}.\n'.format(mirna_id))

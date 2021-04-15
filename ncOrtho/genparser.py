@@ -38,7 +38,7 @@ class GenomeParser(object):
             # of antisense strand hits
             elif hit[4] == '-':
                 seq = (
-                    self.gene_dict[hit[1]][int(hit[3])-1:int(hit[2])]
+                    self.gene_dict[hit[1]][int(hit[2])-1:int(hit[3])]
                     .reverse.complement.seq
                 )
             seq_dict[hit[0]] = seq

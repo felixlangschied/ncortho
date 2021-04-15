@@ -13,6 +13,10 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
     cut_off = mirna.bit * cm_cutoff
     # Calculate the length cutoff.
     len_cut = len(mirna.pre) * msl
+    # if no model exists for mirna return False
+    if not os.path.isfile('{}/{}.cm'.format(models, mirna_id)):
+        print('# No model found for {}. Skipping..'.format(mirna_id))
+        return False
     # Perform covariance model search.
     # Report and inclusion thresholds set according to cutoff.
 
@@ -49,25 +53,75 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
         genes = pyfaidx.Fasta(query)
         # collect heuristic sequences
         print('collecting sequences')
+        # set border regions to include in analysis
+        extraregion = 1000
+        diff_dict = {}
+        hit_at_start = False
+        hit_at_end = False
         heuristic_fa = '{0}/heuristic_{1}.out'.format(out, mirna_id)
         with open(heuristic_fa, 'w') as of:
             for hit in hit_list:
                 chrom, start, end, strand = hit
                 strand = strand.replace('plus', '+')
                 strand = strand.replace('minus', '-')
+                if strand == '-':
+                    start, end = end, start
                 header = ">{}|{}|{}|{}\n".format(chrom, start, end, strand)
-                # change start and end point to include neighbourhood
+                # print(header)
+                start = int(start)
+                end = int(end)
+                if start > extraregion:
+                    n_start = start - extraregion
+                else:
+                    # hit starts at the beginning of the chromosome
+                    n_start = 0
+                    hit_at_start = True
+                n_end = end + extraregion
+                if n_end > genes[chrom][-1].end:
+                    # hit is at the end of the chromosome
+                    n_end = genes[chrom][-1].end
+                    hit_at_end = True
                 if strand == '+':
-                    n_start = int(start) - 1000
-                    n_end = int(end) + 1000
                     sequence = genes[chrom][n_start:n_end].seq
                 elif strand == '-':
-                    n_start = int(start) + 1000 
-                    n_end = int(end) - 1000
-                    sequence = genes[chrom][n_end:n_start].seq#.reverse.complement.seq
-                else:
-                    print('Something went wrong during the heuristic cmsearch')
-                    sys.exit()
+                    sequence = genes[chrom][n_start:n_end].reverse.complement.seq
+                # print(start, end)
+                # print(n_start, n_end)
+                # start_diff = start - n_start
+                # end_diff = n_end - end
+                header = ">{}|{}|{}|{}|{}|{}\n".format(chrom, start, end, strand, hit_at_start, hit_at_end)
+                # change start and end point to include neighbourhood
+                # if strand == '+':
+                #     # if the miRNA is located at the start of the chromosme, extract beginning of chromosome
+                #     if int(start) > 1000:
+                #         n_start = int(start) - 1000
+                #     else:
+                #         n_start = 1
+                #     n_end = int(end) + 1000
+                #     try:
+                #         sequence = genes[chrom][n_start:n_end].seq
+                #     except pyfaidx.FetchError:
+                #         # if the hit is located at the end of the chromosome, extract end of chromosome
+                #         n_end = -1
+                #         sequence = genes[chrom][n_start:n_end].seq
+                # elif strand == '-':
+                #     n_start = int(start) + 1000
+                #     # if the miRNA is located at the start of the chromosme, extract beginning of chromosome
+                #     if int(end) > 1000:
+                #         n_end = int(end) - 1000
+                #     else:
+                #         n_end = 1
+                #     try:
+                #         sequence = genes[chrom][n_end:n_start].seq#.reverse.complement.seq
+                #     except pyfaidx.FetchError:
+                #         # if the hit is located at the end of the chromosome
+                #         n_start = -1
+                #         sequence = genes[chrom][n_end:n_start].seq
+                # else:
+                #     print('Something went wrong during the heuristic cmsearch')
+                #     sys.exit()
+                # print('start end')
+                # print(n_start, n_end)
                 of.write(header)
                 of.write(f'{sequence}\n')
         # start the cmsearch with the heuristic candidates
@@ -95,17 +149,37 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
                     data = line.strip().split()
                     blast_chrom = data[0].split('|')[0]
                     blast_start, blast_end = map(int, data[0].split('|')[1:3])
-                    # blast_strand = data[0].split('|')[-1]
+                    hit_at_start, hit_at_end = data[0].split('|')[4:6]
+                    blast_strand = data[0].split('|')[3]
                     cm_start, cm_end = map(int, data[7:9])
-                    # cm_strand = data[9]
+                    # cm_start, cm_end = map(int, data[5:7])
+                    cm_strand = data[9]
+                    if cm_strand == '-':
+                        # reverse hits should not be possible since blasthits were extracted
+                        # as reverse complement if they were on the minus strand
+                        continue
                     # if not cm_strand == blast_strand:
                     #     print('Rejecting cmsearch hit. Not on same strand as BLAST hit')
                     #     break
-                    hit_start = blast_start + (cm_start - 1000)
-                    hit_end = blast_end + (cm_end - 1000)
+                    # print(type(hit_at_start), hit_at_end)
+                    if hit_at_start == 'True':
+                        print('# cmsearch hit for {} at the beginning of a chromosome in the query species'.format(mirna_id))
+                        hit_start = cm_start
+                        hit_end = cm_end
+                    elif hit_at_end == 'True':
+                        print('# cmsearch hit for {} at the end of a chromosome in the query species'.format(
+                            mirna_id))
+                        hit_start = blast_start + (cm_start - extraregion) - 1
+                        hit_end = hit_start + (cm_end - cm_start) - 1
+                    else:
+                        hit_start = blast_start + (cm_start - extraregion) - 1
+                        hit_end = hit_start + (cm_end - extraregion) - 1
+                    # hit_start = blast_end - cm_end
+                    # hit_end = blast_end - cm_start
                     data[0] = blast_chrom
                     data[7] = hit_start
                     data[8] = hit_end
+                    data[9] = blast_strand
                     data = [str(entry) for entry in data]
                     of.write('\t'.join(data))
                     of.write('\n')
