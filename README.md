@@ -3,5 +3,6 @@ NcOrtho is a tool for the targeted search of orthologous micro RNAs (miRNAs) thr
 
 # Credits
 Dept. for Applied Bioinformatics Institute for Cell Biology and Neurosciences Goethe University Frankfurt am Main
+
 Preliminary Work:
 Andreas Blaumeiser, Mirko Brüggemann, Daniel Amsel
