@@ -161,18 +161,13 @@ def mirna_maker(mirpath, cmpath, output, msl):
 # blast_search(temp_fasta, reference, blast_output, cpu)
 def blast_search(s, r, o, c):
     """
-    
 
     Parameters
     ----------
-    s : TYPE
-        DESCRIPTION.
-    r : TYPE
-        DESCRIPTION.
-    o : TYPE
-        DESCRIPTION.
-    c : TYPE
-        DESCRIPTION.
+    s : cmsearch result
+    r : Reference genome.
+    o : Output Name.
+    c : Number of Threads for BLAST search.
 
     Returns
     -------
@@ -295,7 +290,6 @@ def main():
         '-l', '--msl', metavar='float', type=float,
         help='hit length filter', nargs='?', const=0.7, default=0.7
     )
-    # TODO: implement cleanup
     parser.add_argument(
         '--heuristic', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(

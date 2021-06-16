@@ -16,10 +16,11 @@ import pickle
 import pyfaidx
 import subprocess as sp
 import sys
+import re
 
 ###############################################################################
 
-# Parse a GTF file to store the coordinates for each protein-coding gene in a
+# Parse an Ensembl GTF file to store the coordinates for each protein-coding gene in a
 # dictionary
 def gtf_parser(gtf):
     species_name = gtf.split('/')[-1].split('.')[0]
@@ -52,6 +53,57 @@ def gtf_parser(gtf):
                 i += 1
     return chr_dict
 
+# ['gff', 'gff3']
+def gff_parser(gff, id_type):
+    """
+
+    Parameters
+    ----------
+    gff :   Path to a RefSeq gff3 file
+    id  :   type of identifier in the gff3 file that is to be compared against the IDs in the pairwise ortholgs file
+
+    Returns
+    -------
+    Dictionary containing the location of each gene on a chromosome
+    {'gene_id': ('chromosome': position), 'chromosome': {position: ('gene_id', start, end, strand)} }
+
+    """
+    chr_dict = {}
+    chromo = ''
+
+    # with open(inpath) as infile, open(outpath, 'wb') as outfile:
+    with open(gff) as infile:
+        for line in infile:
+            if (
+                    not line.startswith('#')
+                    and line.split()[2] == 'gene'
+                    and line.split('gene_biotype=')[1].split(';')[0]
+                    == 'protein_coding'
+            ):
+                linedata = line.strip().split('\t')
+                if id_type in ['ID', 'Name', 'gene_id']:
+                    geneid = linedata[-1].split(f'{id_type}=')[1].split(';')[0]
+                elif id_type == 'GeneID':
+                    geneid = re.split('[;,]', linedata[-1].split(f'{id_type}:')[1])[0]
+                else:
+                    print('ERROR: Unknown identifier type "{}"'.format(id_type))
+                    sys.exit()
+
+                contig = linedata[0]
+                # geneid = linedata[-1].split(id)[1].split(';')[0]
+                start = int(linedata[3])
+                end = int(linedata[4])
+                strand = linedata[6]
+                if contig != chromo:
+                    i = 1
+                    chromo = contig
+                chr_dict[geneid] = (contig, i)
+                try:
+                    chr_dict[contig][i] = (geneid, start, end, strand)
+                except:
+                    chr_dict[contig] = {i: (geneid, start, end, strand)}
+                i += 1
+    return chr_dict
 
 ###############################################################################
 #Try to find the ortholog for a given reference gene in a core set species
@@ -385,6 +437,8 @@ def main():
         '-p', '--pairwise', metavar='<path>', type=str,
         help='path to pairwise orthologs'
     )
+
+    # OPTIONAL VARIABLES
     # cpu, use maximum number of available cpus if not specified otherwise
     parser.add_argument(
         '-t', '--threads', metavar='int', type=int,
@@ -402,6 +456,14 @@ def main():
         '--dust', metavar='yes/no', type=str,
         help='Use BLASTn dust filter. Decreases number of models created but improves runtime and possibly specificity', nargs='?',
         const='yes', default='yes'
+    )
+    #
+    parser.add_argument(
+        '--id_type', metavar='str', type=str,
+        help='Choose the ID in the reference gff file that is '
+             'compared to the IDs in the pairwise orthologs file. Default:"ID"'
+             'Options: "Name", "GeneID", gene_id',
+        nargs='?', const='ID=', default='ID'
     )
 
 ###############################################################################
@@ -434,19 +496,20 @@ def main():
     mirna_path = args.ncrna
     output = args.output
     query = args.query
-    ref_gtf_path = args.reference
+    ref_annot_path = args.reference
     ref_genome = args.genome
     oma_paths = glob.glob('{}/*'.format(args.pairwise))
     core_gtf_paths = args.core
     core_fa_paths = args.query
     mgi = args.mgi
     dust = args.dust
+    id_t = args.id_type
 
 ###############################################################################
 
 # Parse the pairwise orthologs
     for oma_path in oma_paths:
-        taxon = oma_path.split('/')[-1]
+        taxon = oma_path.split('/')[-1].split('.')[0]
         with open(oma_path) as omafile:
 #        orthologs = {ref: core for (ref, core) in 
 #[(line.split()[0], line.split()[1]) for line in omafile.readlines()
@@ -466,7 +529,16 @@ def main():
             line.split() for line in mirfile.readlines()
             if not line.startswith('#')
         ]
-    ref_dict = gtf_parser(ref_gtf_path)
+    # Read reference annotation
+    ft = ref_annot_path.split('.')[-1]
+    if ft == 'gtf':
+        ref_dict = gtf_parser(ref_annot_path)
+    elif ft in ['gff3', 'gff']:
+        ref_dict = gff_parser(ref_annot_path, id_t)
+    else:
+        print('ERROR: File type "{}" not valid as reference annotation'.format(ft))
+        sys.exit()
+
 
 #Determine the position of each miRNA and its neighboring gene(s)
     for mirna in mirnas:
@@ -632,17 +704,23 @@ def main():
     print('# starting now with coordinate search\n')
     for taxon in neighbor_dict:
         print('Starting synteny analysis for {}'.format(taxon))
-        print('Trying to parse GTF file for {}.'.format(taxon))
+        print('Trying to parse annotation file for {}.'.format(taxon))
         gtf_path_list = glob.glob('{0}/*{1}*.gtf'.format(core_gtf_paths, taxon))
         if len(gtf_path_list) > 1:
-            print('ERROR: Ambigious core taxon annotation for {}'.format(taxon))
+            print('ERROR: Ambiguous core taxon annotation for {}'.format(taxon))
             sys.exit()
-        elif len(gtf_path_list) == 0:
-            print('Unable to identify annotation file for {}'.format(taxon))
         elif len(gtf_path_list) == 1:
             gtf_path = gtf_path_list[0]
             core_gtf_dict = gtf_parser(gtf_path)
             # print(core_gtf_dict)
+        elif len(gtf_path_list) == 0:
+            gff_path_list = glob.glob('{0}/*{1}*.gff*'.format(core_gtf_paths, taxon))
+            if len(gff_path_list) == 1:
+                core_dict = gff_parser(gff_path_list[0], id_t)
+            else:
+                print('ERROR: Ambiguous core taxon annotation for {}'.format(taxon))
+                sys.exit()
+
         fasta_path = glob.glob('{0}/{1}*.fa'.format(core_fa_paths, taxon))
         #print(gtf_path)
         #print(fasta_path)
@@ -682,7 +760,7 @@ def main():
                     except:
                         mirna_dict[mirna] = {taxon: seq}
                 except:
-                    print('{} not found in GTF file.'.format(mirna[1]))
+                    print('{} not found in GTF file.'.format(mirna))
             elif style == 'in-between':
                 try:
                     left_data = (
@@ -692,7 +770,7 @@ def main():
                         core_gtf_dict[neighbor_dict[taxon][mirna][1][1]]
                     )
                 except KeyError:
-                    print('{} not found in GTF file.'.format(mirna[1]))
+                    print('{} not found in GTF file.'.format(mirna))
                     continue
                 print('#########################')
 # Test to see if the two orthologs are themselves neighbors where their
