@@ -145,7 +145,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
             mkdir_cmd = 'mkdir -p {}'.format(out_folder)
             sp.call(mkdir_cmd, shell=True)
         os.chdir('{}/{}'.format(o_path, mirid))
-        print('### {} ###'.format(mirid))
+        print('\n### {} ###'.format(mirid))
         # Coordinates of the ncRNA
         mchr = mirna[1].replace('chr', '')
         mstart = int(mirna[2])
@@ -154,16 +154,18 @@ def blastsearch(m_path, r_path, o_path, c, dust):
         # Start of reference bit score computation.
         # Convert RNA sequence into DNA sequence.
         preseq = mirna[5].replace('U', 'T')
-        # print(preseq)
+
         # The miRNA precursors can show a low level of complexity, hence it is
         # required to deactivate the dust filter for the BLAST search.
 
+
         # check if blastdb of reference genome exists
+        fname = '.'.join(r_path.split("/")[-1].split('.')[0:-1])
+        ref_blastdb = f'{o_path}/refBLASTdb/{fname}'
         file_extensions = ['.nhr', '.nin', '.nsq']
-        # file_extensions = ['.nhr']
+        c = 0
         for fe in file_extensions:
-            files = glob.glob(f'{r_path}*{fe}')
-            # checkpath = '{}{}'.format(r_path, fe)
+            files = glob.glob(f'{ref_blastdb}*{fe}')
             if not files:
                 print(
                     'BLAST database does not exist for reference genome.\n'
@@ -171,51 +173,50 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                 )
                 # At least one of the BLAST db files is not existent and has to be
                 # created.
-                db_command = (
-                    'makeblastdb -dbtype nucl -in {}'
-                        .format(r_path)
-                )
+                db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(r_path, blastdb)
+
                 sp.call(db_command, shell=True)
                 break
             else:
-                print('BLAST database already exists.')
+                c += 1
+        if c == 3:
+            print('BLAST database of reference genome already exists.')
 
         bit_check = (
             'blastn -num_threads {0} -dust {1} -task megablast -db {2} '
-            '-outfmt \"6 bitscore\"'.format(c, dust, r_path)
+            '-outfmt \"6 bitscore\"'.format(c, dust, ref_blastdb)
         )
-        #print(bit_check)
+        print('# Determining reference bit score..')
         ref_bit_cmd = sp.Popen(
             bit_check, shell=True, stdin=sp.PIPE,
             stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
         )
         ref_results, err = ref_bit_cmd.communicate(preseq)
+        if err:
+            print(err)
         if not ref_results:
             print('# Sequence for {} not found in reference. Skipping..')
             skip_file = '{}/not_found_in_ref.fa'.format(o_path)
             with open(skip_file, 'w') as of:
                 of.write('>{}\n{}\n'.format(mirid, preseq))
             continue
-        ref_bit_score = float(ref_results.split('\n')[0].split('\t')[0])
-        print(f'reference bit score: {ref_bit_score}')
-        # End of reference bit score computation.
-        print('# Performing reciprocal BLAST search.')
 
+        ref_bit_score = float(ref_results.split('\n')[0].split('\t')[0])
+        print(f'BLAST bit score of reference miRNA against reference genome: {ref_bit_score}')
+        # End of reference bit score computation.
+        # print('# Performing reciprocal BLAST search.')
+        print('# Trying to find pre-miRNA candidates in syntenic region')
         # this fasta file is created by the the main() script
         fasta = '{0}/{1}/{1}.fa'.format(o_path, mirid)
         if os.path.isfile(fasta):
-            print('FASTA file found for {}.'.format(mirna[0]))
-            print('Checking BLAST database.')
-        # Check if BLAST database already exists, otherwise create it.
-        # Database files are ".nhr", ".nin", ".nsq".
+            # print('FASTA file with candidate regions loaded for {}.'.format(mirna[0]))
+            # Check if BLAST database already exists, otherwise create it.
             file_extensions = ['.nhr', '.nin', '.nsq']
-
             for fe in file_extensions:
                 checkpath = '{}{}'.format(fasta, fe)
                 if not os.path.isfile(checkpath):
                     print(
-                        'BLAST database does not exist.\n'
-                        'Constructing BLAST database.'
+                        'Constructing BLAST database of candidate regions.'
                     )
             # At least one of the BLAST db files is not existent and has to be
             # created.
@@ -226,7 +227,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                     sp.call(db_command, shell=True)
                     break
             else:
-                print('BLAST database already exists.')
+                print('BLAST database of candidate regions found.')
 
             blastn_cmd = (
                 'blastn -num_threads {0} -task blastn -dust {1} -db {2} -outfmt \"6 '
@@ -237,6 +238,10 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                 stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
             )
             results, err = blastn.communicate(preseq)
+            if err:
+                print(err)
+                sys.exit()
+
             # print('blast results of reference miRNA against candidate regions:')
             # print(results)
 ##### Collect best hit for each core set species if it is within the accepted bit score range
@@ -256,89 +261,79 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                             not hit_data[0] in core_dict
                             and float(hit_data[2]) >= 0.5*ref_bit_score
                         ):
-                        #if not hit_data[0] in core_dict:
                             core_dict[hit_data[0]] = hit
+                            print(f'pre-miRNA candidate found for {hit_data[0]}! ({hit_data[2]}/{0.5*ref_bit_score})')
+                        else:
+                            print(f'Syntenic candidate region BLAST hit below reference bit score threshold ({hit_data[2]}/{0.5*ref_bit_score})')
+
             if len(core_dict) == 0:
-                print('# No region in the core species scored above the reference bit score threshold')
-            # print('core_dict:')
-            # print(core_dict)
-            #print(results.split('\n'))
-            #print(results)
-    ##### Re-BLAST #####
-            #if core_dict:
+                print('WARNING: No region in the core species scored above the reference bit score threshold')
+
+
+        ##### Re-BLAST #####
+            print('\n### Starting reciprocal BLAST search.')
             accept_dict = {}
             for species in core_dict.keys():
-                print(species)
+                print(f'# {species}')
                 # Make sure to eliminate gaps
                 candidate_seq = core_dict[species].split()[3].replace('-', '')
                 reblastn_cmd = (
                     'blastn -num_threads {0} -task blastn -dust {1} -db {2} -outfmt \"6'
                     ' sseqid sstart send evalue bitscore\"'
-                    .format(c, dust, r_path)
+                    .format(c, dust, ref_blastdb)
                 )
                 reblastn = sp.Popen(
                     reblastn_cmd, shell=True, stdin=sp.PIPE,
                     stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
                 )
                 reresults, reerr = reblastn.communicate(candidate_seq)
-                # print('Reverse search.')
-                # print(reresults)
-                #print(reresults.split('\n')[0])
-    ##### Check if reverse hit overlaps with reference miRNA
+                if reerr:
+                    print(reerr)
+                    sys.exit()
+
+        ##### Check if reverse hit overlaps with reference miRNA
                 if reresults:
                     first_hit = reresults.split('\n')[0].split()
                     rchr = first_hit[0]
                     rstart = int(first_hit[1])
                     rend = int(first_hit[2])
-                    #print(first_hit[1], first_hit[2])
-                    #print(first_hit)
-                    #print('#####')
-                    #print(rchr, mchr)
                     if rchr == mchr:
-                        print('Same chromosome.')
+                        # print('Same chromosome.')
                         if (
                             (rstart <= mstart and mstart <= rend)
                             or (rstart <= mend and mend <= rend)
                         ):
-                    #first within second
-                            print("first within second")
-                    #print(tophit)
+                            #first within second
                             print('Reciprocity fulfilled.')
                             accept_dict[species] = core_dict[species]
                         elif (
                             (mstart <= rstart and rstart <= mend)
                             or (mstart <= rend and rend <= mend)
                         ):
-                    #second within first
-                    #print("yeah")
-                    #print(tophit)
+
+                            # second within first
                             print('Reciprocity fulfilled.')
                             accept_dict[species] = core_dict[species]
-                        print('Reciprocity unfulfilled.')
+                        else:
+                            print('Reciprocity unfulfilled.')
                     else:
                         print('Hit on chromosome {}, expected {}'.format(rchr, mchr))
-
-
                 else:
-                    # del core_dict[species]
                     print(
                         'No reverse hit for {}. Reciprocity unfulfilled.'
                         .format(mirid)
                     )
-
-                #print(results.split('\n')[0].split())
-            #for result in results.split('\n'):
-            #    print(result)
         # If the FASTA file is not existent, the BLAST search cannot be
         # performed.
         else:
             print('FASTA file not found for {}.'.format(mirna[0]))
             continue
-        print(accept_dict)
+
+        # write intermediate output file
         corefile = '{}/{}_core.fa'.format(out_folder, mirid) 
         with open(corefile, 'w') as outfile:
             outfile.write('>{}\n{}\n'.format(mirid, preseq))
-            print('##### Core set for {}: #####'.format(mirid))
+            print('\n### Starting Alignment')
             #print('>{}\n{}'.format(mirid, preseq))
             for accepted in accept_dict:
                 #print('>{}\n{}'.format(accepted, core_dict[accepted].split('\t')[3]))
@@ -350,12 +345,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
         alignment = '{}/{}.aln'.format(out_folder, mirid)
         stockholm = '{}/{}.sto'.format(out_folder, mirid)
         t_coffee = 't_coffee'
-        #t_coffee = '/home/andreas/Applications/tcoffee/Version_11.00.8cbe486/bin/t_coffee'
-        #t_coffee = '/home/andreas/Applications/T-COFFEE_installer_Version_12.00.7fb08c2_linux_x64/bin/t_coffee'
-        #tc_cmd_1 = '{} -quiet=t_coffee.out -cpu 4 -special_mode=rcoffee -in {} -output=clustalw_aln > {}'.format(t_coffee, corefile, alignment)
-        #tc_cmd_1 = '{} -quiet=t_coffee.out -cpu 4 -special_mode=rcoffee -in {} -output=clustalw_aln -outfile {}'.format(t_coffee, corefile, alignment)
-        #tc_cmd_1 = '{} -quiet -multi_core={} -special_mode=rcoffee -in {} -output=clustalw_aln -outfile={}'.format(t_coffee, c, corefile, alignment)
-        #tc_cmd_2 = '{} -other_pg seq_reformat -in {} -action +add_alifold -output stockholm_aln -out {}'.format(t_coffee, alignment, stockholm)
+
         # Call T-Coffee for the sequence alignment.
         print('Building T-Coffee alignment.')
         tc_cmd_1 = (
@@ -364,11 +354,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
             .format(t_coffee, c, corefile, alignment)
         )
         sp.call(tc_cmd_1, shell=True)
-        #with open(alignment) as aln_file:
-            #aln_lines = [line for line in aln_file if not line.startswith('!')]
-        #with open(alignment, 'w') as aln_file:
-         #   for line in aln_lines:
-          #      aln_file.write(line)
+
         # Extend the sequence-based alignment by structural information.
         # Create Stockholm alignment.
         print('Adding secondary structure to Stockholm format.')
@@ -701,10 +687,10 @@ def main():
     # print(neighbor_dict)
 
 ### Search for the coordinates of the orthologs and extract the sequences
-    print('# starting now with coordinate search\n')
+    # print('# starting now with coordinate search\n')
     for taxon in neighbor_dict:
-        print('Starting synteny analysis for {}'.format(taxon))
-        print('Trying to parse annotation file for {}.'.format(taxon))
+        print('\n### Starting synteny analysis for {}'.format(taxon))
+        print('# Trying to parse annotation file for {}.'.format(taxon))
         gtf_path_list = glob.glob('{0}/*{1}*.gtf'.format(core_gtf_paths, taxon))
         if len(gtf_path_list) > 1:
             print('ERROR: Ambiguous core taxon annotation for {}'.format(taxon))
@@ -720,7 +706,8 @@ def main():
             else:
                 print('ERROR: Ambiguous core taxon annotation for {}'.format(taxon))
                 sys.exit()
-
+        print('Done')
+        print('# Loading genome file')
         fasta_path = glob.glob('{0}/{1}*.fa'.format(core_fa_paths, taxon))
         #print(gtf_path)
         #print(fasta_path)
@@ -728,7 +715,7 @@ def main():
             print('Unable to identify genome file for {}'.format(taxon))
             sys.exit()
         genome = pyfaidx.Fasta(fasta_path[0])
-
+        print('Done')
         # try:
         #     core_gtf_dict = gtf_parser(gtf_path)
         #     print('Done')
@@ -739,29 +726,31 @@ def main():
         for mirna in neighbor_dict[taxon]:
             # print(mirna)
             style = neighbor_dict[taxon][mirna][0]
-            print(f'# style = {style}')
             if style == 'inside' or style == 'opposite':
+                print(f'# {mirna} location: {style} of gene')
 ###############################################################################
                 try:
                     ortho_data = (
                         core_gtf_dict[neighbor_dict[taxon][mirna][1]]
                     )
-                    positions = list(
-                        core_gtf_dict[ortho_data[0]][ortho_data[1]][1:4]
-                    )
-                    coordinates = [ortho_data[0]] + positions
-                    seq = (
-                        genome[coordinates[0]]
-                        [coordinates[1]-1:coordinates[2]].seq
-                    )
-                    # print(seq[0:10])
-                    try:
-                        mirna_dict[mirna][taxon] = seq
-                    except:
-                        mirna_dict[mirna] = {taxon: seq}
-                except:
-                    print('{} not found in GTF file.'.format(mirna))
+                except KeyError as e:
+                    print('{} not found in annotation file.'.format(e))
+                    continue
+                positions = list(
+                    core_gtf_dict[ortho_data[0]][ortho_data[1]][1:4]
+                )
+                coordinates = [ortho_data[0]] + positions
+                seq = (
+                    genome[coordinates[0]]
+                    [coordinates[1]-1:coordinates[2]].seq
+                )
+                # print(seq[0:10])
+                try:
+                    mirna_dict[mirna][taxon] = seq
+                except KeyError:
+                    mirna_dict[mirna] = {taxon: seq}
             elif style == 'in-between':
+                print(f'# {mirna} location: between genes')
                 try:
                     left_data = (
                         core_gtf_dict[neighbor_dict[taxon][mirna][1][0]]
@@ -769,10 +758,10 @@ def main():
                     right_data = (
                         core_gtf_dict[neighbor_dict[taxon][mirna][1][1]]
                     )
-                except KeyError:
-                    print('{} not found in GTF file.'.format(mirna))
+                except KeyError as e:
+                    print('{} not found in annotation file.'.format(e))
                     continue
-                print('#########################')
+                # print('#########################')
 # Test to see if the two orthologs are themselves neighbors where their
 # distance cannot be larger than the selected mgi value. This accounts
 # for insertions in the core species.
@@ -845,26 +834,28 @@ def main():
                 print('## Neither inside, opposite, nor in-between')
                 print(neighbor_dict[taxon][mirna])
                 print('##')
+            print('Candidate region found')
 
             # continue
     # print(mirna_dict.keys())
     #print(mirna_dict['mmu-mir-1224'])
     # print(mirna_dict['mmu-mir-6899'].keys())
+    # print(mirna_dict['hsa-mir-197'])
 
-    def write_output():
-        for mirna in mirna_dict:
-            with open('{0}/{1}/{1}.fa'.format(output, mirna), 'w') as outfile:
-                for core_taxon in mirna_dict[mirna]:
-                    outfile.write(
-                        '>{0}\n{1}\n'
-                        .format(core_taxon, mirna_dict[mirna][core_taxon])
-                    )
+    # Write output file
+    for mirna in mirna_dict:
+        # print('{0}/{1}/{1}.fa'.format(output, mirna))
+        with open('{0}/{1}/{1}.fa'.format(output, mirna), 'w') as outfile:
+            for core_taxon in mirna_dict[mirna]:
+                outfile.write(
+                    '>{0}\n{1}\n'
+                    .format(core_taxon, mirna_dict[mirna][core_taxon])
+                )
 
-    write_output()
 
     #fasta_path = '/home/andreas/Documents/Internship/ncOrtho_to_distribute/ncortho_python/test_core_set_construction/test_fasta'
     #blastsearch(mirna_path, fasta_path, ref_genome, output, cpu)
-    print('# Starting reciprocal blast\n')
+    print('\n### Starting reciprocal BLAST process')
     blastsearch(mirna_path, ref_genome, output, cpu, dust)
     print('# Coreset construction finished')
 
