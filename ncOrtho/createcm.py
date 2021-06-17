@@ -22,14 +22,9 @@ class CmConstructor(object):
     
     def construct(self):
         print('# Constructing covariance model for {}.'.format(self.name))
-        #cmbuild = 'cmbuild'
-        cmbuild = (
-            '/home/andreas/Applications/infernal-1.1.2-linux-intel-gcc/'
-            'binaries/cmbuild'
-        )
         construct_command = (
-            '{0} -n {1} -o {2}/{1}_cmbuild.log {2}/{1}.cm {3}'
-            .format(cmbuild, self.name, self.outpath, self.alignment)
+            'cmbuild -n {0} -o {1}/{0}_cmbuild.log {1}/{0}.cm {2}'
+            .format(self.name, self.outpath, self.alignment)
         )
         sp.call(construct_command, shell=True)
         print(
@@ -40,13 +35,8 @@ class CmConstructor(object):
     
     def calibrate(self):
         print('# Calibrating covariance model for {}.'.format(self.name))
-        #cmcalibrate = 'cmcalibrate'
-        cmcalibrate = (
-            '/home/andreas/Applications/infernal-1.1.2-linux-intel-gcc/'
-            'binaries/cmcalibrate'
-        )
         calibrate_command = (
-            '{0} --cpu {1} {2}'.format(cmcalibrate, self.cpu, self.model)
+            'cmcalibrate --cpu {0} {1}'.format(self.cpu, self.model)
         )
         sp.call(calibrate_command, shell=True)
         print('# Finished covariance model calibration.')

@@ -45,7 +45,7 @@ class Mirna(object):
         # reference bit score that miRNA receives by its own
         # covariance model
         self.bit = bit
-# TODO: include both mature strands, 5p and 3p, aka mature and star
+
 
 
 
@@ -91,22 +91,13 @@ def mirna_maker(mirpath, cmpath, output, msl):
             continue
         # Check if the output folder exists, otherwise create it.
         if not os.path.isdir('{}'.format(output)):
-            try:
-                mkdir = 'mkdir -p {}'.format(output)
-                sp.call(mkdir, shell=True)
-            except:
-                print(
-                    '# Cannot create output folder for {}.'
-                    'Skipping to next miRNA.'
-                )
-                continue
+            mkdir = 'mkdir -p {}'.format(output)
+            sp.call(mkdir, shell=True)
+
 
         # Obtain the reference bit score for each miRNA by applying it
         # to its own covariance model.
         print('# Calculating reference bit score for {}.'.format(mirid))
-
-
-
         
         # Create a temporary FASTA file with the miRNA sequence as
         # query for external search tool cmsearch to calculate the
@@ -294,7 +285,7 @@ def main():
         '--heuristic', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Perform a BLAST search of the reference miRNA in the query genome to identify '
-            'candidate regions for the cmsearch. Majorly improves speed but might decrease accuracy'
+            'candidate regions for the cmsearch. Majorly improves speed.'
         )
     )
     parser.add_argument(
@@ -372,7 +363,7 @@ def main():
             outdir = '{}/{}'.format(output, mirna_id)
         # Create output folder, if not existent.
         if not os.path.isdir(outdir):
-            sp.call('mkdir -p {}'.format(outdir), shell=True)
+            os.mkdir(outdir)
         # start cmsearch
         cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, output,  cleanup, heuristic)
 
@@ -405,8 +396,6 @@ def main():
         for candidate in candidates:
             sequence = candidates[candidate]
             temp_fasta = '{0}/{1}.fa'.format(outdir, candidate)
-            # TODO: change BlastParser to take query directly from command-line
-            #       to avoid creating temporary files
             with open(temp_fasta, 'w') as tempfile:
                 tempfile.write('>{0}\n{1}\n'.format(candidate, sequence))
             blast_output = '{0}/blast_{1}.out'.format(outdir, candidate)
