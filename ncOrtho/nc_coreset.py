@@ -185,11 +185,11 @@ def main():
         if not os.path.isdir('{}/{}'.format(output, mirid)):
             sp.call('mkdir -p {}/{}'.format(output, mirid), shell=True)
         ### Workaround for differing naming conventions in miRBase and Ensembl
-        # if 'chr' in mirna[1]:
-        #     chromo = mirna[1].split('chr')[1]
-        # else:
-        #     chromo = mirna[1]
-        ###
+        if 'chr' in mirna[1]:
+            chromo = mirna[1].split('chr')[1]
+        else:
+            chromo = mirna[1]
+        ##
         start = int(mirna[2])
         end = int(mirna[3])
         strand = mirna[4]
