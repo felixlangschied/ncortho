@@ -1,0 +1,14 @@
+{
+    "core_annotation": [
+        "/share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_008122165.1/genomic.gff"
+    ],
+    "core_genomes": [
+        "/share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_008122165.1/genomic.fna"
+    ],
+    "core_name": [
+        "Gorilla_gorilla"
+    ],
+    "pairwise_orthologs": [
+        "/share/project/felixl/ncOrtho/data/hsa_ref/refseq/oma/Gorilla_gorilla.oma"
+    ]
+}

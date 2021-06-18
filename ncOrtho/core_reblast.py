@@ -67,8 +67,7 @@ def blastsearch(m_path, r_path, o_path, c, dust):
                 )
                 # At least one of the BLAST db files is not existent and has to be
                 # created.
-                db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(r_path, blastdb)
-
+                db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(r_path, ref_blastdb)
                 sp.call(db_command, shell=True)
                 break
             else:
