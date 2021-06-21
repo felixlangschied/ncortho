@@ -32,12 +32,13 @@ until finished
 End with an example of getting some data out of the system or using it for a little demo
 
 
-## Credits
+## Contributors
 
 Dept. for Applied Bioinformatics Institute for Cell Biology and Neurosciences, Goethe University, Frankfurt am Main
 
-Preliminary Work:
-* Andreas Blaumeiser
+* [Ingo Ebersberger](https://github.com/ebersber)
+* [Felix Langschied](https://github.com/felixlangschied)
+* [Andreas Blaumeiser](https://github.com/acblaumeiser)
 * Mirko Brüggemann
 * Daniel Amsel
 
