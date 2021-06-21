@@ -71,13 +71,14 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 
 ## Credits
-Dept. for Applied Bioinformatics Institute for Cell Biology and Neurosciences Goethe University Frankfurt am Main
+
+Dept. for Applied Bioinformatics Institute for Cell Biology and Neurosciences, Goethe University, Frankfurt am Main
 
 Preliminary Work:
-Andreas Blaumeiser, Mirko Brüggemann, Daniel Amsel
+* Andreas Blaumeiser
+* Mirko Brüggemann
+* Daniel Amsel
 
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
