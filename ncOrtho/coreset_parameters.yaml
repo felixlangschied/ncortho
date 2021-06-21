@@ -1,0 +1,29 @@
+---
+type: reference
+name: Homo_sapiens
+genome: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_000001405.39/genomic.fna
+annotation: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_000001405.39/genomic.gff
+---
+type: core
+name: Gorilla_gorilla
+genome: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_008122165.1/genomic.fna
+annotation: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_008122165.1/genomic.gff
+orthologs: /share/project/felixl/ncOrtho/data/hsa_ref/refseq/genename_oma/Homo_sapiens_rep-Gorilla_gorilla_rep.txt
+---
+type: core
+name: Macaca_mulatta
+genome: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_003339765.1/genomic.fna
+annotation: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_003339765.1/genomic.gff
+orthologs: /share/project/felixl/ncOrtho/data/hsa_ref/refseq/genename_oma/Homo_sapiens_rep-Macaca_mulatta_rep.txt
+---
+type: core
+name: Nomascus_leucogenys
+genome: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_006542625.1/genomic.fna
+annotation: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_006542625.1/genomic.gff
+orthologs: /share/project/felixl/ncOrtho/data/hsa_ref/refseq/genename_oma/Homo_sapiens_rep-Nomascus_leucogenys_rep.txt
+---
+type: core
+name: Pongo_abelii
+genome: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_002880775.1/genomic.fna
+annotation: /share/gluster/GeneSets/NCBI-Genomes/MammalianVertebratesRefSeq/raw_dir/active/GCF_002880775.1/genomic.gff
+orthologs: /share/project/felixl/ncOrtho/data/hsa_ref/refseq/genename_oma/Homo_sapiens_rep-Pongo_abelii_rep.txt
