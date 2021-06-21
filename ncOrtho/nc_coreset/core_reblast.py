@@ -219,7 +219,6 @@ def blastsearch(m_path, r_path, o_path, c, dust):
         # performed.
         else:
             print('ERROR: FASTA file not found for {}.'.format(mirna[0]))
-            return None
 
         # write intermediate output file
         corefile = '{}/{}_core.fa'.format(out_folder, mirid)

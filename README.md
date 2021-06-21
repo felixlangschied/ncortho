@@ -1,36 +1,51 @@
 # ncortho
-NcOrtho is a tool for the targeted search of orthologous micro RNAs (miRNAs) throughout the tree of life. Conceptually, it works similar to the program [fDOG](https://github.com/BIONF/fDOG) in that a probabilistic model of the target sequence in a reference species is created. For this, the orthologs of the target sequence are identified in a set of taxa that are closely related to the reference species. In contrast to fDOG, ncOrtho does not train hidden Markov Models but covariance models (CMs) (Eddy & Durbin, 1994) which also model conserved secondary structures of the miRNAs
+NcOrtho is a tool for the targeted search of orthologous micro RNAs (miRNAs) throughout the tree of life. 
+Conceptually, it works similar to the program [fDOG](https://github.com/BIONF/fDOG) in that a probabilistic model of 
+the target sequence in a reference species is created. For this, the orthologs of the target sequence are identified in 
+a set of taxa that are closely related to the reference species. In contrast to fDOG, ncOrtho does not train hidden 
+Markov Models but covariance models (CMs) (Eddy & Durbin, 1994) which also model conserved secondary structures of the 
+miRNAs
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+NcOrtho depends on multiple third party applications, some of which are Linux specific.
+All dependencies can be installed with [Anaconda](https://www.anaconda.com/).
+It is recommended to create a new Anaconda environment for this. For example:
+```
+conda create --name ncOrtho python=3.8
+conda activate ncOrtho
+```
+
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+* **Operating System:** Linux (tested on: Ubuntu 20.04)
+* **Python:** version 3 or higher (tested with v3.8)
 
-```
-tools = ['blastn', 'infernal', 't_coffee', 'alifold']
-packages = ['pyfaidx', 'biopython']
-```
+Tool | Tested version | Anaconda installation
+------------ | ------------- | -------------
+BLASTn | v2.7.1 | `conda install -c kantorlab blastn`
+Infernal | v1.1.4 | `conda install -c bioconda infernal`
+t_coffee | v13.45 | `conda install -c bioconda t-coffee`
+alifold | v2.4.18 | `conda install -c bioconda viennarna`
+
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+Currently, ncOrtho is not yet available as a python package. Until then, two python packages have to be installed
+manually:
 ```
-Give the example
+pip install pyfaidx
+pip install biopython
 ```
-
-And repeat
-
+Cloning the git repository is the easiest option to access ncOrtho at the moment:
 ```
-until finished
+git clone https://github.com/felixlangschied/ncortho.git
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+## Usage
+
+
 
 
 ## Contributors
