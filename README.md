@@ -11,6 +11,7 @@ What things you need to install the software and how to install them
 
 ```
 tools = ['blastn', 'infernal', 't_coffee', 'alifold']
+packages = ['pyfaidx', 'biopython']
 ```
 
 ### Installing
