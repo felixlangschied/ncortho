@@ -175,7 +175,6 @@ def main():
         sys.exit()
     print('Done')
 
-
     # Determine the position of each miRNA and its neighboring gene(s)
     for mirna in mirnas:
         sys.stdout.flush()
@@ -484,29 +483,37 @@ def main():
             for core_taxon in mirna_dict[mirna]:
                 outfile.write(
                     '>{0}\n{1}\n'
-                        .format(core_taxon, mirna_dict[mirna][core_taxon])
+                    .format(core_taxon, mirna_dict[mirna][core_taxon])
                 )
     if not mirna_dict:
         print('\nERROR: No syntenic regions found in the core species. Exiting..')
         sys.exit()
 
-    print('\n### Starting reciprocal BLAST process')
-    sto_path = blastsearch(mirna_path, ref_genome, output, cpu, dust)
+    for mirna in mirnas:
+        if mirna[0] not in list(mirna_dict):
+            print('WARNING: No syntenic region found for {}. Skipping..'.format(mirna[0]))
+            continue
+        else:
+            print('\n### Starting reciprocal BLAST process')
+            sto_path = blastsearch(mirna, ref_genome, output, cpu, dust)
 
-    if create_model == 'yes' and sto_path is not None:
-        print('### Starting to construct covariance model from alignment')
-        model_out = f'{output}/CMs'
-        if not os.path.isdir(model_out):
-            os.mkdir(model_out)
-        name = sto_path.split('/')[-1].split('.')[0]
-        # Initiate covariance model construction and calibration.
-        cmc = CmConstructor(sto_path, model_out, name, cpu)
-        # Construct the model.
-        cmc.construct()
-        # Calibrate the model.
-        cmc.calibrate()
+            if create_model == 'yes' and sto_path is not None:
+                print('### Starting to construct covariance model from alignment')
+                model_dir = f'{output}/CMs'
+                if not os.path.isdir(model_dir):
+                    os.mkdir(model_dir)
+                model_out = f'{model_dir}/{mirna[0]}.cm'
+                if not os.path.isfile(model_out):
+                    # Initiate covariance model construction and calibration.
+                    cmc = CmConstructor(sto_path, model_dir, mirna[0], cpu)
+                    # Construct the model.
+                    cmc.construct()
+                    # Calibrate the model.
+                    cmc.calibrate()
+                else:
+                    print(f'Model of {mirna[0]} already found at {model_dir}. Nothing done..')
+
     print('\n### Construction of core set finished')
-
 
 if __name__ == '__main__':
     main()

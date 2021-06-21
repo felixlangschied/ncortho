@@ -27,7 +27,7 @@ Tool | Tested version | Anaconda installation
 BLASTn | v2.7.1 | `conda install -c kantorlab blastn`
 Infernal | v1.1.4 | `conda install -c bioconda infernal`
 t_coffee | v13.45 | `conda install -c bioconda t-coffee`
-alifold | v2.4.18 | `conda install -c bioconda viennarna`
+
 
 
 ### Installing
@@ -37,6 +37,7 @@ manually:
 ```
 pip install pyfaidx
 pip install biopython
+pip install pyyaml
 ```
 Cloning the git repository is the easiest option to access ncOrtho at the moment:
 ```
@@ -46,18 +47,28 @@ git clone https://github.com/felixlangschied/ncortho.git
 ## Usage
 
 
-
+## Known errors
+### MAX_N_PID
+Example:
+```
+--ERROR: MAX_N_PID exceded -- Recompile changing the value of MAX_N_PID (current: 260000 Requested: 2346303)
+```
+This T-Coffee error has been encountered when running ncOrtho on a SLURM scheduler. It can be fixed by installing the
+beta version of T-Coffee, as explained in this [discussion](https://groups.google.com/g/tcoffee/c/sO8Kd5NjA5A).
+With the beta version of T-Coffee, you can increase the MAX_N_PID value according to your needs.
+Include a similar line to your ncOrtho call for this:
+```
+export MAX_N_PID_4_TCOFFEE=4194304
+```
 
 ## Contributors
 
-Dept. for Applied Bioinformatics Institute for Cell Biology and Neurosciences, Goethe University, Frankfurt am Main
-
-* [Ingo Ebersberger](https://github.com/ebersber)
 * [Felix Langschied](https://github.com/felixlangschied)
 * [Andreas Blaumeiser](https://github.com/acblaumeiser)
 * Mirko Brüggemann
 * Daniel Amsel
 
+Dept. for Applied Bioinformatics Institute for Cell Biology and Neurosciences, Goethe University, Frankfurt am Main
 
 ## License
 
