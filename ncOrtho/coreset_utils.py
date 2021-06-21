@@ -50,6 +50,7 @@ def gff_parser(gff, id_type):
 
     """
     chr_dict = {}
+    gene_dict = {}
     chromo = ''
 
     # with open(inpath) as infile, open(outpath, 'wb') as outfile:
@@ -77,13 +78,13 @@ def gff_parser(gff, id_type):
                 if contig != chromo:
                     i = 1
                     chromo = contig
-                chr_dict[geneid] = (contig, i)
+                gene_dict[geneid] = (contig, i)
                 try:
                     chr_dict[contig][i] = (geneid, start, end, strand)
                 except:
                     chr_dict[contig] = {i: (geneid, start, end, strand)}
                 i += 1
-    return chr_dict
+    return chr_dict, gene_dict
 
 ###############################################################################
 #Try to find the ortholog for a given reference gene in a core set species

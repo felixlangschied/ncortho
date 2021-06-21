@@ -78,7 +78,7 @@ def main():
     )
     #
     parser.add_argument(
-        '--id_type', metavar='str', type=str,
+        '--idtype', metavar='str', type=str,
         help='Choose the ID in the reference gff file that is '
              'compared to the IDs in the pairwise orthologs file. Default:"ID"'
              'Options: "Name", "GeneID", gene_id',
@@ -125,7 +125,7 @@ def main():
     # parse optional arguments
     mgi = args.mgi
     dust = args.dust
-    id_t = args.id_type
+    id_t = args.idtype
     create_model = args.create_model
 
     # check if files exist
@@ -167,9 +167,9 @@ def main():
     print('# Reading reference annotation')
     ft = ref_annot_path.split('.')[-1]
     if ft == 'gtf':
-        ref_dict = gtf_parser(ref_annot_path)
+        ref_dict, tmp = gtf_parser(ref_annot_path)
     elif ft in ['gff3', 'gff']:
-        ref_dict = gff_parser(ref_annot_path, id_t)
+        ref_dict, tmp = gff_parser(ref_annot_path, id_t)
     else:
         print('ERROR: File type "{}" not valid as reference annotation'.format(ft))
         sys.exit()
@@ -202,8 +202,10 @@ def main():
         # assemblies)
         if not chromo in ref_dict.keys():
             print(
-                'There are no protein-coding genes on contig {0}. '
-                'Synteny around {1} cannot be established.'
+                'WARNING: No protein-coding genes found on contig "{0}". '
+                'Synteny around {1} cannot be established.\n'
+                'Make sure that the contig identifiers of the miRNA input file '
+                'match the ones in the reference annotation file'
                     .format(chromo, mirid)
             )
             continue
@@ -341,9 +343,9 @@ def main():
         print('# Trying to parse annotation file for {}.'.format(taxon))
         fe = path_dict[taxon]['annotation'].split('.')[-1]
         if fe == 'gtf':
-            core_dict = gtf_parser(path_dict[taxon]['annotation'])
+            tmp, core_dict = gtf_parser(path_dict[taxon]['annotation'])
         elif fe in ['gff3', 'gff']:
-            core_dict = gff_parser(path_dict[taxon]['annotation'], id_t)
+            tmp, core_dict = gff_parser(path_dict[taxon]['annotation'], id_t)
         else:
             print('ERROR: File type "{}" not valid as reference annotation'.format(ft))
             sys.exit()
@@ -481,11 +483,14 @@ def main():
                     '>{0}\n{1}\n'
                         .format(core_taxon, mirna_dict[mirna][core_taxon])
                 )
+    if not mirna_dict:
+        print('\nERROR: No syntenic regions found in the core species. Exiting..')
+        sys.exit()
 
     print('\n### Starting reciprocal BLAST process')
     sto_path = blastsearch(mirna_path, ref_genome, output, cpu, dust)
 
-    if create_model == 'yes':
+    if create_model == 'yes' and sto_path is not None:
         print('### Starting to construct covariance model from alignment')
         model_out = f'{output}/CMs'
         if not os.path.isdir(model_out):
