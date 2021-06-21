@@ -167,9 +167,9 @@ def main():
     print('# Reading reference annotation')
     ft = ref_annot_path.split('.')[-1]
     if ft == 'gtf':
-        ref_dict, tmp = gtf_parser(ref_annot_path)
+        ref_dict = gtf_parser(ref_annot_path)
     elif ft in ['gff3', 'gff']:
-        ref_dict, tmp = gff_parser(ref_annot_path, id_t)
+        ref_dict = gff_parser(ref_annot_path, id_t)
     else:
         print('ERROR: File type "{}" not valid as reference annotation'.format(ft))
         sys.exit()
@@ -343,16 +343,19 @@ def main():
         print('# Trying to parse annotation file for {}.'.format(taxon))
         fe = path_dict[taxon]['annotation'].split('.')[-1]
         if fe == 'gtf':
-            tmp, core_dict = gtf_parser(path_dict[taxon]['annotation'])
+            core_dict = gtf_parser(path_dict[taxon]['annotation'])
         elif fe in ['gff3', 'gff']:
-            tmp, core_dict = gff_parser(path_dict[taxon]['annotation'], id_t)
+            core_dict = gff_parser(path_dict[taxon]['annotation'], id_t)
         else:
             print('ERROR: File type "{}" not valid as reference annotation'.format(ft))
             sys.exit()
 
         print('# Loading genome file')
         fasta_path = path_dict[taxon]['genome']
-        slink = '{}/slink_to_{}'.format(output, '.'.join(fasta_path.split('/')[-1].split('.')[0:-1]))
+        core_gen_dict = '{}/core_genomes'
+        if not os.path.isdir(core_gen_dict):
+            os.mkdir(core_gen_dict)
+        slink = '{}/slink_to_{}'.format(core_gen_dict, taxon)
         try:
             os.symlink(fasta_path, slink)
         except FileExistsError:
