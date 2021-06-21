@@ -352,7 +352,7 @@ def main():
 
         print('# Loading genome file')
         fasta_path = path_dict[taxon]['genome']
-        core_gen_dict = '{}/core_genomes'
+        core_gen_dict = '{}/core_genomes'.format(output)
         if not os.path.isdir(core_gen_dict):
             os.mkdir(core_gen_dict)
         slink = '{}/slink_to_{}'.format(core_gen_dict, taxon)
