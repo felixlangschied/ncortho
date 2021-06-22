@@ -1,3 +1,21 @@
+"""
+ncOrtho - Targeted ortholog search for miRNAs
+Copyright (C) 2021 Felix Langschied
+
+ncOrtho is a free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ncOrtho is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
 # Create a core set of orthologs
 # Find the corresponding syntenic regions in reference and core species
 # Search for core orthologs by reciprocal BLAST search
@@ -16,11 +34,11 @@ import subprocess as sp
 import sys
 import yaml
 
-from ncOrtho.coreset.createcm import CmConstructor
-from ncOrtho.coreset.core_reblast import blastsearch
-from ncOrtho.coreset.coreset_utils import gff_parser
-from ncOrtho.coreset.coreset_utils import gtf_parser
-from ncOrtho.coreset.coreset_utils import ortho_search
+from createcm import CmConstructor
+from core_reblast import blastsearch
+from coreset_utils import gff_parser
+from coreset_utils import gtf_parser
+from coreset_utils import ortho_search
 
 
 ###############################################################################
@@ -35,7 +53,9 @@ def main():
     # Parse command-line arguments
     # Define global variables
     parser = argparse.ArgumentParser(
-        prog='python coreset.py', description='core set construction'
+        description=(
+            'Build Covariance models'
+         )
     )
     # input file path
     parser.add_argument('-p', '--parameters', metavar='<path>', type=str,
