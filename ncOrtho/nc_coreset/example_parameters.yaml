@@ -1,0 +1,29 @@
+---
+type: reference
+name: Homo_sapiens
+genome: </path/to/GCF_000001405.39_genomic.fna>
+annotation: </path/to/GCF_000001405.39_genomic.gff>
+---
+type: core
+name: Gorilla_gorilla
+genome: </path/to/GCF_008122165.1_genomic.fna>
+annotation: </path/to/GCF_008122165.1_genomic.gff>
+orthologs: </path/to/oma/PairwiseOrthologs/Homo_sapiens_rep-Gorilla_gorilla_rep.txt>
+---
+type: core
+name: Macaca_mulatta
+genome: </path/to/GCF_003339765.1_genomic.fna>
+annotation: </path/to/GCF_003339765.1_genomic.gff>
+orthologs: </path/to/oma/PairwiseOrthologs/Homo_sapiens_rep-Macaca_mulatta_rep.txt>
+---
+type: core
+name: Nomascus_leucogenys
+genome: </path/to/GCF_006542625.1_genomic.fna>
+annotation: </path/to/GCF_006542625.1_genomic.gff>
+orthologs: </path/to/oma/PairwiseOrthologs/Homo_sapiens_rep-Nomascus_leucogenys_rep.txt>
+---
+type: core
+name: Pongo_abelii
+genome: </path/to/GCF_002880775.1_genomic.fna>
+annotation: </path/to/GCF_002880775.1_genomic.gff>
+orthologs: </path/to/oma/PairwiseOrthologs/Homo_sapiens_rep-Pongo_abelii_rep.txt>
