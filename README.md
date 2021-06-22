@@ -45,24 +45,39 @@ scope of an analysis according to the research question at hand.
 For this reason, a few questions need to be answered, before we can start constructing covariance models:
 1. What is the reference species?
 2. How phylogenetically diverse will my set of target species be?
-3. From which species should the core set of miRNA orthologs for training the CMs be extracted?
-4. Which miRNAs should be used for the ortholog search?
+3. From which species should the core set of miRNA orthologs be extracted, which will be used for training the CMs?
+4. Which miRNAs are going to be used for the ortholog search?
 
 You can (soon) find more information on how to answer these questions in the 
 [WIKI](https://github.com/felixlangschied/ncortho/wiki/Creating-miRNA-covariance-models#choosing-core-species).
+As soon as you know what your core species are going to be, you will need to collect the following data:
 
+* Genomic sequence in FASTA format (e.g "genomic.fna" from RefSeq)
+* Genome annotation in GFF3 format (e.g. "genomic.gff" from RefSeq)
+* Pairwise orthologs of all proteins between the reference and each core species (more information 
+[here](https://github.com/felixlangschied/ncortho/wiki/Input-Data#pairwise-orthologs)
 
+Modify the [example parameters](ncOrtho/nc_coreset/example_parameters.yaml) file to contain all 
+relevant paths to your input files. The "name" property of your reference and core species only has to be a 
+unique identifier. It is however recommended to use the correct species names to increase readability.
 
+Additional to the parameters file, you will need a tab separated file containing the position and sequence of each 
+miRNA for which a model should be constructed (more information 
+[here](https://github.com/felixlangschied/ncortho/wiki/Input-Data#reference-mirnas)). 
 
-
-
-
+You can then start CM construction with:
 ```
 python nc_coreset.py -p <parameters.yaml> -n <mirnas.tsv> -o <outdir>
 ```
+If you encounter errors, make sure that:
+* The identifiers in the pairwise orthologs files match the ones in the gff files (use the `-idtype=` flag to use other
+ID types)
+* The contig/chromosome column in tab separated miRNA input file match the contig/chromosome id 
+in the reference gff file
 
+Use `python nc_coreset.py -h` to see all available options for CM construction.
 
-
+### Orthology search
 
 
 
@@ -91,6 +106,8 @@ export MAX_N_PID_4_TCOFFEE=4194304
 
 Dept. for Applied Bioinformatics Institute for Cell Biology and Neurosciences, Goethe University, Frankfurt am Main
 
+* [Ingo Ebersberger](https://www.bio.uni-frankfurt.de/43045195/Abt__Ebersberger___Biowissenschaften)
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details
@@ -103,3 +120,6 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 AccurateMultiple Sequence Alignment
 * [Shirley et al. 2015](https://peerj.com/preprints/970v1/): Efficient "pythonic" access to FASTA files using pyfaidx
 
+## Contact
+
+For support or bug reports please contact: [langschied@bio.uni-frankfurt.de](langschied@bio.uni-frankfurt.de)

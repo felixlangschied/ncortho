@@ -44,7 +44,7 @@ def main():
     # mirna data
     parser.add_argument(
         '-n', '--ncrna', metavar='<path>', type=str,
-        help='path to your reference micrornas'
+        help='Path to tab separated file of reference miRNA '
     )
     # output folder
     parser.add_argument(
@@ -80,8 +80,8 @@ def main():
     parser.add_argument(
         '--idtype', metavar='str', type=str,
         help='Choose the ID in the reference gff file that is '
-             'compared to the IDs in the pairwise orthologs file. Default:"ID"'
-             'Options: "Name", "GeneID", gene_id',
+             'compared to the IDs in the pairwise orthologs file (default:ID) '
+             'Options: ID, Name, GeneID, gene_id',
         nargs='?', const='ID=', default='ID'
     )
 
