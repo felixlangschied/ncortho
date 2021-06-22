@@ -80,23 +80,6 @@ Use `python coreset.py -h` to see all available options for CM construction.
 ### Orthology search
 
 
-
-
-
-## Known Issues
-#### MAX_N_PID
-Example:
-```
---ERROR: MAX_N_PID exceded -- Recompile changing the value of MAX_N_PID (current: 260000 Requested: 2346303)
-```
-This T-Coffee error has been encountered when running ncOrtho on a SLURM scheduler. It can be fixed by installing the
-beta version of T-Coffee, as explained in this [discussion](https://groups.google.com/g/tcoffee/c/sO8Kd5NjA5A).
-With the beta version of T-Coffee, you can increase the MAX_N_PID value according to your needs.
-Include a similar line to the script calling ncOrtho for this:
-```
-export MAX_N_PID_4_TCOFFEE=4194304
-```
-
 ## Contributors
 
 * [Felix Langschied](https://github.com/felixlangschied)
