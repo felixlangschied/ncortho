@@ -9,7 +9,6 @@
 # core set taxa: genome, gtf file, pairwise orthologs
 
 import argparse
-import glob
 import multiprocessing as mp
 import os
 import pyfaidx
@@ -17,11 +16,11 @@ import subprocess as sp
 import sys
 import yaml
 
-from createcm import CmConstructor
-from core_reblast import blastsearch
-from coreset_utils import gff_parser
-from coreset_utils import gtf_parser
-from coreset_utils import ortho_search
+from ncOrtho.coreset.createcm import CmConstructor
+from ncOrtho.coreset.core_reblast import blastsearch
+from ncOrtho.coreset.coreset_utils import gff_parser
+from ncOrtho.coreset.coreset_utils import gtf_parser
+from ncOrtho.coreset.coreset_utils import ortho_search
 
 
 ###############################################################################
@@ -36,7 +35,7 @@ def main():
     # Parse command-line arguments
     # Define global variables
     parser = argparse.ArgumentParser(
-        prog='python nc_coreset.py', description='core set construction'
+        prog='python coreset.py', description='core set construction'
     )
     # input file path
     parser.add_argument('-p', '--parameters', metavar='<path>', type=str,

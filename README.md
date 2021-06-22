@@ -57,7 +57,7 @@ As soon as you know what your core species are going to be, you will need to col
 * Pairwise orthologs of all proteins between the reference and each core species (more information 
 [here](https://github.com/felixlangschied/ncortho/wiki/Input-Data#pairwise-orthologs)
 
-Modify the [example parameters](ncOrtho/nc_coreset/example_parameters.yaml) file to contain all 
+Modify the [example parameters](ncOrtho/coreset/example_parameters.yaml) file to contain all 
 relevant paths to your input files. The "name" property of your reference and core species only has to be a 
 unique identifier. It is however recommended to use the correct species names to increase readability.
 
@@ -75,7 +75,7 @@ ID types)
 * The contig/chromosome column in tab separated miRNA input file match the contig/chromosome id 
 in the reference gff file
 
-Use `python nc_coreset.py -h` to see all available options for CM construction.
+Use `python coreset.py -h` to see all available options for CM construction.
 
 ### Orthology search
 

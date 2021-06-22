@@ -1,0 +1,36 @@
+from setuptools import setup, find_packages
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setup(
+    name="ncOrtho",
+    version="0.0.1",
+    python_requires='>=3.7.0',
+    description=" Targeted ortholog search for miRNAs ",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    author="Felix Langschied",
+    author_email="langschied@bio.uni-frankfurt.de",
+    url="https://github.com/felixlangschied/ncortho",
+    packages=find_packages(),
+    package_data={'': ['*']},
+    install_requires=[
+        'biopython',
+        'pyyaml',
+        'pyfaidx'
+    ],
+    entry_points={
+        'console_scripts': ["ncCreate = ncOrtho.coreset.coreset:main",
+                            "ncSearch = ncOrtho.ncortho:main"
+                            ],
+    },
+    license="GPL-3.0",
+    classifiers=[
+        "Environment :: Console",
+        "Intended Audience :: End Users/Desktop",
+        "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+        "Natural Language :: English",
+        "Programming Language :: Python :: 3",
+    ],
+)
