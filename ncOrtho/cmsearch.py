@@ -1,4 +1,4 @@
- import glob
+import glob
 import pyfaidx
 import subprocess as sp
 import sys
