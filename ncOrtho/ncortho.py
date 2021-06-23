@@ -156,10 +156,6 @@ def mirna_maker(mirpath, cmpath, output, msl):
 
 # blast_search: Perform a reverse BLAST search in the reference genome for a
 # candidate.
-# s: cmsearch result
-# r: reference genome
-# o: output name
-# c: number of threads
 # blast_search(temp_fasta, reference, blast_output, cpu)
 def blast_search(s, r, o, c):
     """
@@ -196,21 +192,14 @@ def blast_search(s, r, o, c):
     sp.call(blast_command, shell=True)
 
 
-# write_output: Write a FASTA file containing the accepted orthologs.
-# Arguments:
-# a: dictionary of accepted hits
-# o: path for output
-# cm: dictionary of cmsearch output
+# Write a FASTA file containing the accepted orthologs.
 def write_output(a, o, cm):
     """
-    
-
     Parameters
     ----------
-    a : TYPE
-        DESCRIPTION.
-    o : TYPE
-        DESCRIPTION.
+    a   :   Dictionary of accepted hits
+    o   :   Output path
+    dm  :   Dictionary of cmsearch output
 
     Returns
     -------
@@ -249,38 +238,41 @@ def main():
     # Parse command-line arguments
     # Define global variables
     parser = argparse.ArgumentParser(
-        prog='python ncortho.py', description='ncRNA orthology prediction tool'
+        description='Find orthologs of reference miRNAs in the genome of a query species.'
     )
+    # covariance models folder
+    parser.add_argument(
+        '-m', '--models', metavar='<path>', type=str,
+        help='Path to directory containing covariance models (.cm)'
+    )
+    # mirna data
+    parser.add_argument(
+        '-n', '--ncrna', metavar='<path>', type=str,
+        help='Path to Tab separated file with information about the reference miRNAs'
+    )
+    # output folder
+    parser.add_argument(
+        '-o', '--output', metavar='<path>', type=str,
+        help='Path to the output directory'
+    )
+    # query genome
+    parser.add_argument(
+        '-q', '--query', metavar='<.fa>', type=str,
+        help='Path to query genome in FASTA format'
+    )
+    # reference genome
+    parser.add_argument(
+        '-r', '--reference', metavar='<.fa>', type=str,
+        help='Path to reference genome in FASTA format'
+    )
+    ##########################################################################
+    # Optional Arguments
+    ##########################################################################
     # cpu, use maximum number of available cpus unless specified otherwise
     parser.add_argument(
         '-c', '--cpu', metavar='int', type=int,
         help='number of cpu cores ncOrtho should use', nargs='?',
         const=mp.cpu_count(), default=mp.cpu_count()
-    )
-    # covariance models folder
-    parser.add_argument(
-        '-m', '--models', metavar='<path>', type=str,
-        help='path to your covariance models'
-    )
-    # mirna data
-    parser.add_argument(
-        '-n', '--ncrna', metavar='<path>', type=str,
-        help='path to your reference micrornas'
-    )
-    # output folder
-    parser.add_argument(
-        '-o', '--output', metavar='<path>', type=str,
-        help='path for the output folder'
-    )
-    # query genome
-    parser.add_argument(
-        '-q', '--query', metavar='<.fa>', type=str,
-        help='path to query genome'
-    )
-    # reference genome
-    parser.add_argument(
-        '-r', '--reference', metavar='<.fa>', type=str,
-        help='path to reference genome'
     )
     # bit score cutoff for cmsearch hits
     parser.add_argument(
@@ -337,24 +329,26 @@ def main():
     else:
         cpu = args.cpu
 
-    ###TODO: include checks for validity of arguments
-    #os.getcwd()
-    #os.chdir(path)
-    #os.path.exists(path)
-    #os.path.isfile(path)
-    #os.path.isdir(path)
-
     mirnas = args.ncrna
     models = args.models
     output = args.output
     query = args.query
     reference = args.reference
+    # optional
     cm_cutoff = args.cutoff
     checkCoorthref = args.checkCoorthologsRef
     cleanup = args.cleanup
     heuristic = args.heuristic
     msl = args.msl
-    #blast_cutoff = args.blastc
+
+    all_files = [mirnas, reference, query]
+    for pth in all_files:
+        if not os.path.isfile(pth):
+            print(f'ERROR: {pth} is not a file')
+            sys.exit()
+    if not os.path.isdir(models):
+        print(f'ERROR: Directory with covariance models does not exist at: {models}')
+        sys.exit()
 
 
     # Create miRNA objects from the list of input miRNAs.
@@ -378,8 +372,6 @@ def main():
         # start cmsearch
         cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, output,  cleanup, heuristic)
 
-        # print('cm_results:')
-        # print(cm_results)
         # Extract sequences for candidate hits (if any were found).
         if not cm_results:
             print('# No hits found for {}.\n'.format(mirna_id))

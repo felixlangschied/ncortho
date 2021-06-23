@@ -90,7 +90,7 @@ Use `python coreset.py -h` to see all available options for CM construction.
 Dept. for Applied Bioinformatics Institute for Cell Biology and Neurosciences, Goethe University, Frankfurt am Main
 
 * [Ingo Ebersberger](https://www.bio.uni-frankfurt.de/43045195/Abt__Ebersberger___Biowissenschaften)
-
+ 
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details
