@@ -1,16 +1,25 @@
+"""
+ncOrtho - Targeted ortholog search for miRNAs
+Copyright (C) 2021 Felix Langschied
+
+ncOrtho is a free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ncOrtho is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
 import subprocess as sp
 from Bio import AlignIO
 from Bio.Phylo.TreeConstruction import DistanceCalculator
 import os
-
-'''
-ncOrtho submodule
-TODO: include license, author details etc
-
-### TODO: calculate length of overlap to see if it is relevant/significant
-### also the bit score should be compared
-### add a check for the presence of the mature miRNA
-'''
 
 def calculate_distance_matrix(aln_path):
     # align reBLAST hits
@@ -56,7 +65,7 @@ class BlastParser(object):
         #     blasthits = [line.strip().split() for line in blastfile]
         # If no BLAST hit was found, the search failed by default.
         if not self.blasthits:
-            print('No reciprocal BLAST hit found')
+            print('Rejecting: No reciprocal BLAST hit found')
             return False
         # Otherwise, check if the best hit and the reference miRNA overlap.
         else:
@@ -69,9 +78,12 @@ class BlastParser(object):
             # Sequences must be on the same contig, otherwise overlap can be
             # ruled out instantaneously
             if not sseqid == self.chromosome:
+                print(f'Rejecting: Contig/Chromosome does not match. Expected {self.chromosome} but found {sseqid}')
                 return False
             # Contigs match, so overlap is possible.
             else:
+                print(f'Start miRNA: {self.start} End miRNA: {self.end}')
+                print(f'Start BLAST hit: {sstart} End BLAST hit: {send}')
                 # first within second
                 if (
                     (sstart <= self.start and self.start <= send)
@@ -86,6 +98,7 @@ class BlastParser(object):
                     return True
                 # No overlap
                 else:
+                    print('Rejecting: No overlap between miRNA and best BLAST hit')
                     return False
 
     def check_coortholog_ref(self, candidate_seq, out):

@@ -16,6 +16,9 @@ You should have received a copy of the GNU General Public License
 along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+# TODO: Check if msl is working
+# TODO: Cleanup output
+
 # Modules import
 
 # Python
@@ -154,42 +157,42 @@ def mirna_maker(mirpath, cmpath, output, msl):
     return mmdict
 
 
-# blast_search: Perform a reverse BLAST search in the reference genome for a
-# candidate.
-# blast_search(temp_fasta, reference, blast_output, cpu)
-def blast_search(s, r, o, c):
-    """
-
-    Parameters
-    ----------
-    s : cmsearch result
-    r : Reference genome.
-    o : Output Name.
-    c : Number of Threads for BLAST search.
-
-    Returns
-    -------
-    None.
-
-    """
-    # Check if BLAST database already exists, otherwise create it.
-    # Database files are ".nhr", ".nin", ".nsq".
-    file_extensions = ['nhr', 'nin', 'nsq']
-    for fe in file_extensions:
-        # checkpath = '{}{}'.format(r, fe)
-        files = glob.glob(f'{r}*{fe}')
-        if not files:
-        # At least one of the BLAST db files is not existent and has to be
-        # created.
-            db_command = 'makeblastdb -in {} -dbtype nucl'.format(r)
-            sp.call(db_command, shell=True)
-            break
-    blast_command = (
-       'blastn -task blastn -db {0} -query {1} '
-       '-out {2} -num_threads {3} -outfmt "6 qseqid sseqid pident '
-       'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'.format(r, s, o, c)
-    )
-    sp.call(blast_command, shell=True)
+# # blast_search: Perform a reverse BLAST search in the reference genome for a
+# # candidate.
+# # blast_search(temp_fasta, reference, blast_output, cpu)
+# def blast_search(s, r, o, c):
+#     """
+#
+#     Parameters
+#     ----------
+#     s : cmsearch result
+#     r : Reference genome.
+#     o : Output Name.
+#     c : Number of Threads for BLAST search.
+#
+#     Returns
+#     -------
+#     None.
+#
+#     """
+#     # Check if BLAST database already exists, otherwise create it.
+#     # Database files are ".nhr", ".nin", ".nsq".
+#     file_extensions = ['nhr', 'nin', 'nsq']
+#     for fe in file_extensions:
+#         # checkpath = '{}{}'.format(r, fe)
+#         files = glob.glob(f'{r}*{fe}')
+#         if not files:
+#         # At least one of the BLAST db files is not existent and has to be
+#         # created.
+#             db_command = 'makeblastdb -in {} -dbtype nucl'.format(r)
+#             sp.call(db_command, shell=True)
+#             break
+#     blast_command = (
+#        'blastn -task blastn -db {0} -query {1} '
+#        '-out {2} -num_threads {3} -outfmt "6 qseqid sseqid pident '
+#        'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'.format(r, s, o, c)
+#     )
+#     sp.call(blast_command, shell=True)
 
 
 # Write a FASTA file containing the accepted orthologs.
@@ -268,20 +271,28 @@ def main():
     ##########################################################################
     # Optional Arguments
     ##########################################################################
+    # query_name
+    parser.add_argument(
+        '--queryname', metavar='str', type=str, nargs='?', const='', default='',
+        help=(
+            'Name for the output directory '
+            '(Use this if you run ncOrtho for multiple taxa whose genome file has the same name)'
+        )
+    )
     # cpu, use maximum number of available cpus unless specified otherwise
     parser.add_argument(
-        '-c', '--cpu', metavar='int', type=int,
+        '--cpu', metavar='int', type=int,
         help='number of cpu cores ncOrtho should use', nargs='?',
         const=mp.cpu_count(), default=mp.cpu_count()
     )
     # bit score cutoff for cmsearch hits
     parser.add_argument(
-        '-t', '--cutoff', metavar='float', type=float,
+        '--cmcutoff', metavar='float', type=float,
         help='cmsearch bit score cutoff', nargs='?', const=0.5, default=0.5
     )
     # length filter to prevent short hits
     parser.add_argument(
-        '-l', '--msl', metavar='float', type=float,
+        '--minlength', metavar='float', type=float,
         help='hit length filter', nargs='?', const=0.7, default=0.7
     )
     parser.add_argument(
@@ -292,9 +303,15 @@ def main():
         )
     )
     parser.add_argument(
-        '-x', '--cleanup', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
+        '--cleanup', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Cleanup temporary files.'
+        )
+    )
+    parser.add_argument(
+        '--refblast', type=str, metavar='<path>', nargs='?', const='', default='',
+        help=(
+            'Path to BLASTdb of the reference species'
         )
     )
     # check Co-ortholog-ref
@@ -335,11 +352,17 @@ def main():
     query = args.query
     reference = args.reference
     # optional
-    cm_cutoff = args.cutoff
+    cm_cutoff = args.cmcutoff
     checkCoorthref = args.checkCoorthologsRef
     cleanup = args.cleanup
     heuristic = args.heuristic
-    msl = args.msl
+    msl = args.minlength
+    refblast = args.refblast
+
+    if args.queryname:
+        qname = args.queryname
+    else:
+        qname = '.'.join(query.split('/')[-1].split('.')[:-1])
 
     all_files = [mirnas, reference, query]
     for pth in all_files:
@@ -349,6 +372,36 @@ def main():
     if not os.path.isdir(models):
         print(f'ERROR: Directory with covariance models does not exist at: {models}')
         sys.exit()
+
+    # create symbolic links to guarantee writing permissions
+    # refname = '.'.join(reference.split('/')[-1].split('.')[:-1])
+    q_data = '{}/data'.format(output)
+    if not os.path.isdir(q_data):
+        os.makedirs(q_data)
+    qlink = f'{q_data}/{qname}.fa'
+    # rlink = f'{q_data}/{refname}.fa'
+    try:
+        os.symlink(query, qlink)
+        # os.symlink(reference, rlink)
+    except FileExistsError:
+        pass
+
+    # make reference BLASTdb
+    if not refblast:
+        refname = reference.split('/')[-1]
+        refblast = f'{q_data}/{refname}'
+        # Check if BLAST database already exists, otherwise create it.
+        # Database files are ".nhr", ".nin", ".nsq".
+        file_extensions = ['nhr', 'nin', 'nsq']
+        for fe in file_extensions:
+            # checkpath = '{}{}'.format(r, fe)
+            files = glob.glob(f'{refblast}*{fe}')
+            if not files:
+                # At least one of the BLAST db files is not existent and has to be
+                # created.
+                db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(reference, refblast)
+                sp.call(db_command, shell=True)
+                break
 
 
     # Create miRNA objects from the list of input miRNAs.
@@ -370,14 +423,14 @@ def main():
         if not os.path.isdir(outdir):
             os.mkdir(outdir)
         # start cmsearch
-        cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, output,  cleanup, heuristic)
+        cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, qlink, output,  cleanup, heuristic)
 
         # Extract sequences for candidate hits (if any were found).
         if not cm_results:
             print('# No hits found for {}.\n'.format(mirna_id))
             continue
         else:
-            gp = GenomeParser(query, cm_results.values())
+            gp = GenomeParser(qlink, cm_results.values())
             candidates = gp.extract_sequences()
             nr_candidates = len(candidates)
             if nr_candidates == 1:
@@ -404,17 +457,27 @@ def main():
             blast_output = '{0}/blast_{1}.out'.format(outdir, candidate)
             print('# Starting reverse blast for {}'.format(candidate))
             # blast_search will write results to the temp_fasta file
-            blast_search(temp_fasta, reference, blast_output, cpu)
+            blast_command = (
+                'blastn -task blastn -db {0} -query {1} '
+                '-out {2} -num_threads {3} -outfmt "6 qseqid sseqid pident '
+                'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'
+                    .format(refblast, temp_fasta, blast_output, cpu)
+            )
+            sp.call(blast_command, shell=True)
+
             # BlastParser will read the temp_fasta file
             bp = BlastParser(mirna, blast_output, msl)
             # the parse_blast_output function will return True if the candidate is accepted
             if bp.evaluate_besthit():
+                print('Found best hit')
                 reblast_hits[candidate] = sequence
             elif checkCoorthref:
                 print('Best hit differs from reference sequence! Doing further checks\n')
                 # coorth_out = '{0}/{1}_coorth'.format(outdir, candidate)
                 if bp.check_coortholog_ref(sequence, outdir):
                     reblast_hits[candidate] = sequence
+            else:
+                print('Best hit does not overlap with miRNA location')
             if cleanup:
                 os.remove(temp_fasta)
                 os.remove(blast_output)

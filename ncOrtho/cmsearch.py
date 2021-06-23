@@ -1,3 +1,21 @@
+"""
+ncOrtho - Targeted ortholog search for miRNAs
+Copyright (C) 2021 Felix Langschied
+
+ncOrtho is a free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ncOrtho is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
 import glob
 import pyfaidx
 import subprocess as sp
@@ -8,7 +26,7 @@ import os
 def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristic):
     mirna_id = mirna.name
 
-    blastdb = '{}/query_BLASTdb/{}'.format(out, query.split('/')[-1])
+    blastdb = query.replace('.fa', '')
     # Calculate the bit score cutoff.
     cut_off = mirna.bit * cm_cutoff
     # Calculate the length cutoff.
@@ -49,7 +67,6 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
             return cm_results
         result = res.stdout.decode('utf-8').split('\n')
         hit_list = [line.split() for line in result if line]
-        # open indexed query fasta
         genes = pyfaidx.Fasta(query)
         # collect heuristic sequences
         print('collecting sequences')
@@ -85,43 +102,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
                     sequence = genes[chrom][n_start:n_end].seq
                 elif strand == '-':
                     sequence = genes[chrom][n_start:n_end].reverse.complement.seq
-                # print(start, end)
-                # print(n_start, n_end)
-                # start_diff = start - n_start
-                # end_diff = n_end - end
                 header = ">{}|{}|{}|{}|{}|{}\n".format(chrom, start, end, strand, hit_at_start, hit_at_end)
-                # change start and end point to include neighbourhood
-                # if strand == '+':
-                #     # if the miRNA is located at the start of the chromosme, extract beginning of chromosome
-                #     if int(start) > 1000:
-                #         n_start = int(start) - 1000
-                #     else:
-                #         n_start = 1
-                #     n_end = int(end) + 1000
-                #     try:
-                #         sequence = genes[chrom][n_start:n_end].seq
-                #     except pyfaidx.FetchError:
-                #         # if the hit is located at the end of the chromosome, extract end of chromosome
-                #         n_end = -1
-                #         sequence = genes[chrom][n_start:n_end].seq
-                # elif strand == '-':
-                #     n_start = int(start) + 1000
-                #     # if the miRNA is located at the start of the chromosme, extract beginning of chromosome
-                #     if int(end) > 1000:
-                #         n_end = int(end) - 1000
-                #     else:
-                #         n_end = 1
-                #     try:
-                #         sequence = genes[chrom][n_end:n_start].seq#.reverse.complement.seq
-                #     except pyfaidx.FetchError:
-                #         # if the hit is located at the end of the chromosome
-                #         n_start = -1
-                #         sequence = genes[chrom][n_end:n_start].seq
-                # else:
-                #     print('Something went wrong during the heuristic cmsearch')
-                #     sys.exit()
-                # print('start end')
-                # print(n_start, n_end)
                 of.write(header)
                 of.write(f'{sequence}\n')
         # start the cmsearch with the heuristic candidates
@@ -204,15 +185,10 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
 
     return cm_results
 
+
 # cmsearch_parser: Parse the output of cmsearch while eliminating
 #                  duplicates and filtering entries according to the
 #                  defined cutoff.
-# Arguments:
-# cms: path to cmsearch output
-# cmc: cutoff to decide which candidate hits should be included for the
-#      reverse BLAST search
-# lc: length cutoff
-# mirid: name/id of the microRNA
 def cmsearch_parser(cms, cmc, lc, mirid):
     """
     Parse the output of cmsearch while eliminating duplicates and filtering
@@ -220,19 +196,14 @@ def cmsearch_parser(cms, cmc, lc, mirid):
 
     Parameters
     ----------
-    cms : TYPE
-        DESCRIPTION.
-    cmc : TYPE
-        DESCRIPTION.
-    lc : TYPE
-        DESCRIPTION.
-    mirid : TYPE
-        DESCRIPTION.
+    cms     :   Path to cmsearch output
+    cmc     :   Cutoff to decide which candidate hits should be included for the reverse BLAST search
+    lc      :   Length cutoff
+    mirid   :   miRNA ID
 
     Returns
     -------
-    hits_dict : TYPE
-        DESCRIPTION.
+    hits_dict : Dictionary containing hits of the cmsearch
 
     """
     # Output
