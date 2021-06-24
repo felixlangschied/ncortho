@@ -23,7 +23,7 @@ import sys
 import os
 
 
-def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristic):
+def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, heuristic):
     mirna_id = mirna.name
 
     blastdb = query.replace('.fa', '')
@@ -39,24 +39,27 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
     # Report and inclusion thresholds set according to cutoff.
 
     if heuristic:
-        # Test if BLASTdb exists for query species
-        file_extensions = ['nhr', 'nin', 'nsq']
-        for fe in file_extensions:
-            files = glob.glob(f'{blastdb}*{fe}')
-            if not files:
-                # At least one of the BLAST db files is not existent and has to be
-                # created.
-                db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(query, blastdb)
-                sp.call(db_command, shell=True)
-                break
+        if not qblast:
+            # Test if BLASTdb exists for query species
+            file_extensions = ['nhr', 'nin', 'nsq']
+            for fe in file_extensions:
+                files = glob.glob(f'{blastdb}*{fe}')
+                if not files:
+                    # At least one of the BLAST db files is not existent and has to be
+                    # created.
+                    db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(query, blastdb)
+                    sp.call(db_command, shell=True)
+                    break
+        else:
+            blastdb = qblast
         # extract candidate regions
         print('# Identifying candidate regions for cmsearch heuristic')
         tmp_out = '{0}/tmp_blast_{1}.out'.format(out, mirna_id)
         with open(tmp_out, 'w') as inf:
             inf.write(">{}\n{}\n".format(mirna_id, mirna.pre))
         blast_command = (
-            'blastn -task blastn -db {0} -query {1} '
-            '-num_threads {2} -outfmt "6 sseqid sstart send sstrand"'.format(blastdb, tmp_out, cpu)
+            'blastn -evalue 0.1 -max_target_seqs 100 -task blastn -db {0} -query {1} '
+            '-num_threads {2} -outfmt "6 sseqid sstart send sstrand length"'.format(blastdb, tmp_out, cpu)
         )
         res = sp.run(blast_command, shell=True, capture_output=True)
         os.remove(tmp_out)
@@ -66,7 +69,10 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
             cm_results = False
             return cm_results
         result = res.stdout.decode('utf-8').split('\n')
+        # hit_list = [line.split() for line in result if line and float(line.split()[-1]) >= len_cut]
         hit_list = [line.split() for line in result if line]
+        print(f'# Found {len(hit_list)} BLAST hits of the reference '
+              f'pre-miRNA in the query')
         genes = pyfaidx.Fasta(query)
         # collect heuristic sequences
         print('collecting sequences')
@@ -78,7 +84,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, out, cleanup, heuristi
         heuristic_fa = '{0}/heuristic_{1}.out'.format(out, mirna_id)
         with open(heuristic_fa, 'w') as of:
             for hit in hit_list:
-                chrom, start, end, strand = hit
+                chrom, start, end, strand, length = hit
                 strand = strand.replace('plus', '+')
                 strand = strand.replace('minus', '-')
                 if strand == '-':

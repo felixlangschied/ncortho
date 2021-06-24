@@ -18,6 +18,8 @@ along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 
 # TODO: Check if msl is working
 # TODO: Cleanup output
+# TODO: Measure time of different cmsearch cutoffs
+
 
 # Modules import
 
@@ -215,6 +217,7 @@ def write_output(a, o, cm):
             header = '|'.join(list(tup))
             outfile.write('>{0}\n{1}\n'.format(header, a[hit]))
 
+
 # Allow boolean argument parsing
 def str2bool(v):
     if isinstance(v, bool):
@@ -225,7 +228,6 @@ def str2bool(v):
         return False
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
-
 
 
 # Main function
@@ -299,19 +301,33 @@ def main():
         '--heuristic', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Perform a BLAST search of the reference miRNA in the query genome to identify '
-            'candidate regions for the cmsearch. Majorly improves speed.'
+            'candidate regions for the cmsearch. Majorly improves speed. (Default: True)'
         )
     )
     parser.add_argument(
         '--cleanup', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
-            'Cleanup temporary files.'
+            'Cleanup temporary files (Default: True)'
         )
     )
     parser.add_argument(
         '--refblast', type=str, metavar='<path>', nargs='?', const='', default='',
         help=(
             'Path to BLASTdb of the reference species'
+        )
+    )
+    parser.add_argument(
+        '--queryblast', type=str, metavar='<path>', nargs='?', const='', default='',
+        help=(
+            'Path to BLASTdb of the query species'
+        )
+    )
+    parser.add_argument(
+        '--maxcmhits', metavar='int', nargs='?', const=20, default=20,
+        help=(
+            'Maximum number of cmsearch hits to examine. '
+            'Decreases runtime significantly if reference miRNA in genomic repeat region (Default: 50). '
+            'Set to empty variable to disable (i.e. --maxcmhits="")'
         )
     )
     # check Co-ortholog-ref
@@ -324,7 +340,7 @@ def main():
             'NOTE: Setting this flag will substantially increase'
             'the sensitivity of HaMStR but most likely affect also the specificity, '
             'especially when the search taxon is evolutionarily only very'
-            'distantly related to the reference taxon'
+            'distantly related to the reference taxon (Default: False)'
         )
     )
 
@@ -352,12 +368,17 @@ def main():
     query = args.query
     reference = args.reference
     # optional
+    max_hits = args.maxcmhits
     cm_cutoff = args.cmcutoff
     checkCoorthref = args.checkCoorthologsRef
     cleanup = args.cleanup
     heuristic = args.heuristic
     msl = args.minlength
     refblast = args.refblast
+    qblast = args.queryblast
+
+    # TODO: Make sure qblast and refblast lead to real files if used
+    # TODO: Make refblastdb only from chromosomes occuring in the miRNA file
 
     if args.queryname:
         qname = args.queryname
@@ -423,28 +444,31 @@ def main():
         if not os.path.isdir(outdir):
             os.mkdir(outdir)
         # start cmsearch
-        cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, qlink, output,  cleanup, heuristic)
+        cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, qlink, qblast, output, cleanup, heuristic)
 
         # Extract sequences for candidate hits (if any were found).
         if not cm_results:
             print('# No hits found for {}.\n'.format(mirna_id))
             continue
+        elif max_hits and len(cm_results) > max_hits:
+            print('# Maximum CMsearch hits reached. Restricting to best {} hits'.format(max_hits))
+            cm_results = {k: cm_results[k] for k in list(cm_results.keys())[:max_hits]}
+        # get sequences for each CM result
+        gp = GenomeParser(qlink, cm_results.values())
+        candidates = gp.extract_sequences()
+        nr_candidates = len(candidates)
+        if nr_candidates == 1:
+            print(
+                '\n# Covariance model search successful, found 1 '
+                'ortholog candidate.\n'
+            )
         else:
-            gp = GenomeParser(qlink, cm_results.values())
-            candidates = gp.extract_sequences()
-            nr_candidates = len(candidates)
-            if nr_candidates == 1:
-                print(
-                    '\n# Covariance model search successful, found 1 '
-                    'ortholog candidate.\n'
-                )
-            else:
-                print(
-                    '\n# Covariance model search successful, found {} '
-                    'ortholog candidates.\n'
-                    .format(nr_candidates)
-                )
-            print('# Evaluating candidates.\n')        
+            print(
+                '\n# Covariance model search successful, found {} '
+                'ortholog candidates.\n'
+                .format(nr_candidates)
+            )
+        print('# Evaluating candidates.\n')
         
         # Perform reverse BLAST test to verify candidates, stored in
         # a list (accepted_hits).
@@ -514,6 +538,7 @@ def main():
                 .format(mirna_id)
             )
         print('# Finished ortholog search for {}.'.format(mirna_id))
+    print('### ncOrtho is finished!')
 
 if __name__ == "__main__":
     main()
