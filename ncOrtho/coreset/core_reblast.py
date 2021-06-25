@@ -4,7 +4,6 @@ import glob
 import sys
 
 
-
 # Perform reciprocal BLAST search and construct Stockholm alignment
 def blastsearch(mirna, r_path, o_path, c, dust):
     """

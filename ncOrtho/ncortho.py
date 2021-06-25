@@ -159,42 +159,19 @@ def mirna_maker(mirpath, cmpath, output, msl):
     return mmdict
 
 
-# # blast_search: Perform a reverse BLAST search in the reference genome for a
-# # candidate.
-# # blast_search(temp_fasta, reference, blast_output, cpu)
-# def blast_search(s, r, o, c):
-#     """
-#
-#     Parameters
-#     ----------
-#     s : cmsearch result
-#     r : Reference genome.
-#     o : Output Name.
-#     c : Number of Threads for BLAST search.
-#
-#     Returns
-#     -------
-#     None.
-#
-#     """
-#     # Check if BLAST database already exists, otherwise create it.
-#     # Database files are ".nhr", ".nin", ".nsq".
-#     file_extensions = ['nhr', 'nin', 'nsq']
-#     for fe in file_extensions:
-#         # checkpath = '{}{}'.format(r, fe)
-#         files = glob.glob(f'{r}*{fe}')
-#         if not files:
-#         # At least one of the BLAST db files is not existent and has to be
-#         # created.
-#             db_command = 'makeblastdb -in {} -dbtype nucl'.format(r)
-#             sp.call(db_command, shell=True)
-#             break
-#     blast_command = (
-#        'blastn -task blastn -db {0} -query {1} '
-#        '-out {2} -num_threads {3} -outfmt "6 qseqid sseqid pident '
-#        'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'.format(r, s, o, c)
-#     )
-#     sp.call(blast_command, shell=True)
+def check_blastdb(db_path):
+    file_extensions = ['nhr', 'nin', 'nsq']
+    for fe in file_extensions:
+        files = glob.glob(f'{db_path}*{fe}')
+        if not files:
+            # At least one of the BLAST db files is not existent
+            return False
+    return True
+
+
+def make_blastndb(inpath, outpath):
+    db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(inpath, outpath)
+    sp.call(db_command, shell=True)
 
 
 # Write a FASTA file containing the accepted orthologs.
@@ -395,14 +372,17 @@ def main():
     refblast = args.refblast
     qblast = args.queryblast
 
-    # TODO: Make sure qblast and refblast lead to real files if used
-    # TODO: Make refblastdb only from chromosomes occuring in the miRNA file
+    ##########################################################################################
+    # Starting argument checks
+    ##########################################################################################
 
+    # Test if optional query name was given
     if args.queryname:
         qname = args.queryname
     else:
         qname = '.'.join(query.split('/')[-1].split('.')[:-1])
 
+    # Test if input files exist
     all_files = [mirnas, reference, query]
     for pth in all_files:
         if not os.path.isfile(pth):
@@ -413,39 +393,58 @@ def main():
         sys.exit()
 
     # create symbolic links to guarantee writing permissions
-    # refname = '.'.join(reference.split('/')[-1].split('.')[:-1])
     q_data = '{}/data'.format(output)
     if not os.path.isdir(q_data):
         os.makedirs(q_data)
     qlink = f'{q_data}/{qname}.fa'
-    # rlink = f'{q_data}/{refname}.fa'
     try:
         os.symlink(query, qlink)
-        # os.symlink(reference, rlink)
     except FileExistsError:
         pass
 
-    # make reference BLASTdb
-    if not refblast:
+    # check if reference BLASTdb was given as input
+    if refblast:
+        # check if BLASTdb exists
+        if not check_blastdb(refblast):
+            print('# Reference BLASTdb not found at: {}'.format(refblast))
+            sys.exit()
+    else:
         refname = reference.split('/')[-1]
         refblast = f'{q_data}/{refname}'
+        # check if BLASTdb exists already. Otherwise create it
+        if not check_blastdb(refblast):
+            make_blastndb(reference, refblast)
+    # check if query BLASTdb was given as input (only used in heuristic mode)
+    if qblast and heuristic:
+        # check if qblast exists
+        if not check_blastdb(qblast):
+            print('# Query BLASTdb not found at: {}'.format(refblast))
+            sys.exit()
+    elif heuristic:
+        print('# Creating query Database')
+        qblast = query.replace('.fa', '')
+        make_blastndb(query, qlink)
+
+
         # Check if BLAST database already exists, otherwise create it.
         # Database files are ".nhr", ".nin", ".nsq".
-        file_extensions = ['nhr', 'nin', 'nsq']
-        for fe in file_extensions:
-            # checkpath = '{}{}'.format(r, fe)
-            files = glob.glob(f'{refblast}*{fe}')
-            if not files:
-                # At least one of the BLAST db files is not existent and has to be
-                # created.
-                db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(reference, refblast)
-                sp.call(db_command, shell=True)
-                break
+        # file_extensions = ['nhr', 'nin', 'nsq']
+        # for fe in file_extensions:
+        #     # checkpath = '{}{}'.format(r, fe)
+        #     files = glob.glob(f'{refblast}*{fe}')
+        #     if not files:
+        #         # At least one of the BLAST db files is not existent and has to be
+        #         # created.
+        #         db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(reference, refblast)
+        #         sp.call(db_command, shell=True)
+        #         break
 
+    ################################################################################################
+    # Main
+    ###############################################################################################
 
     # Create miRNA objects from the list of input miRNAs.
     mirna_dict = mirna_maker(mirnas, models, output, msl)
-
     # Print out query
     print('### Starting ncOrtho run for {}'.format(query))
 
@@ -506,6 +505,7 @@ def main():
                     .format(refblast, temp_fasta, blast_output, cpu)
             )
             sp.call(blast_command, shell=True)
+            print('# finished blast')
 
             # BlastParser will read the temp_fasta file
             bp = BlastParser(mirna, blast_output, msl)
@@ -557,6 +557,7 @@ def main():
             )
         print('# Finished ortholog search for {}.'.format(mirna_id))
     print('### ncOrtho is finished!')
+
 
 if __name__ == "__main__":
     main()

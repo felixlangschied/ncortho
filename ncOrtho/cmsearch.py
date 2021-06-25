@@ -22,8 +22,11 @@ import subprocess as sp
 import sys
 import os
 
+from ncortho import check_blastdb
+from ncortho import make_blastndb
 
-def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, heuristic):
+
+def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup, heuristic):
     """
     Parameters
     ----------
@@ -46,7 +49,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, 
     """
     mirna_id = mirna.name
 
-    blastdb = query.replace('.fa', '')
+    # blastdb = query.replace('.fa', '')
     # Calculate the bit score cutoff.
     cut_off = mirna.bit * cm_cutoff
     # Calculate the length cutoff.
@@ -60,19 +63,19 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, 
     # Report and inclusion thresholds set according to cutoff.
 
     if heuristic[0]:
-        if not qblast:
-            # Test if BLASTdb exists for query species
-            file_extensions = ['nhr', 'nin', 'nsq']
-            for fe in file_extensions:
-                files = glob.glob(f'{blastdb}*{fe}')
-                if not files:
-                    # At least one of the BLAST db files is not existent and has to be
-                    # created.
-                    db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(query, blastdb)
-                    sp.call(db_command, shell=True)
-                    break
-        else:
-            blastdb = qblast
+        # if not qblast:
+        #     # Test if BLASTdb exists for query species
+        #     file_extensions = ['nhr', 'nin', 'nsq']
+        #     for fe in file_extensions:
+        #         files = glob.glob(f'{blastdb}*{fe}')
+        #         if not files:
+        #             # At least one of the BLAST db files is not existent and has to be
+        #             # created.
+        #             db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(query, blastdb)
+        #             sp.call(db_command, shell=True)
+        #             break
+        # else:
+        #     blastdb = qblast
         # extract candidate regions
         print('# Identifying candidate regions for cmsearch heuristic')
         tmp_out = '{0}/tmp_blast_{1}.out'.format(out, mirna_id)
