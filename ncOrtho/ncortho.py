@@ -485,7 +485,7 @@ def main():
             print('# Starting reverse blast for {}'.format(candidate))
             # blast_search will write results to the temp_fasta file
             blast_command = (
-                'blastn -task blastn -db {0} -query {1} -max_target_seqs 10 -dust yes'
+                'blastn -task blastn -db {0} -query {1} -max_target_seqs 10 -dust yes '
                 '-out {2} -num_threads {3} -outfmt "6 qseqid sseqid pident '
                 'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'
                     .format(refblast, temp_fasta, blast_output, cpu)
