@@ -311,6 +311,13 @@ def main():
             'Set to empty variable to disable (i.e. --maxcmhits="")'
         )
     )
+    # use dust filter?
+    parser.add_argument(
+        '--dust', metavar='yes/no', type=str,
+        help='Use BLASTn dust filter during reblast',
+        nargs='?',
+        const='yes', default='yes'
+    )
     # check Co-ortholog-ref
     parser.add_argument(
         '--checkCoorthologsRef', type=str2bool, metavar='True/False', nargs='?', const=False, default=False,
@@ -357,6 +364,7 @@ def main():
     msl = args.minlength
     refblast = args.refblast
     qblast = args.queryblast
+    dust = args.dust
 
     ##########################################################################################
     # Starting argument checks
@@ -485,10 +493,10 @@ def main():
             print('# Starting reverse blast for {}'.format(candidate))
             # blast_search will write results to the temp_fasta file
             blast_command = (
-                'blastn -task blastn -db {0} -query {1} -max_target_seqs 10 -dust yes '
+                'blastn -task blastn -db {0} -query {1} -max_target_seqs 10 -dust {4} '
                 '-out {2} -num_threads {3} -outfmt "6 qseqid sseqid pident '
                 'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'
-                    .format(refblast, temp_fasta, blast_output, cpu)
+                    .format(refblast, temp_fasta, blast_output, cpu, dust)
             )
             sp.call(blast_command, shell=True)
             print('# finished blast')
