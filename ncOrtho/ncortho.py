@@ -29,13 +29,14 @@ import multiprocessing as mp
 import os
 import subprocess as sp
 import sys
-import glob
 
 # Internal ncOrtho modules
 from blastparser import BlastParser
 from blastparser import ReBlastParser
 from genparser import GenomeParser
 from cmsearch import cmsearcher
+from utils import check_blastdb
+from utils import make_blastndb
 
 ###############################################################################
 
@@ -157,21 +158,6 @@ def mirna_maker(mirpath, cmpath, output, msl):
         mmdict[mirna[0]] = Mirna(*mirna)
 
     return mmdict
-
-
-def check_blastdb(db_path):
-    file_extensions = ['nhr', 'nin', 'nsq']
-    for fe in file_extensions:
-        files = glob.glob(f'{db_path}*{fe}')
-        if not files:
-            # At least one of the BLAST db files is not existent
-            return False
-    return True
-
-
-def make_blastndb(inpath, outpath):
-    db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(inpath, outpath)
-    sp.call(db_command, shell=True)
 
 
 # Write a FASTA file containing the accepted orthologs.

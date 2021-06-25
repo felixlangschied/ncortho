@@ -22,8 +22,8 @@ import subprocess as sp
 import sys
 import os
 
-from ncortho import check_blastdb
-from ncortho import make_blastndb
+from utils import check_blastdb
+from utils import make_blastndb
 
 
 def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup, heuristic):
