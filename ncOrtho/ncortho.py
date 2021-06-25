@@ -289,19 +289,37 @@ def main():
     )
     # bit score cutoff for cmsearch hits
     parser.add_argument(
-        '--cmcutoff', metavar='float', type=float,
+        '--cm_cutoff', metavar='float', type=float,
         help='cmsearch bit score cutoff', nargs='?', const=0.5, default=0.5
     )
     # length filter to prevent short hits
     parser.add_argument(
         '--minlength', metavar='float', type=float,
-        help='hit length filter', nargs='?', const=0.7, default=0.7
+        help='CMsearch hit in the query species must have at '
+             'least the length of this value times the length of the refernce pre-miRNA',
+        nargs='?', const=0.7, default=0.7
     )
     parser.add_argument(
         '--heuristic', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Perform a BLAST search of the reference miRNA in the query genome to identify '
-            'candidate regions for the cmsearch. Majorly improves speed. (Default: True)'
+            'candidate regions for the CMsearch. Majorly improves speed. (Default: True)'
+        )
+    )
+    parser.add_argument(
+        '--heur_blast_evalue', type=float, metavar='float', nargs='?', const=0.5, default=0.5,
+        help=(
+            'Evalue filter for the BLASTn search that '
+            'determines candidate regions for the CMsearch when running ncOrtho in heuristic mode. '
+            '(Default: 0.5) (Set to 10 to turn off)'
+        )
+    )
+    parser.add_argument(
+        '--heur_blast_length', type=float, metavar='float', nargs='?', const=0.5, default=0.5,
+        help=(
+            'Length cutoff relative to the refernce pre-miRNA length for the BLASTn search that '
+            'determines candidate regions for the CMsearch when running ncOrtho in heuristic mode. '
+            '(Default: 0.5) (Set to 0 to turn off)'
         )
     )
     parser.add_argument(
@@ -323,7 +341,7 @@ def main():
         )
     )
     parser.add_argument(
-        '--maxcmhits', metavar='int', nargs='?', const=20, default=20,
+        '--maxcmhits', metavar='int', nargs='?', const=50, default=50,
         help=(
             'Maximum number of cmsearch hits to examine. '
             'Decreases runtime significantly if reference miRNA in genomic repeat region (Default: 50). '
@@ -369,10 +387,10 @@ def main():
     reference = args.reference
     # optional
     max_hits = args.maxcmhits
-    cm_cutoff = args.cmcutoff
+    cm_cutoff = args.cm_cutoff
     checkCoorthref = args.checkCoorthologsRef
     cleanup = args.cleanup
-    heuristic = args.heuristic
+    heuristic = (args.heuristic, args.heur_blast_evalue, args.heur_blast_length)
     msl = args.minlength
     refblast = args.refblast
     qblast = args.queryblast

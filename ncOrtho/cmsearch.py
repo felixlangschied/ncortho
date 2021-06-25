@@ -24,6 +24,26 @@ import os
 
 
 def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, heuristic):
+    """
+    Parameters
+    ----------
+    mirna       :   Mirna object
+    cm_cutoff   :   Minimum bit score of the CMsearch hit relative to the
+                    bit score that results from searching in the reference genome with the same model
+    cpu         :   Number of cores to use
+    msl             Minimum length of CMsearch hit relative to the reference pre-miRNA length
+    models      :   Path to the directory that contains the CMs
+    query       :   Path to the query genome
+    qblast      :   Optional Path to a BLASTdb of the query genome
+    out         :   Path to the output directory
+    cleanup     :   Delete intermediate files True/False
+    heuristic   :   Should heuristic mode be used and if yes, set parameters (True/False, evalue, minlength)
+
+    Returns
+    -------
+    cm_results : Dictionary containing hits of the cmsearch
+
+    """
     mirna_id = mirna.name
 
     blastdb = query.replace('.fa', '')
@@ -31,6 +51,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, 
     cut_off = mirna.bit * cm_cutoff
     # Calculate the length cutoff.
     len_cut = len(mirna.pre) * msl
+    blast_len_cut = len(mirna.pre) * heuristic[2]
     # if no model exists for mirna return False
     if not os.path.isfile('{}/{}.cm'.format(models, mirna_id)):
         print('# No model found for {}. Skipping..'.format(mirna_id))
@@ -38,7 +59,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, 
     # Perform covariance model search.
     # Report and inclusion thresholds set according to cutoff.
 
-    if heuristic:
+    if heuristic[0]:
         if not qblast:
             # Test if BLASTdb exists for query species
             file_extensions = ['nhr', 'nin', 'nsq']
@@ -58,8 +79,8 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, 
         with open(tmp_out, 'w') as inf:
             inf.write(">{}\n{}\n".format(mirna_id, mirna.pre))
         blast_command = (
-            'blastn -evalue 0.1 -max_target_seqs 100 -task blastn -db {0} -query {1} '
-            '-num_threads {2} -outfmt "6 sseqid sstart send sstrand length"'.format(blastdb, tmp_out, cpu)
+            'blastn -evalue {3} -task blastn -db {0} -query {1} '
+            '-num_threads {2} -outfmt "6 sseqid sstart send sstrand length"'.format(blastdb, tmp_out, cpu, heuristic[1])
         )
         res = sp.run(blast_command, shell=True, capture_output=True)
         os.remove(tmp_out)
@@ -69,8 +90,8 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, qblast, out, cleanup, 
             cm_results = False
             return cm_results
         result = res.stdout.decode('utf-8').split('\n')
-        # hit_list = [line.split() for line in result if line and float(line.split()[-1]) >= len_cut]
-        hit_list = [line.split() for line in result if line]
+        hit_list = [line.split() for line in result if line and float(line.split()[-1]) >= blast_len_cut]
+        # hit_list = [line.split() for line in result if line]
         print(f'# Found {len(hit_list)} BLAST hits of the reference '
               f'pre-miRNA in the query')
         genes = pyfaidx.Fasta(query)
