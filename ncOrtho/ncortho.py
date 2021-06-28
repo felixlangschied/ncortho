@@ -498,7 +498,7 @@ def main():
                 'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'
                     .format(refblast, temp_fasta, blast_output, cpu, dust)
             )
-            sp.call(blast_command, shell=True)
+            sp.run(blast_command, shell=True)
             print('# finished blast')
 
             # BlastParser will read the temp_fasta file
