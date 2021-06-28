@@ -416,7 +416,7 @@ def main():
             sys.exit()
     elif heuristic:
         print('# Creating query Database')
-        qblast = query.replace('.fa', '')
+        qblast = query
         make_blastndb(query, qlink)
 
 
