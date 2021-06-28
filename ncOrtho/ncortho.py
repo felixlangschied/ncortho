@@ -416,7 +416,7 @@ def main():
             sys.exit()
     elif heuristic:
         print('# Creating query Database')
-        qblast = query
+        qblast = qlink
         make_blastndb(query, qlink)
 
 

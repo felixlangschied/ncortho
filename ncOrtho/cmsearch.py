@@ -85,7 +85,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
             'blastn -evalue {3} -task blastn -db {0} -query {1} '
             '-num_threads {2} -outfmt "6 sseqid sstart send sstrand length"'.format(blastdb, tmp_out, cpu, heuristic[1])
         )
-        print(blast_command)
+        # print(blast_command)
         res = sp.run(blast_command, shell=True, capture_output=True)
         os.remove(tmp_out)
         if res.stdout:
