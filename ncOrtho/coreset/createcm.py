@@ -23,14 +23,10 @@ class CmConstructor(object):
     def construct(self):
         print('# Constructing covariance model for {}.'.format(self.name))
         construct_command = (
-            'cmbuild -n {0} -o {1}/{0}_cmbuild.log {1}/{0}.cm {2}'
+            'cmbuild -n {0} {1}/{0}.cm {2}'
             .format(self.name, self.outpath, self.alignment)
         )
         sp.call(construct_command, shell=True)
-        print(
-            '# Writing log file to {}/{}_cmbuild.log'
-            .format(self.outpath, self.name)
-        )
         print('# Finished covariance model construction.')
     
     def calibrate(self):
