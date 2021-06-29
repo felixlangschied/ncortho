@@ -314,9 +314,11 @@ def main():
     # use dust filter?
     parser.add_argument(
         '--dust', metavar='yes/no', type=str,
-        help='Use BLASTn dust filter during reblast',
+        help='Use BLASTn dust filter during re-BLAST. Greatly decreases runtime if reference miRNA(s) '
+             'are located in repeat regions. '
+             'However ncOrtho will also not identify orthologs for these miRNAs',
         nargs='?',
-        const='yes', default='yes'
+        const='no', default='no'
     )
     # check Co-ortholog-ref
     parser.add_argument(
@@ -355,6 +357,7 @@ def main():
     output = args.output
     query = args.query
     reference = args.reference
+
     # optional
     max_hits = args.maxcmhits
     cm_cutoff = args.cm_cutoff
@@ -364,7 +367,7 @@ def main():
     msl = args.minlength
     refblast = args.refblast
     qblast = args.queryblast
-    dust = args.dust
+    dust = args.dust.strip()
 
     ##########################################################################################
     # Starting argument checks
