@@ -16,14 +16,8 @@ You should have received a copy of the GNU General Public License
 along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-# TODO: Check if msl is working
-# TODO: Cleanup output
-# TODO: Measure time of different cmsearch cutoffs
-
 
 # Modules import
-
-# Python
 import argparse
 import multiprocessing as mp
 import os
@@ -422,19 +416,6 @@ def main():
         qblast = qlink
         make_blastndb(query, qlink)
 
-
-        # Check if BLAST database already exists, otherwise create it.
-        # Database files are ".nhr", ".nin", ".nsq".
-        # file_extensions = ['nhr', 'nin', 'nsq']
-        # for fe in file_extensions:
-        #     # checkpath = '{}{}'.format(r, fe)
-        #     files = glob.glob(f'{refblast}*{fe}')
-        #     if not files:
-        #         # At least one of the BLAST db files is not existent and has to be
-        #         # created.
-        #         db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(reference, refblast)
-        #         sp.call(db_command, shell=True)
-        #         break
 
     ################################################################################################
     # Main
