@@ -23,7 +23,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="ncOrtho",
-    version="0.0.1",
+    version="0.0.2",
     python_requires='>=3.7.0',
     description=" Targeted ortholog search for miRNAs ",
     long_description=long_description,
@@ -34,8 +34,8 @@ setup(
     packages=find_packages(),
     package_data={'': ['*']},
     install_requires=[
+        'PyYAML',
         'biopython',
-        'pyyaml',
         'pyfaidx'
     ],
     entry_points={

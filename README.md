@@ -25,16 +25,10 @@ Infernal | v1.1.4 | `conda install -c bioconda infernal`
 t_coffee | v13.45 | `conda install -c bioconda t-coffee`
 
 ### Installing
-Currently, ncOrtho is not yet available as a python package. Until then, some python packages have to be installed
-manually:
+
+After installing all three dependencies, ncOrtho can be installed with `pip`:
 ```
-pip install pyfaidx
-pip install biopython
-pip install pyyaml
-```
-Cloning the git repository is the easiest option to access ncOrtho at the moment:
-```
-git clone https://github.com/felixlangschied/ncortho.git
+ pip install ncOrtho
 ```
 
 ## Usage
@@ -67,7 +61,7 @@ miRNA for which a model should be constructed (more information
 
 You can then start CM construction with:
 ```
-python nc_coreset.py -p <parameters.yaml> -n <mirnas.tsv> -o <outdir>
+ncCreate -p <parameters.yaml> -n <mirnas.tsv> -o <outdir>
 ```
 If you encounter errors, make sure that:
 * The identifiers in the pairwise orthologs files match the ones in the gff files (use the `-idtype=` flag to use other
@@ -75,10 +69,16 @@ ID types)
 * The contig/chromosome column in tab separated miRNA input file match the contig/chromosome id 
 in the reference gff file
 
-Use `python coreset.py -h` to see all available options for CM construction.
+Use `ncCreate -h` to see all available options for CM construction.
 
 ### Orthology search
 
+You can start the orthology search with:
+```
+ncSearch -m <CMs/> -n <mirnas.tsv> -q <query_genome.fa> -r <reference_genome.fa> -o <outdir>
+```
+
+Use `ncSearch -h` to see all available options for the orthology search.
 
 ## Contributors
 

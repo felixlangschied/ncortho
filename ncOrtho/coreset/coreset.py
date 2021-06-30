@@ -34,11 +34,11 @@ import subprocess as sp
 import sys
 import yaml
 
-from createcm import CmConstructor
-from core_reblast import blastsearch
-from coreset_utils import gff_parser
-from coreset_utils import gtf_parser
-from coreset_utils import ortho_search
+from ncOrtho.coreset.createcm import CmConstructor
+from ncOrtho.coreset.core_reblast import blastsearch
+from ncOrtho.coreset.coreset_utils import gff_parser
+from ncOrtho.coreset.coreset_utils import gtf_parser
+from ncOrtho.coreset.coreset_utils import ortho_search
 
 
 ###############################################################################
