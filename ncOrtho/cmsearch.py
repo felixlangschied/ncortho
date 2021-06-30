@@ -254,9 +254,19 @@ def cmsearch_parser(cms, cmc, lc, mirid):
         # Add the hits to the return dictionary.
         if hits:
             for candidate_nr, hit in enumerate(hits, 1):
+                h_chrom = hit[0]
+                h_start = hit[7]
+                h_end = hit[8]
+                h_strand = hit[9]
+                h_score = hit[14]
+                # blastparser expects the start to be the smaller number, will extract reverse complement if on - strand
+                if h_start > h_end:
+                    start_tmp = h_start
+                    h_start = h_end
+                    h_end = start_tmp
                 data = (
                     '{0}_c{1}'.format(mirid, candidate_nr),
-                    hit[0], hit[7], hit[8], hit[9], hit[14]
+                    h_chrom, h_start, h_end, h_strand, h_score
                 )
                 hits_dict[data[0]] = data
 
