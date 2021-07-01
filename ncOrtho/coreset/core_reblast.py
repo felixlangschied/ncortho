@@ -93,11 +93,16 @@ def blastsearch(mirna, r_path, o_path, c, dust):
     if err:
         print(err)
     if not ref_results:
-        print('# Sequence for {} not found in reference. Skipping..')
+        print('WARNING: Reference sequence of {} not found in reference Genome. '
+              'Consider turning the dust filter off'.format(mirid))
         skip_file = '{}/not_found_in_ref.fa'.format(o_path)
-        with open(skip_file, 'w') as of:
-            of.write('>{}\n{}\n'.format(mirid, preseq))
-            return None
+        if not os.path.isfile(skip_file):
+            with open(skip_file, 'w') as of:
+                of.write('>{}\n{}\n'.format(mirid, preseq))
+        else:
+            with open(skip_file, 'a') as of:
+                of.write('>{}\n{}\n'.format(mirid, preseq))
+        return None
     ref_bit_score = float(ref_results.split('\n')[0].split('\t')[0])
     print(f'BLAST bit score of reference miRNA against reference genome: {ref_bit_score}')
 

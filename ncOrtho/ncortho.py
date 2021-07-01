@@ -25,12 +25,20 @@ import subprocess as sp
 import sys
 
 # Internal ncOrtho modules
-from ncOrtho.blastparser import BlastParser
-from ncOrtho.blastparser import ReBlastParser
-from ncOrtho.genparser import GenomeParser
-from ncOrtho.cmsearch import cmsearcher
-from ncOrtho.utils import check_blastdb
-from ncOrtho.utils import make_blastndb
+try:
+    from ncOrtho.blastparser import BlastParser
+    from ncOrtho.blastparser import ReBlastParser
+    from ncOrtho.genparser import GenomeParser
+    from ncOrtho.cmsearch import cmsearcher
+    from ncOrtho.utils import check_blastdb
+    from ncOrtho.utils import make_blastndb
+except ImportError:
+    from blastparser import BlastParser
+    from blastparser import ReBlastParser
+    from genparser import GenomeParser
+    from cmsearch import cmsearcher
+    from utils import check_blastdb
+    from utils import make_blastndb
 
 ###############################################################################
 
@@ -412,12 +420,14 @@ def main():
     if qblast and heuristic:
         # check if qblast exists
         if not check_blastdb(qblast):
-            print('# Query BLASTdb not found at: {}'.format(refblast))
+            print('# Query BLASTdb not found at: {}'.format(qblast))
             sys.exit()
     elif heuristic:
-        print('# Creating query Database')
         qblast = qlink
-        make_blastndb(query, qlink)
+        # check if already exists
+        if not check_blastdb(qlink):
+            print('# Creating query Database')
+            make_blastndb(query, qlink)
 
     ################################################################################################
     # Main
