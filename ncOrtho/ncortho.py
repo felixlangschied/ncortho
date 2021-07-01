@@ -372,6 +372,9 @@ def main():
         qname = args.queryname
     else:
         qname = '.'.join(query.split('/')[-1].split('.')[:-1])
+    # make folder for query in output dir
+    if not output.split('/')[-1] == qname:
+        output = f'{output}/{qname}'
 
     # Test if input files exist
     all_files = [mirnas, reference, query]
@@ -416,7 +419,6 @@ def main():
         qblast = qlink
         make_blastndb(query, qlink)
 
-
     ################################################################################################
     # Main
     ###############################################################################################
@@ -431,13 +433,15 @@ def main():
         sys.stdout.flush()
         mirna = mirna_dict[mir_data]
         mirna_id = mirna.name
+
+        # Create output folder, if not existent.
         if heuristic:
             outdir = '{}'.format(output)
         else:
             outdir = '{}/{}'.format(output, mirna_id)
-        # Create output folder, if not existent.
         if not os.path.isdir(outdir):
-            os.mkdir(outdir)
+            os.makedirs(outdir)
+
         # start cmsearch
         cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, qlink, qblast, output, cleanup, heuristic)
 

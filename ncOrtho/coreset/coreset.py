@@ -86,7 +86,8 @@ def main():
     # use dust filter?
     parser.add_argument(
         '--dust', metavar='yes/no', type=str,
-        help='Use BLASTn dust filter. Decreases number of models created but improves runtime and possibly specificity',
+        help='Use BLASTn dust filter. '
+             'Will not build models from repeat regions. (Default: yes)',
         nargs='?',
         const='yes', default='yes'
     )

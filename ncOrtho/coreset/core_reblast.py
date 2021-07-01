@@ -133,7 +133,7 @@ def blastsearch(mirna, r_path, o_path, c, dust):
         sys.exit()
 
 
-##### Collect best hit for each core set species if it is within the accepted bit score range
+    ##### Collect best hit for each core set species if it is within the accepted bit score range
     core_dict = {}
     result_list = results.split('\n')
     # print(result_list)
@@ -152,6 +152,7 @@ def blastsearch(mirna, r_path, o_path, c, dust):
                 ):
                     core_dict[hit_data[0]] = hit
                     print(f'pre-miRNA candidate found for {hit_data[0]}! ({hit_data[2]}/{0.5*ref_bit_score})')
+                    break
                 else:
                     print(f'Syntenic candidate region BLAST hit below reference bit score threshold ({hit_data[2]}/{0.5*ref_bit_score})')
 
