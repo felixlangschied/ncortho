@@ -433,10 +433,11 @@ def main():
     # Main
     ###############################################################################################
 
-    # Create miRNA objects from the list of input miRNAs.
-    mirna_dict = mirna_maker(mirnas, models, output, msl)
     # Print out query
     print('### Starting ncOrtho run for {}'.format(query))
+
+    # Create miRNA objects from the list of input miRNAs.
+    mirna_dict = mirna_maker(mirnas, models, output, msl)
 
     # Identify ortholog candidates.
     for mir_data in mirna_dict:
