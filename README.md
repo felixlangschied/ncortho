@@ -52,7 +52,7 @@ As soon as you know what your core species are going to be, you will need to col
 [here](https://github.com/felixlangschied/ncortho/wiki/Input-Data#pairwise-orthologs)
 
 Modify the [example parameters](ncOrtho/coreset/example_parameters.yaml) file to contain all 
-relevant paths to your input files. The "name" property of your reference and core species only has to be a 
+relevant paths to your input files. The "name" property of your reference and core species has to merely be a 
 unique identifier. It is however recommended to use the correct species names to increase readability.
 
 Additional to the parameters file, you will need a tab separated file containing the position and sequence of each 
@@ -78,7 +78,8 @@ You can start the orthology search with:
 ncSearch -m <CMs/> -n <mirnas.tsv> -q <query_genome.fa> -r <reference_genome.fa> -o <outdir>
 ```
 
-Use `ncSearch -h` to see all available options for the orthology search.
+Use `ncSearch -h` to see all available options for the orthology search or have a look at the 
+[WIKI](https://github.com/felixlangschied/ncortho/wiki/Running-orthology-search).
 
 ## Support
 

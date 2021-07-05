@@ -61,50 +61,53 @@ def main():
     # Define global variables
     parser = argparse.ArgumentParser(
         description=(
-            'Build Covariance models'
+            'Build Covariance models of reference miRNAs from core set of orthologs.'
          )
     )
+    parser._action_groups.pop()
+    required = parser.add_argument_group('Required Arguments')
+    optional = parser.add_argument_group('Optional Arguments')
     # input file path
-    parser.add_argument('-p', '--parameters', metavar='<path>', type=str,
+    required.add_argument('-p', '--parameters', metavar='<path>', type=str, required=True,
                         help='Path to the parameters file in yaml format')
     # mirna data
-    parser.add_argument(
-        '-n', '--ncrna', metavar='<path>', type=str,
-        help='Path to tab separated file of reference miRNA '
+    required.add_argument(
+        '-n', '--ncrna', metavar='<path>', type=str, required=True,
+        help='Path to tab separated file of reference miRNAs information '
     )
     # output folder
-    parser.add_argument(
-        '-o', '--output', metavar='<path>', type=str,
-        help='path for the output folder'
+    required.add_argument(
+        '-o', '--output', metavar='<path>', type=str, required=True,
+        help='Path for the output folder'
     )
     # OPTIONAL VARIABLES
     # cpu, use maximum number of available cpus if not specified otherwise
-    parser.add_argument(
+    optional.add_argument(
         '--threads', metavar='int', type=int,
-        help='number of CPU cores to use', nargs='?',
+        help='Number of CPU cores to use (Default: All available)', nargs='?',
         const=mp.cpu_count(), default=mp.cpu_count()
     )
     # Maximum gene insertions
-    parser.add_argument(
+    optional.add_argument(
         '--mgi', metavar='int', type=int,
-        help='maximum number of gene insertions', nargs='?',
+        help='Maximum number of gene insertions in the core species (Default: 3)', nargs='?',
         const=3, default=3
     )
     # use dust filter?
-    parser.add_argument(
+    optional.add_argument(
         '--dust', metavar='yes/no', type=str,
         help='Use BLASTn dust filter. '
              'Will not build models from repeat regions. (Default: yes)',
         nargs='?',
         const='yes', default='yes'
     )
-    parser.add_argument(
+    optional.add_argument(
         '--create_model', metavar='yes/no', type=str,
-        help='set to "no" if you only want to create the alignment', nargs='?',
+        help='set to "no" if you only want to create the alignment. (Default: yes)', nargs='?',
         const='yes', default='yes'
     )
     #
-    parser.add_argument(
+    optional.add_argument(
         '--idtype', metavar='str', type=str,
         help='Choose the ID in the reference gff file that is '
              'compared to the IDs in the pairwise orthologs file (default:ID) '

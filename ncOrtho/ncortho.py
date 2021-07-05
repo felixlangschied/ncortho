@@ -210,36 +210,39 @@ def main():
     parser = argparse.ArgumentParser(
         description='Find orthologs of reference miRNAs in the genome of a query species.'
     )
+    parser._action_groups.pop()
+    required = parser.add_argument_group('Required Arguments')
+    optional = parser.add_argument_group('Optional Arguments')
     # covariance models folder
-    parser.add_argument(
-        '-m', '--models', metavar='<path>', type=str,
+    required.add_argument(
+        '-m', '--models', metavar='<path>', type=str, required=True,
         help='Path to directory containing covariance models (.cm)'
     )
     # mirna data
-    parser.add_argument(
-        '-n', '--ncrna', metavar='<path>', type=str,
+    required.add_argument(
+        '-n', '--ncrna', metavar='<path>', type=str, required=True,
         help='Path to Tab separated file with information about the reference miRNAs'
     )
     # output folder
-    parser.add_argument(
-        '-o', '--output', metavar='<path>', type=str,
+    required.add_argument(
+        '-o', '--output', metavar='<path>', type=str, required=True,
         help='Path to the output directory'
     )
     # query genome
-    parser.add_argument(
-        '-q', '--query', metavar='<.fa>', type=str,
+    required.add_argument(
+        '-q', '--query', metavar='<.fa>', type=str, required=True,
         help='Path to query genome in FASTA format'
     )
     # reference genome
-    parser.add_argument(
-        '-r', '--reference', metavar='<.fa>', type=str,
+    required.add_argument(
+        '-r', '--reference', metavar='<.fa>', type=str, required=True,
         help='Path to reference genome in FASTA format'
     )
     ##########################################################################
     # Optional Arguments
     ##########################################################################
     # query_name
-    parser.add_argument(
+    optional.add_argument(
         '--queryname', metavar='str', type=str, nargs='?', const='', default='',
         help=(
             'Name for the output directory '
@@ -247,31 +250,31 @@ def main():
         )
     )
     # cpu, use maximum number of available cpus unless specified otherwise
-    parser.add_argument(
+    optional.add_argument(
         '--cpu', metavar='int', type=int,
         help='number of cpu cores ncOrtho should use', nargs='?',
         const=mp.cpu_count(), default=mp.cpu_count()
     )
     # bit score cutoff for cmsearch hits
-    parser.add_argument(
+    optional.add_argument(
         '--cm_cutoff', metavar='float', type=float,
         help='cmsearch bit score cutoff', nargs='?', const=0.5, default=0.5
     )
     # length filter to prevent short hits
-    parser.add_argument(
+    optional.add_argument(
         '--minlength', metavar='float', type=float,
         help='CMsearch hit in the query species must have at '
              'least the length of this value times the length of the refernce pre-miRNA',
         nargs='?', const=0.7, default=0.7
     )
-    parser.add_argument(
+    optional.add_argument(
         '--heuristic', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Perform a BLAST search of the reference miRNA in the query genome to identify '
             'candidate regions for the CMsearch. Majorly improves speed. (Default: True)'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--heur_blast_evalue', type=float, metavar='float', nargs='?', const=0.5, default=0.5,
         help=(
             'Evalue filter for the BLASTn search that '
@@ -279,7 +282,7 @@ def main():
             '(Default: 0.5) (Set to 10 to turn off)'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--heur_blast_length', type=float, metavar='float', nargs='?', const=0.5, default=0.5,
         help=(
             'Length cutoff relative to the refernce pre-miRNA length for the BLASTn search that '
@@ -287,25 +290,25 @@ def main():
             '(Default: 0.5) (Set to 0 to turn off)'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--cleanup', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Cleanup temporary files (Default: True)'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--refblast', type=str, metavar='<path>', nargs='?', const='', default='',
         help=(
             'Path to BLASTdb of the reference species'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--queryblast', type=str, metavar='<path>', nargs='?', const='', default='',
         help=(
             'Path to BLASTdb of the query species'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--maxcmhits', metavar='int', nargs='?', const=50, default=50,
         help=(
             'Maximum number of cmsearch hits to examine. '
