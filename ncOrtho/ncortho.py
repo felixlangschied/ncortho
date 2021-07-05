@@ -162,25 +162,25 @@ def mirna_maker(mirpath, cmpath, output, msl):
     return mmdict
 
 
-# Write a FASTA file containing the accepted orthologs.
-def write_output(a, o, cm):
-    """
-    Parameters
-    ----------
-    a   :   Dictionary of accepted hits
-    o   :   Output path
-    dm  :   Dictionary of cmsearch output
-
-    Returns
-    -------
-    None.
-
-    """
-    with open(o, 'w') as outfile:
-        for hit in a:
-            tup = cm[hit]
-            header = '|'.join(list(tup))
-            outfile.write('>{0}\n{1}\n'.format(header, a[hit]))
+# # Write a FASTA file containing the accepted orthologs.
+# def write_output(a, o, cm):
+#     """
+#     Parameters
+#     ----------
+#     a   :   Dictionary of accepted hits
+#     o   :   Output path
+#     dm  :   Dictionary of cmsearch output
+#
+#     Returns
+#     -------
+#     None.
+#
+#     """
+#     with open(o, 'w') as outfile:
+#         for hit in a:
+#             tup = cm[hit]
+#             header = '|'.join(list(tup))
+#             outfile.write('>{0}\n{1}\n'.format(header, a[hit]))
 
 
 # Allow boolean argument parsing
@@ -433,10 +433,11 @@ def main():
     # Main
     ###############################################################################################
 
-    # Create miRNA objects from the list of input miRNAs.
-    mirna_dict = mirna_maker(mirnas, models, output, msl)
     # Print out query
     print('### Starting ncOrtho run for {}'.format(query))
+
+    # Create miRNA objects from the list of input miRNAs.
+    mirna_dict = mirna_maker(mirnas, models, output, msl)
 
     # Identify ortholog candidates.
     for mir_data in mirna_dict:
@@ -540,7 +541,14 @@ def main():
 
             print('# Writing output of accepted candidates.\n')
             outpath = '{0}/{1}_orthologs.fa'.format(outdir, mirna_id)
-            write_output(out_dict, outpath, cm_results)
+            with open(outpath, 'w') as of:
+                for hit in out_dict:
+                    cmres = list(cm_results[hit])
+                    cmres.insert(qname)
+                    header = '|'.join(cmres)
+                    of.write('>{0}\n{1}\n'.format(header, out_dict[hit]))
+
+            # write_output(out_dict, outpath, cm_results)
             print('# Finished writing output.\n')
         else:
             print(
