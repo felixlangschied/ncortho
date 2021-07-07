@@ -79,7 +79,7 @@ ncSearch -m <CMs/> -n <mirnas.tsv> -q <query_genome.fa> -r <reference_genome.fa>
 ```
 
 Use `ncSearch -h` to see all available options for the orthology search or have a look at the 
-[WIKI](https://github.com/felixlangschied/ncortho/wiki/Running-orthology-search).
+[WIKI](https://github.com/felixlangschied/ncortho/wiki/Running-the-orthology-search).
 
 ## Support
 
