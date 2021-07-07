@@ -16,14 +16,8 @@ You should have received a copy of the GNU General Public License
 along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-# TODO: Check if msl is working
-# TODO: Cleanup output
-# TODO: Measure time of different cmsearch cutoffs
-
 
 # Modules import
-
-# Python
 import argparse
 import multiprocessing as mp
 import os
@@ -31,12 +25,20 @@ import subprocess as sp
 import sys
 
 # Internal ncOrtho modules
-from blastparser import BlastParser
-from blastparser import ReBlastParser
-from genparser import GenomeParser
-from cmsearch import cmsearcher
-from utils import check_blastdb
-from utils import make_blastndb
+try:
+    from ncOrtho.blastparser import BlastParser
+    from ncOrtho.blastparser import ReBlastParser
+    from ncOrtho.genparser import GenomeParser
+    from ncOrtho.cmsearch import cmsearcher
+    from ncOrtho.utils import check_blastdb
+    from ncOrtho.utils import make_blastndb
+except ImportError:
+    from blastparser import BlastParser
+    from blastparser import ReBlastParser
+    from genparser import GenomeParser
+    from cmsearch import cmsearcher
+    from utils import check_blastdb
+    from utils import make_blastndb
 
 ###############################################################################
 
@@ -160,25 +162,25 @@ def mirna_maker(mirpath, cmpath, output, msl):
     return mmdict
 
 
-# Write a FASTA file containing the accepted orthologs.
-def write_output(a, o, cm):
-    """
-    Parameters
-    ----------
-    a   :   Dictionary of accepted hits
-    o   :   Output path
-    dm  :   Dictionary of cmsearch output
-
-    Returns
-    -------
-    None.
-
-    """
-    with open(o, 'w') as outfile:
-        for hit in a:
-            tup = cm[hit]
-            header = '|'.join(list(tup))
-            outfile.write('>{0}\n{1}\n'.format(header, a[hit]))
+# # Write a FASTA file containing the accepted orthologs.
+# def write_output(a, o, cm):
+#     """
+#     Parameters
+#     ----------
+#     a   :   Dictionary of accepted hits
+#     o   :   Output path
+#     dm  :   Dictionary of cmsearch output
+#
+#     Returns
+#     -------
+#     None.
+#
+#     """
+#     with open(o, 'w') as outfile:
+#         for hit in a:
+#             tup = cm[hit]
+#             header = '|'.join(list(tup))
+#             outfile.write('>{0}\n{1}\n'.format(header, a[hit]))
 
 
 # Allow boolean argument parsing
@@ -208,36 +210,39 @@ def main():
     parser = argparse.ArgumentParser(
         description='Find orthologs of reference miRNAs in the genome of a query species.'
     )
+    parser._action_groups.pop()
+    required = parser.add_argument_group('Required Arguments')
+    optional = parser.add_argument_group('Optional Arguments')
     # covariance models folder
-    parser.add_argument(
-        '-m', '--models', metavar='<path>', type=str,
+    required.add_argument(
+        '-m', '--models', metavar='<path>', type=str, required=True,
         help='Path to directory containing covariance models (.cm)'
     )
     # mirna data
-    parser.add_argument(
-        '-n', '--ncrna', metavar='<path>', type=str,
+    required.add_argument(
+        '-n', '--ncrna', metavar='<path>', type=str, required=True,
         help='Path to Tab separated file with information about the reference miRNAs'
     )
     # output folder
-    parser.add_argument(
-        '-o', '--output', metavar='<path>', type=str,
+    required.add_argument(
+        '-o', '--output', metavar='<path>', type=str, required=True,
         help='Path to the output directory'
     )
     # query genome
-    parser.add_argument(
-        '-q', '--query', metavar='<.fa>', type=str,
+    required.add_argument(
+        '-q', '--query', metavar='<.fa>', type=str, required=True,
         help='Path to query genome in FASTA format'
     )
     # reference genome
-    parser.add_argument(
-        '-r', '--reference', metavar='<.fa>', type=str,
+    required.add_argument(
+        '-r', '--reference', metavar='<.fa>', type=str, required=True,
         help='Path to reference genome in FASTA format'
     )
     ##########################################################################
     # Optional Arguments
     ##########################################################################
     # query_name
-    parser.add_argument(
+    optional.add_argument(
         '--queryname', metavar='str', type=str, nargs='?', const='', default='',
         help=(
             'Name for the output directory '
@@ -245,31 +250,31 @@ def main():
         )
     )
     # cpu, use maximum number of available cpus unless specified otherwise
-    parser.add_argument(
+    optional.add_argument(
         '--cpu', metavar='int', type=int,
         help='number of cpu cores ncOrtho should use', nargs='?',
         const=mp.cpu_count(), default=mp.cpu_count()
     )
     # bit score cutoff for cmsearch hits
-    parser.add_argument(
+    optional.add_argument(
         '--cm_cutoff', metavar='float', type=float,
         help='cmsearch bit score cutoff', nargs='?', const=0.5, default=0.5
     )
     # length filter to prevent short hits
-    parser.add_argument(
+    optional.add_argument(
         '--minlength', metavar='float', type=float,
         help='CMsearch hit in the query species must have at '
              'least the length of this value times the length of the refernce pre-miRNA',
         nargs='?', const=0.7, default=0.7
     )
-    parser.add_argument(
+    optional.add_argument(
         '--heuristic', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Perform a BLAST search of the reference miRNA in the query genome to identify '
             'candidate regions for the CMsearch. Majorly improves speed. (Default: True)'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--heur_blast_evalue', type=float, metavar='float', nargs='?', const=0.5, default=0.5,
         help=(
             'Evalue filter for the BLASTn search that '
@@ -277,7 +282,7 @@ def main():
             '(Default: 0.5) (Set to 10 to turn off)'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--heur_blast_length', type=float, metavar='float', nargs='?', const=0.5, default=0.5,
         help=(
             'Length cutoff relative to the refernce pre-miRNA length for the BLASTn search that '
@@ -285,25 +290,25 @@ def main():
             '(Default: 0.5) (Set to 0 to turn off)'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--cleanup', type=str2bool, metavar='True/False', nargs='?', const=True, default=True,
         help=(
             'Cleanup temporary files (Default: True)'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--refblast', type=str, metavar='<path>', nargs='?', const='', default='',
         help=(
             'Path to BLASTdb of the reference species'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--queryblast', type=str, metavar='<path>', nargs='?', const='', default='',
         help=(
             'Path to BLASTdb of the query species'
         )
     )
-    parser.add_argument(
+    optional.add_argument(
         '--maxcmhits', metavar='int', nargs='?', const=50, default=50,
         help=(
             'Maximum number of cmsearch hits to examine. '
@@ -378,6 +383,9 @@ def main():
         qname = args.queryname
     else:
         qname = '.'.join(query.split('/')[-1].split('.')[:-1])
+    # make folder for query in output dir
+    if not output.split('/')[-1] == qname:
+        output = f'{output}/{qname}'
 
     # Test if input files exist
     all_files = [mirnas, reference, query]
@@ -415,48 +423,39 @@ def main():
     if qblast and heuristic:
         # check if qblast exists
         if not check_blastdb(qblast):
-            print('# Query BLASTdb not found at: {}'.format(refblast))
+            print('# Query BLASTdb not found at: {}'.format(qblast))
             sys.exit()
     elif heuristic:
-        print('# Creating query Database')
         qblast = qlink
-        make_blastndb(query, qlink)
-
-
-        # Check if BLAST database already exists, otherwise create it.
-        # Database files are ".nhr", ".nin", ".nsq".
-        # file_extensions = ['nhr', 'nin', 'nsq']
-        # for fe in file_extensions:
-        #     # checkpath = '{}{}'.format(r, fe)
-        #     files = glob.glob(f'{refblast}*{fe}')
-        #     if not files:
-        #         # At least one of the BLAST db files is not existent and has to be
-        #         # created.
-        #         db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(reference, refblast)
-        #         sp.call(db_command, shell=True)
-        #         break
+        # check if already exists
+        if not check_blastdb(qlink):
+            print('# Creating query Database')
+            make_blastndb(query, qlink)
 
     ################################################################################################
     # Main
     ###############################################################################################
 
-    # Create miRNA objects from the list of input miRNAs.
-    mirna_dict = mirna_maker(mirnas, models, output, msl)
     # Print out query
     print('### Starting ncOrtho run for {}'.format(query))
+
+    # Create miRNA objects from the list of input miRNAs.
+    mirna_dict = mirna_maker(mirnas, models, output, msl)
 
     # Identify ortholog candidates.
     for mir_data in mirna_dict:
         sys.stdout.flush()
         mirna = mirna_dict[mir_data]
         mirna_id = mirna.name
+
+        # Create output folder, if not existent.
         if heuristic:
             outdir = '{}'.format(output)
         else:
             outdir = '{}/{}'.format(output, mirna_id)
-        # Create output folder, if not existent.
         if not os.path.isdir(outdir):
-            os.mkdir(outdir)
+            os.makedirs(outdir)
+
         # start cmsearch
         cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, qlink, qblast, output, cleanup, heuristic)
 
@@ -545,7 +544,14 @@ def main():
 
             print('# Writing output of accepted candidates.\n')
             outpath = '{0}/{1}_orthologs.fa'.format(outdir, mirna_id)
-            write_output(out_dict, outpath, cm_results)
+            with open(outpath, 'w') as of:
+                for hit in out_dict:
+                    cmres = list(cm_results[hit])
+                    cmres.insert(qname)
+                    header = '|'.join(cmres)
+                    of.write('>{0}\n{1}\n'.format(header, out_dict[hit]))
+
+            # write_output(out_dict, outpath, cm_results)
             print('# Finished writing output.\n')
         else:
             print(

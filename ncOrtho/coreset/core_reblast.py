@@ -93,11 +93,16 @@ def blastsearch(mirna, r_path, o_path, c, dust):
     if err:
         print(err)
     if not ref_results:
-        print('# Sequence for {} not found in reference. Skipping..')
+        print('WARNING: Reference sequence of {} not found in reference Genome. '
+              'Consider turning the dust filter off'.format(mirid))
         skip_file = '{}/not_found_in_ref.fa'.format(o_path)
-        with open(skip_file, 'w') as of:
-            of.write('>{}\n{}\n'.format(mirid, preseq))
-            return None
+        if not os.path.isfile(skip_file):
+            with open(skip_file, 'w') as of:
+                of.write('>{}\n{}\n'.format(mirid, preseq))
+        else:
+            with open(skip_file, 'a') as of:
+                of.write('>{}\n{}\n'.format(mirid, preseq))
+        return None
     ref_bit_score = float(ref_results.split('\n')[0].split('\t')[0])
     print(f'BLAST bit score of reference miRNA against reference genome: {ref_bit_score}')
 
@@ -133,7 +138,7 @@ def blastsearch(mirna, r_path, o_path, c, dust):
         sys.exit()
 
 
-##### Collect best hit for each core set species if it is within the accepted bit score range
+    ##### Collect best hit for each core set species if it is within the accepted bit score range
     core_dict = {}
     result_list = results.split('\n')
     # print(result_list)
@@ -152,6 +157,7 @@ def blastsearch(mirna, r_path, o_path, c, dust):
                 ):
                     core_dict[hit_data[0]] = hit
                     print(f'pre-miRNA candidate found for {hit_data[0]}! ({hit_data[2]}/{0.5*ref_bit_score})')
+                    break
                 else:
                     print(f'Syntenic candidate region BLAST hit below reference bit score threshold ({hit_data[2]}/{0.5*ref_bit_score})')
 

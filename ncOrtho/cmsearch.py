@@ -22,9 +22,6 @@ import subprocess as sp
 import sys
 import os
 
-from utils import check_blastdb
-from utils import make_blastndb
-
 
 def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup, heuristic):
     """
@@ -63,19 +60,6 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
     # Report and inclusion thresholds set according to cutoff.
 
     if heuristic[0]:
-        # if not qblast:
-        #     # Test if BLASTdb exists for query species
-        #     file_extensions = ['nhr', 'nin', 'nsq']
-        #     for fe in file_extensions:
-        #         files = glob.glob(f'{blastdb}*{fe}')
-        #         if not files:
-        #             # At least one of the BLAST db files is not existent and has to be
-        #             # created.
-        #             db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(query, blastdb)
-        #             sp.call(db_command, shell=True)
-        #             break
-        # else:
-        #     blastdb = qblast
         # extract candidate regions
         print('# Identifying candidate regions for cmsearch heuristic')
         tmp_out = '{0}/tmp_blast_{1}.out'.format(out, mirna_id)
@@ -254,9 +238,19 @@ def cmsearch_parser(cms, cmc, lc, mirid):
         # Add the hits to the return dictionary.
         if hits:
             for candidate_nr, hit in enumerate(hits, 1):
+                h_chrom = hit[0]
+                h_start = hit[7]
+                h_end = hit[8]
+                h_strand = hit[9]
+                h_score = hit[14]
+                # blastparser expects the start to be the smaller number, will extract reverse complement if on - strand
+                if h_start > h_end:
+                    start_tmp = h_start
+                    h_start = h_end
+                    h_end = start_tmp
                 data = (
                     '{0}_c{1}'.format(mirid, candidate_nr),
-                    hit[0], hit[7], hit[8], hit[9], hit[14]
+                    h_chrom, h_start, h_end, h_strand, h_score
                 )
                 hits_dict[data[0]] = data
 
