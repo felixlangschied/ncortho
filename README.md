@@ -108,6 +108,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 ## Acknowledgments
 
+* [Lorenz et al. 2011](https://almob.biomedcentral.com/articles/10.1186/1748-7188-6-26): ViennaRNA Package 2.0
 * [Nawrocki et al. 2013](https://academic.oup.com/bioinformatics/article/29/22/2933/316439): Infernal 1.1: 
 100-fold faster RNA homology searches
 * [Notredame et al. 2000](http://www.tcoffee.org/Publications/Pdf/tcoffee.pdf): T-Coffee: A Novel Method for Fast and 
