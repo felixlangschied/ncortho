@@ -153,7 +153,7 @@ def main():
             name = data[1].replace(' ', '_')
             name_2_id[name] = taxid
     pp_out = '{}/{}.long'.format(out_path, tree_name)
-    make_phyloprofile(filtered_orthologs, name_2_id, out_path)
+    make_phyloprofile(filtered_orthologs, name_2_id, pp_out)
 
     # writing fasta files of representatives to directory in out_path
     multi_out = '{}/multifasta'.format(out_path)

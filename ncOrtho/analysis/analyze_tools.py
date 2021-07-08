@@ -26,10 +26,9 @@ def create_overview(results, out):
     return ortholog_dict
 
 
-def make_phyloprofile(overview_dict, map_dict, out):
+def make_phyloprofile(overview_dict, map_dict, pp_out):
     print('# Starting to create phyloprofile input')
     # create outdir
-
 
     res_dict = {}
     for path in overview_dict:
