@@ -121,7 +121,7 @@ def make_supermatrix(out):
         sp.run(f'mkdir -p {tree_out}', shell=True)
     print('# Creating supermatrix alignment')
     cmd = (
-        '{}/perl concat_alignments_dmp.pl -in {} -out supermatrix.aln'
+        'perl {}/concat_alignments_dmp.pl -in {} -out supermatrix.aln'
             .format(curr_dir, align_out)
     )
     res = sp.run(cmd, shell=True, capture_output=True)
@@ -133,7 +133,7 @@ def make_supermatrix(out):
 
     print('# De-gapping alignment')
     cmd = (
-        '{}/perl degapper.pl -in {}/supermatrix.aln'.format(curr_dir, out)
+        'perl {}/degapper.pl -in {}/supermatrix.aln'.format(curr_dir, out)
     )
     sp.run(cmd, shell=True)
     # move files to output dir
