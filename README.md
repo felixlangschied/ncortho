@@ -7,7 +7,7 @@ Conceptually, it works similar to the program [fDOG](https://github.com/BIONF/fD
 a reference miRNA is created. For training the model, orthologs of the reference sequence are first identified in 
 a set of taxa that are more closely related to the reference species. In contrast to fDOG, ncOrtho does not train hidden 
 Markov Models but covariance models (CMs) (Eddy & Durbin, 1994) 
-which also model conservation of miRNA secondary structure.
+which also model conservation of the miRNA's secondary structure.
 
 ![workflow](https://github.com/felixlangschied/ncortho/blob/master/ncOrtho/docs/ncortho_white.png)
 
