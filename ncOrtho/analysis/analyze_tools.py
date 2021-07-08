@@ -12,10 +12,9 @@ def create_overview(results, out):
     # create overview file or load it if already existant
     outpath = f'{out}/overview.txt'
     ortholog_dict = {}
-    print('# Searching for ortholog results')
+    print('# Searching for results..')
     files = glob.glob('{}/*/*_orthologs.fa'.format(results))
 
-    print('# Done')
     with open(outpath, 'w') as of:
         for file in files:
             with open(file, 'r') as infile:
@@ -23,15 +22,14 @@ def create_overview(results, out):
                 count = len(counter)
             of.write(f'{file}\t{count}\n')
             ortholog_dict[file] = count
+    print('# Done')
     return ortholog_dict
 
 
-def make_phyloprofile(overview_dict, map_dict, an_name, out):
+def make_phyloprofile(overview_dict, map_dict, out):
     print('# Starting to create phyloprofile input')
     # create outdir
-    pp_outdir = '{}/phyloprofile'.format(out)
-    if not os.path.isdir(pp_outdir):
-        sp.run(f'mkdir -p {pp_outdir}', shell=True)
+    pp_out = '{}/phyloprofile.long'.format(out)
 
     res_dict = {}
     for path in overview_dict:
@@ -42,8 +40,7 @@ def make_phyloprofile(overview_dict, map_dict, an_name, out):
         res_string = '{}#ncbi{}'.format(mirid, map_dict[res_name])
         res_dict[res_string] = count
 
-    pp_fileout = f'{pp_outdir}/{an_name}.long'
-    with open(pp_fileout, 'w') as of:
+    with open(pp_out, 'w') as of:
         keys = list(res_dict.keys())
         keys.sort()
         # print(res_C)

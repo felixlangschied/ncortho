@@ -66,11 +66,11 @@ def main():
     )
     optional.add_argument(
         '--iqtree', metavar='str', type=str, nargs='?',
-        const='iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/{}',
-        default='iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/{}',
+        const='iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/species_tree',
+        default='iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/species_tree',
         help=(
             'Call to iqtree. Do not change curly bracket notation '
-            '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/{})'
+            '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/species_tree)'
         )
     )
     # Show
@@ -88,6 +88,10 @@ def main():
     spec_to_skip = args.skip.split(',')
     tool = args.method
     iqtree_cmd = args.iqtree
+
+    # create output dir if not existing
+    if not os.path.isdir(out_path):
+        os.makedirs(out_path)
 
     over_file = '{}/overview.txt'.format(out_path)
     # if overview exists read it
@@ -140,7 +144,7 @@ def main():
             name = data[1].replace(' ', '_')
             name_2_id[name] = taxid
 
-    make_phyloprofile(filtered_orthologs, name_2_id, analysis_name, out_path)
+    make_phyloprofile(filtered_orthologs, name_2_id, out_path)
 
     # writing fasta files of representatives to directory in out_path
     multi_paths = extract_representative(filtered_orthologs, mirnas_found, result_path, out_path)
@@ -154,7 +158,7 @@ def main():
     # calculate tree using iqtree
     print('# Starting tree calculation')
     tree_out = f'{out_path}/species_tree'
-    tree_cmd = iqtree_cmd.format(superm_path, tree_out, analysis_name)
+    tree_cmd = iqtree_cmd.format(superm_path, tree_out)
     res = sp.run(tree_cmd, shell=True, capture_output=True)
     print(res.stdout.decode('utf-8'))
     if res.returncode != 0:
