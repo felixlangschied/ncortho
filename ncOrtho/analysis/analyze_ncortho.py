@@ -89,13 +89,6 @@ def main():
             'Should alignments be re-calculated each time the script is run (Default: no)'
         )
     )
-    optional.add_argument(
-        '--redo', metavar='yes/no', type=str, nargs='?',
-        const='no', default='no',
-        help=(
-            'Should alignments be re-calculated each time the script is run (Default: no)'
-        )
-    )
     # Show
     # Show help when no arguments are added.
     if len(sys.argv) == 1:
