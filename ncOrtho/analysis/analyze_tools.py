@@ -3,6 +3,7 @@ import os
 import subprocess as sp
 import sys
 import shutil
+import inspect
 
 
 def create_overview(results, out):
@@ -115,7 +116,8 @@ def align_seqs(path_list, align_out, method):
 def make_supermatrix(out):
     align_out = '{}/alignments'.format(out)
     tree_out = '{}/supermatrix'.format(out)
-    curr_dir = sys.path[0]
+    # curr_dir = sys.path[0]
+    curr_dir = '/'.join(inspect.getfile(inspect.currentframe()).split('/')[:-1])
     if not os.path.isdir(tree_out):
         sp.run(f'mkdir -p {tree_out}', shell=True)
     print('# Creating supermatrix alignment')
