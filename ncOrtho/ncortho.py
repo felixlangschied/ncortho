@@ -252,19 +252,20 @@ def main():
     # cpu, use maximum number of available cpus unless specified otherwise
     optional.add_argument(
         '--cpu', metavar='int', type=int,
-        help='number of cpu cores ncOrtho should use', nargs='?',
+        help='Number of CPU cores to use (Default: all available)', nargs='?',
         const=mp.cpu_count(), default=mp.cpu_count()
     )
     # bit score cutoff for cmsearch hits
     optional.add_argument(
         '--cm_cutoff', metavar='float', type=float,
-        help='cmsearch bit score cutoff', nargs='?', const=0.5, default=0.5
+        help='CMsearch bit score cutoff, given as ratio of the CMsearch bitscore '
+             'of the CM against the refernce species (Default: 0.5)', nargs='?', const=0.5, default=0.5
     )
     # length filter to prevent short hits
     optional.add_argument(
         '--minlength', metavar='float', type=float,
         help='CMsearch hit in the query species must have at '
-             'least the length of this value times the length of the refernce pre-miRNA',
+             'least the length of this value times the length of the refernce pre-miRNA (Default: 0.7)',
         nargs='?', const=0.7, default=0.7
     )
     optional.add_argument(
@@ -285,8 +286,8 @@ def main():
     optional.add_argument(
         '--heur_blast_length', type=float, metavar='float', nargs='?', const=0.5, default=0.5,
         help=(
-            'Length cutoff relative to the refernce pre-miRNA length for the BLASTn search that '
-            'determines candidate regions for the CMsearch when running ncOrtho in heuristic mode. '
+            'Length cutoff for BLASTN search with which candidate regions for the CMsearch are identified.'
+            'Cutoff is given as ratio of the reference pre-miRNA length '
             '(Default: 0.5) (Set to 0 to turn off)'
         )
     )
