@@ -97,7 +97,7 @@ def main():
     spec_to_skip = args.skip.split(',')
     tool = args.method
     iqtree_cmd = args.iqtree
-    tree_name = args.treename
+    tree_name = args.analysis
 
     # create output dir if not existing
     if not os.path.isdir(out_path):
