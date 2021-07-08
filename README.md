@@ -1,4 +1,7 @@
 # ncOrtho
+[![PyPI version](https://badge.fury.io/py/ncOrtho.png)](https://pypi.org/project/ncOrtho/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 NcOrtho is a tool for the targeted search of orthologous micro RNAs (miRNAs) throughout the tree of life. 
 Conceptually, it works similar to the program [fDOG](https://github.com/BIONF/fDOG) in that a probabilistic model of 
 a reference miRNA is created. For training the model, orthologs of the reference sequence are first identified in 
