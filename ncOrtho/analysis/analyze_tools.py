@@ -116,13 +116,13 @@ def align_seqs(path_list, align_out, method):
 def make_supermatrix(out):
     align_out = '{}/alignments'.format(out)
     tree_out = '{}/supermatrix'.format(out)
-    # curr_dir = os.getcwd()
+    curr_dir = sys.path[0]
     if not os.path.isdir(tree_out):
         sp.run(f'mkdir -p {tree_out}', shell=True)
     print('# Creating supermatrix alignment')
     cmd = (
-        'perl concat_alignments_dmp.pl -in {} -out supermatrix.aln'
-            .format(align_out)
+        '{}/perl concat_alignments_dmp.pl -in {} -out supermatrix.aln'
+            .format(curr_dir, align_out)
     )
     res = sp.run(cmd, shell=True, capture_output=True)
     if res.returncode != 0:
@@ -133,7 +133,7 @@ def make_supermatrix(out):
 
     print('# De-gapping alignment')
     cmd = (
-        'perl degapper.pl -in {}/supermatrix.aln'.format(out)
+        '{}/perl degapper.pl -in {}/supermatrix.aln'.format(curr_dir, out)
     )
     sp.run(cmd, shell=True)
     # move files to output dir
