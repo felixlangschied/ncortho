@@ -76,10 +76,10 @@ def main():
         )
     )
     optional.add_argument(
-        '--treename', metavar='str', type=str, nargs='?',
-        const='iqtree_rapidboot', default='iqtree_rapidboot',
+        '--analysis', metavar='str', type=str, nargs='?',
+        const='ncOrtho', default='ncOrtho',
         help=(
-            'Name for the species tree (Default: iqtree_rapidboot)'
+            'Name of the analysis'
         )
     )
     # Show
@@ -152,6 +152,7 @@ def main():
             taxid = data[0]
             name = data[1].replace(' ', '_')
             name_2_id[name] = taxid
+    pp_out = '{}/{}.long'.format(out_path, tree_name)
     make_phyloprofile(filtered_orthologs, name_2_id, out_path)
 
     # writing fasta files of representatives to directory in out_path

@@ -29,7 +29,7 @@ def create_overview(results, out):
 def make_phyloprofile(overview_dict, map_dict, out):
     print('# Starting to create phyloprofile input')
     # create outdir
-    pp_out = '{}/phyloprofile.long'.format(out)
+
 
     res_dict = {}
     for path in overview_dict:
