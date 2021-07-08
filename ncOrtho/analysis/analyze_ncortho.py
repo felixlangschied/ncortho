@@ -81,7 +81,6 @@ def main():
     else:
         args = parser.parse_args()
     # Parse arguments
-    analysis_name = args.analysis
     result_path = args.results
     mirna_path = args.ncrna
     map_path = args.mapping
