@@ -125,7 +125,7 @@ def main():
         # create overview from result directory
         ortholog_files = create_overview(result_path, out_path)
 
-    print('# Starting filtering for miRNAs and species')
+    print('# Reading miRNA info')
     # determine miRNAs to analyse
     mirna_ids = []
     with open(mirna_path, 'r') as inf:
@@ -146,7 +146,7 @@ def main():
             mirnas_found.add(path.split('/')[-1].replace('_orthologs.fa', ''))
             filtered_orthologs[path] = ortholog_files[path]
     print('# Done')
-
+    print(filtered_orthologs)
     # double check
     if not filtered_orthologs:
         print('# Nothing left after filtering. Exiting..')
@@ -161,7 +161,6 @@ def main():
             taxid = data[0]
             name = data[1].replace(' ', '_')
             name_2_id[name] = taxid
-
     make_phyloprofile(filtered_orthologs, name_2_id, out_path)
 
     # writing fasta files of representatives to directory in out_path
