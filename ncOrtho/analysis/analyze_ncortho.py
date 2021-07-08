@@ -63,7 +63,7 @@ def main():
     optional.add_argument(
         '--skip', metavar='str', type=str, nargs='?', const='', default='',
         help=(
-            'Comma separated list of species to skip analyses for'
+            'Comma separated list of species for which analyses should be skipped'
         )
     )
     optional.add_argument(
@@ -82,13 +82,6 @@ def main():
             'Name for the species tree (Default: iqtree_rapidboot)'
         )
     )
-    optional.add_argument(
-        '--redo', metavar='yes/no', type=str, nargs='?',
-        const='no', default='no',
-        help=(
-            'Should alignments be re-calculated each time the script is run (Default: no)'
-        )
-    )
     # Show
     # Show help when no arguments are added.
     if len(sys.argv) == 1:
@@ -105,7 +98,6 @@ def main():
     tool = args.method
     iqtree_cmd = args.iqtree
     tree_name = args.treename
-    redo = args.redo
 
     # create output dir if not existing
     if not os.path.isdir(out_path):
@@ -146,7 +138,6 @@ def main():
             mirnas_found.add(path.split('/')[-1].replace('_orthologs.fa', ''))
             filtered_orthologs[path] = ortholog_files[path]
     print('# Done')
-    print(filtered_orthologs)
     # double check
     if not filtered_orthologs:
         print('# Nothing left after filtering. Exiting..')
@@ -165,17 +156,12 @@ def main():
 
     # writing fasta files of representatives to directory in out_path
     multi_out = '{}/multifasta'.format(out_path)
-    if not os.path.isdir(multi_out) or redo == 'yes':
-        multi_paths = extract_representative(filtered_orthologs, mirnas_found, result_path, multi_out)
-    else:
-        print('# Using existing multifasta files in output directory')
+    multi_paths = extract_representative(filtered_orthologs, mirnas_found, result_path, multi_out)
+
 
     # align representative multifasta files using MAFFT-linsi
     align_out = '{}/alignments'.format(out_path)
-    if not os.path.isdir(align_out) or redo == 'yes':
-        align_seqs(multi_paths, align_out, tool)
-    else:
-        print('# Using existing alignment files in output directory')
+    align_seqs(multi_paths, align_out, tool)
 
     # call Ingo's concat alignment and degap scripts
     superm_path = make_supermatrix(out_path)
