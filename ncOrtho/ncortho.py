@@ -162,27 +162,6 @@ def mirna_maker(mirpath, cmpath, output, msl):
     return mmdict
 
 
-# # Write a FASTA file containing the accepted orthologs.
-# def write_output(a, o, cm):
-#     """
-#     Parameters
-#     ----------
-#     a   :   Dictionary of accepted hits
-#     o   :   Output path
-#     dm  :   Dictionary of cmsearch output
-#
-#     Returns
-#     -------
-#     None.
-#
-#     """
-#     with open(o, 'w') as outfile:
-#         for hit in a:
-#             tup = cm[hit]
-#             header = '|'.join(list(tup))
-#             outfile.write('>{0}\n{1}\n'.format(header, a[hit]))
-
-
 # Allow boolean argument parsing
 def str2bool(v):
     if isinstance(v, bool):
