@@ -54,11 +54,10 @@ def make_phyloprofile(overview_dict, map_dict, out):
     print('# Done')
 
 
-def extract_representative(data, mirnas, result_path, out):
+def extract_representative(data, mirnas, result_path, multi_out):
     # create multifasta files for reach miRNA
     # choosing the top hit ot the cmsearch als represantative ortholog
     print('# Starting to extract representative orthologs in miRNA specific multifasta files')
-    multi_out = '{}/multifasta'.format(out)
     if not os.path.isdir(multi_out):
         sp.run(f'mkdir -p {multi_out}', shell=True)
 
@@ -91,8 +90,7 @@ def extract_representative(data, mirnas, result_path, out):
 
 
 # aligns multifasta files using mafft
-def align_seqs(path_list, out, method):
-    align_out = '{}/alignments'.format(out)
+def align_seqs(path_list, align_out, method):
     if not os.path.isdir(align_out):
         sp.run(f'mkdir -p {align_out}', shell=True)
     print('# Starting alignment of {} miRNA sequences using {}'.format(len(path_list), method))
@@ -118,19 +116,24 @@ def align_seqs(path_list, out, method):
 def make_supermatrix(out):
     align_out = '{}/alignments'.format(out)
     tree_out = '{}/supermatrix'.format(out)
+    curr_dir = os.getcwd()
     if not os.path.isdir(tree_out):
         sp.run(f'mkdir -p {tree_out}', shell=True)
     print('# Creating supermatrix alignment')
     cmd = (
-        'perl /home/felixl/scripts/concat_alignments_dmp.pl -in {} -out supermatrix.aln'
-            .format(f'{out}/alignments')
+        'perl {}/concat_alignments_dmp.pl -in {} -out supermatrix.aln'
+            .format(curr_dir, align_out)
     )
     res = sp.run(cmd, shell=True, capture_output=True)
+    if res.returncode != 0:
+        print('ERROR:')
+        print(res.stderr.decode('utf-8'))
+        sys.exit()
     print('# Done')
 
     print('# De-gapping alignment')
     cmd = (
-        'perl /home/felixl/scripts/degapper.pl -in {}'.format(f'{out}/supermatrix.aln')
+        'perl {}/degapper.pl -in {}/supermatrix.aln'.format(curr_dir, out)
     )
     sp.run(cmd, shell=True)
     # move files to output dir

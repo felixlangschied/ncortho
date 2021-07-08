@@ -40,7 +40,9 @@ def main():
     # mirna data
     required.add_argument(
         '-n', '--ncrna', metavar='<path>', type=str, required=True,
-        help='Path to Tab separated file with information about the reference miRNAs'
+        help='Path to Tab separated file with information about the reference miRNAs. '
+             'Can be a subset of all miRNAs for which results are available but must not contain '
+             'miRNAs without results in the given directory'
     )
     required.add_argument(
         '-o', '--output', metavar='<path>', type=str,
@@ -61,7 +63,7 @@ def main():
     optional.add_argument(
         '--skip', metavar='str', type=str, nargs='?', const='', default='',
         help=(
-            'Comma separated list of species that are to skip for tree reconstruction'
+            'Comma separated list of species to skip analyses for'
         )
     )
     optional.add_argument(
@@ -70,7 +72,28 @@ def main():
         default='iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/species_tree',
         help=(
             'Call to iqtree. Do not change curly bracket notation '
-            '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/species_tree)'
+            '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/{})'
+        )
+    )
+    optional.add_argument(
+        '--treename', metavar='str', type=str, nargs='?',
+        const='iqtree_rapidboot', default='iqtree_rapidboot',
+        help=(
+            'Name for the species tree (Default: iqtree_rapidboot)'
+        )
+    )
+    optional.add_argument(
+        '--redo', metavar='yes/no', type=str, nargs='?',
+        const='no', default='no',
+        help=(
+            'Should alignments be re-calculated each time the script is run (Default: no)'
+        )
+    )
+    optional.add_argument(
+        '--redo', metavar='yes/no', type=str, nargs='?',
+        const='no', default='no',
+        help=(
+            'Should alignments be re-calculated each time the script is run (Default: no)'
         )
     )
     # Show
@@ -88,6 +111,8 @@ def main():
     spec_to_skip = args.skip.split(',')
     tool = args.method
     iqtree_cmd = args.iqtree
+    tree_name = args.treename
+    redo = args.redo
 
     # create output dir if not existing
     if not os.path.isdir(out_path):
@@ -116,14 +141,12 @@ def main():
 
     # determine species to analyse
     all_specs = [path.split('/')[-2] for path in ortholog_files]
-
     all_specs = set(all_specs)
     specs_to_analyse = all_specs - set(spec_to_skip)
     # filter overview dictionary
     filtered_orthologs = {}
     mirnas_found = set()
     # print(mirna_ids)
-
     for path in ortholog_files:
         outmirna = path.split('/')[-1].replace('_orthologs.fa', '')
         if outmirna in mirna_ids and path.split('/')[-2] in specs_to_analyse:
@@ -149,17 +172,25 @@ def main():
     make_phyloprofile(filtered_orthologs, name_2_id, out_path)
 
     # writing fasta files of representatives to directory in out_path
-    multi_paths = extract_representative(filtered_orthologs, mirnas_found, result_path, out_path)
+    multi_out = '{}/multifasta'.format(out_path)
+    if not os.path.isdir(multi_out) or redo == 'yes':
+        multi_paths = extract_representative(filtered_orthologs, mirnas_found, result_path, multi_out)
+    else:
+        print('# Using existing multifasta files in output directory')
 
     # align representative multifasta files using MAFFT-linsi
-    align_seqs(multi_paths, out_path, tool)
+    align_out = '{}/alignments'.format(out_path)
+    if not os.path.isdir(align_out) or redo == 'yes':
+        align_seqs(multi_paths, align_out, tool)
+    else:
+        print('# Using existing alignment files in output directory')
 
     # call Ingo's concat alignment and degap scripts
     superm_path = make_supermatrix(out_path)
 
     # calculate tree using iqtree
     print('# Starting tree calculation')
-    tree_out = f'{out_path}/species_tree'
+    tree_out = f'{out_path}/{tree_name}'
     if not os.path.isdir(tree_out):
         os.mkdir(tree_out)
     tree_cmd = iqtree_cmd.format(superm_path, tree_out)

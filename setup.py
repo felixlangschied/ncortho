@@ -40,7 +40,8 @@ setup(
     ],
     entry_points={
         'console_scripts': ["ncCreate = ncOrtho.coreset.coreset:main",
-                            "ncSearch = ncOrtho.ncortho:main"
+                            "ncSearch = ncOrtho.ncortho:main",
+                            "ncAnalyze = ncOrtho.analysis.analyze_ncortho:main"
                             ],
     },
     license="GPL-3.0",
