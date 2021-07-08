@@ -4,11 +4,11 @@ import sys
 import argparse
 
 try:
-    ncOrtho.analysis.analyze_tools import create_overview
-    ncOrtho.analysis.analyze_tools import make_phyloprofile
-    ncOrtho.analysis.analyze_tools import extract_representative
-    ncOrtho.analysis.analyze_tools import align_seqs
-    ncOrtho.analysis.analyze_tools import make_supermatrix
+    from ncOrtho.analysis.analyze_tools import create_overview
+    from ncOrtho.analysis.analyze_tools import make_phyloprofile
+    from ncOrtho.analysis.analyze_tools import extract_representative
+    from ncOrtho.analysis.analyze_tools import align_seqs
+    from ncOrtho.analysis.analyze_tools import make_supermatrix
 except ImportError:
     from analyze_tools import create_overview
     from analyze_tools import make_phyloprofile
