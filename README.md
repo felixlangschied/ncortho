@@ -6,7 +6,8 @@ NcOrtho is a tool for the targeted search of orthologous micro RNAs (miRNAs) thr
 Conceptually, it works similar to the program [fDOG](https://github.com/BIONF/fDOG) in that a probabilistic model of 
 a reference miRNA is created. For training the model, orthologs of the reference sequence are first identified in 
 a set of taxa that are more closely related to the reference species. In contrast to fDOG, ncOrtho does not train hidden 
-Markov Models but covariance models (CMs) (Eddy & Durbin, 1994) which also model the secondary structure of miRNAs.
+Markov Models but covariance models (CMs) (Eddy & Durbin, 1994) 
+which also model conservation of miRNA secondary structure.
 
 ![workflow](https://github.com/felixlangschied/ncortho/blob/master/ncOrtho/docs/ncortho_white.png)
 
