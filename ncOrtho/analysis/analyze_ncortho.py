@@ -96,11 +96,13 @@ def main():
     over_file = '{}/overview.txt'.format(out_path)
     # if overview exists read it
     if os.path.isfile(over_file):
+        print('# Ortholog result overview file found')
         ortholog_files = {}
         with open(over_file, 'r') as inf:
             for line in inf:
                 key, value = line.strip().split()
                 ortholog_files[key] = value
+
     else:
         # create overview from result directory
         ortholog_files = create_overview(result_path, out_path)
@@ -158,6 +160,8 @@ def main():
     # calculate tree using iqtree
     print('# Starting tree calculation')
     tree_out = f'{out_path}/species_tree'
+    if not os.path.isdir(tree_out):
+        os.mkdir(tree_out)
     tree_cmd = iqtree_cmd.format(superm_path, tree_out)
     res = sp.run(tree_cmd, shell=True, capture_output=True)
     print(res.stdout.decode('utf-8'))
