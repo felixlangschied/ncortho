@@ -429,10 +429,10 @@ def main():
         mirna_id = mirna.name
 
         # Create output folder, if not existent.
-        if heuristic:
-            outdir = '{}'.format(output)
-        else:
+        if not heuristic or cleanup:
             outdir = '{}/{}'.format(output, mirna_id)
+        else:
+            outdir = '{}'.format(output)
         if not os.path.isdir(outdir):
             os.makedirs(outdir)
 
