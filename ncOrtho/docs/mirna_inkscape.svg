@@ -9,6 +9,9 @@
    id="svg5"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    sodipodi:docname="mirna_inkscape.svg"
+   inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"
+   inkscape:export-xdpi="600"
+   inkscape:export-ydpi="600"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -29,18 +32,18 @@
   </metadata>
   <sodipodi:namedview
      id="namedview7"
-     pagecolor="#ffffff"
+     pagecolor="#f3f3f3"
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:pageshadow="2"
-     inkscape:pageopacity="1"
+     inkscape:pageopacity="0"
      inkscape:pagecheckerboard="false"
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:snap-bbox="false"
      inkscape:zoom="1.4142136"
-     inkscape:cx="372.99882"
-     inkscape:cy="258.44752"
+     inkscape:cx="372.29171"
+     inkscape:cy="428.15314"
      inkscape:window-width="2400"
      inkscape:window-height="1271"
      inkscape:window-x="2391"
@@ -293,8 +296,24 @@
   </defs>
   <g
      inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Hintergrund">
+    <rect
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.574985;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1631"
+       width="204.42883"
+       height="130.47023"
+       x="3.8327181"
+       y="0.90520614"
+       ry="7.7417951"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Ebene 2"
+     inkscape:label="Figure"
      style="display:inline">
     <path
        style="color:#000000;fill:#ffffff;fill-opacity:0;stroke-linejoin:bevel"
@@ -310,7 +329,7 @@
        sodipodi:nodetypes="ccccc" />
     <path
        id="path9895"
-       style="color:#000000;opacity:0.81800022;fill:#bd582c;fill-opacity:1;stroke:#8a3e1d;stroke-width:0.30000001;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="color:#000000;opacity:0.818;fill:#bd582c;fill-opacity:1;stroke:#8a3e1d;stroke-width:0.3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 182.87045,179.789 c -3.33264,-0.0566 -6.91477,1.98985 -7.74061,5.37332 -0.6421,2.45263 0.58008,5.01309 2.56522,6.4735 v 21.39508 c 0.66003,0.19446 0.63426,-0.29699 0.58704,-0.80977 v -20.1998 c 0.007,0.004 0.0144,0.009 0.0217,0.0129 v -0.7121 c -0.81249,-0.54924 -1.51133,-1.26366 -2.02572,-2.14199 -1.32443,-2.16869 -0.71857,-5.13679 1.17254,-6.77426 1.45241,-1.35035 3.45222,-2.02761 5.41983,-2.02314 3.06607,-0.0542 6.38726,1.7957 7.16132,4.9134 0.59554,2.2631 -0.576,4.59789 -2.41743,5.92108 v 0.69454 5.34592 15.74478 c 0.66003,0.19446 0.63426,-0.29699 0.58705,-0.80977 v -20.69486 c 0.66415,-0.5188 1.24349,-1.15002 1.70015,-1.89239 1.50646,-2.34666 0.96794,-5.63555 -1.0666,-7.49825 -1.56994,-1.53742 -3.78451,-2.3231 -5.9645,-2.31821 z"
        inkscape:connector-curvature="0" />
     <g
@@ -331,75 +350,21 @@
        transform="matrix(0.26458333,0,0,0.26458333,-84.180003,124.46329)"
        style="font-weight:400;font-family:Arial;fill:none;stroke-miterlimit:10" />
     <g
-       style="display:inline"
-       id="g7775"
-       transform="matrix(0.26458333,0,0,0.26458333,11.472655,237.73147)">
-      <rect
-         id="rect7746"
-         height="220"
-         width="100"
-         y="0"
-         x="0"
-         style="fill:#bad4aa" />
-      <rect
-         id="rect7748"
-         height="220"
-         width="100"
-         y="0"
-         x="100"
-         style="fill:#ebf5df" />
-      <rect
-         id="rect7750"
-         height="220"
-         width="100"
-         y="0"
-         x="200"
-         style="fill:#d4d4aa" />
-      <rect
-         id="rect7752"
-         height="220"
-         width="100"
-         y="0"
-         x="300"
-         style="fill:#edb458" />
-      <rect
-         id="rect7754"
-         height="220"
-         width="100"
-         y="0"
-         x="400"
-         style="fill:#e8871e" />
-      <text
-         id="text7756"
-         alignment-baseline="middle"
-         font-size="6"
-         y="235"
-         x="10"
-         style="font-size:6px;font-family:Arial">Exported from Coolors.co</text>
-      <text
-         id="text7758"
-         alignment-baseline="middle"
-         font-size="6"
-         y="235"
-         x="490"
-         style="font-size:6px;font-family:Arial;text-anchor:end">https://coolors.co/bad4aa-ebf5df-d4d4aa-edb458-e8871e</text>
-    </g>
-    <g
        id="g9699"
        transform="translate(84.402088,-17.859394)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png">
       <g
          transform="matrix(1.116133,0,0,0.95449287,4.4676053,-1.4052785)"
          id="g9682">
         <path
-           style="fill:#855a5c;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.26458299;stroke-opacity:1"
+           style="fill:#855a5c;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.264583;stroke-opacity:1"
            d="m 85.251971,58.455655 c 0,0.947159 4.24634,1.714411 9.48217,1.714411 5.23848,0 9.482179,-0.767252 9.482179,-1.714411 v 10.286466 c 0,0.947159 -4.243699,1.714411 -9.482179,1.714411 -5.23583,0 -9.48217,-0.767252 -9.48217,-1.714411 z"
            id="path14131"
            inkscape:connector-curvature="0" />
         <path
-           style="fill:#b0898b;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.26458299;stroke-opacity:1"
+           style="fill:#b0898b;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.264583;stroke-opacity:1"
            d="m 85.251971,58.455655 c 0,-0.944513 4.24634,-1.714411 9.48217,-1.714411 5.23848,0 9.482179,0.769898 9.482179,1.714411 0,0.947159 -4.243699,1.714411 -9.482179,1.714411 -5.23583,0 -9.48217,-0.767252 -9.48217,-1.714411 z"
            id="path14133"
            inkscape:connector-curvature="0" />
@@ -421,45 +386,45 @@
            id="flowPara9690">Reference Genome</flowPara></flowRoot>
     </g>
     <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.78393143;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.783931;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 48.9479,23.15624 H 97.132698"
        id="path9703-6-2"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        id="rect9720-1"
-       style="display:inline;fill:#2b4756;fill-opacity:1;stroke:#223944;stroke-width:0.30000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="display:inline;fill:#2b4756;fill-opacity:1;stroke:#223944;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 81.713455,20.299623 11.310417,0.10713 2.443905,2.774416 -2.470945,2.831688 -11.310417,-0.107129 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        id="rect9720-2"
-       style="display:inline;fill:#4e8197;fill-opacity:1;stroke:#223944;stroke-width:0.30000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="display:inline;fill:#4e8197;fill-opacity:1;stroke:#223944;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 51.145618,20.299623 11.31048,0.107131 2.44392,2.774415 -2.47096,2.831688 -11.31048,-0.107129 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.22259374;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Mstart);marker-end:url(#Arrow1Mend)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.222594;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Mstart);marker-end:url(#Arrow1Mend)"
        d="M 58.009296,28.134415 V 41.295321"
        id="path11301"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot11972"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,-27.168876,-11.577904)"
+       transform="matrix(0.26458333,0,0,0.26458333,-27.168876,-8.9320701)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><flowRegion
          id="flowRegion11974"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"><rect
            id="rect11976"
@@ -468,61 +433,62 @@
            x="334"
            y="155.01968"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle" /></flowRegion><flowPara
-         id="flowPara11978">Gene orthology</flowPara></flowRoot>
+         id="flowPara11978"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif">Orthologs</flowPara></flowRoot>
     <path
        inkscape:connector-curvature="0"
        id="path12189"
        d="M 48.9479,46.273521 H 97.132698"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.78393143;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.783931;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        id="rect9720"
-       style="fill:#664546;fill-opacity:1;stroke:#493233;stroke-width:0.30000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="fill:#664546;fill-opacity:1;stroke:#493233;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 81.713455,43.416904 11.310417,0.10713 2.443905,2.774416 -2.470945,2.831688 -11.310417,-0.10713 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        id="rect9720-9"
-       style="display:inline;fill:#ab8385;fill-opacity:1;stroke:#493233;stroke-width:0.30000001;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="display:inline;fill:#ab8385;fill-opacity:1;stroke:#493233;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 51.145618,43.416904 11.31048,0.10713 2.44392,2.774416 -2.47096,2.831688 -11.31048,-0.10713 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
-       d="m 69.620468,43.40056 a 2.8203272,2.8730374 0 0 0 -2.82043,2.87296 2.8203272,2.8730374 0 0 0 2.82043,2.872962 2.8203272,2.8730374 0 0 0 2.281276,-1.188892 H 79.12928 V 44.807894 H 72.04254 A 2.8203272,2.8730374 0 0 0 69.620468,43.40056 Z"
+       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 69.942335,43.40056 a 2.8203272,2.8730374 0 0 0 -2.82043,2.87296 2.8203272,2.8730374 0 0 0 2.82043,2.872962 2.8203272,2.8730374 0 0 0 2.281276,-1.188892 h 7.227536 v -3.149696 h -7.08674 A 2.8203272,2.8730374 0 0 0 69.942335,43.40056 Z"
        id="path12022"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="66.740532"
+       x="66.448868"
        y="52.921852"
        id="text12094"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          id="tspan12092"
-         x="66.740532"
+         x="66.448868"
          y="52.921852"
-         style="font-size:3.52778px;stroke-width:0.264583px">miRNA</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px">miRNA</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24266273;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.242663;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 48.9479,18.237877 v -1.960798 h 48.087298 v 1.771043"
        id="path12108"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -531,7 +497,7 @@
        id="text12094-5"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          id="tspan12092-3"
          x="59.887321"
@@ -541,34 +507,34 @@
        inkscape:connector-curvature="0"
        id="path12364"
        d="M 88.577106,28.134416 V 41.295322"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.22259374;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker12368);marker-end:url(#marker12372)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.222594;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker12368);marker-end:url(#marker12372)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:connector-curvature="0"
        id="path12726"
        d="m 108.21465,23.15624 h 48.18507"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.78399998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.784;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:connector-curvature="0"
        id="path12728"
        d="m 128.96297,43.40056 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.22259374;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker12746)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.222594;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker12746)"
        d="M 132.30718,28.134416 V 41.295322"
        id="path12738"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -577,28 +543,28 @@
        id="text12094-8"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          id="tspan12092-31"
          x="133.56009"
          y="36.256439"
          style="font-size:3.52778px;stroke-width:0.264583px">BLASTn</tspan></text>
     <path
-       style="fill:#36596a;fill-opacity:0.78431373;stroke:#223944;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.39999996, 0.69999998;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#36596a;fill-opacity:0.784314;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.7;stroke-dashoffset:0;stroke-opacity:1"
        d="m 128.96297,20.117212 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
        id="path13250"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:connector-curvature="0"
        id="path13270"
        d="m 108.21465,18.237877 v -1.960798 h 48.08757 v 1.771043"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24266273;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.242663;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        id="text13274"
        y="13.431624"
@@ -607,7 +573,7 @@
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          style="font-size:3.52778px;stroke-width:0.264583px"
          y="13.431624"
          x="119.15405"
@@ -617,26 +583,26 @@
        inkscape:connector-curvature="0"
        id="path13276"
        d="m 171.29657,20.117212 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
-       style="fill:#36596a;fill-opacity:0.78431373;stroke:#223944;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.39999996, 0.69999998;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#36596a;fill-opacity:0.784314;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.7;stroke-dashoffset:0;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24756147px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.247561px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 180.96848,22.946678 h 2.12901 V 61.11741 h -1.99596"
        id="path13318"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="m 171.29657,58.217236 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 V 59.62457 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
        id="path13329"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -645,44 +611,44 @@
        id="text12094-8-8"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          id="tspan12092-31-9"
          x="165.86232"
          y="42.961227"
          style="font-size:3.52778px;stroke-width:0.264583px">re-BLAST</tspan></text>
     <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#855a5c;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#855a5c;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 139.9891,56.304722 h 13.12778"
        id="path13349"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:connector-curvature="0"
        id="path13351"
        d="m 139.9891,59.261504 h 13.12778"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#36596a;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#36596a;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#87a330;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#87a330;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 139.9891,65.175066 h 13.12778"
        id="path13353"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:connector-curvature="0"
        id="path13355"
        d="m 139.98909,62.218286 h 13.12778"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#828e82;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#828e82;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <g
        clip-path="url(#clipPath5464)"
        style="font-family:none;fill:none;stroke-miterlimit:10"
@@ -691,7 +657,7 @@
        id="g14073"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png">
       <g
          style="font-weight:400;font-family:Arial"
          font-weight="400"
@@ -753,7 +719,7 @@
         <g
            id="g13393">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13387"
              d="m 505,390 h -5" />
@@ -796,7 +762,7 @@
         <g
            id="g13413">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13407"
              d="m 505,990 h -5" />
@@ -815,7 +781,7 @@
         <g
            id="g13421">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13415"
              d="m 505,540 h -5" />
@@ -866,7 +832,7 @@
         <g
            id="g13445">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13439"
              d="m 505,450 h -5" />
@@ -885,7 +851,7 @@
         <g
            id="g13453">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13447"
              d="m 505,480 h -5" />
@@ -920,7 +886,7 @@
         <g
            id="g13469">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13463"
              d="m 505,1590 h -5" />
@@ -939,7 +905,7 @@
         <g
            id="g13477">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13471"
              d="m 505,1020 h -5" />
@@ -958,7 +924,7 @@
         <g
            id="g13485">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13479"
              d="m 505,1380 h -5" />
@@ -977,7 +943,7 @@
         <g
            id="g13493">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13487"
              d="m 505,1620 h -5" />
@@ -996,7 +962,7 @@
         <g
            id="g13501">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13495"
              d="m 505,810 h -5" />
@@ -1015,7 +981,7 @@
         <g
            id="g13509">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13503"
              d="m 505,270 h -5" />
@@ -1050,7 +1016,7 @@
         <g
            id="g13525">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13519"
              d="m 505,660 h -5" />
@@ -1077,7 +1043,7 @@
         <g
            id="g13537">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13531"
              d="m 505,330 h -5" />
@@ -1096,7 +1062,7 @@
         <g
            id="g13545">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13539"
              d="m 505,900 h -5" />
@@ -1115,7 +1081,7 @@
         <g
            id="g13553">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13547"
              d="m 505,1410 h -5" />
@@ -1142,7 +1108,7 @@
         <g
            id="g13565">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13559"
              d="m 505,780 h -5" />
@@ -1161,7 +1127,7 @@
         <g
            id="g13573">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13567"
              d="m 505,750 h -5" />
@@ -1188,7 +1154,7 @@
         <g
            id="g13585">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13579"
              d="m 505,1260 h -5" />
@@ -1255,7 +1221,7 @@
         <g
            id="g13617">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13611"
              d="m 505,210 h -5" />
@@ -1274,7 +1240,7 @@
         <g
            id="g13625">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13619"
              d="m 505,90 h -5" />
@@ -1293,7 +1259,7 @@
         <g
            id="g13633">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13627"
              d="m 505,1560 h -5" />
@@ -1328,7 +1294,7 @@
         <g
            id="g13649">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13643"
              d="m 505,180 h -5" />
@@ -1363,7 +1329,7 @@
         <g
            id="g13665">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13659"
              d="m 505,1710 h -5" />
@@ -1390,7 +1356,7 @@
         <g
            id="g13677">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13671"
              d="m 505,930 h -5" />
@@ -1417,7 +1383,7 @@
         <g
            id="g13689">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13683"
              d="m 505,690 h -5" />
@@ -1436,7 +1402,7 @@
         <g
            id="g13697">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13691"
              d="m 505,1350 h -5" />
@@ -1463,7 +1429,7 @@
         <g
            id="g13709">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13703"
              d="m 505,630 h -5" />
@@ -1482,7 +1448,7 @@
         <g
            id="g13717">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13711"
              d="m 505,510 h -5" />
@@ -1509,7 +1475,7 @@
         <g
            id="g13729">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13723"
              d="m 505,120 h -5" />
@@ -1528,7 +1494,7 @@
         <g
            id="g13737">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13731"
              d="m 505,30 h -5" />
@@ -1547,7 +1513,7 @@
         <g
            id="g13745">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13739"
              d="m 505,870 h -5" />
@@ -1566,7 +1532,7 @@
         <g
            id="g13753">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13747"
              d="m 505,1170 h -5" />
@@ -1585,7 +1551,7 @@
         <g
            id="g13761">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13755"
              d="m 505,240 h -5" />
@@ -1612,7 +1578,7 @@
         <g
            id="g13773">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13767"
              d="m 505,1500 h -5" />
@@ -1631,7 +1597,7 @@
         <g
            id="g13781">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13775"
              d="m 505,300 h -5" />
@@ -1658,7 +1624,7 @@
         <g
            id="g13793">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13787"
              d="m 505,1680 h -5" />
@@ -1677,7 +1643,7 @@
         <g
            id="g13801">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13795"
              d="m 505,1470 h -5" />
@@ -1696,7 +1662,7 @@
         <g
            id="g13809">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13803"
              d="m 505,1290 h -5" />
@@ -1715,7 +1681,7 @@
         <g
            id="g13817">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13811"
              d="m 505,360 h -5" />
@@ -1742,7 +1708,7 @@
         <g
            id="g13829">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13823"
              d="m 505,1140 h -5" />
@@ -1761,7 +1727,7 @@
         <g
            id="g13837">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13831"
              d="m 505,1440 h -5" />
@@ -1780,7 +1746,7 @@
         <g
            id="g13845">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13839"
              d="m 505,1230 h -5" />
@@ -1815,7 +1781,7 @@
         <g
            id="g13861">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13855"
              d="m 505,600 h -5" />
@@ -1842,7 +1808,7 @@
         <g
            id="g13873">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13867"
              d="m 505,1110 h -5" />
@@ -1877,7 +1843,7 @@
         <g
            id="g13889">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13883"
              d="m 505,420 h -5" />
@@ -1904,7 +1870,7 @@
         <g
            id="g13901">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13895"
              d="m 505,1530 h -5" />
@@ -1955,7 +1921,7 @@
         <g
            id="g13925">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13919"
              d="m 505,1650 h -5" />
@@ -1974,7 +1940,7 @@
         <g
            id="g13933">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13927"
              d="m 505,60 h -5" />
@@ -2001,7 +1967,7 @@
         <g
            id="g13945">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13939"
              d="m 505,840 h -5" />
@@ -2028,7 +1994,7 @@
         <g
            id="g13957">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13951"
              d="m 505,1080 h -5" />
@@ -2055,7 +2021,7 @@
         <g
            id="g13969">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13963"
              d="m 505,570 h -5" />
@@ -2098,7 +2064,7 @@
         <g
            id="g13989">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13983"
              d="m 505,150 h -5" />
@@ -2117,7 +2083,7 @@
         <g
            id="g13997">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13991"
              d="m 505,0 h -5" />
@@ -2136,7 +2102,7 @@
         <g
            id="g14005">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path13999"
              d="m 505,960 h -5" />
@@ -2155,7 +2121,7 @@
         <g
            id="g14013">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path14007"
              d="m 505,720 h -5" />
@@ -2182,7 +2148,7 @@
         <g
            id="g14025">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path14019"
              d="m 505,1200 h -5" />
@@ -2201,7 +2167,7 @@
         <g
            id="g14033">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path14027"
              d="m 505,1050 h -5" />
@@ -2220,7 +2186,7 @@
         <g
            id="g14041">
           <path
-             style="stroke:#aaaaaa;stroke-width:0.30000001;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
+             style="stroke:#aaaaaa;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:5, 10;stroke-dashoffset:10"
              inkscape:connector-curvature="0"
              id="path14035"
              d="m 505,1320 h -5" />
@@ -2308,11 +2274,11 @@
        sodipodi:cx="51.985413"
        sodipodi:sides="6"
        id="path14075"
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.52196187;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        transform="matrix(0.39500273,0,0,0.44036816,14.243782,6.0733184)"
        inkscape:transform-center-y="-0.62414821"
@@ -2328,11 +2294,11 @@
        sodipodi:cx="56.693348"
        sodipodi:sides="3"
        id="path14077"
-       style="display:inline;fill:#828e82;fill-opacity:1;stroke:#4c544c;stroke-width:0.95907372;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:#828e82;fill-opacity:1;stroke:#4c544c;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        transform="matrix(0.39500273,0,0,0.44036816,14.243782,-0.80639868)"
        inkscape:transform-center-y="-0.62414821"
@@ -2348,11 +2314,11 @@
        sodipodi:cx="56.693348"
        sodipodi:sides="3"
        id="path14079"
-       style="display:inline;fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.95907372;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        transform="matrix(0.39500273,0,0,0.44036816,14.243782,14.053998)"
        inkscape:transform-center-y="-0.62414821"
@@ -2368,21 +2334,21 @@
        sodipodi:cx="56.693348"
        sodipodi:sides="3"
        id="path14081"
-       style="display:inline;fill:#87a330;fill-opacity:1;stroke:#4c5c1c;stroke-width:0.95907372;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:#87a330;fill-opacity:1;stroke:#4c5c1c;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <ellipse
        ry="1.9589142"
        rx="1.9874892"
        cy="65.106422"
        cx="36.63781"
        id="ellipse14083"
-       style="fill:#fbba72;fill-opacity:1;stroke:#b46916;stroke-width:0.44842058;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#fbba72;fill-opacity:1;stroke:#b46916;stroke-width:0.448421;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <rect
        ry="4.3550825"
        y="13.172992"
@@ -2390,12 +2356,12 @@
        height="73.394943"
        width="31.73628"
        id="rect14085"
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.35099888;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.05299666, 0.35099889;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.350999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.053, 0.350999;stroke-dashoffset:0;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.60489172;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.604892;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect14453"
        width="17.765289"
        height="14.11007"
@@ -2404,15 +2370,15 @@
        ry="0.83725804"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:connector-curvature="0"
        id="path15919"
        d="m 118.95406,60.605881 h 13.1609"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.22259374;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker15927)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.222594;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker15927)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        id="text16303"
        y="57.423126"
@@ -2421,7 +2387,7 @@
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          style="font-size:3.52778px;stroke-width:0.264583px"
          y="57.423126"
          x="118.28548"
@@ -2435,7 +2401,7 @@
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          style="font-size:3.52778px;stroke-width:0.264583px"
          y="66.418968"
          x="116.17968"
@@ -2445,11 +2411,11 @@
        inkscape:connector-curvature="0"
        id="path16319"
        d="m 111.0902,58.147641 h -9.67192 c -0.85646,-1.505413 -2.410054,-2.429298 -4.088873,-2.431551 -2.629557,-9.2e-5 -4.761303,2.222289 -4.761374,4.963816 6.8e-5,2.741529 2.131815,4.963913 4.761374,4.963821 1.525202,-0.0021 2.957123,-0.765829 3.851183,-2.054133 h 9.90961"
-       style="fill:none;fill-opacity:1;stroke:#855a5c;stroke-width:1.19599998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#855a5c;stroke-width:1.196;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        sodipodi:nodetypes="ccccccc"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -2458,7 +2424,7 @@
        id="text16323"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          id="tspan16321"
          x="94.510559"
@@ -2471,12 +2437,12 @@
        height="14.11007"
        width="22.181492"
        id="rect16387"
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.6759069;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.675907;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 99.20982,24.479157 h 3.71311 v 1.32292 l 2.64584,-2.64583 -2.64584,-2.64584 v 1.32292 h -3.71311 z"
        id="path16402"
        inkscape:connector-curvature="0"
@@ -2485,7 +2451,7 @@
        sodipodi:nodetypes="cccccccc"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        sodipodi:nodetypes="cccccccc"
        inkscape:transform-center-y="7.6706359"
@@ -2493,12 +2459,12 @@
        inkscape:connector-curvature="0"
        id="path16404"
        d="m 159.28665,24.479157 h 3.71312 v 1.32292 l 2.64584,-2.64583 -2.64584,-2.64584 v 1.32292 h -3.71312 z"
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 165.70041,59.667391 h -3.71312 v -1.32292 l -2.64584,2.64583 2.64584,2.64584 v -1.32292 h 3.71312 z"
        id="path16406"
        inkscape:connector-curvature="0"
@@ -2507,7 +2473,7 @@
        sodipodi:nodetypes="cccccccc"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot11972-3"
@@ -2515,7 +2481,7 @@
        transform="matrix(0.26458333,0,0,0.26458333,-88.461815,-38.157687)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><flowRegion
          id="flowRegion11974-3"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"><rect
            id="rect11976-8"
@@ -2533,7 +2499,7 @@
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><flowRegion
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"
          id="flowRegion16434"><rect
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"
@@ -2551,7 +2517,7 @@
        transform="matrix(0.26458333,0,0,0.26458333,-47.102108,26.935347)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><flowRegion
          id="flowRegion16442"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"><rect
            id="rect16440"
@@ -2570,7 +2536,7 @@
        id="text16450"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          id="tspan16448"
          x="174.12975"
@@ -2578,7 +2544,7 @@
          style="font-size:3.21028px;text-align:center;text-anchor:middle;stroke-width:0.264583px">candidate</tspan><tspan
          sodipodi:role="line"
          x="174.12975"
-         y="18.379915"
+         y="18.379917"
          style="font-size:3.21028px;text-align:center;text-anchor:middle;stroke-width:0.264583px"
          id="tspan16452">ortholog</tspan></text>
     <text
@@ -2589,7 +2555,7 @@
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          style="font-size:3.21028px;text-align:center;text-anchor:middle;stroke-width:0.264583px"
          y="67.283775"
          x="174.12975"
@@ -2605,7 +2571,7 @@
        transform="translate(4.050682,4.2254683)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png">
       <path
          transform="matrix(0.74198683,0,0,0.79149151,-26.681089,31.752669)"
          d="m 53.149265,71.600565 -0.04563,1.684063 1.591552,0.552374 -1.481259,0.802511 0.317406,1.654511 -1.435625,-0.881552 -1.274145,1.102137 0.04563,-1.684064 -1.591551,-0.552373 1.481259,-0.802512 -0.317407,-1.65451 1.435625,0.881552 z"
@@ -2620,7 +2586,7 @@
          sodipodi:cx="51.985413"
          sodipodi:sides="6"
          id="path16460"
-         style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.52196187;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <path
          transform="matrix(0.39500273,0,0,0.44036816,-10.502625,76.421476)"
@@ -2637,7 +2603,7 @@
          sodipodi:cx="56.693348"
          sodipodi:sides="3"
          id="path16462"
-         style="display:inline;fill:#828e82;fill-opacity:1;stroke:#4c544c;stroke-width:0.95907372;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:#828e82;fill-opacity:1;stroke:#4c544c;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <path
          transform="matrix(0.39500273,0,0,0.44036816,-10.502625,71.03534)"
@@ -2654,7 +2620,7 @@
          sodipodi:cx="56.693348"
          sodipodi:sides="3"
          id="path16464"
-         style="display:inline;fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.95907372;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <path
          transform="matrix(0.39500273,0,0,0.44036816,-10.502625,81.807603)"
@@ -2671,7 +2637,7 @@
          sodipodi:cx="56.693348"
          sodipodi:sides="3"
          id="path16466"
-         style="display:inline;fill:#87a330;fill-opacity:1;stroke:#4c5c1c;stroke-width:0.95907372;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:#87a330;fill-opacity:1;stroke:#4c5c1c;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <ellipse
          ry="1.9589142"
@@ -2679,7 +2645,7 @@
          cy="111.91314"
          cx="11.704309"
          id="ellipse16468"
-         style="fill:#fbba72;fill-opacity:1;stroke:#b46916;stroke-width:0.44842058;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#fbba72;fill-opacity:1;stroke:#b46916;stroke-width:0.448421;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <text
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -2740,23 +2706,23 @@
        inkscape:connector-curvature="0"
        id="path16524"
        d="m 54.274625,80.971417 a 2.8203272,2.8730374 0 0 0 -2.82043,2.872956 2.8203272,2.8730374 0 0 0 2.82043,2.872965 2.8203272,2.8730374 0 0 0 2.281276,-1.188894 h 7.227536 v -3.149693 h -7.08674 a 2.8203272,2.8730374 0 0 0 -2.422072,-1.407334 z"
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <g
        id="g16560"
        transform="translate(4.2333336,-23.812509)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png">
       <path
-         style="fill:#fbba72;fill-opacity:1;fill-rule:evenodd;stroke:#b46916;stroke-width:0.27309027;stroke-opacity:1"
+         style="fill:#fbba72;fill-opacity:1;fill-rule:evenodd;stroke:#b46916;stroke-width:0.27309;stroke-opacity:1"
          d="m 66.547169,110.87878 c 0,0.90406 4.73948,1.6364 10.583363,1.6364 5.84684,0 10.583373,-0.73234 10.583373,-1.6364 v 9.81836 c 0,0.90406 -4.736533,1.6364 -10.583373,1.6364 -5.843883,0 -10.583363,-0.73234 -10.583363,-1.6364 z"
          id="path16526"
          inkscape:connector-curvature="0" />
       <path
-         style="fill:#fcd1a1;fill-opacity:1;fill-rule:evenodd;stroke:#b46916;stroke-width:0.27309027;stroke-opacity:1"
+         style="fill:#fcd1a1;fill-opacity:1;fill-rule:evenodd;stroke:#b46916;stroke-width:0.27309;stroke-opacity:1"
          d="m 66.547169,110.87878 c 0,-0.90153 4.73948,-1.63639 10.583363,-1.63639 5.84684,0 10.583373,0.73486 10.583373,1.63639 0,0.90406 -4.736533,1.6364 -10.583373,1.6364 -5.843883,0 -10.583363,-0.73234 -10.583363,-1.6364 z"
          id="path16528"
          inkscape:connector-curvature="0" />
@@ -2786,36 +2752,36 @@
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          style="font-size:3.52778px;stroke-width:0.264583px"
          y="82.823151"
          x="74.293465"
          id="tspan17528"
          sodipodi:role="line">BLASTn</tspan></text>
     <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.60467786;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.604678;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 97.470189,81.36461 H 126.13365"
        id="path17532"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:connector-curvature="0"
        id="path17534"
        d="m 102.2327,86.65628 h 28.66348"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.60467786;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.604678;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.60467786;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.604678;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 99.05769,91.418781 h 28.66347"
        id="path17536"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -2824,20 +2790,20 @@
        id="text17548"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          id="tspan17546"
          x="99.57489"
          y="97.304619"
          style="font-size:3.52778px;stroke-width:0.264583px">candidate regions</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.33148429;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker17562)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.331484;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker17562)"
        d="m 163.49001,83.966252 h -29.1869"
        id="path17554"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -2846,34 +2812,34 @@
        id="text18006"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          id="tspan18004"
          x="137.79332"
          y="82.823151"
          style="font-size:3.52778px;stroke-width:0.264583px">CMsearch</tspan></text>
     <path
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 54.274625,80.971417 a 2.8203272,2.8730374 0 0 0 -2.82043,2.872956 2.8203272,2.8730374 0 0 0 2.82043,2.872965 2.8203272,2.8730374 0 0 0 2.281276,-1.188894 h 7.227536 v -3.149693 h -7.08674 a 2.8203272,2.8730374 0 0 0 -2.422072,-1.407334 z"
        id="path18018"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
-       style="fill:#fbba72;fill-opacity:0.60824741;stroke:#b46916;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.39999996, 0.69999998;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#fbba72;fill-opacity:0.608247;stroke:#b46916;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.7;stroke-dashoffset:0;stroke-opacity:1"
        d="m 171.29657,80.971417 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
        id="path18020"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <g
        transform="translate(84.402088,43.523966)"
        id="g18038"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png">
       <g
          id="g18028"
          transform="matrix(1.116133,0,0,0.95449287,4.4676053,-1.4052785)">
@@ -2881,12 +2847,12 @@
            inkscape:connector-curvature="0"
            id="path18024"
            d="m 85.251971,58.455655 c 0,0.947159 4.24634,1.714411 9.48217,1.714411 5.23848,0 9.482179,-0.767252 9.482179,-1.714411 v 10.286466 c 0,0.947159 -4.243699,1.714411 -9.482179,1.714411 -5.23583,0 -9.48217,-0.767252 -9.48217,-1.714411 z"
-           style="fill:#855a5c;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.26458299;stroke-opacity:1" />
+           style="fill:#855a5c;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.264583;stroke-opacity:1" />
         <path
            inkscape:connector-curvature="0"
            id="path18026"
            d="m 85.251971,58.455655 c 0,-0.944513 4.24634,-1.714411 9.48217,-1.714411 5.23848,0 9.482179,0.769898 9.482179,1.714411 0,0.947159 -4.243699,1.714411 -9.482179,1.714411 -5.23583,0 -9.48217,-0.767252 -9.48217,-1.714411 z"
-           style="fill:#b0898b;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.26458299;stroke-opacity:1" />
+           style="fill:#b0898b;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.264583;stroke-opacity:1" />
       </g>
       <flowRoot
          xml:space="preserve"
@@ -2912,7 +2878,7 @@
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          style="font-size:3.52778px;stroke-width:0.264583px"
          y="104.3446"
          x="165.86232"
@@ -2922,18 +2888,18 @@
        inkscape:connector-curvature="0"
        id="path18046"
        d="m 171.29657,119.07155 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87297 2.8203272,2.8730374 0 0 0 2.82044,2.87298 2.8203272,2.8730374 0 0 0 2.28129,-1.1889 h 7.22758 v -3.14971 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.40734 z"
-       style="fill:#fbba72;fill-opacity:1;stroke:#b46916;stroke-width:0.69999999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:7;stroke-opacity:1"
+       style="fill:#fbba72;fill-opacity:1;stroke:#b46916;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:7;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:connector-curvature="0"
        id="path18112"
        d="M 95.756379,83.966252 H 66.56959"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.33148429;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker18120)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.331484;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker18120)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.21028px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -2942,7 +2908,7 @@
        id="text18578"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          sodipodi:role="line"
          x="158.97557"
          y="118.95502"
@@ -2955,19 +2921,19 @@
          id="tspan18582">species</tspan><tspan
          sodipodi:role="line"
          x="158.97557"
-         y="126.98071"
+         y="126.98072"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.21028px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;stroke-width:0.264583px"
          id="tspan18584">ortholog</tspan></text>
     <path
        inkscape:connector-curvature="0"
        id="path18586"
        d="m 180.96848,83.800883 h 2.12901 v 38.170857 h -1.99596"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24756147px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.247561px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.57498503;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.574985;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect18588"
        width="204.42883"
        height="130.47023"
@@ -2976,7 +2942,7 @@
        ry="7.7417951"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <path
        inkscape:export-ydpi="600"
        inkscape:export-xdpi="600"
@@ -2985,7 +2951,7 @@
        d="m 157.65716,89.897661 h -9.67192 c -0.85646,-1.505413 -2.41006,-2.429298 -4.08889,-2.431551 -2.62957,-9.2e-5 -4.76133,2.222289 -4.7614,4.963816 7e-5,2.741529 2.13182,4.963913 4.7614,4.963821 1.52521,-0.0021 2.95714,-0.765829 3.8512,-2.054133 h 9.90961"
        id="path18592"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <text
        inkscape:export-ydpi="600"
        inkscape:export-xdpi="600"
@@ -2994,7 +2960,7 @@
        x="141.07703"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><tspan
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px"
          y="93.576157"
          x="141.07703"
@@ -3010,7 +2976,7 @@
        x="137.33444"
        y="85.707626"
        ry="0.83725804"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot1471"
@@ -3018,7 +2984,7 @@
        transform="matrix(0.26458333,0,0,0.26458333,45.810725,28.109609)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_transparent.png"><flowRegion
          id="flowRegion1467"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle"><rect
            id="rect1465"
@@ -3028,16 +2994,10 @@
            y="155.01968"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle" /></flowRegion><flowPara
          id="flowPara1469">MSA</flowPara></flowRoot>
-  </g>
-  <g
-     inkscape:label="Ebene 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     style="display:inline">
     <g
        style="display:inline"
        id="g7679"
-       transform="matrix(0.26458333,0,0,0.26458333,11.472654,214.0878)">
+       transform="matrix(0.26458333,0,0,0.26458333,17.272403,144.67791)">
       <rect
          id="rect7650"
          height="220"
@@ -3087,59 +3047,6 @@
          y="235"
          x="490"
          style="font-size:6px;font-family:Arial;text-anchor:end">https://coolors.co/fbba72-855a5c-223843-828e82-87a330</text>
-    </g>
-    <g
-       id="g8890"
-       transform="matrix(0.26458333,0,0,0.26458333,11.379252,189.73792)">
-      <rect
-         id="rect8861"
-         height="220"
-         width="100"
-         y="0"
-         x="0"
-         style="fill:#ddca7d" />
-      <rect
-         id="rect8863"
-         height="220"
-         width="100"
-         y="0"
-         x="100"
-         style="fill:#855a5c" />
-      <rect
-         id="rect8865"
-         height="220"
-         width="100"
-         y="0"
-         x="200"
-         style="fill:#b59294" />
-      <rect
-         id="rect8867"
-         height="220"
-         width="100"
-         y="0"
-         x="300"
-         style="fill:#493233" />
-      <rect
-         id="rect8869"
-         height="220"
-         width="100"
-         y="0"
-         x="400"
-         style="fill:#302121" />
-      <text
-         id="text8871"
-         alignment-baseline="middle"
-         font-size="6"
-         y="235"
-         x="10"
-         style="font-size:6px;font-family:Arial">Exported from Coolors.co</text>
-      <text
-         id="text8873"
-         alignment-baseline="middle"
-         font-size="6"
-         y="235"
-         x="490"
-         style="font-size:6px;font-family:Arial;text-anchor:end">https://coolors.co/ddca7d-855a5c-b59294-493233-302121</text>
     </g>
   </g>
 </svg>
