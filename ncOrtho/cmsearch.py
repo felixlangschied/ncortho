@@ -22,6 +22,9 @@ import subprocess as sp
 import sys
 import os
 
+def heuristic_parser(cm_res):
+
+
 
 def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup, heuristic):
     """
@@ -62,24 +65,25 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
     if heuristic[0]:
         # extract candidate regions
         print('# Identifying candidate regions for cmsearch heuristic')
-        tmp_out = '{0}/tmp_blast_{1}.out'.format(out, mirna_id)
-        with open(tmp_out, 'w') as inf:
-            inf.write(">{}\n{}\n".format(mirna_id, mirna.pre))
+        # tmp_out = '{0}/tmp_blast_{1}.out'.format(out, mirna_id)
+        # with open(tmp_out, 'w') as inf:
+        #     inf.write(">{}\n{}\n".format(mirna_id, mirna.pre))
         blast_command = (
-            'blastn -evalue {3} -task blastn -db {0} -query {1} '
-            '-num_threads {2} -outfmt "6 sseqid sstart send sstrand length"'.format(blastdb, tmp_out, cpu, heuristic[1])
+            'blastn -task blastn -db {0} '
+            '-num_threads {1} -evalue {2} '
+            '-outfmt "6 sseqid sstart send sstrand length"'.format(blastdb, cpu, heuristic[1])
         )
-        # print(blast_command)
-        res = sp.run(blast_command, shell=True, capture_output=True)
-        os.remove(tmp_out)
-        if res.stdout:
-            print('Blast step finished')
-        else:
+        blast_call = sp.Popen(
+            blast_command, shell=True, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
+        )
+        res, err = blast_call.communicate(mirna.pre)
+        if err:
+            print(f'ERROR: {err}')
             cm_results = False
             return cm_results
-        result = res.stdout.decode('utf-8').split('\n')
+        print('Blast step finished')
+        result = list(filter(None, res.split('\n')))
         hit_list = [line.split() for line in result if line and float(line.split()[-1]) >= blast_len_cut]
-        # hit_list = [line.split() for line in result if line]
         print(f'# Found {len(hit_list)} BLAST hits of the reference '
               f'pre-miRNA in the query')
         genes = pyfaidx.Fasta(query)
@@ -98,7 +102,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
                 strand = strand.replace('minus', '-')
                 if strand == '-':
                     start, end = end, start
-                header = ">{}|{}|{}|{}\n".format(chrom, start, end, strand)
+                # header = ">{}|{}|{}|{}\n".format(chrom, start, end, strand)
                 # print(header)
                 start = int(start)
                 end = int(end)
@@ -138,6 +142,8 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
         # else:
         #     print('# Found cm_search results at: {}. Using those'.format(cms_output))
         #     cm_results = cmsearch_parser(cms_output, cut_off, len_cut, mirna_id)
+
+
         heur_results = heuristic_cms.replace('.out', '_res.out')
         with open(heuristic_cms, 'r') as inf, open(heur_results, 'w') as of:
             for line in inf:
@@ -227,39 +233,41 @@ def cmsearch_parser(cms, cmc, lc, mirid):
     chromo_dict = {}
     cut_off = cmc
 
-    with open(cms) as cmsfile:
-        # Collect only the hits which satisfy the bit score cutoff.
-        hits = [
-            line.strip().split() for line in cmsfile
-            if not line.startswith('#')
-               and float(line.strip().split()[14]) >= cut_off
-               and abs(int(line.split()[7]) - int(line.strip().split()[8])) >= lc
-        ]
-        # Add the hits to the return dictionary.
-        if hits:
-            for candidate_nr, hit in enumerate(hits, 1):
-                h_chrom = hit[0]
-                h_start = hit[7]
-                h_end = hit[8]
-                h_strand = hit[9]
-                h_score = hit[14]
-                # blastparser expects the start to be the smaller number, will extract reverse complement if on - strand
-                if h_start > h_end:
-                    start_tmp = h_start
-                    h_start = h_end
-                    h_end = start_tmp
-                data = (
-                    '{0}_c{1}'.format(mirid, candidate_nr),
-                    h_chrom, h_start, h_end, h_strand, h_score
-                )
-                hits_dict[data[0]] = data
+    if os.path.isfile(cms):
+        with open(cms) as cmsfile:
+            # Collect only the hits which satisfy the bit score cutoff.
+            hits = [
+                line.strip().split() for line in cmsfile
+                if not line.startswith('#')
+                   and float(line.strip().split()[14]) >= cut_off
+                   and abs(int(line.split()[7]) - int(line.strip().split()[8])) >= lc
+            ]
 
-                # Store the hits that satisfy the bit score cutoff to filter
-                # duplicates.
-                try:
-                    chromo_dict[data[1]].append(data)
-                except:
-                    chromo_dict[data[1]] = [data]
+    # Add the hits to the return dictionary.
+    if hits:
+        for candidate_nr, hit in enumerate(hits, 1):
+            h_chrom = hit[0]
+            h_start = hit[7]
+            h_end = hit[8]
+            h_strand = hit[9]
+            h_score = hit[14]
+            # blastparser expects the start to be the smaller number, will extract reverse complement if on - strand
+            if h_start > h_end:
+                start_tmp = h_start
+                h_start = h_end
+                h_end = start_tmp
+            data = (
+                '{0}_c{1}'.format(mirid, candidate_nr),
+                h_chrom, h_start, h_end, h_strand, h_score
+            )
+            hits_dict[data[0]] = data
+
+            # Store the hits that satisfy the bit score cutoff to filter
+            # duplicates.
+            try:
+                chromo_dict[data[1]].append(data)
+            except:
+                chromo_dict[data[1]] = [data]
 
     # Loop over the candidate hits to eliminate duplicates.
     for chromo in chromo_dict:
