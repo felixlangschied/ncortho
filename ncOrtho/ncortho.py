@@ -425,11 +425,12 @@ def main():
             os.makedirs(outdir)
 
         # start cmsearch
-        cm_results = cmsearcher(mirna, cm_cutoff, cpu, msl, models, qlink, qblast, output, cleanup, heuristic)
+        cm_results, exitstatus = cmsearcher(mirna, cm_cutoff, cpu, msl, models, qlink, qblast, outdir, cleanup, heuristic)
+        # TODO: save exitstatus
 
         # Extract sequences for candidate hits (if any were found).
         if not cm_results:
-            print('# No hits found for {}.\n'.format(mirna_id))
+            print('# {} for {}.\n'.format(exitstatus, mirna_id))
             continue
         elif max_hits and len(cm_results) > max_hits:
             print('# Maximum CMsearch hits reached. Restricting to best {} hits'.format(max_hits))
@@ -516,6 +517,7 @@ def main():
                 for hit in out_dict:
                     cmres = list(cm_results[hit])
                     cmres.insert(0, qname)
+                    cmres = [str(entry) for entry in cmres]
                     header = '|'.join(cmres)
                     of.write('>{0}\n{1}\n'.format(header, out_dict[hit]))
 
