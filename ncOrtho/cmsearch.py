@@ -124,28 +124,6 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
 
         cm_results = []
         return_data = []
-        # start the cmsearch with the heuristic candidates
-        # if not cleanup:
-        #     heuristic_cms = '{0}/cmsearch_canregion_{1}.out'.format(out, mirna_id)
-        #     print('# Running covariance model search for {}'.format(mirna_id))
-        #     cms_command = (
-        #         'cmsearch -T {5} --incT {5} --cpu {0} --noali '
-        #         '-o {1} {2}/{3}.cm {4}'
-        #         .format(cpu, heuristic_cms, models, mirna_id, heuristic_fa, cut_off)
-        #     )
-        #     res = sp.run(cms_command, shell=True, capture_output=True)
-        #     if not res.returncode == 0:
-        #         print(f'ERROR: {err}')
-        #         sys.exit()
-        #     with open(heuristic_cms, 'r') as inf:
-        #         for line in inf:
-        #             if line.startswith('  '):
-        #                 data = line.strip().split()
-        #                 cm_results.append(data)
-        #     if not data:
-        #         exitstatus = 'cmSearch did not find anything'
-        #         return cm_results, exitstatus
-        # else:
         cms_command = (
             'cmsearch --cpu {0} --noali -T {3} --incT {3} {1}/{2}.cm {4}'
             .format(cpu, models, mirna_id, cut_off, heuristic_fa)
@@ -252,7 +230,7 @@ def cmsearch_parser(cms, cmc, lc, mirid):
 
     Parameters
     ----------
-    cms     :   Path to cmsearch output
+    cms     :   List with CMsearch hits [chrom, start, end, strand, score]
     cmc     :   Cutoff to decide which candidate hits should be included for the reverse BLAST search
     lc      :   Length cutoff
     mirid   :   miRNA ID
@@ -268,24 +246,8 @@ def cmsearch_parser(cms, cmc, lc, mirid):
     chromo_dict = {}
     cut_off = cmc
 
-    # with open(cms) as cmsfile:
-    #     # Collect only the hits which satisfy the bit score cutoff.
-    #     hits = [
-    #         line.strip().split() for line in cmsfile
-    #         if not line.startswith('#')
-    #            and float(line.strip().split()[14]) >= cut_off
-    #            and abs(int(line.split()[7]) - int(line.strip().split()[8])) >= lc
-    #     ]
-    #     # Add the hits to the return dictionary.
-    #     if hits:
-    #         for candidate_nr, hit in enumerate(hits, 1):
     for candidate_nr, hit in enumerate(cms, 1):
         h_chrom, h_start, h_end, h_strand, h_score = hit
-                # h_chrom = hit[0]
-                # h_start = hit[7]
-                # h_end = hit[8]
-                # h_strand = hit[9]
-                # h_score = hit[14]
         # blastparser expects the start to be the smaller number, will extract reverse complement if on - strand
         if h_start > h_end:
             start_tmp = h_start
