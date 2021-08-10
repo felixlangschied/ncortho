@@ -32,6 +32,7 @@ try:
     from ncOrtho.cmsearch import cmsearcher
     from ncOrtho.utils import check_blastdb
     from ncOrtho.utils import make_blastndb
+    from ncOrtho.utils import find_refbit
 except ImportError:
     from blastparser import BlastParser
     from blastparser import ReBlastParser
@@ -39,6 +40,7 @@ except ImportError:
     from cmsearch import cmsearcher
     from utils import check_blastdb
     from utils import make_blastndb
+    from utils import find_refbit
 
 ###############################################################################
 
@@ -113,7 +115,6 @@ def mirna_maker(mirpath, cmpath, output, msl):
             mkdir = 'mkdir -p {}'.format(output)
             sp.call(mkdir, shell=True)
 
-
         # Obtain the reference bit score for each miRNA by applying it
         # to its own covariance model.
         print('# Calculating reference bit score for {}.'.format(mirid))
@@ -123,39 +124,19 @@ def mirna_maker(mirpath, cmpath, output, msl):
         # reference bit score.
         with open(query, 'w') as tmpfile:
             tmpfile.write('>{0}\n{1}'.format(mirid, seq))
-        cms_output = '{0}/ref_cmsearch_{1}_tmp.out'.format(output, mirid)
-        cms_log = '{0}/ref_cmsearch_{1}.log'.format(output, mirid)
-        if not os.path.isfile(cms_output):
-            cms_command = (
-                'cmsearch -E 0.01 --noali -o {3} --tblout {0} {1} {2}'
-                .format(cms_output, model, query, cms_log)
-            )
-            sp.call(cms_command, shell=True)
+        cms_command = (
+            'cmsearch -E 0.01 --noali {0} {1}'
+            .format(model, query)
+        )
+        res = sp.run(cms_command, shell=True, capture_output=True)
+        if res.returncode == 0:
+            top_score = find_refbit(res.stdout.decode('utf-8'))
+            mirna.append(top_score)
         else:
-            print('# Found cmsearch results at: {} using those'.format(cms_output))
-        with open(cms_output) as cmsfile:
-            hits = [
-                line.strip().split() for line in cmsfile
-                if not line.startswith('#')
-            ]
-            if hits:
-                top_score = float(hits[0][14])
-            # In case of any issues occuring in the calculation of the bit
-            # score, no specific threshold can be determined. The value will
-            # set to zero, which technically turns off the filter.
-            else:
-                print(
-                    '# Warning: Self bit score not applicable, '
-                    'setting threshold to 0.'
-                )
-                top_score = 0.0
-
-        mirna.append(top_score)
-
-        # Remove temporary files.
-        for rmv_file in [cms_output, cms_log, query]:
-            sp.call('rm {}'.format(rmv_file), shell=True)
-
+            print(f'ERROR: {res.stderr.decode("utf-8")}')
+            sys.exit()
+        # cleanup
+        os.remove(query)
         # Create output.
         mmdict[mirna[0]] = Mirna(*mirna)
 
