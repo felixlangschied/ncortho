@@ -45,7 +45,7 @@ class BlastParser(object):
     # mirna: Mirna object that holds the location for the reference miRNA
     # blastpath: path to the output file of the reverse BLAST search
     # msl: ncOrtho minimum sequence length threshold
-    def __init__(self, mirna, blastpath, msl):
+    def __init__(self, mirna, blasthits, msl):
         self.start = mirna.start
         self.end = mirna.end
         self.chromosome = mirna.chromosome
@@ -53,8 +53,9 @@ class BlastParser(object):
         self.refseq = mirna.pre
         del mirna
         #self.blastpath = blastpath
-        with open(blastpath, 'r') as blastfile:
-            self.blasthits = [line.strip().split() for line in blastfile]
+        self.blasthits = blasthits
+        # with open(blastpath, 'r') as blastfile:
+        #     self.blasthits = [line.strip().split() for line in blastfile]
         self.msl = msl
         #self.blasthits = []
         #self.top_score = 100

@@ -400,7 +400,7 @@ def main():
             print('# Creating query Database')
             make_blastndb(query, qlink)
 
-    ################################################################################################
+    ###############################################################################################
     # Main
     ###############################################################################################
 
@@ -428,7 +428,9 @@ def main():
                 os.makedirs(outdir)
 
             # start cmsearch
-            cm_results, exitstatus = cmsearcher(mirna, cm_cutoff, cpu, msl, models, qlink, qblast, outdir, cleanup, heuristic)
+            cm_results, exitstatus = cmsearcher(
+                mirna, cm_cutoff, cpu, msl, models, qlink, qblast, outdir, cleanup, heuristic
+            )
 
             # Extract sequences for candidate hits (if any were found).
             if not cm_results:
@@ -460,20 +462,28 @@ def main():
             reblast_hits = {}
             for candidate in candidates:
                 sequence = candidates[candidate]
-                temp_fasta = '{0}/{1}.fa'.format(outdir, candidate)
-                with open(temp_fasta, 'w') as tempfile:
-                    tempfile.write('>{0}\n{1}\n'.format(candidate, sequence))
-                blast_output = '{0}/blast_{1}.out'.format(outdir, candidate)
                 print('# Starting reverse blast for {}'.format(candidate))
-                # blast_search will write results to the temp_fasta file
-                # TODO: remove temporary file
                 blast_command = (
-                    'blastn -task blastn -db {0} -query {1} -dust {4} '
-                    '-out {2} -num_threads {3} -outfmt "6 qseqid sseqid pident '
+                    'blastn -task blastn -db {0} -num_threads {1} -dust {2} -outfmt "6 qseqid sseqid pident '
                     'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'
-                        .format(refblast, temp_fasta, blast_output, cpu, dust)
+                        .format(refblast, cpu, dust)
                 )
-                sp.run(blast_command, shell=True)
+                blast_call = sp.Popen(
+                    blast_command, shell=True, stdin=sp.PIPE,
+                    stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
+                )
+                # run BLAST
+                res, err = blast_call.communicate(sequence)
+                if err:
+                    print(f'ERROR: {err}')
+                    sys.exit()
+                if not cleanup:
+                    blast_output = '{0}/reBLAST_{1}.out'.format(outdir, candidate)
+                    with open(blast_output, 'w') as bh:
+                        for line in res:
+                            bh.write(line)
+                # parse BLASTn results
+                blast_output = [line.split() for line in res.split('\n')]
                 print('# finished blast')
 
                 # BlastParser will read the temp_fasta file
@@ -489,9 +499,6 @@ def main():
                         reblast_hits[candidate] = sequence
                 else:
                     print('Best hit does not overlap with miRNA location')
-                if cleanup:
-                    os.remove(temp_fasta)
-                    os.remove(blast_output)
 
             # Write output file if at least one candidate got accepted.
             if reblast_hits:
