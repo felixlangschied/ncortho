@@ -176,13 +176,16 @@ def str2bool(v):
 
 # Main function
 def main():
-
     # Print header
     print('\n'+'#'*57)
     print('###'+' '*51+'###')
     print('###   ncOrtho - ortholog search for non-coding RNAs   ###')
     print('###'+' '*51+'###')
     print('#'*57+'\n')
+
+    ##########################################################################################
+    # Command line arguments
+    ##########################################################################################
     
     # Parse command-line arguments
     # Define global variables
@@ -318,6 +321,9 @@ def main():
             'distantly related to the reference taxon (Default: False)'
         )
     )
+    ##########################################################################################
+    # Parse arguments
+    ##########################################################################################
 
     # Show help when no arguments are added.
     if len(sys.argv) == 1:
@@ -337,6 +343,7 @@ def main():
     else:
         cpu = args.cpu
 
+    # mandatory
     mirnas = args.ncrna
     models = args.models
     output = args.output
@@ -400,12 +407,12 @@ def main():
         if not check_blastdb(refblast):
             make_blastndb(reference, refblast)
     # check if query BLASTdb was given as input (only used in heuristic mode)
-    if qblast and heuristic:
+    if qblast and heuristic[0]:
         # check if qblast exists
         if not check_blastdb(qblast):
             print('# Query BLASTdb not found at: {}'.format(qblast))
             sys.exit()
-    elif heuristic:
+    elif heuristic[0]:
         qblast = qlink
         # check if already exists
         if not check_blastdb(qlink):
@@ -429,7 +436,7 @@ def main():
         mirna_id = mirna.name
 
         # Create output folder, if not existent.
-        if not heuristic or cleanup:
+        if not heuristic[0] or not cleanup:
             outdir = '{}/{}'.format(output, mirna_id)
         else:
             outdir = '{}'.format(output)
@@ -527,7 +534,7 @@ def main():
             with open(outpath, 'w') as of:
                 for hit in out_dict:
                     cmres = list(cm_results[hit])
-                    cmres.insert(qname)
+                    cmres.insert(0, qname)
                     header = '|'.join(cmres)
                     of.write('>{0}\n{1}\n'.format(header, out_dict[hit]))
 

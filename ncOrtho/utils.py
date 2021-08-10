@@ -14,3 +14,6 @@ def check_blastdb(db_path):
 def make_blastndb(inpath, outpath):
     db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(inpath, outpath)
     sp.call(db_command, shell=True)
+
+def cmsearch_parser(outstr):
+    pass
