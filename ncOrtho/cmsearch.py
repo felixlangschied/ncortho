@@ -135,6 +135,10 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
             cms_command, shell=True, stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
         )
         res, err = cms_call.communicate(mirna.pre)
+        # delete temporary file
+        if cleanup:
+            os.remove(heuristic_fa)
+        # read results
         if err:
             print(f'ERROR: {err}')
             sys.exit()
@@ -190,8 +194,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
                     out_d = [str(entry) for entry in cm_results[hit]]
                     of.write('\t'.join(out_d))
                     of.write('\n')
-        else:
-            os.remove(heuristic_fa)
+
     # non heuristic mode (searches whole query genome with CM)
     else:
         cm_res_list = []
