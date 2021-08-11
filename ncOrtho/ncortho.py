@@ -100,6 +100,7 @@ def mirna_maker(mirpath, cmpath, output, msl):
             if not line.startswith('#')
         ]
 
+    print('# Calculating reference bit scores')
     for mirna in mirna_data:
         mirid = mirna[0]
         seq = mirna[5]
@@ -108,7 +109,8 @@ def mirna_maker(mirpath, cmpath, output, msl):
         # Check if the covariance model even exists, otherwise skip to
         # the next miRNA.
         if not os.path.isfile(model):
-            print('# No covariance model found for {}'.format(mirid))
+            print('WARNING: No covariance model found for {}'.format(mirid))
+            mmdict[mirna[0]] = ''
             continue
         # Check if the output folder exists, otherwise create it.
         if not os.path.isdir('{}'.format(output)):
@@ -117,7 +119,6 @@ def mirna_maker(mirpath, cmpath, output, msl):
 
         # Obtain the reference bit score for each miRNA by applying it
         # to its own covariance model.
-        print('# Calculating reference bit score for {}.'.format(mirid))
         
         # Create a temporary FASTA file with the miRNA sequence as
         # query for external search tool cmsearch to calculate the
@@ -419,15 +420,18 @@ def main():
     with open(log_file, 'w') as log, open(outpath, 'w') as of:
         log.write(f'# miRNA\tStatus\n')
         # Identify ortholog candidates.
-        for mir_data in mirna_dict:
+        for mirna in mirna_dict:
             sys.stdout.flush()
-            mirna = mirna_dict[mir_data]
-            mirna_id = mirna.name
-            print(f'\n### {mirna_id}')
+            mirna_data = mirna_dict[mirna]
+            # mirna objects for which no CM was found are empty
+            if not mirna_data:
+                log.write(f'{mirna}\tNo CM\n')
+                continue
+            print(f'\n### {mirna}')
 
             # Create output folder, if not existent.
             if not heuristic[0] or not cleanup:
-                outdir = '{}/{}'.format(output, mirna_id)
+                outdir = '{}/{}'.format(output, mirna)
             else:
                 outdir = '{}'.format(output)
             if not os.path.isdir(outdir):
@@ -435,13 +439,13 @@ def main():
 
             # start cmsearch
             cm_results, exitstatus = cmsearcher(
-                mirna, cm_cutoff, cpu, msl, models, qlink, qblast, outdir, cleanup, heuristic
+                mirna_data, cm_cutoff, cpu, msl, models, qlink, qblast, outdir, cleanup, heuristic
             )
 
             # Extract sequences for candidate hits (if any were found).
             if not cm_results:
-                print('# {} for {}'.format(exitstatus, mirna_id))
-                log.write(f'{mirna_id}\t{exitstatus}\n')
+                print('# {} for {}'.format(exitstatus, mirna))
+                log.write(f'{mirna}\t{exitstatus}\n')
                 continue
             elif max_hits and len(cm_results) > max_hits:
                 print('# Maximum CMsearch hits reached. Restricting to best {} hits'.format(max_hits))
@@ -498,7 +502,7 @@ def main():
                 # print('# finished blast')
 
                 # BlastParser will read the temp_fasta file
-                bp = BlastParser(mirna, blast_output, msl)
+                bp = BlastParser(mirna_data, blast_output, msl)
                 # the parse_blast_output function will return True if the candidate is accepted
                 if bp.evaluate_besthit():
                     print('Found best hit')
@@ -523,7 +527,7 @@ def main():
                         .format(nr_accepted)
                     )
                     print('# Evaluating distance between candidates to verify co-orthologs')
-                    rbp = ReBlastParser(mirna, reblast_hits)
+                    rbp = ReBlastParser(mirna_data, reblast_hits)
                     out_dict = rbp.verify_coorthologs(outdir)
                     if len(out_dict) == 1:
                         print('ncOrtho found 1 verified ortholog')
@@ -545,13 +549,13 @@ def main():
 
                 # write_output(out_dict, outpath, cm_results)
                 # print('# Finished writing output.')
-                log.write(f'{mirna_id}\tSUCESS\n')
+                log.write(f'{mirna}\tSUCESS\n')
             else:
                 print(
                     '# None of the candidates for {} could be verified.'
-                    .format(mirna_id)
+                    .format(mirna)
                 )
-                log.write(f'{mirna_id}\tNo re-BLAST\n')
+                log.write(f'{mirna}\tNo re-BLAST\n')
             # print('# Finished ortholog search for {}.'.format(mirna_id))
         print('\n### ncOrtho is finished!')
 
