@@ -382,11 +382,15 @@ def main():
             print('# Reference BLASTdb not found at: {}'.format(refblast))
             sys.exit()
     else:
-        refname = reference.split('/')[-1]
-        refblast = f'{q_data}/{refname}'
-        # check if BLASTdb exists already. Otherwise create it
-        if not check_blastdb(refblast):
-            make_blastndb(reference, refblast)
+        # check if refblast exists at location of reference genome
+        if not check_blastdb(reference):
+            refname = reference.split('/')[-1]
+            refblast = f'{q_data}/{refname}'
+            # check if BLASTdb exists already. Otherwise create it
+            if not check_blastdb(refblast):
+                make_blastndb(reference, refblast)
+        else:
+            refblast = reference
     # check if query BLASTdb was given as input (only used in heuristic mode)
     if qblast and heuristic[0]:
         # check if qblast exists
@@ -405,19 +409,21 @@ def main():
     ###############################################################################################
 
     # Print out query
-    print('### Starting ncOrtho run for {}'.format(query))
+    print('### Starting ncOrtho run for {}\n'.format(query))
 
     # Create miRNA objects from the list of input miRNAs.
     mirna_dict = mirna_maker(mirnas, models, output, msl)
 
-    log_file = f'{output}/ncOrtho.log'
-    with open(log_file, 'w') as log:
+    outpath = '{0}/{1}_orthologs.fa'.format(output, qname)
+    log_file = f'{output}/{qname}.log'
+    with open(log_file, 'w') as log, open(outpath, 'w') as of:
         log.write(f'# miRNA\tStatus\n')
         # Identify ortholog candidates.
         for mir_data in mirna_dict:
             sys.stdout.flush()
             mirna = mirna_dict[mir_data]
             mirna_id = mirna.name
+            print(f'\n### {mirna_id}')
 
             # Create output folder, if not existent.
             if not heuristic[0] or not cleanup:
@@ -434,7 +440,7 @@ def main():
 
             # Extract sequences for candidate hits (if any were found).
             if not cm_results:
-                print('# {} for {}.\n'.format(exitstatus, mirna_id))
+                print('# {} for {}'.format(exitstatus, mirna_id))
                 log.write(f'{mirna_id}\t{exitstatus}\n')
                 continue
             elif max_hits and len(cm_results) > max_hits:
@@ -446,27 +452,32 @@ def main():
             nr_candidates = len(candidates)
             if nr_candidates == 1:
                 print(
-                    '\n# Covariance model search successful, found 1 '
-                    'ortholog candidate.\n'
+                    '# Covariance model search successful, found 1 '
+                    'ortholog candidate.'
                 )
             else:
                 print(
-                    '\n# Covariance model search successful, found {} '
-                    'ortholog candidates.\n'
+                    '# Covariance model search successful, found {} '
+                    'ortholog candidates.'
                     .format(nr_candidates)
                 )
-            print('# Evaluating candidates.\n')
+            print('# Evaluating candidates.')
 
             # Perform reverse BLAST test to verify candidates, stored in
             # a list (accepted_hits).
             reblast_hits = {}
             for candidate in candidates:
                 sequence = candidates[candidate]
-                print('# Starting reverse blast for {}'.format(candidate))
+                # print('# Starting reverse blast for {}'.format(candidate))
                 blast_command = (
                     'blastn -task blastn -db {0} -num_threads {1} -dust {2} -outfmt "6 qseqid sseqid pident '
                     'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'
                         .format(refblast, cpu, dust)
+                )
+                blast_command = (
+                    'blastn -task blastn -db {0} -num_threads {1} -dust {2} -outfmt "6 sseqid '
+                    'sstart send sstrand"'
+                    .format(refblast, cpu, dust)
                 )
                 blast_call = sp.Popen(
                     blast_command, shell=True, stdin=sp.PIPE,
@@ -484,7 +495,7 @@ def main():
                             bh.write(line)
                 # parse BLASTn results
                 blast_output = [line.split() for line in res.split('\n')]
-                print('# finished blast')
+                # print('# finished blast')
 
                 # BlastParser will read the temp_fasta file
                 bp = BlastParser(mirna, blast_output, msl)
@@ -504,11 +515,11 @@ def main():
             if reblast_hits:
                 nr_accepted = len(reblast_hits)
                 if nr_accepted == 1:
-                    print('# ncOrtho found 1 verified ortholog.\n')
+                    print('# ncOrtho found 1 verified ortholog.')
                     out_dict = reblast_hits
                 else:
                     print(
-                        '# ncOrtho found {} potential co-orthologs.\n'
+                        '# ncOrtho found {} potential co-orthologs.'
                         .format(nr_accepted)
                     )
                     print('# Evaluating distance between candidates to verify co-orthologs')
@@ -518,31 +529,31 @@ def main():
                         print('ncOrtho found 1 verified ortholog')
                     else:
                         print(
-                            '# ncOrtho found {} verified co-orthologs.\n'
+                            '# ncOrtho found {} verified co-orthologs.'
                                 .format(len(out_dict))
                         )
 
-                print('# Writing output of accepted candidates.\n')
-                outpath = '{0}/{1}_orthologs.fa'.format(outdir, mirna_id)
-                with open(outpath, 'w') as of:
-                    for hit in out_dict:
-                        cmres = list(cm_results[hit])
-                        cmres.insert(0, qname)
-                        cmres = [str(entry) for entry in cmres]
-                        header = '|'.join(cmres)
-                        of.write('>{0}\n{1}\n'.format(header, out_dict[hit]))
+                # print('# Writing output of accepted candidates.')
+                # outpath = '{0}/{1}_orthologs.fa'.format(outdir, mirna_id)
+                # with open(outpath, 'w') as of:
+                for hit in out_dict:
+                    cmres = list(cm_results[hit])
+                    cmres.insert(0, qname)
+                    cmres = [str(entry) for entry in cmres]
+                    header = '|'.join(cmres)
+                    of.write('>{0}\n{1}\n'.format(header, out_dict[hit]))
 
                 # write_output(out_dict, outpath, cm_results)
-                print('# Finished writing output.\n')
+                # print('# Finished writing output.')
                 log.write(f'{mirna_id}\tSUCESS\n')
             else:
                 print(
-                    '# None of the candidates for {} could be verified.\n'
+                    '# None of the candidates for {} could be verified.'
                     .format(mirna_id)
                 )
                 log.write(f'{mirna_id}\tNo re-BLAST\n')
-            print('# Finished ortholog search for {}.'.format(mirna_id))
-        print('### ncOrtho is finished!')
+            # print('# Finished ortholog search for {}.'.format(mirna_id))
+        print('\n### ncOrtho is finished!')
 
 
 if __name__ == "__main__":

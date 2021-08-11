@@ -77,15 +77,18 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
             exitstatus = 'No BLASTn candidate regions'
             return cm_results, exitstatus
 
-        print('Blast step finished')
+        # print('Blast step finished')
         result = list(filter(None, res.split('\n')))
         hit_list = [line.split() for line in result if line and float(line.split()[-1]) >= blast_len_cut]
+        if not hit_list:
+            exitstatus = 'No BLASTn candidate regions above length cutoff'
+            return cm_results, exitstatus
         # hit_list = [line.split() for line in result if line]
         print(f'# Found {len(hit_list)} BLAST hits of the reference '
               f'pre-miRNA in the query')
         genes = pyfaidx.Fasta(query)
         # collect heuristic sequences
-        print('collecting sequences')
+        # print('collecting sequences')
         # set border regions to include in analysis
         extraregion = 1000
         diff_dict = {}
@@ -135,15 +138,17 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
         if err:
             print(f'ERROR: {err}')
             sys.exit()
-        elif not res:
-            exitstatus = 'CMsearch did not find any hits above threshold'
-            return cm_results, exitstatus
         for line in res.split('\n'):
             if line.startswith('  '):
-                data = line.strip().split()
-                cm_results.append(data)
+                if 'No hits detected that satisfy reporting thresholds' in line:
+                    exitstatus = 'CMsearch found not hits'
+                    return cm_results, exitstatus
+                else:
+                    data = line.strip().split()
+                    cm_results.append(data)
 
         for data in cm_results:
+            # print(data)
             # parse CMsearch output of candidate regions to acutal genomic regions
             blast_chrom = data[5].split('|')[0]
             blast_start, blast_end = map(int, data[5].split('|')[1:3])
@@ -155,8 +160,8 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
             if cm_strand == '-':
                 # reverse hits should not be possible since blasthits were extracted
                 # as reverse complement if they were on the minus strand
-                print('ERROR: Unexpected hit of CMsearch')
-                sys.exit()
+                print('Unexpected hit of CMsearch')
+                continue
             if hit_at_start == 'True':
                 print('# cmsearch hit for {} at the beginning of a chromosome in the query species'.format(mirna_id))
                 hit_start = cm_start
@@ -171,9 +176,10 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
                 hit_end = hit_start + (cm_end - extraregion) - 1
             # fill output variable
             return_data.append([blast_chrom, hit_start, hit_end, blast_strand, float(data[3])])
-            if not return_data:
-                exitstatus = 'No hits left after parsing of CMsearch results'
-                return cm_results, exitstatus
+        if not return_data:
+            exitstatus = 'No hits left after parsing of CMsearch results'
+            return cm_results, exitstatus
+
         cm_results, exitstatus = cmsearch_parser(return_data, cut_off, len_cut, mirna_id)
 
         if not cleanup:
@@ -184,9 +190,9 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
                     out_d = [str(entry) for entry in cm_results[hit]]
                     of.write('\t'.join(out_d))
                     of.write('\n')
-        if cleanup:
+        else:
             os.remove(heuristic_fa)
-
+    # non heuristic mode (searches whole query genome with CM)
     else:
         cm_res_list = []
         cms_output = '{0}/cmsearch_{1}.out'.format(out, mirna_id)

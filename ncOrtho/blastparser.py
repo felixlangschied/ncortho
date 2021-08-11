@@ -20,6 +20,7 @@ import subprocess as sp
 from Bio import AlignIO
 from Bio.Phylo.TreeConstruction import DistanceCalculator
 import os
+import sys
 
 def calculate_distance_matrix(aln_path):
     # align reBLAST hits
@@ -52,14 +53,9 @@ class BlastParser(object):
         self.strand = mirna.strand
         self.refseq = mirna.pre
         del mirna
-        #self.blastpath = blastpath
         self.blasthits = blasthits
-        # with open(blastpath, 'r') as blastfile:
-        #     self.blasthits = [line.strip().split() for line in blastfile]
         self.msl = msl
-        #self.blasthits = []
-        #self.top_score = 100
-        #self.top_score = blasthits[0][6]
+
 
     def evaluate_besthit(self,):
         # with open(self.blastpath) as blastfile:
@@ -72,9 +68,19 @@ class BlastParser(object):
         else:
             # Gather coordinates of best BLAST hit.
             tophit = self.blasthits[0]
-            sseqid = tophit[1]
-            sstart = int(tophit[8])
-            send = int(tophit[9])
+            sseqid = tophit[0]
+            sstrand = tophit[3]
+            if sstrand == 'plus':
+                sstart = int(tophit[1])
+                send = int(tophit[2])
+            elif sstrand == 'minus':
+                sstart = int(tophit[2])
+                send = int(tophit[1])
+            else:
+                print('ERROR: re-BLAST on neither plus nor minus strand')
+                print(tophit)
+                sys.exit()
+
             # del blasthits
             # Sequences must be on the same contig, otherwise overlap can be
             # ruled out instantaneously
@@ -87,14 +93,14 @@ class BlastParser(object):
                 print(f'Start BLAST hit: {sstart} End BLAST hit: {send}')
                 # first within second
                 if (
-                    (sstart <= self.start and self.start <= send)
-                    or (sstart <= self.end and self.end <= send)
+                    (sstart <= self.start <= send)
+                    or (sstart <= self.end <= send)
                 ):
                     return True
                 # second within first
                 elif (
-                    (self.start <= sstart and sstart <= self.end)
-                    or (self.start <= send and send <= self.end)
+                    (self.start <= sstart <= self.end)
+                    or (self.start <= send <= self.end)
                 ):
                     return True
                 # No overlap
