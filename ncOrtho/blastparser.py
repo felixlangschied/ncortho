@@ -22,6 +22,7 @@ from Bio.Phylo.TreeConstruction import DistanceCalculator
 import os
 import sys
 
+
 def calculate_distance_matrix(aln_path):
     # align reBLAST hits
     aln_cmd = (
@@ -55,7 +56,6 @@ class BlastParser(object):
         del mirna
         self.blasthits = blasthits
         self.msl = msl
-
 
     def evaluate_besthit(self,):
         # with open(self.blastpath) as blastfile:
@@ -117,7 +117,6 @@ class BlastParser(object):
         # 6) if distance between best blast hit and reference smaller than
         # difference between best hit and candidate, accept candidate -> reBLAST hit co-ortholog instead of reference
 
-
         # get process id to ensure that the correct library is used when running ncOrtho in parallel
         pid = os.getpid()
         tmp_out = '{0}/{1}.fa'.format(out, pid)
@@ -146,6 +145,7 @@ class BlastParser(object):
                 %(distance_hit_query, distance_ref_hit)
             )
             return False
+
 
 class ReBlastParser(object):
     def __init__(self, mirna, reblast_dict):

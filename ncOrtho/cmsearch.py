@@ -214,6 +214,9 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
         with open(cms_output, 'r') as inf:
             for line in inf:
                 if line.startswith('  '):
+                    if 'No hits detected that satisfy reporting thresholds' in line:
+                        exitstatus = 'CMsearch found not hits'
+                        return cm_results, exitstatus
                     data = line.strip().split()
                     h_chrom = data[5]
                     h_start = int(data[6])
