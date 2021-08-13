@@ -26,21 +26,21 @@ import sys
 
 # Internal ncOrtho modules
 # try:
-#     from ncOrtho.blastparser import BlastParser
-#     from ncOrtho.blastparser import ReBlastParser
-#     from ncOrtho.genparser import GenomeParser
-#     from ncOrtho.cmsearch import cmsearcher
-#     from ncOrtho.utils import check_blastdb
-#     from ncOrtho.utils import make_blastndb
-#     from ncOrtho.utils import find_refbit
+from ncOrtho.blastparser import BlastParser
+from ncOrtho.blastparser import ReBlastParser
+from ncOrtho.genparser import GenomeParser
+from ncOrtho.cmsearch import cmsearcher
+from ncOrtho.utils import check_blastdb
+from ncOrtho.utils import make_blastndb
+from ncOrtho.utils import find_refbit
 # except ImportError:
-from blastparser import BlastParser
-from blastparser import ReBlastParser
-from genparser import GenomeParser
-from cmsearch import cmsearcher
-from utils import check_blastdb
-from utils import make_blastndb
-from utils import find_refbit
+# from blastparser import BlastParser
+# from blastparser import ReBlastParser
+# from genparser import GenomeParser
+# from cmsearch import cmsearcher
+# from utils import check_blastdb
+# from utils import make_blastndb
+# from utils import find_refbit
 
 ###############################################################################
 
