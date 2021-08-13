@@ -143,7 +143,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
             print(f'ERROR: {err}')
             sys.exit()
         for line in res.split('\n'):
-            if line.startswith('  '):
+            if line.startswith('  ('):
                 if 'No hits detected that satisfy reporting thresholds' in line:
                     exitstatus = 'CMsearch found not hits'
                     return cm_results, exitstatus
@@ -213,7 +213,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
             print('# Found cm_search results at: {}. Using those'.format(cms_output))
         with open(cms_output, 'r') as inf:
             for line in inf:
-                if line.startswith('  '):
+                if line.startswith('  ('):
                     if 'No hits detected that satisfy reporting thresholds' in line:
                         exitstatus = 'CMsearch found not hits'
                         return cm_results, exitstatus
