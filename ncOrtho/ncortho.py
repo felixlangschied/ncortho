@@ -501,6 +501,10 @@ def main():
                             bh.write(line)
                 # parse BLASTn results
                 blast_output = [line.split() for line in res.split('\n')]
+                if not blast_output[0]:
+                    print('No re-BLAST hits')
+                    continue
+
                 # print('# finished blast')
 
                 # BlastParser will read the temp_fasta file
