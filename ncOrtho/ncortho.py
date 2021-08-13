@@ -410,7 +410,7 @@ def main():
     ###############################################################################################
 
     # Print out query
-    print('### Starting ncOrtho run for {}\n'.format(query))
+    print('### Starting ncOrtho run for {}\n'.format(qname))
 
     # Create miRNA objects from the list of input miRNAs.
     mirna_dict = mirna_maker(mirnas, models, output, msl)
