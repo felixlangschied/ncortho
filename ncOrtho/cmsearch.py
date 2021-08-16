@@ -150,6 +150,9 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
                 else:
                     data = line.strip().split()
                     cm_results.append(data)
+        if not cm_results:
+            exitstatus = 'CMsearch found no hits'
+            return cm_results, exitstatus
 
         for data in cm_results:
             # print(data)
@@ -182,7 +185,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
             return_data.append([blast_chrom, hit_start, hit_end, blast_strand, float(data[3])])
         if not return_data:
             exitstatus = 'No hits left after parsing of CMsearch results'
-            return cm_results, exitstatus
+            return False, exitstatus
 
         cm_results, exitstatus = cmsearch_parser(return_data, cut_off, len_cut, mirna_id)
 
