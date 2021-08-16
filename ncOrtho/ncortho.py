@@ -493,7 +493,7 @@ def main():
                 res, err = blast_call.communicate(sequence)
                 if err:
                     print(f'ERROR: {err}')
-                    sys.exit()
+                    continue
                 if not cleanup:
                     blast_output = '{0}/reBLAST_{1}.out'.format(outdir, candidate)
                     with open(blast_output, 'w') as bh:
