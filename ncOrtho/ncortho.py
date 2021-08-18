@@ -282,7 +282,7 @@ def main():
         )
     )
     # use dust filter?
-    parser.add_argument(
+    optional.add_argument(
         '--dust', metavar='yes/no', type=str,
         help='Use BLASTn dust filter during re-BLAST. Greatly decreases runtime if reference miRNA(s) '
              'are located in repeat regions. '
@@ -291,7 +291,7 @@ def main():
         const='no', default='no'
     )
     # check Co-ortholog-ref
-    parser.add_argument(
+    optional.add_argument(
         '--checkCoorthologsRef', type=str2bool, metavar='True/False', nargs='?', const=False, default=False,
         help=(
             'If the re-blast does not identify the original reference miRNA sequence as best hit,'
