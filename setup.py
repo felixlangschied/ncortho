@@ -23,7 +23,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="ncOrtho",
-    version="0.0.11",
+    version="0.0.12",
     python_requires='>=3.7.0',
     description=" Targeted ortholog search for miRNAs ",
     long_description=long_description,
@@ -41,7 +41,7 @@ setup(
     entry_points={
         'console_scripts': ["ncCreate = ncOrtho.coreset.coreset:main",
                             "ncSearch = ncOrtho.ncortho:main",
-                            "ncAnalyze = ncOrtho.analysis.analyze_ncortho:main"
+                            "ncAnalyze = ncOrtho.analysis.ncAnalyze:main"
                             ],
     },
     license="GPL-3.0",
