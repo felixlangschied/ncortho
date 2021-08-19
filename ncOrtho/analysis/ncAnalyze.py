@@ -145,7 +145,7 @@ def main():
 
     ortho_dict = {}  # ortho_dict = {mirna: {species: seq}}
     # read all results into one dictionary and write phyloprofile input
-    pp_in = f'{outdir}/pp.long'
+    pp_in = f'{outdir}/PhyloProfile.long'
     spec_list = []
     with open(pp_in, 'w') as pp:
         pp.write('geneID\tncbiID\torthoID\n')
