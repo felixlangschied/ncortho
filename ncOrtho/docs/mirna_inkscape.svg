@@ -2,23 +2,23 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="210mm"
    height="297mm"
    viewBox="0 0 210 297"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="mirna_inkscape.svg"
    inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"
    inkscape:export-xdpi="600"
-   inkscape:export-ydpi="600"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:dc="http://purl.org/dc/elements/1.1/">
+   inkscape:export-ydpi="600">
   <metadata
      id="metadata1635">
     <rdf:RDF>
@@ -27,6 +27,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -42,12 +43,12 @@
      showgrid="false"
      inkscape:snap-bbox="false"
      inkscape:zoom="1.4142136"
-     inkscape:cx="372.29171"
-     inkscape:cy="315.01606"
-     inkscape:window-width="2400"
-     inkscape:window-height="1271"
-     inkscape:window-x="2391"
-     inkscape:window-y="-9"
+     inkscape:cx="393.45004"
+     inkscape:cy="849.23718"
+     inkscape:window-width="1848"
+     inkscape:window-height="1136"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer2"
      inkscape:snap-grids="true"
@@ -349,42 +350,6 @@
        font-weight="400"
        transform="matrix(0.26458333,0,0,0.26458333,-84.180003,124.46329)"
        style="font-weight:400;font-family:Arial;fill:none;stroke-miterlimit:10" />
-    <g
-       id="g9699"
-       transform="translate(84.402088,-17.859394)"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
-      <g
-         transform="matrix(1.116133,0,0,0.95449287,4.4676053,-1.4052785)"
-         id="g9682">
-        <path
-           style="fill:#855a5c;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.264583;stroke-opacity:1"
-           d="m 85.251971,58.455655 c 0,0.947159 4.24634,1.714411 9.48217,1.714411 5.23848,0 9.482179,-0.767252 9.482179,-1.714411 v 10.286466 c 0,0.947159 -4.243699,1.714411 -9.482179,1.714411 -5.23583,0 -9.48217,-0.767252 -9.48217,-1.714411 z"
-           id="path14131"
-           inkscape:connector-curvature="0" />
-        <path
-           style="fill:#b0898b;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.264583;stroke-opacity:1"
-           d="m 85.251971,58.455655 c 0,-0.944513 4.24634,-1.714411 9.48217,-1.714411 5.23848,0 9.482179,0.769898 9.482179,1.714411 0,0.947159 -4.243699,1.714411 -9.482179,1.714411 -5.23583,0 -9.48217,-0.767252 -9.48217,-1.714411 z"
-           id="path14133"
-           inkscape:connector-curvature="0" />
-      </g>
-      <flowRoot
-         transform="matrix(0.26458333,0,0,0.26458333,14.348945,-5.5307986)"
-         style="font-style:normal;font-weight:normal;font-size:14.6667px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         id="flowRoot9684"
-         xml:space="preserve"><flowRegion
-           style="font-size:14.6667px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle"
-           id="flowRegion9686"><rect
-             style="font-size:14.66666698px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle"
-             y="235.51968"
-             x="306"
-             height="45.5"
-             width="112"
-             id="rect9688" /></flowRegion><flowPara
-           style="font-size:14.6667px;line-height:100%;letter-spacing:0px"
-           id="flowPara9690">Reference Genome</flowPara></flowRoot>
-    </g>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.783931;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 48.9479,23.15624 H 97.132698"
@@ -395,7 +360,7 @@
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
     <path
        id="rect9720-1"
-       style="display:inline;fill:#2b4756;fill-opacity:1;stroke:#223944;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="display:inline;fill:#345565;fill-opacity:1;stroke:#223843;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 81.713455,20.299623 11.310417,0.10713 2.443905,2.774416 -2.470945,2.831688 -11.310417,-0.107129 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
@@ -434,8 +399,7 @@
            y="155.01968"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle" /></flowRegion><flowPara
          id="flowPara11978"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif">Orthologs</flowPara></flowRoot>
-    <path
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif">Orthologs</flowPara></flowRoot>    <path
        inkscape:connector-curvature="0"
        id="path12189"
        d="M 48.9479,46.273521 H 97.132698"
@@ -445,7 +409,7 @@
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
     <path
        id="rect9720"
-       style="fill:#664546;fill-opacity:1;stroke:#493233;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="fill:#664546;fill-opacity:1;stroke:#241919;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 81.713455,43.416904 11.310417,0.10713 2.443905,2.774416 -2.470945,2.831688 -11.310417,-0.10713 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
@@ -453,14 +417,14 @@
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
     <path
        id="rect9720-9"
-       style="display:inline;fill:#ab8385;fill-opacity:1;stroke:#493233;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="display:inline;fill:#c8b0b1;fill-opacity:1;stroke:#644546;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 51.145618,43.416904 11.31048,0.10713 2.44392,2.774416 -2.47096,2.831688 -11.31048,-0.10713 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
     <path
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 69.942335,43.40056 a 2.8203272,2.8730374 0 0 0 -2.82043,2.87296 2.8203272,2.8730374 0 0 0 2.82043,2.872962 2.8203272,2.8730374 0 0 0 2.281276,-1.188892 h 7.227536 v -3.149696 h -7.08674 A 2.8203272,2.8730374 0 0 0 69.942335,43.40056 Z"
        id="path12022"
        inkscape:connector-curvature="0"
@@ -523,7 +487,7 @@
        inkscape:connector-curvature="0"
        id="path12728"
        d="m 128.96297,43.40056 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
@@ -550,7 +514,7 @@
          y="36.256439"
          style="font-size:3.52778px;stroke-width:0.264583px">BLASTn</tspan></text>
     <path
-       style="fill:#36596a;fill-opacity:0.784314;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.7;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#3e667a;fill-opacity:0.78431374;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.69999999999999996;stroke-dashoffset:0;stroke-opacity:1"
        d="m 128.96297,20.117212 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
        id="path13250"
        inkscape:connector-curvature="0"
@@ -583,12 +547,12 @@
        inkscape:connector-curvature="0"
        id="path13276"
        d="m 171.29657,20.117212 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
-       style="fill:#36596a;fill-opacity:0.784314;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.7;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#3e667a;fill-opacity:0.78431374;stroke:#223843;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.69999999999999996;stroke-dashoffset:0;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.247561px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24756099px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 180.96848,22.946678 h 2.12901 V 61.11741 h -1.99596"
        id="path13318"
        inkscape:connector-curvature="0"
@@ -596,7 +560,7 @@
        inkscape:export-ydpi="600"
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
     <path
-       style="fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#3e667a;fill-opacity:1;stroke:#223843;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="m 171.29657,58.217236 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 V 59.62457 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
        id="path13329"
        inkscape:connector-curvature="0"
@@ -2274,7 +2238,7 @@
        sodipodi:cx="51.985413"
        sodipodi:sides="6"
        id="path14075"
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
@@ -2314,7 +2278,7 @@
        sodipodi:cx="56.693348"
        sodipodi:sides="3"
        id="path14079"
-       style="display:inline;fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="display:inline;fill:#3e667a;fill-opacity:1;stroke:#223843;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
@@ -2491,8 +2455,7 @@
            y="155.01968"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle" /></flowRegion><flowPara
          id="flowPara11978-6"
-         style="font-size:24px">A)</flowPara></flowRoot>
-    <flowRoot
+         style="font-size:24px">A</flowPara></flowRoot>    <flowRoot
        transform="matrix(0.26458333,0,0,0.26458333,-47.235433,-38.157687)"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="flowRoot16438"
@@ -2509,8 +2472,7 @@
            width="91"
            id="rect16432" /></flowRegion><flowPara
          style="font-size:24px"
-         id="flowPara16436">B)</flowPara></flowRoot>
-    <flowRoot
+         id="flowPara16436">B</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot16446"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -2527,8 +2489,7 @@
            y="155.01968"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle" /></flowRegion><flowPara
          id="flowPara16444"
-         style="font-size:24px">C)</flowPara></flowRoot>
-    <text
+         style="font-size:24px">C</flowPara></flowRoot>    <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.21028px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="174.12975"
@@ -2586,7 +2547,7 @@
          sodipodi:cx="51.985413"
          sodipodi:sides="6"
          id="path16460"
-         style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <path
          transform="matrix(0.39500273,0,0,0.44036816,-10.502625,76.421476)"
@@ -2620,7 +2581,7 @@
          sodipodi:cx="56.693348"
          sodipodi:sides="3"
          id="path16464"
-         style="display:inline;fill:#36596a;fill-opacity:1;stroke:#223944;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:#3e667a;fill-opacity:1;stroke:#223843;stroke-width:0.959074;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <path
          transform="matrix(0.39500273,0,0,0.44036816,-10.502625,81.807603)"
@@ -2712,7 +2673,7 @@
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
     <g
        id="g16560"
-       transform="translate(4.2333336,-23.812509)"
+       transform="translate(3.7041669,-23.812509)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
@@ -2729,10 +2690,10 @@
       <flowRoot
          xml:space="preserve"
          id="flowRoot16538"
-         style="font-style:normal;font-weight:normal;font-size:14.6667px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;font-size:14.66670036px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          transform="matrix(0.26458333,0,0,0.26458333,-18.724029,50.957758)"><flowRegion
            id="flowRegion16534"
-           style="font-size:14.6667px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle"><rect
+           style="font-size:14.66670036px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle"><rect
              id="rect16532"
              width="112"
              height="45.5"
@@ -2740,22 +2701,21 @@
              y="235.51968"
              style="font-size:14.66666698px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle" /></flowRegion><flowPara
            id="flowPara16536"
-           style="font-size:14.6667px;line-height:100%;letter-spacing:0px">Query</flowPara><flowPara
+           style="font-size:14.66670036px;line-height:100%;letter-spacing:0px">Query</flowPara><flowPara
            id="flowPara16549"
-           style="font-size:14.6667px;line-height:100%;letter-spacing:0px"> Genome</flowPara></flowRoot>
-    </g>
+           style="font-size:14.66670036px;line-height:100%;letter-spacing:0px"> Genome</flowPara></flowRoot>    </g>
     <text
        id="text17530"
        y="82.823151"
-       x="74.293465"
-       style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="74.056473"
+       style="font-style:normal;font-weight:normal;font-size:3.52778006px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458299px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         style="font-size:3.52778px;stroke-width:0.264583px"
+         style="font-size:3.52778006px;stroke-width:0.26458299px"
          y="82.823151"
-         x="74.293465"
+         x="74.056473"
          id="tspan17528"
          sodipodi:role="line">BLASTn</tspan></text>
     <path
@@ -2819,7 +2779,7 @@
          y="82.823151"
          style="font-size:3.52778px;stroke-width:0.264583px">CMsearch</tspan></text>
     <path
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        d="m 54.274625,80.971417 a 2.8203272,2.8730374 0 0 0 -2.82043,2.872956 2.8203272,2.8730374 0 0 0 2.82043,2.872965 2.8203272,2.8730374 0 0 0 2.281276,-1.188894 h 7.227536 v -3.149693 h -7.08674 a 2.8203272,2.8730374 0 0 0 -2.422072,-1.407334 z"
        id="path18018"
        inkscape:connector-curvature="0"
@@ -2834,42 +2794,6 @@
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
        inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <g
-       transform="translate(84.402088,43.523966)"
-       id="g18038"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
-      <g
-         id="g18028"
-         transform="matrix(1.116133,0,0,0.95449287,4.4676053,-1.4052785)">
-        <path
-           inkscape:connector-curvature="0"
-           id="path18024"
-           d="m 85.251971,58.455655 c 0,0.947159 4.24634,1.714411 9.48217,1.714411 5.23848,0 9.482179,-0.767252 9.482179,-1.714411 v 10.286466 c 0,0.947159 -4.243699,1.714411 -9.482179,1.714411 -5.23583,0 -9.48217,-0.767252 -9.48217,-1.714411 z"
-           style="fill:#855a5c;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.264583;stroke-opacity:1" />
-        <path
-           inkscape:connector-curvature="0"
-           id="path18026"
-           d="m 85.251971,58.455655 c 0,-0.944513 4.24634,-1.714411 9.48217,-1.714411 5.23848,0 9.482179,0.769898 9.482179,1.714411 0,0.947159 -4.243699,1.714411 -9.482179,1.714411 -5.23583,0 -9.48217,-0.767252 -9.48217,-1.714411 z"
-           style="fill:#b0898b;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.264583;stroke-opacity:1" />
-      </g>
-      <flowRoot
-         xml:space="preserve"
-         id="flowRoot18036"
-         style="font-style:normal;font-weight:normal;font-size:14.6667px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         transform="matrix(0.26458333,0,0,0.26458333,14.348945,-5.5307986)"><flowRegion
-           id="flowRegion18032"
-           style="font-size:14.6667px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle"><rect
-             id="rect18030"
-             width="112"
-             height="45.5"
-             x="306"
-             y="235.51968"
-             style="font-size:14.66666698px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle" /></flowRegion><flowPara
-           id="flowPara18034"
-           style="font-size:14.6667px;line-height:100%;letter-spacing:0px">Reference Genome</flowPara></flowRoot>
-    </g>
     <text
        id="text18044"
        y="104.3446"
@@ -2993,8 +2917,7 @@
            x="334"
            y="155.01968"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle" /></flowRegion><flowPara
-         id="flowPara1469">MSA</flowPara></flowRoot>
-    <g
+         id="flowPara1469">MSA</flowPara></flowRoot>    <g
        style="display:inline"
        id="g7679"
        transform="matrix(0.26458333,0,0,0.26458333,17.272403,144.67791)">
@@ -3048,5 +2971,91 @@
          x="490"
          style="font-size:6px;font-family:Arial;text-anchor:end">https://coolors.co/fbba72-855a5c-223843-828e82-87a330</text>
     </g>
+    <rect
+       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:2.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1987"
+       width="24.134438"
+       height="15.715447"
+       x="44.996296"
+       y="186.64163"
+       ry="0.83725804" />
+    <g
+       id="g2054"
+       transform="translate(71.197784,59.902266)"
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600">
+      <g
+         transform="translate(-20.205576,-3.9288619)"
+         id="g2021">
+        <path
+           style="fill:#ac8688;fill-opacity:1;fill-rule:evenodd;stroke:#644546;stroke-width:0.27309027;stroke-opacity:1"
+           d="m 133.28782,-18.850539 c 0,0.904056 4.73948,1.636393 10.58336,1.636393 5.84684,0 10.58337,-0.732337 10.58337,-1.636393 v 9.8183584 c 0,0.9040565 -4.73653,1.636393 -10.58337,1.636393 -5.84388,0 -10.58336,-0.7323365 -10.58336,-1.636393 z"
+           id="path14131-6"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:#d3c2c3;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.27309027;stroke-opacity:1"
+           d="m 133.28782,-18.850539 c 0,-0.901531 4.73948,-1.636393 10.58336,-1.636393 5.84684,0 10.58337,0.734862 10.58337,1.636393 0,0.904056 -4.73653,1.636393 -10.58337,1.636393 -5.84388,0 -10.58336,-0.732337 -10.58336,-1.636393 z"
+           id="path14133-7"
+           inkscape:connector-curvature="0" />
+      </g>
+      <flowRoot
+         transform="matrix(0.26458333,0,0,0.26458333,27.696015,-82.162071)"
+         style="font-style:normal;font-weight:normal;font-size:14.66670036px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot9684"
+         xml:space="preserve"><flowRegion
+           style="font-size:14.66670036px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1"
+           id="flowRegion9686"><rect
+             style="font-size:14.66666698px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1"
+             y="235.51968"
+             x="306"
+             height="45.5"
+             width="112"
+             id="rect9688" /></flowRegion><flowPara
+           style="font-size:14.66670036px;line-height:100%;letter-spacing:0px;fill:#000000;fill-opacity:1"
+           id="flowPara9690">Reference Genome</flowPara></flowRoot>    </g>
+    <g
+       transform="translate(71.197784,120.75653)"
+       id="g2109"
+       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600">
+      <g
+         id="g2099"
+         transform="translate(-20.205576,-3.9288619)">
+        <path
+           inkscape:connector-curvature="0"
+           id="path2095"
+           d="m 133.28782,-18.850539 c 0,0.904056 4.73948,1.636393 10.58336,1.636393 5.84684,0 10.58337,-0.732337 10.58337,-1.636393 v 9.8183584 c 0,0.9040565 -4.73653,1.636393 -10.58337,1.636393 -5.84388,0 -10.58336,-0.7323365 -10.58336,-1.636393 z"
+           style="fill:#ac8688;fill-opacity:1;fill-rule:evenodd;stroke:#644546;stroke-width:0.27309027;stroke-opacity:1" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path2097"
+           d="m 133.28782,-18.850539 c 0,-0.901531 4.73948,-1.636393 10.58336,-1.636393 5.84684,0 10.58337,0.734862 10.58337,1.636393 0,0.904056 -4.73653,1.636393 -10.58337,1.636393 -5.84388,0 -10.58336,-0.732337 -10.58336,-1.636393 z"
+           style="fill:#d3c2c3;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.27309027;stroke-opacity:1" />
+      </g>
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot2107"
+         style="font-style:normal;font-weight:normal;font-size:14.66670036px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.26458333,0,0,0.26458333,27.696015,-82.162071)"><flowRegion
+           id="flowRegion2103"
+           style="font-size:14.66670036px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1"><rect
+             id="rect2101"
+             width="112"
+             height="45.5"
+             x="306"
+             y="235.51968"
+             style="font-size:14.66666698px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara2105"
+           style="font-size:14.66670036px;line-height:100%;letter-spacing:0px;fill:#000000;fill-opacity:1">Reference Genome</flowPara></flowRoot>    </g>
+    <rect
+       style="display:inline;fill:#3e667a;fill-opacity:1;stroke:#223843;stroke-width:2.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1987-5"
+       width="24.134438"
+       height="15.715448"
+       x="75.303192"
+       y="194.47542"
+       ry="0.83725804" />
   </g>
 </svg>
