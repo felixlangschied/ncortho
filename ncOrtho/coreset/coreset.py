@@ -34,18 +34,18 @@ import subprocess as sp
 import sys
 import yaml
 
-try:
-    from ncOrtho.coreset.createcm import CmConstructor
-    from ncOrtho.coreset.core_reblast import blastsearch
-    from ncOrtho.coreset.coreset_utils import gff_parser
-    from ncOrtho.coreset.coreset_utils import gtf_parser
-    from ncOrtho.coreset.coreset_utils import ortho_search
-except ImportError:
-    from createcm import CmConstructor
-    from core_reblast import blastsearch
-    from coreset_utils import gff_parser
-    from coreset_utils import gtf_parser
-    from coreset_utils import ortho_search
+
+from ncOrtho.coreset.createcm import CmConstructor
+from ncOrtho.coreset.core_reblast import blastsearch
+from ncOrtho.coreset.coreset_utils import gff_parser
+from ncOrtho.coreset.coreset_utils import gtf_parser
+from ncOrtho.coreset.coreset_utils import ortho_search
+
+# from createcm import CmConstructor
+# from core_reblast import blastsearch
+# from coreset_utils import gff_parser
+# from coreset_utils import gtf_parser
+# from coreset_utils import ortho_search
 
 
 ###############################################################################
@@ -516,34 +516,30 @@ def main():
                     .format(core_taxon, mirna_dict[mirna][core_taxon])
                 )
     if not mirna_dict:
-        print('\nERROR: No syntenic regions found in the core species. Exiting..')
-        sys.exit()
+        print('\nWARNING: No syntenic regions found in the core species')
 
     for mirna in mirnas:
-        if mirna[0] not in list(mirna_dict):
-            print('WARNING: No syntenic region found for {}. Skipping..'.format(mirna[0]))
-            continue
-        else:
-            print('\n### Starting reciprocal BLAST process')
-            sto_path = blastsearch(mirna, ref_genome, output, cpu, dust)
+        print('\n### Starting reciprocal BLAST process')
+        sto_path = blastsearch(mirna, ref_genome, output, cpu, dust)
 
-            if create_model == 'yes' and sto_path is not None:
-                print('### Starting to construct covariance model from alignment')
-                model_dir = f'{output}/CMs'
-                if not os.path.isdir(model_dir):
-                    os.mkdir(model_dir)
-                model_out = f'{model_dir}/{mirna[0]}.cm'
-                if not os.path.isfile(model_out):
-                    # Initiate covariance model construction and calibration.
-                    cmc = CmConstructor(sto_path, model_dir, mirna[0], cpu)
-                    # Construct the model.
-                    cmc.construct()
-                    # Calibrate the model.
-                    cmc.calibrate()
-                else:
-                    print(f'Model of {mirna[0]} already found at {model_dir}. Nothing done..')
+        if create_model == 'yes' and sto_path is not None:
+            print('### Starting to construct covariance model from alignment')
+            model_dir = f'{output}/CMs'
+            if not os.path.isdir(model_dir):
+                os.mkdir(model_dir)
+            model_out = f'{model_dir}/{mirna[0]}.cm'
+            if not os.path.isfile(model_out):
+                # Initiate covariance model construction and calibration.
+                cmc = CmConstructor(sto_path, model_dir, mirna[0], cpu)
+                # Construct the model.
+                cmc.construct()
+                # Calibrate the model.
+                cmc.calibrate()
+            else:
+                print(f'Model of {mirna[0]} already found at {model_dir}. Nothing done..')
 
     print('\n### Construction of core set finished')
+
 
 if __name__ == '__main__':
     main()

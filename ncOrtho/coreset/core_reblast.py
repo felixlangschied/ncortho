@@ -3,6 +3,33 @@ import os
 import glob
 import sys
 
+from ncOrtho.utils import check_blastdb
+from ncOrtho.utils import make_blastndb
+
+
+def make_alignment(out, mirna, cpu, core):
+    alignment = '{}/{}.aln'.format(out, mirna)
+    stockholm = '{}/{}.sto'.format(out, mirna)
+
+    # Call T-Coffee for the sequence alignment.
+    print('Building T-Coffee alignment.')
+    tc_cmd_1 = (
+        't_coffee -quiet -multi_core={} -special_mode=rcoffee -in {} '
+        '-output=clustalw_aln -outfile={}'
+            .format(cpu, core, alignment)
+    )
+    sp.call(tc_cmd_1, shell=True)
+
+    # Extend the sequence-based alignment by structural information.
+    # Create Stockholm alignment.
+    print('Adding secondary structure to Stockholm format.')
+    tc_cmd_2 = (
+        't_coffee -other_pg seq_reformat -in {} -action +add_alifold -output '
+        'stockholm_aln -out {}'
+            .format(alignment, stockholm)
+    )
+    sp.call(tc_cmd_2, shell=True)
+    return stockholm
 
 # Perform reciprocal BLAST search and construct Stockholm alignment
 def blastsearch(mirna, r_path, o_path, c, dust):
@@ -34,15 +61,12 @@ def blastsearch(mirna, r_path, o_path, c, dust):
     mirid = mirna[0]
     # this fasta file is created by the the main() script
     fasta = '{0}/{1}/{1}.fa'.format(o_path, mirid)
-    if not os.path.isfile(fasta):
-        print('ERROR: FASTA file not found for {}.'.format(mirna[0]))
-        return None
 
     # Ensure that output folder exists and change to this folder.
     out_folder = '{}/{}'.format(o_path, mirid)
     if not os.path.isdir(out_folder):
-        mkdir_cmd = 'mkdir -p {}'.format(out_folder)
-        sp.call(mkdir_cmd, shell=True)
+        os.mkdir(out_folder)
+
     os.chdir('{}/{}'.format(o_path, mirid))
     print('\n### {} ###'.format(mirid))
     # Coordinates of the ncRNA
@@ -54,6 +78,13 @@ def blastsearch(mirna, r_path, o_path, c, dust):
     # Convert RNA sequence into DNA sequence.
     preseq = mirna[5].replace('U', 'T')
 
+    if not os.path.isfile(fasta):
+        # no synteny region detected, make alignment of reference miRNA only
+        with open(fasta, 'w') as fastah:
+            fastah.write(f'>{mirid}\n{preseq}\n')
+        stock = make_alignment(out_folder, mirid, c, fasta)
+        return stock
+
     # The miRNA precursors can show a low level of complexity, hence it is
     # required to deactivate the dust filter for the BLAST search.
 
@@ -61,24 +92,8 @@ def blastsearch(mirna, r_path, o_path, c, dust):
     # check if blastdb of reference genome exists
     fname = '.'.join(r_path.split("/")[-1].split('.')[0:-1])
     ref_blastdb = f'{o_path}/refBLASTdb/{fname}'
-    file_extensions = ['.nhr', '.nin', '.nsq']
-    count = 0
-    for fe in file_extensions:
-        files = glob.glob(f'{ref_blastdb}*{fe}')
-        if not files:
-            print(
-                'BLAST database does not exist for reference genome.\n'
-                'Constructing BLAST database.'
-            )
-            # At least one of the BLAST db files is not existent and has to be
-            # created.
-            db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(r_path, ref_blastdb)
-            sp.call(db_command, shell=True)
-            break
-        else:
-            count += 1
-    if count == 3:
-        print('BLAST database of reference genome already exists.')
+    if not check_blastdb(ref_blastdb):
+        make_blastndb(r_path, ref_blastdb)
 
     bit_check = (
         'blastn -num_threads {0} -dust {1} -task megablast -db {2} '
@@ -231,28 +246,7 @@ def blastsearch(mirna, r_path, o_path, c, dust):
                     .format(accepted, accept_dict[accepted].split('\t')[3])
                     .replace('-', '')
             )
-    alignment = '{}/{}.aln'.format(out_folder, mirid)
-    stockholm = '{}/{}.sto'.format(out_folder, mirid)
-    t_coffee = 't_coffee'
-
-    # Call T-Coffee for the sequence alignment.
-    print('Building T-Coffee alignment.')
-    tc_cmd_1 = (
-        '{} -quiet -multi_core={} -special_mode=rcoffee -in {} '
-        '-output=clustalw_aln -outfile={}'
-            .format(t_coffee, c, corefile, alignment)
-    )
-    sp.call(tc_cmd_1, shell=True)
-
-    # Extend the sequence-based alignment by structural information.
-    # Create Stockholm alignment.
-    print('Adding secondary structure to Stockholm format.')
-    tc_cmd_2 = (
-        '{} -other_pg seq_reformat -in {} -action +add_alifold -output '
-        'stockholm_aln -out {}'
-            .format(t_coffee, alignment, stockholm)
-    )
-    sp.call(tc_cmd_2, shell=True)
-    return stockholm
+    stock = make_alignment(out_folder, mirid, c, corefile)
+    return stock
 
 

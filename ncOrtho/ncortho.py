@@ -366,7 +366,7 @@ def main():
         print(f'ERROR: Directory with covariance models does not exist at: {models}')
         sys.exit()
 
-    # create symbolic links to guarantee writing permissions
+    # create symbolic links to guarantee writing permissions for pyfaidx index
     q_data = '{}/data'.format(output)
     if not os.path.isdir(q_data):
         os.makedirs(q_data)
