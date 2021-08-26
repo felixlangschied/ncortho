@@ -89,7 +89,7 @@ def main():
         help=(
             'Exclude species for which less than a fraction of the reference '
             'miRNAs were detected from species tree calculation. '
-            '(e.g. --auto_skip 0.5 means that only species in which at least 50% '
+            '(e.g. --auto_skip 0.5 means that only species in which at least 50%% '
             'of the reference miRNAs were found are used for species tree calculation) (Default: Off)'
         )
     )
