@@ -209,8 +209,7 @@ def main():
     optional.add_argument(
         '--queryname', metavar='str', type=str, nargs='?', const='', default='',
         help=(
-            'Name for the output directory '
-            '(Use this if you run ncOrtho for multiple taxa whose genome file has the same name)'
+            'Name for the output directory (RECOMMENDED) '
         )
     )
     # cpu, use maximum number of available cpus unless specified otherwise
@@ -505,8 +504,6 @@ def main():
                     print('No re-BLAST hits')
                     continue
 
-                # print('# finished blast')
-
                 # BlastParser will read the temp_fasta file
                 bp = BlastParser(mirna_data, blast_output, msl)
                 # the parse_blast_output function will return True if the candidate is accepted
@@ -543,9 +540,6 @@ def main():
                                 .format(len(out_dict))
                         )
 
-                # print('# Writing output of accepted candidates.')
-                # outpath = '{0}/{1}_orthologs.fa'.format(outdir, mirna_id)
-                # with open(outpath, 'w') as of:
                 for hit in out_dict:
                     cmres = list(cm_results[hit])
                     cmres.insert(0, qname)
@@ -553,8 +547,6 @@ def main():
                     header = '|'.join(cmres)
                     of.write('>{0}\n{1}\n'.format(header, out_dict[hit]))
 
-                # write_output(out_dict, outpath, cm_results)
-                # print('# Finished writing output.')
                 log.write(f'{mirna}\tSUCESS\n')
             else:
                 print(
@@ -565,7 +557,6 @@ def main():
                     log.write(f'{mirna}\tNo re-BLAST after restricting to {max_hits} CMsearch hits\n')
                 else:
                     log.write(f'{mirna}\tNo re-BLAST\n')
-            # print('# Finished ortholog search for {}.'.format(mirna_id))
         print('\n### ncOrtho is finished!')
 
 

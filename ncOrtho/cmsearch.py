@@ -22,6 +22,22 @@ import os
 import sys
 
 
+def candidate_blast(db, c, evalue, seq, task):
+    # extract candidate regions
+    print('# Identifying candidate regions for cmsearch heuristic')
+    blast_command = (
+        'blastn -task {0} -db {1} '
+        '-num_threads {2} -evalue {3} '
+        '-outfmt "6 sseqid sstart send sstrand length"'.format(task, db, c, evalue)
+    )
+    blast_call = sp.Popen(
+        blast_command, shell=True, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
+    )
+    res, err = blast_call.communicate(seq)
+    return res, err
+
+
+
 def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup, heuristic):
     """
     Parameters
@@ -60,21 +76,16 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
 
     if heuristic[0]:
         # extract candidate regions
-        print('# Identifying candidate regions for cmsearch heuristic')
-        blast_command = (
-            'blastn -task blastn -db {0} '
-            '-num_threads {1} -evalue {2} '
-            '-outfmt "6 sseqid sstart send sstrand length"'.format(blastdb, cpu, heuristic[1])
-        )
-        blast_call = sp.Popen(
-            blast_command, shell=True, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
-        )
-        res, err = blast_call.communicate(mirna.pre)
+        #candidate_blast(db, c, evalue, seq, task):
+        res, err = candidate_blast(blastdb, cpu, heuristic[1], mirna.pre, 'blastn')
+        if not err and not res:
+            print('No BLASTn candidate regions with pre-miRNA. Trying mature sequence')
+            res, err = candidate_blast(blastdb, cpu, 10, mirna.mature, 'blastn-short')
+            # turn off length blast length cutoff
+            blast_len_cut = 0
         if err:
             print(f'ERROR: {err}')
-            sys.exit()
-        elif not res:
-            exitstatus = 'No BLASTn candidate regions'
+            exitstatus = 'ERROR during candidate region BLAST search'
             return cm_results, exitstatus
 
         # print('Blast step finished')
@@ -214,6 +225,7 @@ def cmsearcher(mirna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
 
         else:
             print('# Found cm_search results at: {}. Using those'.format(cms_output))
+        data = []
         with open(cms_output, 'r') as inf:
             for line in inf:
                 if line.startswith('  ('):

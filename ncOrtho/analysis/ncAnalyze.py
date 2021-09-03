@@ -8,7 +8,6 @@ import inspect
 from collections import Counter
 import argparse
 
-
 """
 Species in spec_to_skip will not be part of multiple sequence alignments
 """
@@ -74,8 +73,9 @@ def main():
     )
     required.add_argument(
         '-m', '--mapping', metavar='<path>', type=str,
-        help='Tab seperated mapping file between NCBI taxonomy id and name of query species/results directory name '
-             '(e.g 9606 Homo sapiens)'
+        help='Tab seperated mapping file between NCBI taxonomy id and name of the query species '
+             'or more generally the name of the directory that contains the ncOrtho results of each species'
+             '(e.g "9606\tHomo_sapiens")'
     )
     ##########################################################################################
     optional.add_argument(
