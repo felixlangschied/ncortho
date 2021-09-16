@@ -64,17 +64,13 @@ class BlastParser(object):
         outbool = False
         if not self.blasthits:
             print('Rejecting: No reciprocal BLAST hit found')
-            outbool = False
+            return False
         # Otherwise, check if the best hit and the reference miRNA overlap.
         else:
-            i = 0
             topscore = float(self.blasthits[0][4])
-            # print(self.blasthits[0:2])
-            while outbool == False and float(self.blasthits[i][4]) >= topscore:
-            # Gather coordinates of best BLAST hit.
-                tophit = self.blasthits[i]
-                i += 1
-                # print(f'I have incremented to {i}')
+            for tophit in self.blasthits:
+                if not tophit or float(tophit[4]) < topscore:
+                    return False
                 sseqid = tophit[0]
                 sstrand = tophit[3]
                 if sstrand == 'plus':
@@ -93,7 +89,6 @@ class BlastParser(object):
                 # ruled out instantaneously
                 if not sseqid == self.chromosome:
                     print(f'Rejecting: Contig/Chromosome does not match. Expected {self.chromosome} but found {sseqid}')
-                    outbool = False
                 # Contigs match, so overlap is possible.
                 else:
                     print(f'Start miRNA: {self.start} End miRNA: {self.end}')
@@ -113,7 +108,6 @@ class BlastParser(object):
                     # No overlap
                     else:
                         print('Rejecting: No overlap between miRNA and best BLAST hit')
-                        outbool = False
         return outbool
 
     def check_coortholog_ref(self, candidate_seq, out):
