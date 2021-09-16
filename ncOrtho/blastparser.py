@@ -61,52 +61,60 @@ class BlastParser(object):
         # with open(self.blastpath) as blastfile:
         #     blasthits = [line.strip().split() for line in blastfile]
         # If no BLAST hit was found, the search failed by default.
+        outbool = False
         if not self.blasthits:
             print('Rejecting: No reciprocal BLAST hit found')
-            return False
+            outbool = False
         # Otherwise, check if the best hit and the reference miRNA overlap.
         else:
+            i = 0
+            topscore = float(self.blasthits[0][4])
+            # print(self.blasthits[0:2])
+            while outbool == False and float(self.blasthits[i][4]) >= topscore:
             # Gather coordinates of best BLAST hit.
-            tophit = self.blasthits[0]
-            sseqid = tophit[0]
-            sstrand = tophit[3]
-            if sstrand == 'plus':
-                sstart = int(tophit[1])
-                send = int(tophit[2])
-            elif sstrand == 'minus':
-                sstart = int(tophit[2])
-                send = int(tophit[1])
-            else:
-                print('ERROR: re-BLAST on neither plus nor minus strand')
-                print(tophit)
-                sys.exit()
-
-            # del blasthits
-            # Sequences must be on the same contig, otherwise overlap can be
-            # ruled out instantaneously
-            if not sseqid == self.chromosome:
-                print(f'Rejecting: Contig/Chromosome does not match. Expected {self.chromosome} but found {sseqid}')
-                return False
-            # Contigs match, so overlap is possible.
-            else:
-                print(f'Start miRNA: {self.start} End miRNA: {self.end}')
-                print(f'Start BLAST hit: {sstart} End BLAST hit: {send}')
-                # first within second
-                if (
-                    (sstart <= self.start <= send)
-                    or (sstart <= self.end <= send)
-                ):
-                    return True
-                # second within first
-                elif (
-                    (self.start <= sstart <= self.end)
-                    or (self.start <= send <= self.end)
-                ):
-                    return True
-                # No overlap
+                tophit = self.blasthits[i]
+                i += 1
+                # print(f'I have incremented to {i}')
+                sseqid = tophit[0]
+                sstrand = tophit[3]
+                if sstrand == 'plus':
+                    sstart = int(tophit[1])
+                    send = int(tophit[2])
+                elif sstrand == 'minus':
+                    sstart = int(tophit[2])
+                    send = int(tophit[1])
                 else:
-                    print('Rejecting: No overlap between miRNA and best BLAST hit')
-                    return False
+                    print('ERROR: re-BLAST on neither plus nor minus strand')
+                    print(tophit)
+                    sys.exit()
+
+                # del blasthits
+                # Sequences must be on the same contig, otherwise overlap can be
+                # ruled out instantaneously
+                if not sseqid == self.chromosome:
+                    print(f'Rejecting: Contig/Chromosome does not match. Expected {self.chromosome} but found {sseqid}')
+                    outbool = False
+                # Contigs match, so overlap is possible.
+                else:
+                    print(f'Start miRNA: {self.start} End miRNA: {self.end}')
+                    print(f'Start BLAST hit: {sstart} End BLAST hit: {send}')
+                    # first within second
+                    if (
+                        (sstart <= self.start <= send)
+                        or (sstart <= self.end <= send)
+                    ):
+                        return True
+                    # second within first
+                    elif (
+                        (self.start <= sstart <= self.end)
+                        or (self.start <= send <= self.end)
+                    ):
+                        return True
+                    # No overlap
+                    else:
+                        print('Rejecting: No overlap between miRNA and best BLAST hit')
+                        outbool = False
+        return outbool
 
     def check_coortholog_ref(self, candidate_seq, out):
         # 1) get query sequence

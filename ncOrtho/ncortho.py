@@ -26,7 +26,7 @@ import sys
 
 # Internal ncOrtho modules
 # try:
-from ncOrtho.blastparser import BlastParser
+# from ncOrtho.blastparser import BlastParser
 from ncOrtho.blastparser import ReBlastParser
 from ncOrtho.genparser import GenomeParser
 from ncOrtho.cmsearch import cmsearcher
@@ -34,7 +34,7 @@ from ncOrtho.utils import check_blastdb
 from ncOrtho.utils import make_blastndb
 from ncOrtho.utils import find_refbit
 # except ImportError:
-# from blastparser import BlastParser
+from blastparser import BlastParser
 # from blastparser import ReBlastParser
 # from genparser import GenomeParser
 # from cmsearch import cmsearcher
@@ -481,7 +481,7 @@ def main():
                 )
                 blast_command = (
                     'blastn -task blastn -db {0} -num_threads {1} -dust {2} -outfmt "6 sseqid '
-                    'sstart send sstrand"'
+                    'sstart send sstrand bitscore"'
                     .format(refblast, cpu, dust)
                 )
                 blast_call = sp.Popen(
