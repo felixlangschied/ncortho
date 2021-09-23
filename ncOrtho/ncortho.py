@@ -273,11 +273,11 @@ def main():
         )
     )
     optional.add_argument(
-        '--maxcmhits', metavar='int', nargs='?', const=50, default=50,
+        '--maxcmhits', metavar='int', nargs='?', const=None, default=None,
         help=(
             'Maximum number of cmsearch hits to examine. '
-            'Decreases runtime significantly if reference miRNA in genomic repeat region (Default: 50). '
-            'Set to empty variable to disable (i.e. --maxcmhits="")'
+            'Decreases runtime significantly if reference miRNA in genomic repeat region. '
+            'Set to empty variable to disable (i.e. --maxcmhits=None, default)'
         )
     )
     # use dust filter?
@@ -332,7 +332,10 @@ def main():
     reference = args.reference
 
     # optional
-    max_hits = args.maxcmhits
+    try:
+        max_hits = int(args.maxcmhits)
+    except TypeError:
+        max_hits = None
     cm_cutoff = args.cm_cutoff
     checkCoorthref = args.checkCoorthologsRef
     cleanup = args.cleanup
@@ -447,10 +450,11 @@ def main():
                 print('# {} for {}'.format(exitstatus, mirna))
                 log.write(f'{mirna}\t{exitstatus}\n')
                 continue
-            elif max_hits and len(cm_results) > max_hits:
-                print('# Maximum CMsearch hits reached. Restricting to best {} hits'.format(max_hits))
-                cm_results = {k: cm_results[k] for k in list(cm_results.keys())[:max_hits]}
-                restricted = True
+            elif max_hits:
+                if len(cm_results) > max_hits:
+                    print('# Maximum CMsearch hits reached. Restricting to best {} hits'.format(max_hits))
+                    cm_results = {k: cm_results[k] for k in list(cm_results.keys())[:max_hits]}
+                    restricted = True
             # get sequences for each CM result
             gp = GenomeParser(qlink, cm_results.values())
             candidates = gp.extract_sequences()
