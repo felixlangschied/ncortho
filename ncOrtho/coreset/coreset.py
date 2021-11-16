@@ -127,11 +127,7 @@ def main():
     # Check if computer provides the desired number of cores.
     available_cpu = mp.cpu_count()
     if args.threads > available_cpu:
-        print(
-            '# Error: The provided number of CPU cores is higher than the '
-            'number available on this system. Exiting...'
-        )
-        sys.exit(1)
+        raise ValueError('The provided number of CPU cores is higher than the number available on this system')
     else:
         cpu = args.threads
 
@@ -165,8 +161,7 @@ def main():
     all_paths.extend([ref_annot_path, ref_genome])
     for cp in all_paths:
         if not os.path.isfile(cp):
-            print(f'ERROR: {cp} does not exist')
-            sys.exit()
+            raise ValueError(f'{cp} does not exist')
 
     ###############################################################################
     ortho_dict = {}
@@ -201,8 +196,7 @@ def main():
     elif ft in ['gff3', 'gff']:
         ref_dict = gff_parser(ref_annot_path, id_t)
     else:
-        print('ERROR: File type "{}" not valid as reference annotation'.format(ft))
-        sys.exit()
+        raise ValueError('File type "{}" not valid as reference annotation. Expecting .gff3, .gff or .gtf'.format(ft))
     print('Done')
 
     # Determine the position of each miRNA and its neighboring gene(s)
@@ -376,8 +370,7 @@ def main():
         elif fe in ['gff3', 'gff']:
             core_dict = gff_parser(path_dict[taxon]['annotation'], id_t)
         else:
-            print('ERROR: File type "{}" not valid as reference annotation'.format(ft))
-            sys.exit()
+            raise ValueError('File type "{}" not valid as reference annotation'.format(ft))
 
         print('# Loading genome file')
         fasta_path = path_dict[taxon]['genome']

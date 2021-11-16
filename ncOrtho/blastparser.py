@@ -80,11 +80,8 @@ class BlastParser(object):
                     sstart = int(tophit[2])
                     send = int(tophit[1])
                 else:
-                    print('ERROR: re-BLAST on neither plus nor minus strand')
-                    print(tophit)
-                    sys.exit()
+                    raise ValueError('re-BLAST on neither plus nor minus strand')
 
-                # del blasthits
                 # Sequences must be on the same contig, otherwise overlap can be
                 # ruled out instantaneously
                 if not sseqid == self.chromosome:

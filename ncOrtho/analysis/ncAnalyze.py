@@ -126,8 +126,7 @@ def main():
     if not os.path.isdir(outdir):
         os.mkdir(outdir)
     if auto_skip < 0 or auto_skip > 1:
-        print(f'ERROR: --auto_skip must be a value between 0 and 1, not {auto_skip}')
-        sys.exit()
+        raise ValueError(f'--auto_skip must be a value between 0 and 1, not {auto_skip}')
 
     ###############################################################################################
     # Main

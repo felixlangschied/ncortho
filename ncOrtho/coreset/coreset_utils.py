@@ -65,8 +65,7 @@ def gff_parser(gff, id_type):
                 elif id_type == 'GeneID':
                     geneid = re.split('[;,]', linedata[-1].split(f'{id_type}:')[1])[0]
                 else:
-                    print('ERROR: Unknown identifier type "{}"'.format(id_type))
-                    sys.exit()
+                    raise ValueError('Unknown identifier type "{}"'.format(id_type))
 
                 contig = linedata[0]
                 start = int(linedata[3])

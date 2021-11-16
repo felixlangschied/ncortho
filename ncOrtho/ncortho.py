@@ -316,11 +316,7 @@ def main():
     # Check if computer provides the desired number of cores.
     available_cpu = mp.cpu_count()
     if args.cpu > available_cpu:
-        print(
-            '# Error: The provided number of CPU cores is higher than the '
-            'number available on this system. Exiting...'
-        )
-        sys.exit(1)
+        raise ValueError('The provided number of CPU cores is higher than the number available on this system')
     else:
         cpu = args.cpu
 
@@ -362,11 +358,9 @@ def main():
     all_files = [mirnas, reference, query]
     for pth in all_files:
         if not os.path.isfile(pth):
-            print(f'ERROR: {pth} is not a file')
-            sys.exit()
+            raise ValueError(f'{pth} is not a file')
     if not os.path.isdir(models):
-        print(f'ERROR: Directory with covariance models does not exist at: {models}')
-        sys.exit()
+        raise ValueError(f'Directory with covariance models does not exist at: {models}')
 
     # create symbolic links to guarantee writing permissions for pyfaidx index
     q_data = '{}/data'.format(output)
@@ -382,8 +376,7 @@ def main():
     if refblast:
         # check if BLASTdb exists
         if not check_blastdb(refblast):
-            print('# Reference BLASTdb not found at: {}'.format(refblast))
-            sys.exit()
+            raise ValueError('# Reference BLASTdb not found at: {}'.format(refblast))
     else:
         # check if refblast exists at location of reference genome
         if not check_blastdb(reference):
@@ -398,8 +391,7 @@ def main():
     if qblast and heuristic[0]:
         # check if qblast exists
         if not check_blastdb(qblast):
-            print('# Query BLASTdb not found at: {}'.format(qblast))
-            sys.exit()
+            raise ValueError('# Query BLASTdb not found at: {}'.format(qblast))
     elif heuristic[0]:
         qblast = qlink
         # check if already exists
