@@ -53,6 +53,7 @@ def main():
     print('###   Analysis of ncOrtho results   ###')
     print('###'+' '*33+'###')
     print('#'*39+'\n')
+    sys.stdout.flush()
 
     # Parse command-line arguments
     # Define global variables
@@ -198,6 +199,7 @@ def main():
                 print(res.stderr.decode('utf8'))
                 sys.exit()
 
+    sys.stdout.flush()
     superm_path = make_supermatrix(outdir)
     print('# Starting tree calculation')
     tree_out = f'{outdir}/species_tree'
@@ -208,6 +210,17 @@ def main():
     print(res.stdout.decode('utf-8'))
     if res.returncode != 0:
         print(res.stderr.decode('utf-8'))
+
+    # write tree that can be used as optional phyloprofile input
+    treepath = f'{tree_out}/species_tree.contree'
+    pptree = f'{outdir}/PhyloProfile_tree.contree'
+    with open(treepath, 'r') as th:
+        treestr = th.read().strip()
+        for name in name_2_taxid:
+            ppid = f'ncbi{name_2_taxid[name]}'
+            treestr = treestr.replace(name, ppid)
+    with open(pptree, 'w') as otfh:
+        otfh.write(treestr)
 
 
 if __name__ == "__main__":
