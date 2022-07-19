@@ -2,23 +2,24 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="210mm"
    height="297mm"
    viewBox="0 0 210 297"
    version="1.1"
    id="svg5"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   inkscape:version="1.1.1 (3bf5ae0, 2021-09-20)"
    sodipodi:docname="mirna_inkscape.svg"
    inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"
    inkscape:export-xdpi="600"
-   inkscape:export-ydpi="600">
+   inkscape:export-ydpi="600"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata
      id="metadata1635">
     <rdf:RDF>
@@ -27,7 +28,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -38,28 +38,122 @@
      borderopacity="1.0"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
-     inkscape:pagecheckerboard="false"
+     inkscape:pagecheckerboard="true"
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:snap-bbox="false"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="393.45004"
-     inkscape:cy="849.23718"
+     inkscape:zoom="1"
+     inkscape:cx="364.49999"
+     inkscape:cy="409.49999"
      inkscape:window-width="1848"
      inkscape:window-height="1136"
      inkscape:window-x="72"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="g79936-3-3"
      inkscape:snap-grids="true"
      inkscape:snap-to-guides="true"
-     borderlayer="true">
+     borderlayer="true"
+     showguides="true">
     <inkscape:grid
        type="xygrid"
        id="grid8708" />
   </sodipodi:namedview>
   <defs
      id="defs2">
+    <marker
+       style="overflow:visible"
+       id="marker19927"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DiamondSstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) translate(6,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "
+         id="path19925" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DiamondSstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DiamondSstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) translate(6,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "
+         id="path19703" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Sstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) translate(6,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path19621" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Send"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) rotate(180) translate(6,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path19624" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Tail"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Tail"
+       inkscape:isstock="true">
+      <g
+         transform="scale(-1.2)"
+         id="g19657">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.8;stroke-linecap:round"
+           d="M -3.8048674,-3.9585227 L 0.54352094,0"
+           id="path19645" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.8;stroke-linecap:round"
+           d="M -1.2866832,-3.9585227 L 3.0617053,0"
+           id="path19647" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.8;stroke-linecap:round"
+           d="M 1.3053582,-3.9585227 L 5.6537466,0"
+           id="path19649" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.8;stroke-linecap:round"
+           d="M -3.8048674,4.1775838 L 0.54352094,0.21974226"
+           id="path19651" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.8;stroke-linecap:round"
+           d="M -1.2866832,4.1775838 L 3.0617053,0.21974226"
+           id="path19653" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.8;stroke-linecap:round"
+           d="M 1.3053582,4.1775838 L 5.6537466,0.21974226"
+           id="path19655" />
+      </g>
+    </marker>
     <marker
        inkscape:isstock="true"
        style="overflow:visible"
@@ -116,21 +210,6 @@
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
          transform="scale(0.4) rotate(180) translate(10,0)" />
-    </marker>
-    <marker
-       inkscape:stockid="Arrow1Mstart"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="marker12746"
-       style="overflow:visible"
-       inkscape:isstock="true"
-       inkscape:collect="always">
-      <path
-         id="path12744"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.4) translate(10,0)" />
     </marker>
     <marker
        inkscape:isstock="true"
@@ -294,22 +373,204 @@
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
          transform="matrix(-0.4,0,0,-0.4,-4,0)" />
     </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker12372-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:collect="always">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path12370-6" />
+    </marker>
+    <style
+       type="text/css"
+       id="style2627">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+    <path
+       id="DejaVuSans-35"
+       d="M 691 4666  L 3169 4666  L 3169 4134  L 1269 4134  L 1269 2991  Q 1406 3038 1543 3061  Q 1681 3084 1819 3084  Q 2600 3084 3056 2656  Q 3513 2228 3513 1497  Q 3513 744 3044 326  Q 2575 -91 1722 -91  Q 1428 -91 1123 -41  Q 819 9 494 109  L 494 744  Q 775 591 1075 516  Q 1375 441 1709 441  Q 2250 441 2565 725  Q 2881 1009 2881 1497  Q 2881 1984 2565 2268  Q 2250 2553 1709 2553  Q 1456 2553 1204 2497  Q 953 2441 691 2322  L 691 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-70"
+       d="M 1159 525  L 1159 -1331  L 581 -1331  L 581 3500  L 1159 3500  L 1159 2969  Q 1341 3281 1617 3432  Q 1894 3584 2278 3584  Q 2916 3584 3314 3078  Q 3713 2572 3713 1747  Q 3713 922 3314 415  Q 2916 -91 2278 -91  Q 1894 -91 1617 61  Q 1341 213 1159 525  z M 3116 1747  Q 3116 2381 2855 2742  Q 2594 3103 2138 3103  Q 1681 3103 1420 2742  Q 1159 2381 1159 1747  Q 1159 1113 1420 752  Q 1681 391 2138 391  Q 2594 391 2855 752  Q 3116 1113 3116 1747  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-2d"
+       d="M 313 2009  L 1997 2009  L 1997 1497  L 313 1497  L 313 2009  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-46"
+       d="M 628 4666  L 3309 4666  L 3309 4134  L 1259 4134  L 1259 2759  L 3109 2759  L 3109 2228  L 1259 2228  L 1259 0  L 628 0  L 628 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-6c"
+       d="M 603 4863  L 1178 4863  L 1178 0  L 603 0  L 603 4863  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-61"
+       d="M 2194 1759  Q 1497 1759 1228 1600  Q 959 1441 959 1056  Q 959 750 1161 570  Q 1363 391 1709 391  Q 2188 391 2477 730  Q 2766 1069 2766 1631  L 2766 1759  L 2194 1759  z M 3341 1997  L 3341 0  L 2766 0  L 2766 531  Q 2569 213 2275 61  Q 1981 -91 1556 -91  Q 1019 -91 701 211  Q 384 513 384 1019  Q 384 1609 779 1909  Q 1175 2209 1959 2209  L 2766 2209  L 2766 2266  Q 2766 2663 2505 2880  Q 2244 3097 1772 3097  Q 1472 3097 1187 3025  Q 903 2953 641 2809  L 641 3341  Q 956 3463 1253 3523  Q 1550 3584 1831 3584  Q 2591 3584 2966 3190  Q 3341 2797 3341 1997  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-6e"
+       d="M 3513 2113  L 3513 0  L 2938 0  L 2938 2094  Q 2938 2591 2744 2837  Q 2550 3084 2163 3084  Q 1697 3084 1428 2787  Q 1159 2491 1159 1978  L 1159 0  L 581 0  L 581 3500  L 1159 3500  L 1159 2956  Q 1366 3272 1645 3428  Q 1925 3584 2291 3584  Q 2894 3584 3203 3211  Q 3513 2838 3513 2113  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-6b"
+       d="M 581 4863  L 1159 4863  L 1159 1991  L 2875 3500  L 3609 3500  L 1753 1863  L 3688 0  L 2938 0  L 1159 1709  L 1159 0  L 581 0  L 581 4863  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-4d"
+       d="M 628 4666  L 1569 4666  L 2759 1491  L 3956 4666  L 4897 4666  L 4897 0  L 4281 0  L 4281 4097  L 3078 897  L 2444 897  L 1241 4097  L 1241 0  L 628 0  L 628 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-74"
+       d="M 1172 4494  L 1172 3500  L 2356 3500  L 2356 3053  L 1172 3053  L 1172 1153  Q 1172 725 1289 603  Q 1406 481 1766 481  L 2356 481  L 2356 0  L 1766 0  Q 1100 0 847 248  Q 594 497 594 1153  L 594 3053  L 172 3053  L 172 3500  L 594 3500  L 594 4494  L 1172 4494  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-75"
+       d="M 544 1381  L 544 3500  L 1119 3500  L 1119 1403  Q 1119 906 1312 657  Q 1506 409 1894 409  Q 2359 409 2629 706  Q 2900 1003 2900 1516  L 2900 3500  L 3475 3500  L 3475 0  L 2900 0  L 2900 538  Q 2691 219 2414 64  Q 2138 -91 1772 -91  Q 1169 -91 856 284  Q 544 659 544 1381  z M 1991 3584  L 1991 3584  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-72"
+       d="M 2631 2963  Q 2534 3019 2420 3045  Q 2306 3072 2169 3072  Q 1681 3072 1420 2755  Q 1159 2438 1159 1844  L 1159 0  L 581 0  L 581 3500  L 1159 3500  L 1159 2956  Q 1341 3275 1631 3429  Q 1922 3584 2338 3584  Q 2397 3584 2469 3576  Q 2541 3569 2628 3553  L 2631 2963  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-65"
+       d="M 3597 1894  L 3597 1613  L 953 1613  Q 991 1019 1311 708  Q 1631 397 2203 397  Q 2534 397 2845 478  Q 3156 559 3463 722  L 3463 178  Q 3153 47 2828 -22  Q 2503 -91 2169 -91  Q 1331 -91 842 396  Q 353 884 353 1716  Q 353 2575 817 3079  Q 1281 3584 2069 3584  Q 2775 3584 3186 3129  Q 3597 2675 3597 1894  z M 3022 2063  Q 3016 2534 2758 2815  Q 2500 3097 2075 3097  Q 1594 3097 1305 2825  Q 1016 2553 972 2059  L 3022 2063  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-53"
+       d="M 3425 4513  L 3425 3897  Q 3066 4069 2747 4153  Q 2428 4238 2131 4238  Q 1616 4238 1336 4038  Q 1056 3838 1056 3469  Q 1056 3159 1242 3001  Q 1428 2844 1947 2747  L 2328 2669  Q 3034 2534 3370 2195  Q 3706 1856 3706 1288  Q 3706 609 3251 259  Q 2797 -91 1919 -91  Q 1588 -91 1214 -16  Q 841 59 441 206  L 441 856  Q 825 641 1194 531  Q 1563 422 1919 422  Q 2459 422 2753 634  Q 3047 847 3047 1241  Q 3047 1584 2836 1778  Q 2625 1972 2144 2069  L 1759 2144  Q 1053 2284 737 2584  Q 422 2884 422 3419  Q 422 4038 858 4394  Q 1294 4750 2059 4750  Q 2388 4750 2728 4690  Q 3069 4631 3425 4513  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-4c"
+       d="M 628 4666  L 1259 4666  L 1259 531  L 3531 531  L 3531 0  L 628 0  L 628 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-6f"
+       d="M 1959 3097  Q 1497 3097 1228 2736  Q 959 2375 959 1747  Q 959 1119 1226 758  Q 1494 397 1959 397  Q 2419 397 2687 759  Q 2956 1122 2956 1747  Q 2956 2369 2687 2733  Q 2419 3097 1959 3097  z M 1959 3584  Q 2709 3584 3137 3096  Q 3566 2609 3566 1747  Q 3566 888 3137 398  Q 2709 -91 1959 -91  Q 1206 -91 779 398  Q 353 888 353 1747  Q 353 2609 779 3096  Q 1206 3584 1959 3584  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-33"
+       d="M 2597 2516  Q 3050 2419 3304 2112  Q 3559 1806 3559 1356  Q 3559 666 3084 287  Q 2609 -91 1734 -91  Q 1441 -91 1130 -33  Q 819 25 488 141  L 488 750  Q 750 597 1062 519  Q 1375 441 1716 441  Q 2309 441 2620 675  Q 2931 909 2931 1356  Q 2931 1769 2642 2001  Q 2353 2234 1838 2234  L 1294 2234  L 1294 2753  L 1863 2753  Q 2328 2753 2575 2939  Q 2822 3125 2822 3475  Q 2822 3834 2567 4026  Q 2313 4219 1838 4219  Q 1578 4219 1281 4162  Q 984 4106 628 3988  L 628 4550  Q 988 4650 1302 4700  Q 1616 4750 1894 4750  Q 2613 4750 3031 4423  Q 3450 4097 3450 3541  Q 3450 3153 3228 2886  Q 3006 2619 2597 2516  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-50"
+       d="M 1259 4147  L 1259 2394  L 2053 2394  Q 2494 2394 2734 2622  Q 2975 2850 2975 3272  Q 2975 3691 2734 3919  Q 2494 4147 2053 4147  L 1259 4147  z M 628 4666  L 2053 4666  Q 2838 4666 3239 4311  Q 3641 3956 3641 3272  Q 3641 2581 3239 2228  Q 2838 1875 2053 1875  L 1259 1875  L 1259 0  L 628 0  L 628 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-69"
+       d="M 603 3500  L 1178 3500  L 1178 0  L 603 0  L 603 3500  z M 603 4863  L 1178 4863  L 1178 4134  L 603 4134  L 603 4863  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-20"
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-63"
+       d="M 3122 3366  L 3122 2828  Q 2878 2963 2633 3030  Q 2388 3097 2138 3097  Q 1578 3097 1268 2742  Q 959 2388 959 1747  Q 959 1106 1268 751  Q 1578 397 2138 397  Q 2388 397 2633 464  Q 2878 531 3122 666  L 3122 134  Q 2881 22 2623 -34  Q 2366 -91 2075 -91  Q 1284 -91 818 406  Q 353 903 353 1747  Q 353 2603 823 3093  Q 1294 3584 2113 3584  Q 2378 3584 2631 3529  Q 2884 3475 3122 3366  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-64"
+       d="M 2906 2969  L 2906 4863  L 3481 4863  L 3481 0  L 2906 0  L 2906 525  Q 2725 213 2448 61  Q 2172 -91 1784 -91  Q 1150 -91 751 415  Q 353 922 353 1747  Q 353 2572 751 3078  Q 1150 3584 1784 3584  Q 2172 3584 2448 3432  Q 2725 3281 2906 2969  z M 947 1747  Q 947 1113 1208 752  Q 1469 391 1925 391  Q 2381 391 2643 752  Q 2906 1113 2906 1747  Q 2906 2381 2643 2742  Q 2381 3103 1925 3103  Q 1469 3103 1208 2742  Q 947 2381 947 1747  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-67"
+       d="M 2906 1791  Q 2906 2416 2648 2759  Q 2391 3103 1925 3103  Q 1463 3103 1205 2759  Q 947 2416 947 1791  Q 947 1169 1205 825  Q 1463 481 1925 481  Q 2391 481 2648 825  Q 2906 1169 2906 1791  z M 3481 434  Q 3481 -459 3084 -895  Q 2688 -1331 1869 -1331  Q 1566 -1331 1297 -1286  Q 1028 -1241 775 -1147  L 775 -588  Q 1028 -725 1275 -790  Q 1522 -856 1778 -856  Q 2344 -856 2625 -561  Q 2906 -266 2906 331  L 2906 616  Q 2728 306 2450 153  Q 2172 0 1784 0  Q 1141 0 747 490  Q 353 981 353 1791  Q 353 2603 747 3093  Q 1141 3584 1784 3584  Q 2172 3584 2450 3431  Q 2728 3278 2906 2969  L 2906 3500  L 3481 3500  L 3481 434  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-52"
+       d="M 2841 2188  Q 3044 2119 3236 1894  Q 3428 1669 3622 1275  L 4263 0  L 3584 0  L 2988 1197  Q 2756 1666 2539 1819  Q 2322 1972 1947 1972  L 1259 1972  L 1259 0  L 628 0  L 628 4666  L 2053 4666  Q 2853 4666 3247 4331  Q 3641 3997 3641 3322  Q 3641 2881 3436 2590  Q 3231 2300 2841 2188  z M 1259 4147  L 1259 2491  L 2053 2491  Q 2509 2491 2742 2702  Q 2975 2913 2975 3322  Q 2975 3731 2742 3939  Q 2509 4147 2053 4147  L 1259 4147  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-4e"
+       d="M 628 4666  L 1478 4666  L 3547 763  L 3547 4666  L 4159 4666  L 4159 0  L 3309 0  L 1241 3903  L 1241 0  L 628 0  L 628 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-41"
+       d="M 2188 4044  L 1331 1722  L 3047 1722  L 2188 4044  z M 1831 4666  L 2547 4666  L 4325 0  L 3669 0  L 3244 1197  L 1141 1197  L 716 0  L 50 0  L 1831 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-30"
+       d="M 2034 4250  Q 1547 4250 1301 3770  Q 1056 3291 1056 2328  Q 1056 1369 1301 889  Q 1547 409 2034 409  Q 2525 409 2770 889  Q 3016 1369 3016 2328  Q 3016 3291 2770 3770  Q 2525 4250 2034 4250  z M 2034 4750  Q 2819 4750 3233 4129  Q 3647 3509 3647 2328  Q 3647 1150 3233 529  Q 2819 -91 2034 -91  Q 1250 -91 836 529  Q 422 1150 422 2328  Q 422 3509 836 4129  Q 1250 4750 2034 4750  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-31"
+       d="M 794 531  L 1825 531  L 1825 4091  L 703 3866  L 703 4441  L 1819 4666  L 2450 4666  L 2450 531  L 3481 531  L 3481 0  L 794 0  L 794 531  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-32"
+       d="M 1228 531  L 3431 531  L 3431 0  L 469 0  L 469 531  Q 828 903 1448 1529  Q 2069 2156 2228 2338  Q 2531 2678 2651 2914  Q 2772 3150 2772 3378  Q 2772 3750 2511 3984  Q 2250 4219 1831 4219  Q 1534 4219 1204 4116  Q 875 4013 500 3803  L 500 4441  Q 881 4594 1212 4672  Q 1544 4750 1819 4750  Q 2544 4750 2975 4387  Q 3406 4025 3406 3419  Q 3406 3131 3298 2873  Q 3191 2616 2906 2266  Q 2828 2175 2409 1742  Q 1991 1309 1228 531  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-34"
+       d="M 2419 4116  L 825 1625  L 2419 1625  L 2419 4116  z M 2253 4666  L 3047 4666  L 3047 1625  L 3713 1625  L 3713 1100  L 3047 1100  L 3047 0  L 2419 0  L 2419 1100  L 313 1100  L 313 1709  L 2253 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-36"
+       d="M 2113 2584  Q 1688 2584 1439 2293  Q 1191 2003 1191 1497  Q 1191 994 1439 701  Q 1688 409 2113 409  Q 2538 409 2786 701  Q 3034 994 3034 1497  Q 3034 2003 2786 2293  Q 2538 2584 2113 2584  z M 3366 4563  L 3366 3988  Q 3128 4100 2886 4159  Q 2644 4219 2406 4219  Q 1781 4219 1451 3797  Q 1122 3375 1075 2522  Q 1259 2794 1537 2939  Q 1816 3084 2150 3084  Q 2853 3084 3261 2657  Q 3669 2231 3669 1497  Q 3669 778 3244 343  Q 2819 -91 2113 -91  Q 1303 -91 875 529  Q 447 1150 447 2328  Q 447 3434 972 4092  Q 1497 4750 2381 4750  Q 2619 4750 2861 4703  Q 3103 4656 3366 4563  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-37"
+       d="M 525 4666  L 3525 4666  L 3525 4397  L 1831 0  L 1172 0  L 2766 4134  L 525 4134  L 525 4666  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-38"
+       d="M 2034 2216  Q 1584 2216 1326 1975  Q 1069 1734 1069 1313  Q 1069 891 1326 650  Q 1584 409 2034 409  Q 2484 409 2743 651  Q 3003 894 3003 1313  Q 3003 1734 2745 1975  Q 2488 2216 2034 2216  z M 1403 2484  Q 997 2584 770 2862  Q 544 3141 544 3541  Q 544 4100 942 4425  Q 1341 4750 2034 4750  Q 2731 4750 3128 4425  Q 3525 4100 3525 3541  Q 3525 3141 3298 2862  Q 3072 2584 2669 2484  Q 3125 2378 3379 2068  Q 3634 1759 3634 1313  Q 3634 634 3220 271  Q 2806 -91 2034 -91  Q 1263 -91 848 271  Q 434 634 434 1313  Q 434 1759 690 2068  Q 947 2378 1403 2484  z M 1172 3481  Q 1172 3119 1398 2916  Q 1625 2713 2034 2713  Q 2441 2713 2670 2916  Q 2900 3119 2900 3481  Q 2900 3844 2670 4047  Q 2441 4250 2034 4250  Q 1625 4250 1398 4047  Q 1172 3844 1172 3481  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-73"
+       d="M 2834 3397  L 2834 2853  Q 2591 2978 2328 3040  Q 2066 3103 1784 3103  Q 1356 3103 1142 2972  Q 928 2841 928 2578  Q 928 2378 1081 2264  Q 1234 2150 1697 2047  L 1894 2003  Q 2506 1872 2764 1633  Q 3022 1394 3022 966  Q 3022 478 2636 193  Q 2250 -91 1575 -91  Q 1294 -91 989 -36  Q 684 19 347 128  L 347 722  Q 666 556 975 473  Q 1284 391 1588 391  Q 1994 391 2212 530  Q 2431 669 2431 922  Q 2431 1156 2273 1281  Q 2116 1406 1581 1522  L 1381 1569  Q 847 1681 609 1914  Q 372 2147 372 2553  Q 372 3047 722 3315  Q 1072 3584 1716 3584  Q 2034 3584 2315 3537  Q 2597 3491 2834 3397  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-79"
+       d="M 2059 -325  Q 1816 -950 1584 -1140  Q 1353 -1331 966 -1331  L 506 -1331  L 506 -850  L 844 -850  Q 1081 -850 1212 -737  Q 1344 -625 1503 -206  L 1606 56  L 191 3500  L 800 3500  L 1894 763  L 2988 3500  L 3597 3500  L 2059 -325  z "
+       transform="scale(0.015625)" />
+    <path
+       id="DejaVuSans-62"
+       d="M 3116 1747  Q 3116 2381 2855 2742  Q 2594 3103 2138 3103  Q 1681 3103 1420 2742  Q 1159 2381 1159 1747  Q 1159 1113 1420 752  Q 1681 391 2138 391  Q 2594 391 2855 752  Q 3116 1113 3116 1747  z M 1159 2969  Q 1341 3281 1617 3432  Q 1894 3584 2278 3584  Q 2916 3584 3314 3078  Q 3713 2572 3713 1747  Q 3713 922 3314 415  Q 2916 -91 2278 -91  Q 1894 -91 1617 61  Q 1341 213 1159 525  L 1159 0  L 581 0  L 581 4863  L 1159 4863  L 1159 2969  z "
+       transform="scale(0.015625)" />
+    <clipPath
+       id="pa71e90842f">
+      <rect
+         x="50.918"
+         y="15.368"
+         width="370.714"
+         height="212.377016"
+         id="rect3029" />
+    </clipPath>
   </defs>
   <g
      inkscape:groupmode="layer"
      id="layer1"
-     inkscape:label="Hintergrund">
+     inkscape:label="Hintergrund"
+     style="display:inline">
     <rect
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.574985;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect1631"
-       width="204.42883"
-       height="130.47023"
-       x="3.8327181"
-       y="0.90520614"
-       ry="7.7417951"
+       style="display:inline;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.48649;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect115545"
+       width="173.49545"
+       height="110.05307"
+       x="20.116186"
+       y="8.9529018"
+       ry="6.5302882"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <rect
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.48649;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect119768"
+       width="173.49545"
+       height="110.05307"
+       x="20.116186"
+       y="8.9529018"
+       ry="6.5302882"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -318,20 +579,23 @@
      style="display:inline">
     <path
        style="color:#000000;fill:#ffffff;fill-opacity:0;stroke-linejoin:bevel"
-       d="m 156.06025,182.97721 v 21.64932 c 0.66003,0.19447 0.63417,-0.29696 0.58696,-0.80974 -0.38762,-2.62056 1.07809,-20.83958 -0.58696,-20.83958 z"
+       d="m 351.00664,155.66227 v 21.64932 c 0.66003,0.19447 0.63417,-0.29696 0.58696,-0.80974 -0.38762,-2.62056 1.07809,-20.83958 -0.58696,-20.83958 z"
        id="path9879"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
     <path
        style="color:#000000;fill:#ffffff;fill-opacity:0;stroke-linejoin:bevel"
-       d="m 144.20008,226.29692 v 21.64933 c 0.66003,0.19446 0.63417,-0.29697 0.58696,-0.80975 v -20.83958 z"
+       d="m 160.94405,80.562649 v 21.649331 c 0.66003,0.19446 0.63417,-0.29697 0.58696,-0.80975 V 80.562649 Z"
        id="path9887"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
     <path
        id="path9895"
        style="color:#000000;opacity:0.818;fill:#bd582c;fill-opacity:1;stroke:#8a3e1d;stroke-width:0.3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 182.87045,179.789 c -3.33264,-0.0566 -6.91477,1.98985 -7.74061,5.37332 -0.6421,2.45263 0.58008,5.01309 2.56522,6.4735 v 21.39508 c 0.66003,0.19446 0.63426,-0.29699 0.58704,-0.80977 v -20.1998 c 0.007,0.004 0.0144,0.009 0.0217,0.0129 v -0.7121 c -0.81249,-0.54924 -1.51133,-1.26366 -2.02572,-2.14199 -1.32443,-2.16869 -0.71857,-5.13679 1.17254,-6.77426 1.45241,-1.35035 3.45222,-2.02761 5.41983,-2.02314 3.06607,-0.0542 6.38726,1.7957 7.16132,4.9134 0.59554,2.2631 -0.576,4.59789 -2.41743,5.92108 v 0.69454 5.34592 15.74478 c 0.66003,0.19446 0.63426,-0.29699 0.58705,-0.80977 v -20.69486 c 0.66415,-0.5188 1.24349,-1.15002 1.70015,-1.89239 1.50646,-2.34666 0.96794,-5.63555 -1.0666,-7.49825 -1.56994,-1.53742 -3.78451,-2.3231 -5.9645,-2.31821 z"
+       d="m 377.81684,152.47406 c -3.33264,-0.0566 -6.91477,1.98985 -7.74061,5.37332 -0.6421,2.45263 0.58008,5.01309 2.56522,6.4735 v 21.39508 c 0.66003,0.19446 0.63426,-0.29699 0.58704,-0.80977 v -20.1998 c 0.007,0.004 0.0144,0.009 0.0217,0.0129 v -0.7121 c -0.81249,-0.54924 -1.51133,-1.26366 -2.02572,-2.14199 -1.32443,-2.16869 -0.71857,-5.13679 1.17254,-6.77426 1.45241,-1.35035 3.45222,-2.02761 5.41983,-2.02314 3.06607,-0.0542 6.38726,1.7957 7.16132,4.9134 0.59554,2.2631 -0.576,4.59789 -2.41743,5.92108 v 0.69454 5.34592 15.74478 c 0.66003,0.19446 0.63426,-0.29699 0.58705,-0.80977 v -20.69486 c 0.66415,-0.5188 1.24349,-1.15002 1.70015,-1.89239 1.50646,-2.34666 0.96794,-5.63555 -1.0666,-7.49825 -1.56994,-1.53742 -3.78451,-2.3231 -5.9645,-2.31821 z"
        inkscape:connector-curvature="0" />
     <g
        id="wrapperHolder"
@@ -352,276 +616,113 @@
        style="font-weight:400;font-family:Arial;fill:none;stroke-miterlimit:10" />
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.783931;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 48.9479,23.15624 H 97.132698"
+       d="M 68.118511,35.265581 H 116.30331"
        id="path9703-6-2"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
        id="rect9720-1"
        style="display:inline;fill:#345565;fill-opacity:1;stroke:#223843;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
-       d="m 81.713455,20.299623 11.310417,0.10713 2.443905,2.774416 -2.470945,2.831688 -11.310417,-0.107129 z"
+       d="m 100.88406,32.408966 11.31042,0.10713 2.44391,2.77441 -2.47095,2.83169 -11.31042,-0.10713 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
        id="rect9720-2"
        style="display:inline;fill:#4e8197;fill-opacity:1;stroke:#223944;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
-       d="m 51.145618,20.299623 11.31048,0.107131 2.44392,2.774415 -2.47096,2.831688 -11.31048,-0.107129 z"
+       d="m 70.316229,32.408966 11.31048,0.10713 2.44392,2.77441 -2.47096,2.83169 -11.31048,-0.10713 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.222594;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Mstart);marker-end:url(#Arrow1Mend)"
-       d="M 58.009296,28.134415 V 41.295321"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.249;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Mstart);marker-end:url(#Arrow1Mend)"
+       d="m 76.517293,24.109199 v 5.87149"
        id="path11301"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot11972"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,-27.168876,-8.9320701)"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
-         id="flowRegion11974"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"><rect
-           id="rect11976"
-           width="91"
-           height="40"
-           x="334"
-           y="155.01968"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle" /></flowRegion><flowPara
-         id="flowPara11978"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif">Orthologs</flowPara></flowRoot>    <path
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
        inkscape:connector-curvature="0"
        id="path12189"
-       d="M 48.9479,46.273521 H 97.132698"
+       d="M 68.866866,19.588669 H 117.05166"
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.783931;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
        id="rect9720"
-       style="fill:#664546;fill-opacity:1;stroke:#241919;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
-       d="m 81.713455,43.416904 11.310417,0.10713 2.443905,2.774416 -2.470945,2.831688 -11.310417,-0.10713 z"
+       style="fill:#3e5375;fill-opacity:1;stroke:#2d3a53;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 101.63242,16.732059 11.31042,0.10713 2.4439,2.77441 -2.47094,2.83169 -11.31042,-0.10713 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
        id="rect9720-9"
-       style="display:inline;fill:#c8b0b1;fill-opacity:1;stroke:#644546;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
-       d="m 51.145618,43.416904 11.31048,0.10713 2.44392,2.774416 -2.47096,2.831688 -11.31048,-0.10713 z"
+       style="display:inline;fill:#7a92b8;fill-opacity:1;stroke:#2d3a53;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 71.064584,16.732059 11.31048,0.10713 2.44392,2.77441 -2.47096,2.83169 -11.31048,-0.10713 z"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
-       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
-       d="m 69.942335,43.40056 a 2.8203272,2.8730374 0 0 0 -2.82043,2.87296 2.8203272,2.8730374 0 0 0 2.82043,2.872962 2.8203272,2.8730374 0 0 0 2.281276,-1.188892 h 7.227536 v -3.149696 h -7.08674 A 2.8203272,2.8730374 0 0 0 69.942335,43.40056 Z"
+       style="fill:#5875a4;fill-opacity:1;stroke:#2d3a53;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 89.861301,16.715709 a 2.8203272,2.8730374 0 0 0 -2.82043,2.87296 2.8203272,2.8730374 0 0 0 2.82043,2.87297 2.8203272,2.8730374 0 0 0 2.281276,-1.1889 h 7.227536 v -3.14969 h -7.08674 a 2.8203272,2.8730374 0 0 0 -2.422072,-1.40734 z"
        id="path12022"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="66.448868"
-       y="52.921852"
+       x="86.367828"
+       y="15.49523"
        id="text12094"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
          sodipodi:role="line"
          id="tspan12092"
-         x="66.448868"
-         y="52.921852"
+         x="86.367828"
+         y="15.49523"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px">miRNA</tspan></text>
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.242663;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 48.9479,18.237877 v -1.960798 h 48.087298 v 1.771043"
-       id="path12108"
-       inkscape:connector-curvature="0"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="59.887321"
-       y="13.431624"
-       id="text12094-5"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         sodipodi:role="line"
-         id="tspan12092-3"
-         x="59.887321"
-         y="13.431624"
-         style="font-size:3.52778px;stroke-width:0.264583px">synteny region</tspan></text>
     <path
        inkscape:connector-curvature="0"
        id="path12364"
-       d="M 88.577106,28.134416 V 41.295322"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.222594;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker12368);marker-end:url(#marker12372)"
+       d="m 107.2236,24.109199 v 5.87149"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.249;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker12368);marker-end:url(#marker12372)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path12726"
-       d="m 108.21465,23.15624 h 48.18507"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.784;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path12728"
-       d="m 128.96297,43.40056 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
-       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.222594;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker12746)"
-       d="M 132.30718,28.134416 V 41.295322"
-       id="path12738"
-       inkscape:connector-curvature="0"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="133.56009"
-       y="36.256439"
+       x="150.97806"
+       y="28.07102"
        id="text12094-8"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
          sodipodi:role="line"
          id="tspan12092-31"
-         x="133.56009"
-         y="36.256439"
+         x="150.97806"
+         y="28.07102"
          style="font-size:3.52778px;stroke-width:0.264583px">BLASTn</tspan></text>
-    <path
-       style="fill:#3e667a;fill-opacity:0.78431374;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.69999999999999996;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 128.96297,20.117212 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
-       id="path13250"
-       inkscape:connector-curvature="0"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path13270"
-       d="m 108.21465,18.237877 v -1.960798 h 48.08757 v 1.771043"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.242663;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <text
-       id="text13274"
-       y="13.431624"
-       x="119.15405"
-       style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         style="font-size:3.52778px;stroke-width:0.264583px"
-         y="13.431624"
-         x="119.15405"
-         id="tspan13272"
-         sodipodi:role="line">synteny region</tspan></text>
-    <path
-       inkscape:connector-curvature="0"
-       id="path13276"
-       d="m 171.29657,20.117212 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
-       style="fill:#3e667a;fill-opacity:0.78431374;stroke:#223843;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.69999999999999996;stroke-dashoffset:0;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24756099px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 180.96848,22.946678 h 2.12901 V 61.11741 h -1.99596"
-       id="path13318"
-       inkscape:connector-curvature="0"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       style="fill:#3e667a;fill-opacity:1;stroke:#223843;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 171.29657,58.217236 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 V 59.62457 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
-       id="path13329"
-       inkscape:connector-curvature="0"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="165.86232"
-       y="42.961227"
-       id="text12094-8-8"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         sodipodi:role="line"
-         id="tspan12092-31-9"
-         x="165.86232"
-         y="42.961227"
-         style="font-size:3.52778px;stroke-width:0.264583px">re-BLAST</tspan></text>
-    <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#855a5c;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 139.9891,56.304722 h 13.12778"
-       id="path13349"
-       inkscape:connector-curvature="0"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path13351"
-       d="m 139.9891,59.261504 h 13.12778"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#36596a;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#87a330;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 139.9891,65.175066 h 13.12778"
-       id="path13353"
-       inkscape:connector-curvature="0"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path13355"
-       d="m 139.98909,62.218286 h 13.12778"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#828e82;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
     <g
        clip-path="url(#clipPath5464)"
        style="font-family:none;fill:none;stroke-miterlimit:10"
-       transform="matrix(0.08424018,0,0,-0.12491154,-8.5001599,230.25656)"
+       transform="matrix(0.08424018,0,0,-0.12491154,8.4950905,231.03933)"
        stroke-miterlimit="10"
        id="g14073"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png">
       <g
          style="font-weight:400;font-family:Arial"
          font-weight="400"
@@ -2225,7 +2326,7 @@
          font-weight="400" />
     </g>
     <path
-       transform="matrix(0.74198683,0,0,0.79149151,-1.9346844,-41.944079)"
+       transform="matrix(0.74198683,0,0,0.79149151,15.060566,-41.161311)"
        d="m 53.149265,71.600565 -0.04563,1.684063 1.591552,0.552374 -1.481259,0.802511 0.317406,1.654511 -1.435625,-0.881552 -1.274145,1.102137 0.04563,-1.684064 -1.591551,-0.552373 1.481259,-0.802512 -0.317407,-1.65451 1.435625,0.881552 z"
        inkscape:randomized="0"
        inkscape:rounded="0"
@@ -2238,13 +2339,13 @@
        sodipodi:cx="51.985413"
        sodipodi:sides="6"
        id="path14075"
-       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#5875a4;fill-opacity:1;stroke:#2d3a53;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
-       transform="matrix(0.39500273,0,0,0.44036816,14.243782,6.0733184)"
+       transform="matrix(0.39500273,0,0,0.44036816,31.239033,6.8560793)"
        inkscape:transform-center-y="-0.62414821"
        d="m 56.693348,52.121299 2.454894,4.252001 2.454894,4.252002 -4.909788,0 -4.909788,-10e-7 2.454894,-4.252001 z"
        inkscape:randomized="0"
@@ -2262,9 +2363,9 @@
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
-       transform="matrix(0.39500273,0,0,0.44036816,14.243782,-0.80639868)"
+       transform="matrix(0.39500273,0,0,0.44036816,31.239033,-0.02363068)"
        inkscape:transform-center-y="-0.62414821"
        d="m 56.693348,52.121299 2.454894,4.252001 2.454894,4.252002 -4.909788,0 -4.909788,-10e-7 2.454894,-4.252001 z"
        inkscape:randomized="0"
@@ -2282,9 +2383,9 @@
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
-       transform="matrix(0.39500273,0,0,0.44036816,14.243782,14.053998)"
+       transform="matrix(0.39500273,0,0,0.44036816,31.239033,14.836759)"
        inkscape:transform-center-y="-0.62414821"
        d="m 56.693348,52.121299 2.454894,4.252001 2.454894,4.252002 -4.909788,0 -4.909788,-10e-7 2.454894,-4.252001 z"
        inkscape:randomized="0"
@@ -2302,167 +2403,87 @@
        sodipodi:type="star"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <ellipse
        ry="1.9589142"
        rx="1.9874892"
-       cy="65.106422"
-       cx="36.63781"
+       cy="65.889107"
+       cx="53.633064"
        id="ellipse14083"
        style="fill:#fbba72;fill-opacity:1;stroke:#b46916;stroke-width:0.448421;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <rect
-       ry="4.3550825"
-       y="13.172992"
-       x="10.273832"
-       height="73.394943"
-       width="31.73628"
+       ry="6.1639895"
+       y="11.674871"
+       x="24.023924"
+       height="103.87994"
+       width="36.264008"
        id="rect14085"
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.350999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.053, 0.350999;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.446372;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.33913, 0.446372;stroke-dashoffset:0;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <rect
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.604892;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect14453"
-       width="17.765289"
-       height="14.11007"
-       x="137.51729"
-       y="53.957596"
-       ry="0.83725804"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <g
+       id="g28224"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
        inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-ydpi="600">
+      <path
+         inkscape:connector-curvature="0"
+         id="path16319"
+         d="m 99.204092,66.077359 h -9.67192 c -0.85646,-1.50541 -2.410054,-2.4293 -4.088873,-2.43155 -2.629557,-9e-5 -4.761303,2.22229 -4.761374,4.96381 6.8e-5,2.74153 2.131815,4.96392 4.761374,4.96383 1.525202,-0.002 2.957123,-0.76583 3.851183,-2.05414 h 9.90961"
+         style="fill:none;fill-opacity:1;stroke:#2d3a53;stroke-width:1.196;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:nodetypes="ccccccc"
+         inkscape:export-xdpi="600"
+         inkscape:export-ydpi="600"
+         inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="82.624451"
+         y="69.755836"
+         id="text16323"
+         inkscape:export-xdpi="600"
+         inkscape:export-ydpi="600"
+         inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
+           sodipodi:role="line"
+           id="tspan16321"
+           x="82.624451"
+           y="69.755836"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px">CM</tspan></text>
+      <rect
+         ry="0.83725804"
+         y="61.887306"
+         x="78.881783"
+         height="14.11007"
+         width="22.181492"
+         id="rect16387"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.675907;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         inkscape:export-xdpi="600"
+         inkscape:export-ydpi="600"
+         inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    </g>
     <path
-       inkscape:connector-curvature="0"
-       id="path15919"
-       d="m 118.95406,60.605881 h 13.1609"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.222594;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker15927)"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <text
-       id="text16303"
-       y="57.423126"
-       x="118.28548"
-       style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         style="font-size:3.52778px;stroke-width:0.264583px"
-         y="57.423126"
-         x="118.28548"
-         id="tspan16301"
-         sodipodi:role="line">CMbuild</tspan></text>
-    <text
-       id="text16311"
-       y="66.418968"
-       x="116.17968"
-       style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         style="font-size:3.52778px;stroke-width:0.264583px"
-         y="66.418968"
-         x="116.17968"
-         id="tspan16309"
-         sodipodi:role="line">RNAalifold</tspan></text>
-    <path
-       inkscape:connector-curvature="0"
-       id="path16319"
-       d="m 111.0902,58.147641 h -9.67192 c -0.85646,-1.505413 -2.410054,-2.429298 -4.088873,-2.431551 -2.629557,-9.2e-5 -4.761303,2.222289 -4.761374,4.963816 6.8e-5,2.741529 2.131815,4.963913 4.761374,4.963821 1.525202,-0.0021 2.957123,-0.765829 3.851183,-2.054133 h 9.90961"
-       style="fill:none;fill-opacity:1;stroke:#855a5c;stroke-width:1.196;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       sodipodi:nodetypes="ccccccc"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="94.510559"
-       y="61.826126"
-       id="text16323"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         sodipodi:role="line"
-         id="tspan16321"
-         x="94.510559"
-         y="61.826126"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px">CM</tspan></text>
-    <rect
-       ry="0.83725804"
-       y="53.957596"
-       x="90.767891"
-       height="14.11007"
-       width="22.181492"
-       id="rect16387"
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.675907;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 99.20982,24.479157 h 3.71311 v 1.32292 l 2.64584,-2.64583 -2.64584,-2.64584 v 1.32292 h -3.71311 z"
-       id="path16402"
-       inkscape:connector-curvature="0"
-       inkscape:transform-center-x="-22.61033"
-       inkscape:transform-center-y="7.6706359"
-       sodipodi:nodetypes="cccccccc"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       sodipodi:nodetypes="cccccccc"
-       inkscape:transform-center-y="7.6706359"
-       inkscape:transform-center-x="-22.61033"
-       inkscape:connector-curvature="0"
-       id="path16404"
-       d="m 159.28665,24.479157 h 3.71312 v 1.32292 l 2.64584,-2.64583 -2.64584,-2.64584 v 1.32292 h -3.71312 z"
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 165.70041,59.667391 h -3.71312 v -1.32292 l -2.64584,2.64583 2.64584,2.64584 v -1.32292 h 3.71312 z"
-       id="path16406"
+       style="display:inline;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 142.11726,67.619426 h -3.71312 v -1.32292 l -2.64584,2.64583 2.64584,2.64584 v -1.32292 h 3.71312 z"
+       id="path16406-3"
        inkscape:connector-curvature="0"
        inkscape:transform-center-x="22.61033"
        inkscape:transform-center-y="-7.670635"
        sodipodi:nodetypes="cccccccc"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <flowRoot
-       xml:space="preserve"
-       id="flowRoot11972-3"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,-88.461815,-38.157687)"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
-         id="flowRegion11974-3"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"><rect
-           id="rect11976-8"
-           width="91"
-           height="40"
-           x="334"
-           y="155.01968"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle" /></flowRegion><flowPara
-         id="flowPara11978-6"
-         style="font-size:24px">A</flowPara></flowRoot>    <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,-47.235433,-38.157687)"
+       transform="matrix(0.26458333,0,0,0.26458333,-70.154659,-28.034921)"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="flowRoot16438"
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><flowRegion
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"
          id="flowRegion16434"><rect
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"
@@ -2472,14 +2493,15 @@
            width="91"
            id="rect16432" /></flowRegion><flowPara
          style="font-size:24px"
-         id="flowPara16436">B</flowPara></flowRoot>    <flowRoot
+         id="flowPara16436">A</flowPara></flowRoot>
+    <flowRoot
        xml:space="preserve"
        id="flowRoot16446"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,-47.102108,26.935347)"
+       transform="matrix(0.26458333,0,0,0.26458333,-34.84622,41.685769)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><flowRegion
          id="flowRegion16442"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"><rect
            id="rect16440"
@@ -2489,50 +2511,13 @@
            y="155.01968"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle" /></flowRegion><flowPara
          id="flowPara16444"
-         style="font-size:24px">C</flowPara></flowRoot>    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:3.21028px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="174.12975"
-       y="14.367067"
-       id="text16450"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         sodipodi:role="line"
-         id="tspan16448"
-         x="174.12975"
-         y="14.367067"
-         style="font-size:3.21028px;text-align:center;text-anchor:middle;stroke-width:0.264583px">candidate</tspan><tspan
-         sodipodi:role="line"
-         x="174.12975"
-         y="18.379917"
-         style="font-size:3.21028px;text-align:center;text-anchor:middle;stroke-width:0.264583px"
-         id="tspan16452">ortholog</tspan></text>
-    <text
-       id="text16458"
-       y="67.283775"
-       x="174.12975"
-       style="font-style:normal;font-weight:normal;font-size:3.21028px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         style="font-size:3.21028px;text-align:center;text-anchor:middle;stroke-width:0.264583px"
-         y="67.283775"
-         x="174.12975"
-         id="tspan16454"
-         sodipodi:role="line">core</tspan><tspan
-         id="tspan16456"
-         style="font-size:3.21028px;text-align:center;text-anchor:middle;stroke-width:0.264583px"
-         y="71.296623"
-         x="174.12975"
-         sodipodi:role="line">ortholog</tspan></text>
+         style="font-size:24px">C</flowPara></flowRoot>
     <g
        id="g16522"
-       transform="translate(4.050682,4.2254683)"
+       transform="translate(19.924571,-1.3232607)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png">
       <path
          transform="matrix(0.74198683,0,0,0.79149151,-26.681089,31.752669)"
          d="m 53.149265,71.600565 -0.04563,1.684063 1.591552,0.552374 -1.481259,0.802511 0.317406,1.654511 -1.435625,-0.881552 -1.274145,1.102137 0.04563,-1.684064 -1.591551,-0.552373 1.481259,-0.802512 -0.317407,-1.65451 1.435625,0.881552 z"
@@ -2547,7 +2532,7 @@
          sodipodi:cx="51.985413"
          sodipodi:sides="6"
          id="path16460"
-         style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#5875a4;fill-opacity:1;stroke:#2d3a53;stroke-width:0.521962;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <path
          transform="matrix(0.39500273,0,0,0.44036816,-10.502625,76.421476)"
@@ -2661,266 +2646,213 @@
            id="tspan16486"
            x="14.882151"
            y="113.24691"
-           style="font-size:3.52778px;stroke-width:0.264583px">= Query</tspan></text>
+           style="font-size:3.52778px;stroke-width:0.264583px">= Target</tspan></text>
     </g>
     <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.460815;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker12372-5)"
+       d="m 179.38024,92.514659 h 5.17319 v 19.200101 h -4.8499"
+       id="path13318-3"
        inkscape:connector-curvature="0"
-       id="path16524"
-       d="m 54.274625,80.971417 a 2.8203272,2.8730374 0 0 0 -2.82043,2.872956 2.8203272,2.8730374 0 0 0 2.82043,2.872965 2.8203272,2.8730374 0 0 0 2.281276,-1.188894 h 7.227536 v -3.149693 h -7.08674 a 2.8203272,2.8730374 0 0 0 -2.422072,-1.407334 z"
-       style="fill:#855a5c;fill-opacity:1;stroke:#493233;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <g
-       id="g16560"
-       transform="translate(3.7041669,-23.812509)"
+       id="g79936-3"
+       style="display:inline"
+       transform="translate(22.282573,-88.493751)"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
        inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png">
+       inkscape:export-ydpi="600">
       <path
-         style="fill:#fbba72;fill-opacity:1;fill-rule:evenodd;stroke:#b46916;stroke-width:0.27309;stroke-opacity:1"
-         d="m 66.547169,110.87878 c 0,0.90406 4.73948,1.6364 10.583363,1.6364 5.84684,0 10.583373,-0.73234 10.583373,-1.6364 v 9.81836 c 0,0.90406 -4.736533,1.6364 -10.583373,1.6364 -5.843883,0 -10.583363,-0.73234 -10.583363,-1.6364 z"
-         id="path16526"
+         style="fill:#ac8688;fill-opacity:1;fill-rule:evenodd;stroke:#5f4242;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.956863"
+         d="m 156.23475,187.1519 c 0,0.6653 2.66672,1.20423 5.95483,1.20423 3.28978,0 5.95484,-0.53893 5.95484,-1.20423 v 7.22537 c 0,0.6653 -2.66506,1.20423 -5.95484,1.20423 -3.28811,0 -5.95483,-0.53893 -5.95483,-1.20423 z"
+         id="path16526-4-1"
          inkscape:connector-curvature="0" />
       <path
-         style="fill:#fcd1a1;fill-opacity:1;fill-rule:evenodd;stroke:#b46916;stroke-width:0.27309;stroke-opacity:1"
-         d="m 66.547169,110.87878 c 0,-0.90153 4.73948,-1.63639 10.583363,-1.63639 5.84684,0 10.583373,0.73486 10.583373,1.63639 0,0.90406 -4.736533,1.6364 -10.583373,1.6364 -5.843883,0 -10.583363,-0.73234 -10.583363,-1.6364 z"
-         id="path16528"
+         style="fill:#c8b0b1;fill-opacity:1;fill-rule:evenodd;stroke:#5f4242;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.956863"
+         d="m 156.23475,187.1519 c 0,-0.66344 2.66672,-1.20423 5.95483,-1.20423 3.28978,0 5.95484,0.54079 5.95484,1.20423 0,0.6653 -2.66506,1.20423 -5.95484,1.20423 -3.28811,0 -5.95483,-0.53893 -5.95483,-1.20423 z"
+         id="path16528-7-9"
          inkscape:connector-curvature="0" />
-      <flowRoot
-         xml:space="preserve"
-         id="flowRoot16538"
-         style="font-style:normal;font-weight:normal;font-size:14.66670036px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         transform="matrix(0.26458333,0,0,0.26458333,-18.724029,50.957758)"><flowRegion
-           id="flowRegion16534"
-           style="font-size:14.66670036px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle"><rect
-             id="rect16532"
-             width="112"
-             height="45.5"
-             x="306"
-             y="235.51968"
-             style="font-size:14.66666698px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle" /></flowRegion><flowPara
-           id="flowPara16536"
-           style="font-size:14.66670036px;line-height:100%;letter-spacing:0px">Query</flowPara><flowPara
-           id="flowPara16549"
-           style="font-size:14.66670036px;line-height:100%;letter-spacing:0px"> Genome</flowPara></flowRoot>    </g>
-    <text
-       id="text17530"
-       y="82.823151"
-       x="74.056473"
-       style="font-style:normal;font-weight:normal;font-size:3.52778006px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458299px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         style="font-size:3.52778006px;stroke-width:0.26458299px"
-         y="82.823151"
-         x="74.056473"
-         id="tspan17528"
-         sodipodi:role="line">BLASTn</tspan></text>
+    </g>
     <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.604678;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 97.470189,81.36461 H 126.13365"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.54608;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:"
+       d="m 105.10892,90.999119 h 23.37723"
        id="path17532"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
        inkscape:connector-curvature="0"
        id="path17534"
-       d="m 102.2327,86.65628 h 28.66348"
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.604678;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 105.10891,98.407489 h 23.37725"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.54608;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
-       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.604678;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 99.05769,91.418781 h 28.66347"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.54608;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:"
+       d="m 105.10892,105.41895 h 23.37724"
        id="path17536"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="99.57489"
-       y="97.304619"
+       x="117.54244"
+       y="110.77544"
        id="text17548"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
          sodipodi:role="line"
          id="tspan17546"
-         x="99.57489"
-         y="97.304619"
-         style="font-size:3.52778px;stroke-width:0.264583px">candidate regions</tspan></text>
+         x="117.54244"
+         y="110.77544"
+         style="font-size:3.52778px;text-align:center;text-anchor:middle;stroke-width:0.264583px">candidate</tspan><tspan
+         sodipodi:role="line"
+         x="117.54244"
+         y="115.18517"
+         style="font-size:3.52778px;text-align:center;text-anchor:middle;stroke-width:0.264583px"
+         id="tspan93000">regions</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.331484;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker17562)"
-       d="m 163.49001,83.966252 h -29.1869"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.299838;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker17562)"
+       d="M 157.2542,92.861809 H 133.3741"
        id="path17554"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="137.79332"
-       y="82.823151"
+       x="136.86429"
+       y="91.718605"
        id="text18006"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
          sodipodi:role="line"
          id="tspan18004"
-         x="137.79332"
-         y="82.823151"
+         x="136.86429"
+         y="91.718605"
          style="font-size:3.52778px;stroke-width:0.264583px">CMsearch</tspan></text>
     <path
-       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
-       d="m 54.274625,80.971417 a 2.8203272,2.8730374 0 0 0 -2.82043,2.872956 2.8203272,2.8730374 0 0 0 2.82043,2.872965 2.8203272,2.8730374 0 0 0 2.281276,-1.188894 h 7.227536 v -3.149693 h -7.08674 a 2.8203272,2.8730374 0 0 0 -2.422072,-1.407334 z"
+       style="fill:#5875a4;fill-opacity:1;stroke:#2d3a53;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 66.085971,95.50074 a 2.8203272,2.8730374 0 0 0 -2.82043,2.872962 2.8203272,2.8730374 0 0 0 2.82043,2.872968 2.8203272,2.8730374 0 0 0 2.281276,-1.1889 h 7.227536 v -3.149692 h -7.08674 A 2.8203272,2.8730374 0 0 0 66.085971,95.50074 Z"
        id="path18018"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
        style="fill:#fbba72;fill-opacity:0.608247;stroke:#b46916;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.7;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 171.29657,80.971417 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.872962 2.8203272,2.8730374 0 0 0 2.28129,-1.188892 h 7.22758 v -3.149696 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.407334 z"
+       d="m 163.52886,89.737599 c -1.55764,-6e-5 -2.8204,1.28621 -2.82044,2.87296 4e-5,1.58675 1.2628,2.87303 2.82044,2.87297 0.90347,-0.001 1.75169,-0.44325 2.28129,-1.1889 0,0 1.52828,0 2.73288,0 1.2046,0 4.4947,0 4.4947,0 v -3.14969 c 0,0 -3.6059,0 -4.78703,0 -1.18113,0 -2.29975,0 -2.29975,0 -0.50733,-0.87131 -1.42762,-1.40604 -2.42209,-1.40734 z"
        id="path18020"
        inkscape:connector-curvature="0"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       sodipodi:nodetypes="ccccsccscc" />
+    <path
+       id="path18020-8"
+       style="display:inline;fill:#fbba72;fill-opacity:0.608247;stroke:#b46916;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.7;stroke-dashoffset:7;stroke-opacity:1"
+       d="m 116.06631,103.90773 v 3.07994 h 3.11206 v -3.07994 z"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
     <text
        id="text18044"
-       y="104.3446"
-       x="165.86232"
+       y="30.195013"
+       x="175.61914"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
          style="font-size:3.52778px;stroke-width:0.264583px"
-         y="104.3446"
-         x="165.86232"
+         y="30.195013"
+         x="175.61914"
          id="tspan18042"
+         sodipodi:role="line">re-BLAST</tspan></text>
+    <text
+       id="text18044-1"
+       y="89.190117"
+       x="175.14326"
+       style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
+         style="font-size:3.52778px;stroke-width:0.264583px"
+         y="89.190117"
+         x="175.14326"
+         id="tspan18042-8"
          sodipodi:role="line">re-BLAST</tspan></text>
     <path
        inkscape:connector-curvature="0"
        id="path18046"
-       d="m 171.29657,119.07155 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87297 2.8203272,2.8730374 0 0 0 2.82044,2.87298 2.8203272,2.8730374 0 0 0 2.28129,-1.1889 h 7.22758 v -3.14971 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.40734 z"
+       d="m 163.7547,108.79182 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87297 2.8203272,2.8730374 0 0 0 2.82044,2.87298 2.8203272,2.8730374 0 0 0 2.28129,-1.1889 h 7.22758 v -3.14971 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.40734 z"
        style="fill:#fbba72;fill-opacity:1;stroke:#b46916;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:7;stroke-opacity:1"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
     <path
        inkscape:connector-curvature="0"
        id="path18112"
-       d="M 95.756379,83.966252 H 66.56959"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.331484;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker18120)"
+       d="M 100.68366,98.495579 H 77.983624"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.292336;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker18120)"
        inkscape:export-xdpi="600"
        inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:3.21028px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="158.97557"
-       y="118.95502"
-       id="text18578"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <g
+       id="g83441"
+       transform="translate(21.266191,-141.08917)"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
        inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         sodipodi:role="line"
-         x="158.97557"
-         y="118.95502"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.21028px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;stroke-width:0.264583px"
-         id="tspan18576">Query</tspan><tspan
-         sodipodi:role="line"
-         x="158.97557"
-         y="122.96786"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.21028px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;stroke-width:0.264583px"
-         id="tspan18582">species</tspan><tspan
-         sodipodi:role="line"
-         x="158.97557"
-         y="126.98072"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.21028px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle;stroke-width:0.264583px"
-         id="tspan18584">ortholog</tspan></text>
-    <path
-       inkscape:connector-curvature="0"
-       id="path18586"
-       d="m 180.96848,83.800883 h 2.12901 v 38.170857 h -1.99596"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.247561px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <rect
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.574985;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect18588"
-       width="204.42883"
-       height="130.47023"
-       x="3.8327181"
-       y="0.90520614"
-       ry="7.7417951"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <path
-       inkscape:export-ydpi="600"
-       inkscape:export-xdpi="600"
-       sodipodi:nodetypes="ccccccc"
-       style="fill:none;fill-opacity:1;stroke:#855a5c;stroke-width:1.196;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 157.65716,89.897661 h -9.67192 c -0.85646,-1.505413 -2.41006,-2.429298 -4.08889,-2.431551 -2.62957,-9.2e-5 -4.76133,2.222289 -4.7614,4.963816 7e-5,2.741529 2.13182,4.963913 4.7614,4.963821 1.52521,-0.0021 2.95714,-0.765829 3.8512,-2.054133 h 9.90961"
-       id="path18592"
-       inkscape:connector-curvature="0"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <text
-       inkscape:export-ydpi="600"
-       inkscape:export-xdpi="600"
-       id="text18596"
-       y="93.576157"
-       x="141.07703"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px"
-         y="93.576157"
-         x="141.07703"
-         id="tspan18594"
-         sodipodi:role="line">CM</tspan></text>
-    <rect
-       inkscape:export-ydpi="600"
-       inkscape:export-xdpi="600"
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.675907;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect18598"
-       width="22.181492"
-       height="14.11007"
-       x="137.33444"
-       y="85.707626"
-       ry="0.83725804"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot1471"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,45.810725,28.109609)"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"><flowRegion
-         id="flowRegion1467"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle"><rect
-           id="rect1465"
-           width="91"
-           height="40"
-           x="334"
-           y="155.01968"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle" /></flowRegion><flowPara
-         id="flowPara1469">MSA</flowPara></flowRoot>    <g
+       inkscape:export-ydpi="600">
+      <path
+         inkscape:export-ydpi="600"
+         inkscape:export-xdpi="600"
+         sodipodi:nodetypes="ccccccc"
+         style="fill:none;fill-opacity:1;stroke:#855a5c;stroke-width:0.905416;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 131.44632,239.3226 h -7.29621 c -0.64609,-1.14368 -1.81808,-1.84557 -3.08454,-1.84728 -1.98367,-7e-5 -3.5918,1.6883 -3.59185,3.77107 5e-5,2.08278 1.60818,3.77115 3.59185,3.77108 1.15058,-0.002 2.23078,-0.58181 2.90523,-1.56055 h 7.47552"
+         id="path18592"
+         inkscape:connector-curvature="0"
+         inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+      <text
+         inkscape:export-ydpi="600"
+         inkscape:export-xdpi="600"
+         id="text18596"
+         y="241.26424"
+         x="119.35921"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.67066px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.200299px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"
+         inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"
+         transform="scale(0.99647724,1.0035352)"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.67066px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.200299px"
+           y="241.26424"
+           x="119.35921"
+           id="tspan18594"
+           sodipodi:role="line">CM</tspan></text>
+      <rect
+         inkscape:export-ydpi="600"
+         inkscape:export-xdpi="600"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.511687;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect18598"
+         width="16.733053"
+         height="10.719606"
+         x="116.11546"
+         y="236.13933"
+         ry="0.63607597"
+         inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png" />
+    </g>
+    <g
        style="display:inline"
        id="g7679"
-       transform="matrix(0.26458333,0,0,0.26458333,17.272403,144.67791)">
+       transform="matrix(0.26458333,0,0,0.26458333,212.21879,117.36297)">
       <rect
          id="rect7650"
          height="220"
@@ -2972,90 +2904,1584 @@
          style="font-size:6px;font-family:Arial;text-anchor:end">https://coolors.co/fbba72-855a5c-223843-828e82-87a330</text>
     </g>
     <rect
-       style="fill:#ac8688;fill-opacity:1;stroke:#644546;stroke-width:2.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#5875a4;fill-opacity:1;stroke:#2d3a53;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1987"
        width="24.134438"
        height="15.715447"
-       x="44.996296"
-       y="186.64163"
+       x="239.94269"
+       y="159.32669"
        ry="0.83725804" />
-    <g
-       id="g2054"
-       transform="translate(71.197784,59.902266)"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600">
-      <g
-         transform="translate(-20.205576,-3.9288619)"
-         id="g2021">
-        <path
-           style="fill:#ac8688;fill-opacity:1;fill-rule:evenodd;stroke:#644546;stroke-width:0.27309027;stroke-opacity:1"
-           d="m 133.28782,-18.850539 c 0,0.904056 4.73948,1.636393 10.58336,1.636393 5.84684,0 10.58337,-0.732337 10.58337,-1.636393 v 9.8183584 c 0,0.9040565 -4.73653,1.636393 -10.58337,1.636393 -5.84388,0 -10.58336,-0.7323365 -10.58336,-1.636393 z"
-           id="path14131-6"
-           inkscape:connector-curvature="0" />
-        <path
-           style="fill:#d3c2c3;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.27309027;stroke-opacity:1"
-           d="m 133.28782,-18.850539 c 0,-0.901531 4.73948,-1.636393 10.58336,-1.636393 5.84684,0 10.58337,0.734862 10.58337,1.636393 0,0.904056 -4.73653,1.636393 -10.58337,1.636393 -5.84388,0 -10.58336,-0.732337 -10.58336,-1.636393 z"
-           id="path14133-7"
-           inkscape:connector-curvature="0" />
-      </g>
-      <flowRoot
-         transform="matrix(0.26458333,0,0,0.26458333,27.696015,-82.162071)"
-         style="font-style:normal;font-weight:normal;font-size:14.66670036px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         id="flowRoot9684"
-         xml:space="preserve"><flowRegion
-           style="font-size:14.66670036px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1"
-           id="flowRegion9686"><rect
-             style="font-size:14.66666698px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1"
-             y="235.51968"
-             x="306"
-             height="45.5"
-             width="112"
-             id="rect9688" /></flowRegion><flowPara
-           style="font-size:14.66670036px;line-height:100%;letter-spacing:0px;fill:#000000;fill-opacity:1"
-           id="flowPara9690">Reference Genome</flowPara></flowRoot>    </g>
-    <g
-       transform="translate(71.197784,120.75653)"
-       id="g2109"
-       inkscape:export-filename="C:\Users\felix\PycharmProjects\ncortho\ncOrtho\docs\ncortho_white.png"
-       inkscape:export-xdpi="600"
-       inkscape:export-ydpi="600">
-      <g
-         id="g2099"
-         transform="translate(-20.205576,-3.9288619)">
-        <path
-           inkscape:connector-curvature="0"
-           id="path2095"
-           d="m 133.28782,-18.850539 c 0,0.904056 4.73948,1.636393 10.58336,1.636393 5.84684,0 10.58337,-0.732337 10.58337,-1.636393 v 9.8183584 c 0,0.9040565 -4.73653,1.636393 -10.58337,1.636393 -5.84388,0 -10.58336,-0.7323365 -10.58336,-1.636393 z"
-           style="fill:#ac8688;fill-opacity:1;fill-rule:evenodd;stroke:#644546;stroke-width:0.27309027;stroke-opacity:1" />
-        <path
-           inkscape:connector-curvature="0"
-           id="path2097"
-           d="m 133.28782,-18.850539 c 0,-0.901531 4.73948,-1.636393 10.58336,-1.636393 5.84684,0 10.58337,0.734862 10.58337,1.636393 0,0.904056 -4.73653,1.636393 -10.58337,1.636393 -5.84388,0 -10.58336,-0.732337 -10.58336,-1.636393 z"
-           style="fill:#d3c2c3;fill-opacity:1;fill-rule:evenodd;stroke:#302121;stroke-width:0.27309027;stroke-opacity:1" />
-      </g>
-      <flowRoot
-         xml:space="preserve"
-         id="flowRoot2107"
-         style="font-style:normal;font-weight:normal;font-size:14.66670036px;line-height:100%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         transform="matrix(0.26458333,0,0,0.26458333,27.696015,-82.162071)"><flowRegion
-           id="flowRegion2103"
-           style="font-size:14.66670036px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1"><rect
-             id="rect2101"
-             width="112"
-             height="45.5"
-             x="306"
-             y="235.51968"
-             style="font-size:14.66666698px;line-height:100%;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1" /></flowRegion><flowPara
-           id="flowPara2105"
-           style="font-size:14.66670036px;line-height:100%;letter-spacing:0px;fill:#000000;fill-opacity:1">Reference Genome</flowPara></flowRoot>    </g>
     <rect
-       style="display:inline;fill:#3e667a;fill-opacity:1;stroke:#223843;stroke-width:2.79999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="display:inline;fill:#3e667a;fill-opacity:1;stroke:#223843;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1987-5"
        width="24.134438"
        height="15.715448"
-       x="75.303192"
-       y="194.47542"
+       x="270.24957"
+       y="167.16048"
        ry="0.83725804" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.750821;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 125.71971,35.265581 h 44.11712"
+       id="path2017"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <g
+       id="g28797"
+       transform="translate(0,0.10768652)"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600">
+      <path
+         style="display:inline;fill:none;fill-rule:evenodd;stroke:#855a5c;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 116.9348,65.202539 h 13.1278"
+         id="path13349"
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="600"
+         inkscape:export-ydpi="600"
+         inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path13351"
+         d="m 116.9348,68.159319 h 13.1278"
+         style="display:inline;fill:none;fill-rule:evenodd;stroke:#36596a;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:export-xdpi="600"
+         inkscape:export-ydpi="600"
+         inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+      <path
+         style="display:inline;fill:none;fill-rule:evenodd;stroke:#87a330;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 116.9348,71.427029 h 13.1278"
+         id="path13353"
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="600"
+         inkscape:export-ydpi="600"
+         inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.558669;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect14453"
+         width="17.811512"
+         height="12.004774"
+         x="114.43987"
+         y="62.832268"
+         ry="0.71233475"
+         inkscape:export-xdpi="600"
+         inkscape:export-ydpi="600"
+         inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1471"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,22.756422,34.890739)"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><flowRegion
+         id="flowRegion1467"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle"><rect
+           id="rect1465"
+           width="91"
+           height="40"
+           x="334"
+           y="155.01968"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle" /></flowRegion><flowPara
+         id="flowPara1469">MSA</flowPara></flowRoot>
+    <path
+       style="fill:#5875a4;fill-opacity:1;stroke:#2d3a53;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 145.66539,16.715709 a 2.8203272,2.8730374 0 0 0 -2.82045,2.87296 2.8203272,2.8730374 0 0 0 2.82045,2.87297 2.8203272,2.8730374 0 0 0 2.28129,-1.1889 h 7.22758 v -3.14969 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.40734 z"
+       id="path2019"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.783931;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 68.118511,43.624146 H 116.30331"
+       id="path4953"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       id="path4957"
+       style="display:inline;fill:#828e82;fill-opacity:1;stroke:#4c544c;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 70.292843,40.657613 11.31048,0.10713 2.44392,2.77441 -2.47096,2.83169 -11.31048,-0.10713 z"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.783931;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 68.118511,51.982707 H 116.30331"
+       id="path4967"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       id="path4971"
+       style="display:inline;fill:#87a330;fill-opacity:1;stroke:#4c5c1c;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 70.316229,49.126092 11.31048,0.10713 2.44392,2.77441 -2.47096,2.83169 -11.31048,-0.10713 z"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.750821;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 125.71971,51.982707 h 44.11712"
+       id="path4975"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       id="path50181"
+       style="display:inline;fill:#5f7222;fill-opacity:1;stroke:#4c5c1c;stroke-width:0.3;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 101.00791,49.126092 11.31048,0.10713 2.44392,2.77441 -2.47096,2.83169 -11.31048,-0.10713 z"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       style="fill:#3e667a;fill-opacity:0.784314;stroke:#223944;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 163.56843,60.693909 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.28129,-1.18889 h 7.22758 v -3.1497 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.40733 z"
+       id="path65248"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       style="fill:#5f7222;fill-opacity:1;stroke:#313a12;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 164.50387,70.205249 a 2.8203272,2.8730374 0 0 0 -2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.82044,2.87296 2.8203272,2.8730374 0 0 0 2.28129,-1.18889 h 7.22758 v -3.1497 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.40733 z"
+       id="path65250"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       style="fill:#5875a4;fill-opacity:1;stroke:#2d3a53;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:10;stroke-opacity:1"
+       d="m 149.50509,66.203819 a 2.8203272,2.8730374 0 0 0 -2.82045,2.87296 2.8203272,2.8730374 0 0 0 2.82045,2.87297 2.8203272,2.8730374 0 0 0 2.28129,-1.1889 h 7.22758 v -3.14969 h -7.08678 a 2.8203272,2.8730374 0 0 0 -2.42209,-1.40734 z"
+       id="path65252"
+       inkscape:connector-curvature="0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       style="display:inline;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 110.98774,67.619426 h -3.7131 v -1.32292 l -2.64582,2.64583 2.64582,2.64584 v -1.32292 h 3.7131 z"
+       id="path65516"
+       inkscape:connector-curvature="0"
+       inkscape:transform-center-x="22.61033"
+       inkscape:transform-center-y="-7.670635"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <path
+       style="display:inline;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 118.28107,25.321969 h 3.71311 v -1.32292 l 2.64583,2.64583 -2.64583,2.64584 v -1.32292 h -3.71311 z"
+       id="path66090"
+       inkscape:connector-curvature="0"
+       inkscape:transform-center-x="-22.610328"
+       inkscape:transform-center-y="-7.670635"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <g
+       id="g66428"
+       transform="matrix(0.56265951,0,0,0.73590387,52.119297,-79.252519)"
+       style="stroke-width:0.777028;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600">
+      <g
+         id="g75402">
+        <path
+           style="fill:#fbba72;fill-opacity:1;fill-rule:evenodd;stroke:#b46916;stroke-width:0.777028;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 54.446487,237.39306 c 0,0.90406 4.73948,1.6364 10.583363,1.6364 5.84684,0 10.583373,-0.73234 10.583373,-1.6364 v 9.81836 c 0,0.90406 -4.736533,1.6364 -10.583373,1.6364 -5.843883,0 -10.583363,-0.73234 -10.583363,-1.6364 z"
+           id="path16526"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:#fcd1a1;fill-opacity:1;fill-rule:evenodd;stroke:#b46916;stroke-width:0.777028;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 54.446487,237.39306 c 0,-0.90153 4.73948,-1.63639 10.583363,-1.63639 5.84684,0 10.583373,0.73486 10.583373,1.63639 0,0.90406 -4.736533,1.6364 -10.583373,1.6364 -5.843883,0 -10.583363,-0.73234 -10.583363,-1.6364 z"
+           id="path16528"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <path
+       inkscape:connector-curvature="0"
+       id="path96046"
+       d="m 150.08634,24.109199 v 5.87149"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.249;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker12372)"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot100067"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,-34.84622,-29.622431)"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><flowRegion
+         id="flowRegion100063"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle"><rect
+           id="rect100061"
+           width="91"
+           height="40"
+           x="334"
+           y="155.01968"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';text-align:center;text-anchor:middle" /></flowRegion><flowPara
+         id="flowPara100065"
+         style="font-size:24px">B</flowPara></flowRoot>
+    <text
+       id="text114646"
+       y="104.37582"
+       x="180.29558"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px"
+         y="104.37582"
+         x="180.29558"
+         id="tspan114644"
+         sodipodi:role="line">Ref</tspan></text>
+    <circle
+       id="path4218"
+       style="fill:#5f7222;stroke:#929292;stroke-width:0.264583"
+       cx="174.62914"
+       cy="52.003025"
+       r="0.00051822746"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <circle
+       id="path4220"
+       style="fill:#5f7222;stroke:#929292;stroke-width:0.264583"
+       cx="174.62914"
+       cy="52.003025"
+       r="0.00051822746"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <path
+       id="path4255"
+       style="fill:none;stroke:#000000;stroke-width:0.461;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker12754);stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 174.59926,51.982708 h 10.00199 m -9.72059,-16.74173 9.7083,0.03363 v 0 m -5.02523,9e-6 h 5.02523 v 33.517052 h -4.71118"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <g
+       id="g79936-3-3"
+       style="display:inline"
+       transform="translate(22.422201,-138.9498)">
+      <path
+         style="fill:#5875a4;fill-opacity:1;fill-rule:evenodd;stroke:#2d3a53;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 156.23475,187.1519 c 0,0.6653 2.66672,1.20423 5.95483,1.20423 3.28978,0 5.95484,-0.53893 5.95484,-1.20423 v 7.22537 c 0,0.6653 -2.66506,1.20423 -5.95484,1.20423 -3.28811,0 -5.95483,-0.53893 -5.95483,-1.20423 z"
+         id="path16526-4-1-0"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:#7a92b8;fill-opacity:1;fill-rule:evenodd;stroke:#2d3a53;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 156.23475,187.1519 c 0,-0.66344 2.66672,-1.20423 5.95483,-1.20423 3.28978,0 5.95484,0.54079 5.95484,1.20423 0,0.6653 -2.66506,1.20423 -5.95484,1.20423 -3.28811,0 -5.95483,-0.53893 -5.95483,-1.20423 z"
+         id="path16528-7-9-4"
+         inkscape:connector-curvature="0" />
+    </g>
+    <text
+       id="text18044-5"
+       y="54.260643"
+       x="180.5675"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="C:\Users\felix\Desktop\new_ncortho_white.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px"
+         y="54.260643"
+         x="180.5675"
+         id="tspan18042-4"
+         sodipodi:role="line">Ref</tspan></text>
+    <text
+       id="text8175"
+       y="101.24368"
+       x="84.684731"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.264583px"
+         y="101.24368"
+         x="84.684731"
+         id="tspan8173"
+         sodipodi:role="line">Tar</tspan></text>
+    <path
+       id="path19507"
+       style="display:inline;fill:#fbba72;fill-opacity:0.608247;stroke:#b46916;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4, 0.7;stroke-dashoffset:7;stroke-opacity:1"
+       d="m 114.6753,96.905116 v 3.149664 h 5.89409 v -3.149664 z"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <path
+       id="path19589"
+       style="display:inline;fill:#678797;fill-opacity:1;stroke:#223944;stroke-width:0.731018;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.46203, 0.731018;stroke-dashoffset:7.31018;stroke-opacity:1"
+       d="m 142.976,33.720404 v 2.947814 h 12.06721 v -2.947814 z"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <path
+       id="path23609"
+       style="display:inline;fill:#829152;fill-opacity:1;stroke:#333c15;stroke-width:0.731018;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.46203, 0.731018;stroke-dashoffset:7.31018;stroke-opacity:1"
+       d="m 142.976,50.653748 v 2.947814 h 12.06721 v -2.947814 z"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <path
+       id="path27519"
+       style="display:inline;fill:#fbba72;fill-opacity:0.608247;stroke:#b46916;stroke-width:0.7;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.4,0.7;stroke-dashoffset:7;stroke-opacity:1"
+       d="m 114.01662,89.496778 v 3.149664 h 7.21144 v -3.149664 z"
+       inkscape:export-filename="/home/felixl/PycharmProjects/ncOrtho/ncOrtho/docs/ncortho_white.png"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <g
+       id="figure_1"
+       transform="matrix(0.35277778,0,0,0.35277778,44.597989,142.03986)">
+      <g
+         id="patch_1">
+        <path
+           d="M 0,288 H 432 V 0 H 0 Z"
+           style="fill:#ffffff"
+           id="path2631" />
+      </g>
+      <g
+         id="axes_1">
+        <g
+           id="patch_2">
+          <path
+             d="M 50.918,227.74502 H 421.632 V 15.368 H 50.918 Z"
+             style="fill:#ffffff"
+             id="path2634" />
+        </g>
+        <g
+           id="matplotlib.axis_1">
+          <g
+             id="xtick_1">
+            <g
+               id="text_1">
+              <!-- 5p-Flank -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.11276311,-0.04104242,-0.04104242,-0.11276311,27.937829,262.30446)"
+                 id="g2663">
+                <defs
+                   id="defs2645">
+                  <path
+                     id="path3081"
+                     d="M 691,4666 H 3169 V 4134 H 1269 V 2991 q 137,47 274,70 138,23 276,23 781,0 1237,-428 457,-428 457,-1159 Q 3513,744 3044,326 2575,-91 1722,-91 1428,-91 1123,-41 819,9 494,109 v 635 q 281,-153 581,-228 300,-75 634,-75 541,0 856,284 316,284 316,772 0,487 -316,771 -315,285 -856,285 -253,0 -505,-56 -251,-56 -513,-175 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3083"
+                     d="M 1159,525 V -1331 H 581 v 4831 h 578 v -531 q 182,312 458,463 277,152 661,152 638,0 1036,-506 399,-506 399,-1331 0,-825 -399,-1332 -398,-506 -1036,-506 -384,0 -661,152 -276,152 -458,464 z m 1957,1222 q 0,634 -261,995 -261,361 -717,361 -457,0 -718,-361 -261,-361 -261,-995 0,-634 261,-995 261,-361 718,-361 456,0 717,361 261,361 261,995 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3085"
+                     d="M 313,2009 H 1997 V 1497 H 313 Z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3087"
+                     d="M 628,4666 H 3309 V 4134 H 1259 V 2759 H 3109 V 2228 H 1259 V 0 H 628 Z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3089"
+                     d="m 603,4863 h 575 V 0 H 603 Z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3091"
+                     d="m 2194,1759 q -697,0 -966,-159 -269,-159 -269,-544 0,-306 202,-486 202,-179 548,-179 479,0 768,339 289,339 289,901 v 128 z m 1147,238 V 0 H 2766 V 531 Q 2569,213 2275,61 1981,-91 1556,-91 q -537,0 -855,302 -317,302 -317,808 0,590 395,890 396,300 1180,300 h 807 v 57 q 0,397 -261,614 -261,217 -733,217 -300,0 -585,-72 -284,-72 -546,-216 v 532 q 315,122 612,182 297,61 578,61 760,0 1135,-394 375,-393 375,-1193 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3093"
+                     d="M 3513,2113 V 0 h -575 v 2094 q 0,497 -194,743 -194,247 -581,247 -466,0 -735,-297 -269,-296 -269,-809 V 0 H 581 v 3500 h 578 v -544 q 207,316 486,472 280,156 646,156 603,0 912,-373 310,-373 310,-1098 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3095"
+                     d="m 581,4863 h 578 V 1991 l 1716,1509 h 734 L 1753,1863 3688,0 H 2938 L 1159,1709 V 0 H 581 Z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-35"
+                   id="use2647"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-70"
+                   x="63.623047"
+                   id="use2649"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-2d"
+                   x="127.09961"
+                   id="use2651"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-46"
+                   x="163.18359"
+                   id="use2653"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6c"
+                   x="220.70312"
+                   id="use2655"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-61"
+                   x="248.48633"
+                   id="use2657"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6e"
+                   x="309.76562"
+                   id="use2659"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6b"
+                   x="373.14453"
+                   id="use2661"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="xtick_2">
+            <g
+               id="text_2">
+              <!-- Mature -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.11276311,-0.04104242,-0.04104242,-0.11276311,89.976165,258.9999)"
+                 id="g2686">
+                <defs
+                   id="defs2672">
+                  <path
+                     id="path3109"
+                     d="m 628,4666 h 941 L 2759,1491 3956,4666 h 941 V 0 H 4281 V 4097 L 3078,897 H 2444 L 1241,4097 V 0 H 628 Z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3111"
+                     d="M 1172,4494 V 3500 H 2356 V 3053 H 1172 V 1153 q 0,-428 117,-550 117,-122 477,-122 h 590 V 0 H 1766 Q 1100,0 847,248 594,497 594,1153 V 3053 H 172 v 447 h 422 v 994 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3113"
+                     d="m 544,1381 v 2119 h 575 V 1403 q 0,-497 193,-746 194,-248 582,-248 465,0 735,297 271,297 271,810 v 1984 h 575 V 0 H 2900 V 538 Q 2691,219 2414,64 2138,-91 1772,-91 1169,-91 856,284 544,659 544,1381 Z m 1447,2203 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3115"
+                     d="m 2631,2963 q -97,56 -211,82 -114,27 -251,27 -488,0 -749,-317 -261,-317 -261,-911 V 0 H 581 v 3500 h 578 v -544 q 182,319 472,473 291,155 707,155 59,0 131,-8 72,-7 159,-23 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3117"
+                     d="M 3597,1894 V 1613 H 953 q 38,-594 358,-905 320,-311 892,-311 331,0 642,81 311,81 618,244 V 178 Q 3153,47 2828,-22 2503,-91 2169,-91 1331,-91 842,396 353,884 353,1716 q 0,859 464,1363 464,505 1252,505 706,0 1117,-455 411,-454 411,-1235 z m -575,169 q -6,471 -264,752 -258,282 -683,282 -481,0 -770,-272 -289,-272 -333,-766 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-4d"
+                   id="use2674"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-61"
+                   x="86.279297"
+                   id="use2676"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-74"
+                   x="147.55859"
+                   id="use2678"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-75"
+                   x="186.76758"
+                   id="use2680"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-72"
+                   x="250.14648"
+                   id="use2682"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-65"
+                   x="289.00977"
+                   id="use2684"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="xtick_3">
+            <g
+               id="text_3">
+              <!-- Star -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.11276311,-0.04104242,-0.04104242,-0.11276311,159.33705,253.03015)"
+                 id="g2701">
+                <defs
+                   id="defs2691">
+                  <path
+                     id="path3129"
+                     d="m 3425,4513 v -616 q -359,172 -678,256 -319,85 -616,85 -515,0 -795,-200 -280,-200 -280,-569 0,-310 186,-468 186,-157 705,-254 l 381,-78 q 706,-135 1042,-474 336,-339 336,-907 0,-679 -455,-1029 -454,-350 -1332,-350 -331,0 -705,75 -373,75 -773,222 v 650 q 384,-215 753,-325 369,-109 725,-109 540,0 834,212 294,213 294,607 0,343 -211,537 -211,194 -692,291 l -385,75 q -706,140 -1022,440 -315,300 -315,835 0,619 436,975 436,356 1201,356 329,0 669,-60 341,-59 697,-177 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-53"
+                   id="use2693"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-74"
+                   x="63.476562"
+                   id="use2695"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-61"
+                   x="102.68555"
+                   id="use2697"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-72"
+                   x="163.96484"
+                   id="use2699"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="xtick_4">
+            <g
+               id="text_4">
+              <!-- Loop -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.11276311,-0.04104242,-0.04104242,-0.11276311,208.37768,254.45638)"
+                 id="g2717">
+                <defs
+                   id="defs2707">
+                  <path
+                     id="path3139"
+                     d="m 628,4666 h 631 V 531 H 3531 V 0 H 628 Z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3141"
+                     d="m 1959,3097 q -462,0 -731,-361 -269,-361 -269,-989 0,-628 267,-989 268,-361 733,-361 460,0 728,362 269,363 269,988 0,622 -269,986 -268,364 -728,364 z m 0,487 q 750,0 1178,-488 429,-487 429,-1349 Q 3566,888 3137,398 2709,-91 1959,-91 1206,-91 779,398 353,888 353,1747 q 0,862 426,1349 427,488 1180,488 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-4c"
+                   id="use2709"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6f"
+                   x="53.962891"
+                   id="use2711"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6f"
+                   x="115.14453"
+                   id="use2713"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-70"
+                   x="176.32617"
+                   id="use2715"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="xtick_5">
+            <g
+               id="text_5">
+              <!-- 3p-Flank -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.11276311,-0.04104242,-0.04104242,-0.11276311,239.7744,262.30446)"
+                 id="g2740">
+                <defs
+                   id="defs2722">
+                  <path
+                     id="path3151"
+                     d="m 2597,2516 q 453,-97 707,-404 255,-306 255,-756 0,-690 -475,-1069 -475,-378 -1350,-378 -293,0 -604,58 -311,58 -642,174 v 609 q 262,-153 574,-231 313,-78 654,-78 593,0 904,234 311,234 311,681 0,413 -289,645 -289,233 -804,233 h -544 v 519 h 569 q 465,0 712,186 247,186 247,536 0,359 -255,551 -254,193 -729,193 -260,0 -557,-57 -297,-56 -653,-174 v 562 q 360,100 674,150 314,50 592,50 719,0 1137,-327 419,-326 419,-882 0,-388 -222,-655 -222,-267 -631,-370 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-33"
+                   id="use2724"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-70"
+                   x="63.623047"
+                   id="use2726"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-2d"
+                   x="127.09961"
+                   id="use2728"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-46"
+                   x="163.18359"
+                   id="use2730"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6c"
+                   x="220.70312"
+                   id="use2732"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-61"
+                   x="248.48633"
+                   id="use2734"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6e"
+                   x="309.76562"
+                   id="use2736"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6b"
+                   x="373.14453"
+                   id="use2738"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="xtick_6">
+            <g
+               id="text_6">
+              <!-- Protein coding -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.11276311,-0.04104242,-0.04104242,-0.11276311,260.53791,274.02271)"
+                 id="g2780">
+                <defs
+                   id="defs2750">
+                  <path
+                     id="path3165"
+                     d="M 1259,4147 V 2394 h 794 q 441,0 681,228 241,228 241,650 0,419 -241,647 -240,228 -681,228 z m -631,519 h 1425 q 785,0 1186,-355 402,-355 402,-1039 0,-691 -402,-1044 -401,-353 -1186,-353 H 1259 V 0 H 628 Z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3167"
+                     d="m 603,3500 h 575 V 0 H 603 Z m 0,1363 h 575 V 4134 H 603 Z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3169"
+                     transform="scale(0.015625)"
+                     d="" />
+                  <path
+                     id="path3171"
+                     d="m 3122,3366 v -538 q -244,135 -489,202 -245,67 -495,67 -560,0 -870,-355 -309,-354 -309,-995 0,-641 309,-996 310,-354 870,-354 250,0 495,67 245,67 489,202 V 134 Q 2881,22 2623,-34 2366,-91 2075,-91 1284,-91 818,406 353,903 353,1747 q 0,856 470,1346 471,491 1290,491 265,0 518,-55 253,-54 491,-163 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3173"
+                     d="m 2906,2969 v 1894 h 575 V 0 H 2906 V 525 Q 2725,213 2448,61 2172,-91 1784,-91 1150,-91 751,415 353,922 353,1747 q 0,825 398,1331 399,506 1033,506 388,0 664,-152 277,-151 458,-463 z M 947,1747 q 0,-634 261,-995 261,-361 717,-361 456,0 718,361 263,361 263,995 0,634 -263,995 -262,361 -718,361 -456,0 -717,-361 -261,-361 -261,-995 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3175"
+                     d="m 2906,1791 q 0,625 -258,968 -257,344 -723,344 -462,0 -720,-344 -258,-343 -258,-968 0,-622 258,-966 258,-344 720,-344 466,0 723,344 258,344 258,966 z M 3481,434 q 0,-893 -397,-1329 -396,-436 -1215,-436 -303,0 -572,45 -269,45 -522,139 v 559 q 253,-137 500,-202 247,-66 503,-66 566,0 847,295 281,295 281,892 V 616 Q 2728,306 2450,153 2172,0 1784,0 1141,0 747,490 353,981 353,1791 q 0,812 394,1302 394,491 1037,491 388,0 666,-153 278,-153 456,-462 v 531 h 575 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-50"
+                   id="use2752"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-72"
+                   x="58.552734"
+                   id="use2754"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6f"
+                   x="97.416016"
+                   id="use2756"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-74"
+                   x="158.59766"
+                   id="use2758"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-65"
+                   x="197.80664"
+                   id="use2760"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-69"
+                   x="259.33008"
+                   id="use2762"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6e"
+                   x="287.11328"
+                   id="use2764"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-20"
+                   x="350.49219"
+                   id="use2766"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-63"
+                   x="382.2793"
+                   id="use2768"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6f"
+                   x="437.25977"
+                   id="use2770"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-64"
+                   x="498.44141"
+                   id="use2772"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-69"
+                   x="561.91797"
+                   id="use2774"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6e"
+                   x="589.70117"
+                   id="use2776"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-67"
+                   x="653.08008"
+                   id="use2778"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="xtick_7">
+            <g
+               id="text_7">
+              <!-- lncRNA -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.11276311,-0.04104242,-0.04104242,-0.11276311,353.83454,259.34107)"
+                 id="g2801">
+                <defs
+                   id="defs2787">
+                  <path
+                     id="path3195"
+                     d="m 2841,2188 q 203,-69 395,-294 192,-225 386,-619 L 4263,0 h -679 l -596,1197 q -232,469 -449,622 -217,153 -592,153 H 1259 V 0 H 628 v 4666 h 1425 q 800,0 1194,-335 394,-334 394,-1009 0,-441 -205,-732 -205,-290 -595,-402 z M 1259,4147 V 2491 h 794 q 456,0 689,211 233,211 233,620 0,409 -233,617 -233,208 -689,208 z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3197"
+                     d="m 628,4666 h 850 L 3547,763 v 3903 h 612 V 0 H 3309 L 1241,3903 V 0 H 628 Z"
+                     transform="scale(0.015625)" />
+                  <path
+                     id="path3199"
+                     d="M 2188,4044 1331,1722 h 1716 z m -357,622 h 716 L 4325,0 H 3669 L 3244,1197 H 1141 L 716,0 H 50 Z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-6c"
+                   id="use2789"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-6e"
+                   x="27.783203"
+                   id="use2791"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-63"
+                   x="91.162109"
+                   id="use2793"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-52"
+                   x="146.14258"
+                   id="use2795"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-4e"
+                   x="215.625"
+                   id="use2797"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-41"
+                   x="290.42969"
+                   id="use2799"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+        </g>
+        <g
+           id="matplotlib.axis_2">
+          <g
+             id="ytick_1">
+            <g
+               id="line2d_1">
+              <path
+                 d="M 50.918,227.74502 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2806" />
+            </g>
+            <g
+               id="text_8">
+              <!-- 0 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,34.983,232.30408)"
+                 id="g2814">
+                <defs
+                   id="defs2810">
+                  <path
+                     id="path3214"
+                     d="m 2034,4250 q -487,0 -733,-480 -245,-479 -245,-1442 0,-959 245,-1439 246,-480 733,-480 491,0 736,480 246,480 246,1439 0,963 -246,1442 -245,480 -736,480 z m 0,500 q 785,0 1199,-621 414,-620 414,-1801 0,-1178 -414,-1799 -414,-620 -1199,-620 -784,0 -1198,620 -414,621 -414,1799 0,1181 414,1801 414,621 1198,621 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   id="use2812"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="ytick_2">
+            <g
+               id="line2d_2">
+              <path
+                 d="M 50.918,201.19789 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2818" />
+            </g>
+            <g
+               id="text_9">
+              <!-- 10 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,27.348,205.75695)"
+                 id="g2828">
+                <defs
+                   id="defs2822">
+                  <path
+                     id="path3223"
+                     d="M 794,531 H 1825 V 4091 L 703,3866 v 575 l 1116,225 h 631 V 531 H 3481 V 0 H 794 Z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-31"
+                   id="use2824"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   x="63.623047"
+                   id="use2826"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="ytick_3">
+            <g
+               id="line2d_3">
+              <path
+                 d="M 50.918,174.65076 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2832" />
+            </g>
+            <g
+               id="text_10">
+              <!-- 20 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,27.348,179.20982)"
+                 id="g2842">
+                <defs
+                   id="defs2836">
+                  <path
+                     id="path3233"
+                     d="M 1228,531 H 3431 V 0 H 469 v 531 q 359,372 979,998 621,627 780,809 303,340 423,576 121,236 121,464 0,372 -261,606 -261,235 -680,235 -297,0 -627,-103 -329,-103 -704,-313 v 638 q 381,153 712,231 332,78 607,78 725,0 1156,-363 431,-362 431,-968 0,-288 -108,-546 -107,-257 -392,-607 -78,-91 -497,-524 Q 1991,1309 1228,531 Z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-32"
+                   id="use2838"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   x="63.623047"
+                   id="use2840"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="ytick_4">
+            <g
+               id="line2d_4">
+              <path
+                 d="M 50.918,148.10363 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2846" />
+            </g>
+            <g
+               id="text_11">
+              <!-- 30 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,27.348,152.6627)"
+                 id="g2853">
+                <use
+                   xlink:href="#DejaVuSans-33"
+                   id="use2849"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   x="63.623047"
+                   id="use2851"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="ytick_5">
+            <g
+               id="line2d_5">
+              <path
+                 d="M 50.918,121.55651 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2857" />
+            </g>
+            <g
+               id="text_12">
+              <!-- 40 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,27.348,126.11557)"
+                 id="g2867">
+                <defs
+                   id="defs2861">
+                  <path
+                     id="path3250"
+                     d="M 2419,4116 825,1625 h 1594 z m -166,550 h 794 V 1625 h 666 V 1100 H 3047 V 0 H 2419 V 1100 H 313 v 609 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-34"
+                   id="use2863"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   x="63.623047"
+                   id="use2865"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="ytick_6">
+            <g
+               id="line2d_6">
+              <path
+                 d="M 50.918,95.009381 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2871" />
+            </g>
+            <g
+               id="text_13">
+              <!-- 50 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,27.348,99.568444)"
+                 id="g2878">
+                <use
+                   xlink:href="#DejaVuSans-35"
+                   id="use2874"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   x="63.623047"
+                   id="use2876"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="ytick_7">
+            <g
+               id="line2d_7">
+              <path
+                 d="M 50.918,68.462254 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2882" />
+            </g>
+            <g
+               id="text_14">
+              <!-- 60 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,27.348,73.021317)"
+                 id="g2892">
+                <defs
+                   id="defs2886">
+                  <path
+                     id="path3267"
+                     d="m 2113,2584 q -425,0 -674,-291 -248,-290 -248,-796 0,-503 248,-796 249,-292 674,-292 425,0 673,292 248,293 248,796 0,506 -248,796 -248,291 -673,291 z m 1253,1979 v -575 q -238,112 -480,171 -242,60 -480,60 -625,0 -955,-422 -329,-422 -376,-1275 184,272 462,417 279,145 613,145 703,0 1111,-427 408,-426 408,-1160 0,-719 -425,-1154 -425,-434 -1131,-434 -810,0 -1238,620 -428,621 -428,1799 0,1106 525,1764 525,658 1409,658 238,0 480,-47 242,-47 505,-140 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-36"
+                   id="use2888"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   x="63.623047"
+                   id="use2890"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="ytick_8">
+            <g
+               id="line2d_8">
+              <path
+                 d="M 50.918,41.915127 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2896" />
+            </g>
+            <g
+               id="text_15">
+              <!-- 70 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,27.348,46.47419)"
+                 id="g2906">
+                <defs
+                   id="defs2900">
+                  <path
+                     id="path3277"
+                     d="M 525,4666 H 3525 V 4397 L 1831,0 H 1172 L 2766,4134 H 525 Z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-37"
+                   id="use2902"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   x="63.623047"
+                   id="use2904"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="ytick_9">
+            <g
+               id="line2d_9">
+              <path
+                 d="M 50.918,15.368 H 421.632"
+                 clip-path="url(#pa71e90842f)"
+                 style="fill:none;stroke:#cccccc;stroke-width:0.8;stroke-linecap:round"
+                 id="path2910" />
+            </g>
+            <g
+               id="text_16">
+              <!-- 80 -->
+              <g
+                 style="fill:#262626"
+                 transform="matrix(0.12,0,0,-0.12,27.348,19.927062)"
+                 id="g2920">
+                <defs
+                   id="defs2914">
+                  <path
+                     id="path3287"
+                     d="m 2034,2216 q -450,0 -708,-241 -257,-241 -257,-662 0,-422 257,-663 258,-241 708,-241 450,0 709,242 260,243 260,662 0,421 -258,662 -257,241 -711,241 z m -631,268 q -406,100 -633,378 -226,279 -226,679 0,559 398,884 399,325 1092,325 697,0 1094,-325 397,-325 397,-884 0,-400 -227,-679 -226,-278 -629,-378 456,-106 710,-416 255,-309 255,-755 Q 3634,634 3220,271 2806,-91 2034,-91 1263,-91 848,271 434,634 434,1313 q 0,446 256,755 257,310 713,416 z m -231,997 q 0,-362 226,-565 227,-203 636,-203 407,0 636,203 230,203 230,565 0,363 -230,566 -229,203 -636,203 -409,0 -636,-203 -226,-203 -226,-566 z"
+                     transform="scale(0.015625)" />
+                </defs>
+                <use
+                   xlink:href="#DejaVuSans-38"
+                   id="use2916"
+                   x="0"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+                <use
+                   xlink:href="#DejaVuSans-30"
+                   x="63.623047"
+                   id="use2918"
+                   y="0"
+                   width="100%"
+                   height="100%" />
+              </g>
+            </g>
+          </g>
+          <g
+             id="text_17">
+            <!-- SNP density per 1 kb -->
+            <g
+               style="fill:#262626"
+               transform="matrix(0,-0.12,-0.12,0,20.852375,184.16745)"
+               id="g2969">
+              <defs
+                 id="defs2927">
+                <path
+                   id="path3295"
+                   d="m 2834,3397 v -544 q -243,125 -506,187 -262,63 -544,63 -428,0 -642,-131 -214,-131 -214,-394 0,-200 153,-314 153,-114 616,-217 l 197,-44 q 612,-131 870,-370 258,-239 258,-667 0,-488 -386,-773 Q 2250,-91 1575,-91 1294,-91 989,-36 684,19 347,128 v 594 q 319,-166 628,-249 309,-82 613,-82 406,0 624,139 219,139 219,392 0,234 -158,359 -157,125 -692,241 l -200,47 q -534,112 -772,345 -237,233 -237,639 0,494 350,762 350,269 994,269 318,0 599,-47 282,-46 519,-140 z"
+                   transform="scale(0.015625)" />
+                <path
+                   id="path3297"
+                   d="m 2059,-325 q -243,-625 -475,-815 -231,-191 -618,-191 H 506 v 481 h 338 q 237,0 368,113 132,112 291,531 L 1606,56 191,3500 H 800 L 1894,763 2988,3500 h 609 z"
+                   transform="scale(0.015625)" />
+                <path
+                   id="path3299"
+                   d="m 3116,1747 q 0,634 -261,995 -261,361 -717,361 -457,0 -718,-361 -261,-361 -261,-995 0,-634 261,-995 261,-361 718,-361 456,0 717,361 261,361 261,995 z M 1159,2969 q 182,312 458,463 277,152 661,152 638,0 1036,-506 399,-506 399,-1331 Q 3713,922 3314,415 2916,-91 2278,-91 1894,-91 1617,61 1341,213 1159,525 V 0 H 581 v 4863 h 578 z"
+                   transform="scale(0.015625)" />
+              </defs>
+              <use
+                 xlink:href="#DejaVuSans-53"
+                 id="use2929"
+                 x="0"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-4e"
+                 x="63.476562"
+                 id="use2931"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-50"
+                 x="138.28125"
+                 id="use2933"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-20"
+                 x="198.58398"
+                 id="use2935"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-64"
+                 x="230.37109"
+                 id="use2937"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-65"
+                 x="293.84766"
+                 id="use2939"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-6e"
+                 x="355.37109"
+                 id="use2941"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-73"
+                 x="418.75"
+                 id="use2943"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-69"
+                 x="470.84961"
+                 id="use2945"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-74"
+                 x="498.63281"
+                 id="use2947"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-79"
+                 x="537.8418"
+                 id="use2949"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-20"
+                 x="597.02148"
+                 id="use2951"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-70"
+                 x="628.80859"
+                 id="use2953"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-65"
+                 x="692.28516"
+                 id="use2955"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-72"
+                 x="753.80859"
+                 id="use2957"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-20"
+                 x="794.92188"
+                 id="use2959"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-31"
+                 x="826.70898"
+                 id="use2961"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-20"
+                 x="890.33203"
+                 id="use2963"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-6b"
+                 x="922.11914"
+                 id="use2965"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+              <use
+                 xlink:href="#DejaVuSans-62"
+                 x="980.0293"
+                 id="use2967"
+                 y="0"
+                 width="100%"
+                 height="100%" />
+            </g>
+          </g>
+        </g>
+        <g
+           id="patch_3">
+          <path
+             d="M 56.213914,227.74502 H 98.581229 V 37.211582 H 56.213914 Z"
+             clip-path="url(#pa71e90842f)"
+             style="fill:#5875a4;stroke:#ffffff;stroke-width:0.8;stroke-linejoin:miter"
+             id="path2973" />
+        </g>
+        <g
+           id="patch_4">
+          <path
+             d="m 109.17306,227.74502 h 42.36731 V 101.91755 h -42.36731 z"
+             clip-path="url(#pa71e90842f)"
+             style="fill:#cc8963;stroke:#ffffff;stroke-width:0.8;stroke-linejoin:miter"
+             id="path2976" />
+        </g>
+        <g
+           id="patch_5">
+          <path
+             d="m 162.1322,227.74502 h 42.36731 V 73.978949 H 162.1322 Z"
+             clip-path="url(#pa71e90842f)"
+             style="fill:#5f9e6e;stroke:#ffffff;stroke-width:0.8;stroke-linejoin:miter"
+             id="path2979" />
+        </g>
+        <g
+           id="patch_6">
+          <path
+             d="m 215.09134,227.74502 h 42.36732 V 73.212692 h -42.36732 z"
+             clip-path="url(#pa71e90842f)"
+             style="fill:#b55d60;stroke:#ffffff;stroke-width:0.8;stroke-linejoin:miter"
+             id="path2982" />
+        </g>
+        <g
+           id="patch_7">
+          <path
+             d="M 268.05049,227.74502 H 310.4178 V 21.90513 h -42.36731 z"
+             clip-path="url(#pa71e90842f)"
+             style="fill:#857aab;stroke:#ffffff;stroke-width:0.8;stroke-linejoin:miter"
+             id="path2985" />
+        </g>
+        <g
+           id="patch_8">
+          <path
+             d="m 321.00963,227.74502 h 42.36731 V 50.483413 h -42.36731 z"
+             clip-path="url(#pa71e90842f)"
+             style="fill:#8d7866;stroke:#ffffff;stroke-width:0.8;stroke-linejoin:miter"
+             id="path2988" />
+        </g>
+        <g
+           id="patch_9">
+          <path
+             d="m 373.96877,227.74502 h 42.36732 V 50.550932 h -42.36732 z"
+             clip-path="url(#pa71e90842f)"
+             style="fill:#d095bf;stroke:#ffffff;stroke-width:0.8;stroke-linejoin:miter"
+             id="path2991" />
+        </g>
+        <g
+           id="line2d_10">
+          <path
+             clip-path="url(#pa71e90842f)"
+             style="fill:none;stroke:#424242;stroke-width:2.16;stroke-linecap:round"
+             id="path2994"
+             d="" />
+        </g>
+        <g
+           id="line2d_11">
+          <path
+             clip-path="url(#pa71e90842f)"
+             style="fill:none;stroke:#424242;stroke-width:2.16;stroke-linecap:round"
+             id="path2997"
+             d="" />
+        </g>
+        <g
+           id="line2d_12">
+          <path
+             clip-path="url(#pa71e90842f)"
+             style="fill:none;stroke:#424242;stroke-width:2.16;stroke-linecap:round"
+             id="path3000"
+             d="" />
+        </g>
+        <g
+           id="line2d_13">
+          <path
+             clip-path="url(#pa71e90842f)"
+             style="fill:none;stroke:#424242;stroke-width:2.16;stroke-linecap:round"
+             id="path3003"
+             d="" />
+        </g>
+        <g
+           id="line2d_14">
+          <path
+             clip-path="url(#pa71e90842f)"
+             style="fill:none;stroke:#424242;stroke-width:2.16;stroke-linecap:round"
+             id="path3006"
+             d="" />
+        </g>
+        <g
+           id="line2d_15">
+          <path
+             clip-path="url(#pa71e90842f)"
+             style="fill:none;stroke:#424242;stroke-width:2.16;stroke-linecap:round"
+             id="path3009"
+             d="" />
+        </g>
+        <g
+           id="line2d_16">
+          <path
+             clip-path="url(#pa71e90842f)"
+             style="fill:none;stroke:#424242;stroke-width:2.16;stroke-linecap:round"
+             id="path3012"
+             d="" />
+        </g>
+        <g
+           id="patch_10">
+          <path
+             d="M 50.918,227.74502 V 15.368"
+             style="fill:none;stroke:#cccccc;stroke-linecap:square;stroke-linejoin:miter"
+             id="path3015" />
+        </g>
+        <g
+           id="patch_11">
+          <path
+             d="M 421.632,227.74502 V 15.368"
+             style="fill:none;stroke:#cccccc;stroke-linecap:square;stroke-linejoin:miter"
+             id="path3018" />
+        </g>
+        <g
+           id="patch_12">
+          <path
+             d="M 50.918,227.74502 H 421.632"
+             style="fill:none;stroke:#cccccc;stroke-linecap:square;stroke-linejoin:miter"
+             id="path3021" />
+        </g>
+        <g
+           id="patch_13">
+          <path
+             d="M 50.918,15.368 H 421.632"
+             style="fill:none;stroke:#cccccc;stroke-linecap:square;stroke-linejoin:miter"
+             id="path3024" />
+        </g>
+      </g>
+    </g>
   </g>
 </svg>

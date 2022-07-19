@@ -46,6 +46,17 @@ def make_supermatrix(out):
     return f'{tree_out}/supermatrix.aln.proc'
 
 
+def arglistcheck(arg):
+    if not arg:
+        return ''
+    if os.path.isfile(arg):
+        with open(arg) as fh:
+            arglist = [element.strip() for element in fh.read().split('\n') if element]
+    else:
+        arglist = [element.strip() for element in arg.split(',') if element]
+    return arglist
+
+
 def main():
     # Print header
     print('\n'+'#'*39)
@@ -82,7 +93,14 @@ def main():
     optional.add_argument(
         '--skip', metavar='str', type=str, nargs='?', const='', default='',
         help=(
-            'Comma separated list of species for which analyses should be skipped'
+            'Comma separated list or path to newline seperated list of species for which analyses should be skipped'
+        )
+    )
+    optional.add_argument(
+        '--include', metavar='str', type=str, nargs='?', const='', default='',
+        help=(
+            'Comma separated list or path to newline seperated list of species for which analyses should be performed. '
+            'Will skip every species not in list.'
         )
     )
     optional.add_argument(
@@ -103,6 +121,12 @@ def main():
             '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/{})'
         )
     )
+    optional.add_argument(
+        '--mirnas', metavar='<path>', type=str, nargs='?', const='', default='',
+        help=(
+            'Comma separated list or path to newline seperated file with miRNAs that should be used for reconstruction'
+        )
+    )
     ##########################################################################################
     # Parse arguments
     ##########################################################################################
@@ -115,9 +139,17 @@ def main():
     res_dict = args.results
     taxmap = args.mapping
     outdir = args.output
-    spec_to_skip = args.skip.split(',')
-    if spec_to_skip[0] == '':
-        spec_to_skip.pop()
+
+    spec_to_skip = arglistcheck(args.skip)
+    spec_include = arglistcheck(args.include)
+
+    overlap = set(spec_to_skip).intersection(set(spec_include))
+    if overlap:
+        raise ValueError(f'"{overlap}" present in species to skip as well as species to include')
+
+
+    mirlist = arglistcheck(args.mirnas)
+
     iqtree_cmd = args.iqtree
     auto_skip = args.auto_skip
 
@@ -169,6 +201,14 @@ def main():
                             spec_list.append(spec)
     print('# Finished writing PhyloProfile input')
 
+    # if miRNAfile option is chosen, prune dictionary
+    if mirlist:
+        tmpdict = ortho_dict
+        for mirnaid, value in ortho_dict.items():
+            if mirnaid in mirlist:
+                tmpdict[mirnaid] = value
+        ortho_dict = tmpdict
+
     # count species and skip species with few orthologs before aligning
     if auto_skip:
         spec_counter = Counter(spec_list)
@@ -182,6 +222,8 @@ def main():
         for spsk in spec_to_skip:
             print(spsk)
 
+
+
     # make alignments
     print('# Starting alignments')
     align_out = f'{outdir}/alignments'
@@ -190,7 +232,10 @@ def main():
     for mirna in ortho_dict:
         with tempfile.NamedTemporaryFile(mode='w+') as fp:
             for spec, seq in ortho_dict[mirna].items():
-                if spec not in spec_to_skip:
+                if (
+                        spec not in spec_to_skip
+                        or spec_include and spec in spec_include
+                ):
                     fp.write(f'>{spec}\n{seq}\n')
             fp.seek(0)
             aln_cmd = f'muscle -in {fp.name} -out {align_out}/{mirna}.aln'
