@@ -203,10 +203,11 @@ def main():
 
     # if miRNAfile option is chosen, prune dictionary
     if mirlist:
-        tmpdict = ortho_dict
+        tmpdict = {}
         for mirnaid, value in ortho_dict.items():
             if mirnaid in mirlist:
                 tmpdict[mirnaid] = value
+        del ortho_dict
         ortho_dict = tmpdict
 
     # count species and skip species with few orthologs before aligning
@@ -222,7 +223,9 @@ def main():
         for spsk in spec_to_skip:
             print(spsk)
 
-
+    # if no species list is given to include, all species are part of specinclude
+    if not spec_include:
+        spec_include = list(ortho_dict.keys())
 
     # make alignments
     print('# Starting alignments')
@@ -234,7 +237,7 @@ def main():
             for spec, seq in ortho_dict[mirna].items():
                 if (
                         spec not in spec_to_skip
-                        or spec_include and spec in spec_include
+                        and spec in spec_include
                 ):
                     fp.write(f'>{spec}\n{seq}\n')
             fp.seek(0)
