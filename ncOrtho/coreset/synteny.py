@@ -1,6 +1,9 @@
-from ncOrtho.coreset.coreset_utils import parse_annotation
 import os
 import pyfaidx
+try:
+    from ncOrtho.coreset.coreset_utils import parse_annotation
+except ModuleNotFoundError:
+    from ncOrtho.coreset.coreset_utils import parse_annotation
 
 
 def vprint(s, verbose):

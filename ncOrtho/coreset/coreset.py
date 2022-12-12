@@ -31,18 +31,19 @@ import multiprocessing as mp
 import os
 import sys
 
+try:
+    from ncOrtho.coreset.createcm import CmConstructor
+    from ncOrtho.coreset.core_reblast import blastsearch
+    from ncOrtho.coreset.synteny import analyze_synteny
+    from ncOrtho.coreset.locate_position import categorize_mirna_position
+    import ncOrtho.coreset.coreset_utils as cu
+except ModuleNotFoundError:
+    from createcm import CmConstructor
+    from core_reblast import blastsearch
+    from locate_position import categorize_mirna_position
+    from synteny import analyze_synteny
+    import coreset_utils as cu
 
-from ncOrtho.coreset.createcm import CmConstructor
-from ncOrtho.coreset.core_reblast import blastsearch
-from ncOrtho.coreset.synteny import analyze_synteny
-from ncOrtho.coreset.locate_position import categorize_mirna_position
-import ncOrtho.coreset.coreset_utils as cu
-
-#from createcm import CmConstructor
-#from core_reblast import blastsearch
-#from locate_position import categorize_mirna_position
-#from synteny import analyze_synteny
-#import coreset_utils as cu
 
 ###############################################################################
 def main():
@@ -58,14 +59,14 @@ def main():
     parser = argparse.ArgumentParser(
         description=(
             'Build Covariance models of reference miRNAs from core set of orthologs.'
-         )
+        )
     )
     parser._action_groups.pop()
     required = parser.add_argument_group('Required Arguments')
     optional = parser.add_argument_group('Optional Arguments')
     # input file path
     required.add_argument('-p', '--parameters', metavar='<path>', type=str, required=True,
-                        help='Path to the parameters file in yaml format')
+                          help='Path to the parameters file in yaml format')
     # mirna data
     required.add_argument(
         '-n', '--ncrna', metavar='<path>', type=str, required=True,
@@ -169,7 +170,6 @@ def main():
     if not os.path.isdir(tmpout):
         os.makedirs(tmpout)
 
-
     print('# Reading pairwise orthologs', flush=True)
     ortho_dict = cu.read_pairwise_orthologs(core_dict)
 
@@ -214,7 +214,7 @@ def main():
         sto_path = blastsearch(mirna, ref_paths['genome'], tmpout, cpu, dust, verbose)
         if create_model == 'yes' and sto_path is not None:
             print(f'# Starting to construct covariance model for {mirid}', flush=True)
-            model_out = f'{output}/{mirna[0]}.cm'
+            model_out = f'{output}/{mirid}.cm'
             if not os.path.isfile(model_out):
                 # Initiate covariance model construction and calibration.
                 cmc = CmConstructor(sto_path, output, mirid, cpu)
@@ -223,7 +223,7 @@ def main():
                 # Calibrate the model.
                 cmc.calibrate()
             else:
-                print(f'Model of {mirid} already found at {model_dir}. Nothing done..', flush=True)
+                print(f'Model of {mirid} already found at {output}. Nothing done..', flush=True)
     print('\n### Construction of core set finished')
 
 
