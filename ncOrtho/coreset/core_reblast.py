@@ -7,32 +7,56 @@ from ncOrtho.utils import check_blastdb
 from ncOrtho.utils import make_blastndb
 
 
+def vprint(s, verbose):
+    if verbose:
+        print(s, flush=True)
+
+
 def make_alignment(out, mirna, cpu, core):
     alignment = '{}/{}.aln'.format(out, mirna)
     stockholm = '{}/{}.sto'.format(out, mirna)
 
     # Call T-Coffee for the sequence alignment.
-    print('Building T-Coffee alignment.')
+    # print('Building T-Coffee alignment.')
     tc_cmd_1 = (
-        't_coffee -quiet -multi_core={} -special_mode=rcoffee -in {} '
-        '-output=clustalw_aln -outfile={}'
-            .format(cpu, core, alignment)
+        f't_coffee -quiet -multi_core={cpu} -special_mode=rcoffee -in {core} '
+        f'-output=clustalw_aln -outfile={alignment}'
     )
     sp.call(tc_cmd_1, shell=True)
 
     # Extend the sequence-based alignment by structural information.
     # Create Stockholm alignment.
-    print('Adding secondary structure to Stockholm format.')
+    # print('Adding secondary structure to Stockholm format.')
     tc_cmd_2 = (
-        't_coffee -other_pg seq_reformat -in {} -action +add_alifold -output '
-        'stockholm_aln -out {}'
-            .format(alignment, stockholm)
+        f't_coffee -other_pg seq_reformat -in {alignment} -action +add_alifold -output stockholm_aln -out {stockholm}'
     )
     sp.call(tc_cmd_2, shell=True)
     return stockholm
 
+
+def maximum_blast_bitscore(mirna, seq, blastdb, c, dust):
+    # The miRNA precursors can show a low level of complexity, hence it might be
+    # required to deactivate the dust filter for the BLAST search.
+    bit_check = (
+        f'blastn -num_threads {c} -dust {dust} -task megablast -db {blastdb} -outfmt \"6 bitscore\"'
+    )
+    # print('# Determining reference bit score..')
+    ref_bit_cmd = sp.Popen(
+        bit_check, shell=True, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
+    )
+    ref_results, err = ref_bit_cmd.communicate(seq)
+    if not ref_results:
+        raise ValueError(f'WARNING: Reference sequence of {mirna} not found in reference Genome. '
+              'Consider turning the dust filter off')
+    try:
+        ref_bit_score = float(ref_results.split('\n')[0].split('\t')[0])
+    except ValueError:  # BLASTn errors are in output not in error
+        raise ValueError(ref_results)
+    return ref_bit_score
+
+
 # Perform reciprocal BLAST search and construct Stockholm alignment
-def blastsearch(mirna, r_path, o_path, c, dust):
+def blastsearch(mirna, r_path, o_path, c, dust, v):
     """
 
     Parameters
@@ -48,46 +72,24 @@ def blastsearch(mirna, r_path, o_path, c, dust):
     Path to Alignment of core pre-miRNAs in Stockholm format
 
     """
-    core_set = {}
 
+    mirid, rawchrom, mstart, mend, mstrand, rawseq = mirna[:6]
+    mchr = rawchrom.replace('chr', '')
+    preseq = rawseq.replace('U', 'T')
 
-    # with open(m_path) as infile:
-    #     mirnas = [
-    #         line.strip().split()
-    #         for line in infile
-    #         if not line.startswith('#')
-    #     ]
-    # for mirna in mirnas:
-    mirid = mirna[0]
-    # this fasta file is created by the the main() script
-    fasta = '{0}/{1}/{1}.fa'.format(o_path, mirid)
+    miroutdir = f'{o_path}/{mirid}'
+    if not os.path.isdir(miroutdir):
+        os.mkdir(miroutdir)
+    synteny_regs = f'{miroutdir}/synteny_regions_{mirid}.fa'  # this fasta file is created by the the main() script
+    os.chdir(miroutdir)
 
-    # Ensure that output folder exists and change to this folder.
-    out_folder = '{}/{}'.format(o_path, mirid)
-    if not os.path.isdir(out_folder):
-        os.mkdir(out_folder)
-
-    os.chdir('{}/{}'.format(o_path, mirid))
-    print('\n### {} ###'.format(mirid))
-    # Coordinates of the ncRNA
-    mchr = mirna[1].replace('chr', '')
-    mstart = int(mirna[2])
-    mend = int(mirna[3])
-
-    # Start of reference bit score computation.
-    # Convert RNA sequence into DNA sequence.
-    preseq = mirna[5].replace('U', 'T')
-
-    if not os.path.isfile(fasta):
-        # no synteny region detected, make alignment of reference miRNA only
-        with open(fasta, 'w') as fastah:
+    print(f'# {mirid}')
+    if not os.path.isfile(synteny_regs):
+        print(f'Warning: No synteny regions found for {mirid}. Training with reference miRNA only.', flush=True)
+        with open(synteny_regs, 'w') as fastah:
             fastah.write(f'>{mirid}\n{preseq}\n')
-        stock = make_alignment(out_folder, mirid, c, fasta)
+        stock = make_alignment(miroutdir, mirid, c, synteny_regs)
         return stock
-
-    # The miRNA precursors can show a low level of complexity, hence it is
-    # required to deactivate the dust filter for the BLAST search.
-
 
     # check if blastdb of reference genome exists
     fname = '.'.join(r_path.split("/")[-1].split('.')[0:-1])
@@ -95,158 +97,70 @@ def blastsearch(mirna, r_path, o_path, c, dust):
     if not check_blastdb(ref_blastdb):
         make_blastndb(r_path, ref_blastdb)
 
-    bit_check = (
-        'blastn -num_threads {0} -dust {1} -task megablast -db {2} '
-        '-outfmt \"6 bitscore\"'.format(c, dust, ref_blastdb)
-    )
-    print('# Determining reference bit score..')
-    ref_bit_cmd = sp.Popen(
-        bit_check, shell=True, stdin=sp.PIPE,
-        stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
-    )
-    ref_results, err = ref_bit_cmd.communicate(preseq)
-    if err:
-        print(err)
-    if not ref_results:
-        print('WARNING: Reference sequence of {} not found in reference Genome. '
-              'Consider turning the dust filter off'.format(mirid))
-        skip_file = '{}/not_found_in_ref.fa'.format(o_path)
-        if not os.path.isfile(skip_file):
-            with open(skip_file, 'w') as of:
-                of.write('>{}\n{}\n'.format(mirid, preseq))
-        else:
-            with open(skip_file, 'a') as of:
-                of.write('>{}\n{}\n'.format(mirid, preseq))
-        return None
-    ref_bit_score = float(ref_results.split('\n')[0].split('\t')[0])
-    print(f'BLAST bit score of reference miRNA against reference genome: {ref_bit_score}')
+    max_bitscore = maximum_blast_bitscore(mirid, preseq, ref_blastdb, c, dust)
 
-    print('# Trying to find pre-miRNA candidates in syntenic region')
-    # Check if BLAST database already exists, otherwise create it.
-    file_extensions = ['.nhr', '.nin', '.nsq']
-    for fe in file_extensions:
-        checkpath = '{}{}'.format(fasta, fe)
-        if not os.path.isfile(checkpath):
-            print(
-                'Constructing BLAST database of candidate regions.'
-            )
-    # At least one of the BLAST db files is not existent and has to be
-    # created.
-            db_command = (
-                'makeblastdb -dbtype nucl -in {}'
-                .format(fasta)
-            )
-            sp.call(db_command, shell=True)
-            break
-
+    # Find pre-miRNA candidates in syntenic region'
+    if not check_blastdb(synteny_regs):
+        make_blastndb(synteny_regs, synteny_regs)
     blastn_cmd = (
         'blastn -num_threads {0} -task blastn -dust {1} -db {2} -outfmt \"6 '
-        'sseqid evalue bitscore sseq\"'.format(c, dust, fasta)
+        'sseqid evalue bitscore sseq\"'.format(c, dust, synteny_regs)
     )
     blastn = sp.Popen(
-        blastn_cmd, shell=True, stdin=sp.PIPE,
-        stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
+        blastn_cmd, shell=True, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
     )
-    results, err = blastn.communicate(preseq)
+    ortholog_candidates, err = blastn.communicate(preseq)
     if err:
-        print(err)
-        sys.exit()
+        raise err
 
+    # Re-BLAST
+    outputcol = {}
+    seq_check = set()
+    ortholog_candidates_list = ortholog_candidates.split('\n')
+    vprint(f'Number of ortholog candidates: {len(ortholog_candidates_list)}', v)
+    for hit in ortholog_candidates_list:
+        if not hit:
+            continue
+        core_region, eval, bitscore, sseq = hit.strip().split()
+        if float(bitscore) <= max_bitscore * 0.5:
+            continue
 
-    ##### Collect best hit for each core set species if it is within the accepted bit score range
-    core_dict = {}
-    result_list = results.split('\n')
-    # print(result_list)
-    if result_list:
-        #print(result_list)
-        for hit in result_list:
-            if hit:
-                hit_data = hit.split()
-                # print(hit_data)
-                # print(f'hit bitscore: {hit_data[2]}')
-                # print(f'you needed: {0.5*ref_bit_score}')
-                # print(f'and you got: {hit_data[2]}')
-                if (
-                    not hit_data[0] in core_dict
-                    and float(hit_data[2]) >= 0.5*ref_bit_score
-                ):
-                    core_dict[hit_data[0]] = hit
-                    print(f'pre-miRNA candidate found for {hit_data[0]}! ({hit_data[2]}/{0.5*ref_bit_score})')
-                    break
-                else:
-                    print(f'Syntenic candidate region BLAST hit below reference bit score threshold ({hit_data[2]}/{0.5*ref_bit_score})')
-
-    if len(core_dict) == 0:
-        print('WARNING: No region in the core species scored above the reference bit score threshold')
-
-
-    ##### Re-BLAST #####
-    print('\n### Starting reciprocal BLAST search.')
-    accept_dict = {}
-    for species in core_dict.keys():
-        print(f'# {species}')
-        # Make sure to eliminate gaps
-        candidate_seq = core_dict[species].split()[3].replace('-', '')
+        degap_seq = sseq.replace('-', '')  # Eliminate gaps in BLAST output
         reblastn_cmd = (
-            'blastn -num_threads {0} -task blastn -dust {1} -db {2} -outfmt \"6'
-            ' sseqid sstart send evalue bitscore\"'
-            .format(c, dust, ref_blastdb)
+            f'blastn -num_threads {c} -task blastn -dust {dust} -db {ref_blastdb} -outfmt \"6'
+            ' sseqid sstart send\"'
         )
         reblastn = sp.Popen(
             reblastn_cmd, shell=True, stdin=sp.PIPE,
             stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
         )
-        reresults, reerr = reblastn.communicate(candidate_seq)
-        if reerr:
-            print(reerr)
-            sys.exit()
+        reresults, reerr = reblastn.communicate(degap_seq)
+        for reblast_res in reresults.split('\n'):
+            if not reblast_res:
+                continue
+            refchrom, refstart, refend = reblast_res.split()
 
-    # Check if reverse hit overlaps with reference miRNA
-        if reresults:
-            first_hit = reresults.split('\n')[0].split()
-            rchr = first_hit[0]
-            rstart = int(first_hit[1])
-            rend = int(first_hit[2])
-            if rchr == mchr:
-                # print('Same chromosome.')
-                if (
-                    (rstart <= mstart and mstart <= rend)
-                    or (rstart <= mend and mend <= rend)
-                ):
-                    #first within second
-                    print('Reciprocity fulfilled.')
-                    accept_dict[species] = core_dict[species]
-                elif (
-                    (mstart <= rstart and rstart <= mend)
-                    or (mstart <= rend and rend <= mend)
-                ):
-
-                    # second within first
-                    print('Reciprocity fulfilled.')
-                    accept_dict[species] = core_dict[species]
-                else:
-                    print('Reciprocity unfulfilled.')
+            if refchrom != mchr:
+                vprint('Hit on chromosome {}, expected {}'.format(refchrom, mchr), v)
+                continue
+            if (refstart <= mstart <= refend) or (refstart <= mend <= refend):  # first within second
+                vprint('Reciprocity fulfilled.', v)
+            elif (mstart <= refstart <= mend) or (mstart <= refend <= mend):  # second within first
+                vprint('Reciprocity fulfilled.', v)
             else:
-                print('Hit on chromosome {}, expected {}'.format(rchr, mchr))
-        else:
-            print(
-                'No reverse hit for {}. Reciprocity unfulfilled.'
-                .format(mirid)
-            )
-    # write intermediate output file
-    corefile = '{}/{}_core.fa'.format(out_folder, mirid)
+                vprint('Reciprocity unfulfilled.', v)
+                continue
+            if core_region not in seq_check:  # only train with best hit per syntenic region
+                outputcol[core_region] = degap_seq
+                seq_check.add(core_region)
+
+    corefile = f'{miroutdir}/core_orthologs_{mirid}.fa'
     with open(corefile, 'w') as outfile:
-        outfile.write('>{}\n{}\n'.format(mirid, preseq))
-        print('\n### Starting Alignment')
-        # print('>{}\n{}'.format(mirid, preseq))
-        for accepted in accept_dict:
-            # print('>{}\n{}'.format(accepted, core_dict[accepted].split('\t')[3]))
-            outfile.write(
-                '>{}\n{}\n'
-                    .format(accepted, accept_dict[accepted].split('\t')[3])
-                    .replace('-', '')
-            )
-    stock = make_alignment(out_folder, mirid, c, corefile)
+        outfile.write(f'>reference\n{preseq}\n')
+        if outputcol:
+            for synteny_region, sequence in outputcol.items():
+                outfile.write(f'>{synteny_region}\n{sequence}\n')
+        else:
+            print(f'Warning: No core orthologs found for {mirid}. Training with reference miRNA only.', flush=True)
+    stock = make_alignment(miroutdir, mirid, c, corefile)
     return stock
-
-

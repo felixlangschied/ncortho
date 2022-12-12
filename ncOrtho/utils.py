@@ -31,3 +31,6 @@ def find_refbit(outstr):
     return highest_score
 
 
+def vprint(s, verbose):
+    if verbose:
+        print(s, flush=True)
