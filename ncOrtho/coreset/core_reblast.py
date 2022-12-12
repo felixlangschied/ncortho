@@ -1,7 +1,5 @@
 import subprocess as sp
 import os
-import glob
-import sys
 
 from ncOrtho.utils import check_blastdb
 from ncOrtho.utils import make_blastndb

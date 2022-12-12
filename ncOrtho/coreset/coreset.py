@@ -29,20 +29,20 @@ along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 import argparse
 import multiprocessing as mp
 import os
-import pyfaidx
-import subprocess as sp
 import sys
 
 
-#from ncOrtho.coreset.createcm import CmConstructor
-#from ncOrtho.coreset.core_reblast import blastsearch
-#from ncOrtho.coreset.coreset_utils import gff_parser, gtf_parser, ortho_search
+from ncOrtho.coreset.createcm import CmConstructor
+from ncOrtho.coreset.core_reblast import blastsearch
+from ncOrtho.coreset.synteny import analyze_synteny
+from ncOrtho.coreset.locate_position import categorize_mirna_position
+import ncOrtho.coreset.coreset_utils as cu
 
-from createcm import CmConstructor
-from core_reblast import blastsearch
-from locate_position import categorize_mirna_position
-from synteny import analyze_synteny
-import coreset_utils as cu
+#from createcm import CmConstructor
+#from core_reblast import blastsearch
+#from locate_position import categorize_mirna_position
+#from synteny import analyze_synteny
+#import coreset_utils as cu
 
 ###############################################################################
 def main():

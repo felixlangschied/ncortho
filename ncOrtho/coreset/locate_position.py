@@ -1,5 +1,3 @@
-import sys
-
 
 def vprint(s, verbose):
     if verbose:
