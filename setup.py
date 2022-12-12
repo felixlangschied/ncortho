@@ -23,7 +23,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="ncOrtho",
-    version="0.3.0",
+    version="0.3.1",
     python_requires='>=3.7.0',
     description=" Targeted ortholog search for miRNAs ",
     long_description=long_description,
