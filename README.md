@@ -9,7 +9,7 @@ a set of taxa that are more closely related to the reference species. In contras
 Markov Models but covariance models (CMs) (Eddy & Durbin, 1994) 
 which also model conservation of the miRNA's secondary structure.
 
-![workflow](https://github.com/felixlangschied/ncortho/blob/master/ncOrtho/docs/ncortho_white.png)
+![workflow](https://github.com/felixlangschied/ncortho/blob/master/ncOrtho/docs/figure1_ncortho_worklfow.png)
 
 ## Getting Started
 NcOrtho depends on multiple third party applications, some of which are Linux specific.
