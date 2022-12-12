@@ -1,4 +1,4 @@
-from coreset_utils import parse_annotation
+from ncOrtho.coreset.coreset_utils import parse_annotation
 import os
 import pyfaidx
 
