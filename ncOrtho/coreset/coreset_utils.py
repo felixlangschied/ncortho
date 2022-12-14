@@ -119,7 +119,6 @@ def parse_annotation(path, idtyp):
         rd = table_parser(path)
     else:
         raise ValueError(f'File type "{idtyp}" not valid as reference annotation. Expecting .gff3, .gff or .gtf')
-    # print('Done')
     return rd
 
 
@@ -168,9 +167,6 @@ def read_mirnas(path):
         ]
     # print('Done')
     return mirnas
-
-
-
 
 
 def mirna_position(mirlist):

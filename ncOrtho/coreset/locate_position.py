@@ -150,3 +150,4 @@ def categorize_mirna_position(
         return syntenytype, core_orthologs
     else:
         vprint(f'Unable to resolve synteny for {mirna}', v)
+        return None, None
