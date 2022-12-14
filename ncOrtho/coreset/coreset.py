@@ -112,10 +112,10 @@ def main():
         nargs='?', const='ID=', default='ID'
     )
     optional.add_argument(
-        '--additional_anchors', metavar='int', type=int,
+        '--max_anchor_dist', metavar='int', type=int,
         help='Number of additional genes to the left and right '
-             'of the reference miRNA that are to be considered as syntenic anchors',
-        nargs='?', const=1, default=1
+             'of the reference miRNA that are to be considered as syntenic anchors. (Default: 3)',
+        nargs='?', const=3, default=3
     )
     optional.add_argument(
         '--verbose', metavar='yes/no', type=str,
@@ -152,7 +152,7 @@ def main():
         verbose = False
     else:
         raise ValueError(f'Unknown value for "verbose": {args.verbose}')
-    add_pos_orthos = args.additional_anchors
+    add_pos_orthos = args.max_anchor_dist
 
     # parameters
     core_dict, ref_paths, all_paths = cu.parse_yaml(args.parameters)
