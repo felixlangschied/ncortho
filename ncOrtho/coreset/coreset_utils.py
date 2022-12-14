@@ -102,9 +102,9 @@ def table_parser(path):
                 chromo = contig
             chr_dict[geneid] = (contig, i)
             try:
-                chr_dict[contig][i] = (geneid, start, end, strand)
+                chr_dict[contig][i] = (geneid, int(start), int(end), strand)
             except KeyError:
-                chr_dict[contig] = {i: (geneid, start, end, strand)}
+                chr_dict[contig] = {i: (geneid, int(start), int(end), strand)}
             i += 1
     return chr_dict
 
