@@ -30,6 +30,7 @@ import argparse
 import multiprocessing as mp
 import os
 import sys
+import shutil
 
 try:
     from createcm import CmConstructor
@@ -191,8 +192,7 @@ def main():
             continue
         mirna_positions[mirid] = (syntype, core_orthos)
 
-    print()
-    print('### Starting Synteny analysis', flush=True)
+    print('### Identifying syntenic regions in core species', flush=True)
     syntenyregion_per_mirna = analyze_synteny(core_dict, mirna_positions, tmpout, args.idtype, args.mgi, verbose)
 
     if not syntenyregion_per_mirna:
@@ -204,7 +204,7 @@ def main():
             continue
         miroutdir = f'{tmpout}/{mirid}'
         if not os.path.isdir(miroutdir):
-            os.makedirs(miroutdir)
+            os.mkdir(miroutdir)
         with open(f'{miroutdir}/synteny_regions_{mirid}.fa', 'w') as of:
             for line in fastalist:
                 of.write(line)

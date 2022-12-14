@@ -27,8 +27,12 @@ def read_genome(path, coretax, outdir):
 def synteny_check(left: list, right: list, orthodict: dict, mgi: int, v):
     seqcol = []
     for left_ortho in left:
+        if left_ortho not in orthodict:
+            continue
         left_chromosome, left_position = orthodict[left_ortho]
         for right_ortho in right:
+            if right_ortho not in orthodict:
+                continue
             right_chromosome, right_position = orthodict[right_ortho]
             distance = abs(left_position - right_position)
             if left_chromosome == right_chromosome and distance <= mgi:
@@ -61,7 +65,6 @@ def analyze_synteny(core_d, mirna_pos, out, idtype, mgi, v):
     synteny_region_collector = {}
     for taxon in core_d:
         print(f'# {taxon}', flush=True)
-        synteny_fulfilled = False
         vprint(f'# Parsing annotation file for {taxon}', v)
 
         core_anno_dict = parse_annotation(core_d[taxon]['annotation'], idtype)
@@ -72,11 +75,12 @@ def analyze_synteny(core_d, mirna_pos, out, idtype, mgi, v):
         vprint('# Done', v)
 
         for mirid, positiontuple in mirna_pos.items():
-            if not mirid in synteny_region_collector:
+            synteny_fulfilled = False
+            if mirid not in synteny_region_collector:
                 synteny_region_collector[mirid] = []
             style, core_ortholog_collection_all_taxa = positiontuple
             if taxon not in core_ortholog_collection_all_taxa:
-                vprint(f'No core orthologs found for {taxon}', v)
+                vprint(f'No core orthologs found for {mirid} in {taxon}', v)
                 continue
             core_ortholog_collection = core_ortholog_collection_all_taxa[taxon]
             if style in ['inside', 'opposite']:
@@ -97,6 +101,8 @@ def analyze_synteny(core_d, mirna_pos, out, idtype, mgi, v):
             else:
                 leftorthos, rightorthos = core_ortholog_collection
                 synregs = synteny_check(leftorthos, rightorthos, core_anno_dict, mgi, v)
+                if not synregs:
+                    continue
                 for count, syntenyregion in enumerate(synregs):
                     synchrom, synstart, synend = syntenyregion
                     seq = genome[synchrom][synstart-1:synend].seq

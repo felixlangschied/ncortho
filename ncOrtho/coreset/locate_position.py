@@ -79,8 +79,9 @@ def neighbor_search(leftgene, rightgene, core_dict, gene_position, chromdict, no
                 if nextgene in orthologs:
                     core_orthologs = orthologs[nextgene]
                     vprint(f'No  ortholog(s) to {genename} in {core_taxon}', v)
-                    vprint(f'{" ".join(core_orthologs)} identified as ortholog(s) in distance of '
-                           f'{index} genes to {nextgene} in {core_taxon}', v)
+                    vprint(f'{" ".join(core_orthologs)} identified as ortholog(s) of {nextgene}, '
+                           f'which is in distance of '
+                           f'{index} genes to {genename} in {core_taxon}', v)
                     return core_orthologs
 
     coreorthologs_per_species = {}
