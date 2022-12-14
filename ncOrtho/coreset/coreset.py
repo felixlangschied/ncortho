@@ -31,18 +31,18 @@ import multiprocessing as mp
 import os
 import sys
 
-# try:
-#     from ncOrtho.coreset.createcm import CmConstructor
-#     from ncOrtho.coreset.core_reblast import blastsearch
-#     from ncOrtho.coreset.synteny import analyze_synteny
-#     from ncOrtho.coreset.locate_position import categorize_mirna_position
-#     import ncOrtho.coreset.coreset_utils as cu
-# except ModuleNotFoundError:
-from createcm import CmConstructor
-from core_reblast import blastsearch
-from locate_position import categorize_mirna_position
-from synteny import analyze_synteny
-import coreset_utils as cu
+try:
+    from createcm import CmConstructor
+    from core_reblast import blastsearch
+    from locate_position import categorize_mirna_position
+    from synteny import analyze_synteny
+    import coreset_utils as cu
+except ModuleNotFoundError:
+    from ncOrtho.coreset.createcm import CmConstructor
+    from ncOrtho.coreset.core_reblast import blastsearch
+    from ncOrtho.coreset.synteny import analyze_synteny
+    from ncOrtho.coreset.locate_position import categorize_mirna_position
+    import ncOrtho.coreset.coreset_utils as cu
 
 
 ###############################################################################
