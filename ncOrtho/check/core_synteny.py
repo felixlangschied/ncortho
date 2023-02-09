@@ -100,6 +100,11 @@ def main():
              'Options: ID, Name, GeneID, gene_id, CDS',
         nargs='?', const='ID=', default='ID'
     )
+    optional.add_argument(
+        '--outformat', metavar='str', type=str,
+        help='Choose format for output figures, as accepted by matplotlib package (Default: png)',
+        nargs='?', const='png', default='png'
+    )
     # Show help when no arguments are added.
     if len(sys.argv) == 1:
         parser.print_help()
@@ -113,7 +118,7 @@ def main():
 
     core_dict, ref_paths, all_paths = cu.parse_yaml(args.parameters)
     # check if files exist
-    #for cp in all_paths:
+    # for cp in all_paths:
     #    if not os.path.isfile(cp):
     #        raise ValueError(f'{cp} does not exist')
 
@@ -126,6 +131,7 @@ def main():
 
     syn_col = []
     ortho_col = []
+    print('# Checking synteny conservation', flush=True)
     for corespec, pairwiseorthos in ortho_dict.items():
 
         core_col = []
@@ -150,7 +156,7 @@ def main():
     plt.xticks(rotation=45, ha='right')
     plt.xlabel('')
     plt.tight_layout()
-    plt.savefig(f'{args.output}/ortholog_distribution.svg')
+    plt.savefig(f'{args.output}/ortholog_distribution.{args.outformat}')
 
     plt.figure()
     df = pd.DataFrame(syn_col, columns=['species', 'reference_protein', 'num_conserved_anchors'])
@@ -159,10 +165,10 @@ def main():
                       shrink=0.8)
     sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
     plt.xlabel(f'Number of conserved anchors in neighborhood k={add_pos_orthos}')
-    plt.savefig(f'{args.output}/anchor_conservation.svg')
+    plt.savefig(f'{args.output}/anchor_conservation.{args.outformat}')
     plt.tight_layout()
+    print(f'# Finished. Output created at: {args.outdir}')
 
 
 if __name__ == '__main__':
     main()
-
