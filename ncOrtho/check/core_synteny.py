@@ -158,16 +158,18 @@ def main():
     plt.tight_layout()
     plt.savefig(f'{args.output}/ortholog_distribution.{args.outformat}')
 
-    plt.figure()
+
+    plt.clf()
+    plt.figure(figsize=(12, 4))
     df = pd.DataFrame(syn_col, columns=['species', 'reference_protein', 'num_conserved_anchors'])
     sns.set(rc={'figure.figsize': (12, 4), 'ytick.left': True, 'xtick.bottom': True}, font_scale=1.2, style='whitegrid')
     ax = sns.histplot(data=df, x='num_conserved_anchors', hue='species', discrete=True, multiple='dodge', hue_order=o,
                       shrink=0.8)
     sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
     plt.xlabel(f'Number of conserved anchors in neighborhood k={add_pos_orthos}')
-    plt.savefig(f'{args.output}/anchor_conservation.{args.outformat}')
     plt.tight_layout()
-    print(f'# Finished. Output created at: {args.outdir}')
+    plt.savefig(f'{args.output}/anchor_conservation.{args.outformat}')
+    print(f'# Finished. Output created at: {args.output}')
 
 
 if __name__ == '__main__':
