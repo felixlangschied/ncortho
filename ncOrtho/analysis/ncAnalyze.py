@@ -57,6 +57,20 @@ def arglistcheck(arg):
     return arglist
 
 
+def parse_matseq(path):
+    m2s = {}
+    with open(path) as fh:
+        for line in fh:
+            if line.startswith('#'):
+                continue
+            mature = line.strip().split('\t')[-1].replace('U', 'T')
+            mirid = line.strip().split('\t')[1].split('_')[0]
+            if len(mature) < 7:
+                raise ValueError('No mature sequence found in "ncrna_file"')
+            seed = mature[1:8]
+            m2s[mirid] = seed
+    return m2s
+
 def main():
     # Print header
     print('\n'+'#'*39)
@@ -127,6 +141,12 @@ def main():
             'Comma separated list or path to newline seperated file with miRNAs that should be used for reconstruction'
         )
     )
+    # mirna data
+    optional.add_argument(
+        '--ncrna_file', metavar='<path>', nargs='?', const='', default='',
+        help='Path to tab separated file of reference miRNAs information, as used in ncCreate and ncSearch. '
+             'Uses mature sequence column to identify seed conservation.'
+    )
     ##########################################################################################
     # Parse arguments
     ##########################################################################################
@@ -153,6 +173,10 @@ def main():
     iqtree_cmd = args.iqtree
     auto_skip = args.auto_skip
 
+    if args.ncrna_file:
+        mirid2seed = parse_matseq(args.ncrna_file)
+    else:
+        mirid2seed = {}
     ##########################################################################################
     # Argument checks
     ##########################################################################################
@@ -191,7 +215,15 @@ def main():
                         # write phyloprofile input
                         taxstr = f'ncbi{name_2_taxid[spec]}'
                         group_str = mirna.split('_')[0]
-                        pp.write(f'{group_str}\t{taxstr}\t{mirna}\n')
+                        if mirid2seed:
+                            seed = mirid2seed[group_str]
+                            if seed in seq:
+                                seedcon = 1
+                            else:
+                                seedcon = 0
+                            pp.write(f'{group_str}\t{taxstr}\t{mirna}\t{seedcon}\n')
+                        else:
+                            pp.write(f'{group_str}\t{taxstr}\t{mirna}\n')
                         # initialize dictionary
                         if group_str not in ortho_dict:
                             ortho_dict[group_str] = {}

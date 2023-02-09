@@ -58,7 +58,7 @@ def analyze_synteny(core_d, mirna_pos, out, idtype, mgi, v):
     mgi
     v
 
-    Returns:    {mirid: ['>coretaxon1\n', 'seq1\n', 'Ycoretaxon2\n', 'seq2\n']}
+    Returns:    {mirid: ['>coretaxon1\n', 'seq1\n', 'coretaxon2\n', 'seq2\n']}
     -------
 
     """

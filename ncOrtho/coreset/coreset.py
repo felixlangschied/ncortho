@@ -108,8 +108,8 @@ def main():
     optional.add_argument(
         '--idtype', metavar='str', type=str,
         help='Choose the ID in the reference gff file that is '
-             'compared to the IDs in the pairwise orthologs file (default:ID) '
-             'Options: ID, Name, GeneID, gene_id',
+             'compared to the IDs in the pairwise orthologs file (default:GeneID) '
+             'Options: ID, Name, GeneID, gene_id, CDS',
         nargs='?', const='ID=', default='ID'
     )
     optional.add_argument(
@@ -172,7 +172,10 @@ def main():
         os.makedirs(tmpout)
 
     print('# Reading pairwise orthologs', flush=True)
-    ortho_dict = cu.read_pairwise_orthologs(core_dict)
+    if args.idtype == 'CDS':
+        ortho_dict = cu.pairwise_orthologs_from_cds(core_dict, ref_paths['annotation'])
+    else:
+        ortho_dict = cu.read_pairwise_orthologs(core_dict)
 
     print('# Reading miRNA data', flush=True)
     mirnas = cu.read_mirnas(args.ncrna)
@@ -200,7 +203,8 @@ def main():
 
     for mirid, fastalist in syntenyregion_per_mirna.items():
         if not fastalist:
-            print(f'Warning: No syntenic region found in any core species for {mirid}')
+            print(f'Warning: No syntenic region found in any core species for {mirid}. '
+                  f'Make sure that the IDs in the annotation file match the ones in the orthologs file')
             continue
         miroutdir = f'{tmpout}/{mirid}'
         if not os.path.isdir(miroutdir):
