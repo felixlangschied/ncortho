@@ -68,7 +68,7 @@ def gff_parser(gff, id_type):
 
             if id_type == 'GeneID':
                 geneid = re.split('[;,]', linedata[-1].split(f'{id_type}:')[1])[0]
-            elif id_type in ['ID', 'Name', 'gene_id', 'CDS']:
+            elif id_type in ['ID', 'Name', 'CDS']:
                 geneid = linedata[-1].split(f'{id_type}=')[1].split(';')[0]
                 if id_type in ['ID', 'CDS']:
                     geneid = '-'.join(geneid.split('-')[1:])

@@ -97,7 +97,7 @@ def main():
         '--idtype', metavar='str', type=str,
         help='Choose the ID in the reference gff file that is '
              'compared to the IDs in the pairwise orthologs file (default:GeneID) '
-             'Options: ID, Name, GeneID, gene_id, CDS',
+             'Options: ID, Name, GeneID, CDS',
         nargs='?', const='ID=', default='ID'
     )
     optional.add_argument(
