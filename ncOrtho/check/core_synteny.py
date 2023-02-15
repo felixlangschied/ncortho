@@ -88,7 +88,7 @@ def main():
         help='Path for the output folder'
     )
     optional.add_argument(
-        '--max_anchor_dist', metavar='int', type=int,
+        '-k, --max_anchor_dist', metavar='int', type=int,
         help='Number of additional genes to the left and right '
              'of the reference miRNA that are to be considered as syntenic anchors. (Default: 3)',
         nargs='?', const=3, default=3
