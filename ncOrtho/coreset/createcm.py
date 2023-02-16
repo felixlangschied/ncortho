@@ -71,26 +71,17 @@ def main():
     # Check if computer provides the desired number of cores.
     available_cpu = mp.cpu_count()
     if args.cpu > available_cpu:
-        print(
-            '# Error: The provided number of CPU cores is higher than the '
-            'number available on this system. Exiting...'
-        )
-        sys.exit(1)
+        raise ValueError('The provided number of CPU cores is higher than the number available on this system')
     else:
         cpu = args.cpu
 
     # Check if alignment file exists.
     if not os.path.isfile(args.alignment):
-        print(
-            '# Error: The provided path to the alignment file appears to be '
-            'invalid. Exiting...'
-        )
-        sys.exit(1)
+        raise ValueError('Invalid path to alignment file')
     else:
         alignment = args.alignment
 
     output = args.output
-    alignment = args.alignment
     name = alignment.split('/')[-1].split('.')[0]
 
     # Check if the output folder exists.

@@ -9,7 +9,7 @@ a set of taxa that are more closely related to the reference species. In contras
 Markov Models but covariance models (CMs) (Eddy & Durbin, 1994) 
 which also model conservation of the miRNA's secondary structure.
 
-![workflow](https://github.com/felixlangschied/ncortho/blob/master/ncOrtho/docs/ncortho_white.png)
+![workflow](https://github.com/felixlangschied/ncortho/blob/master/ncOrtho/docs/figure1_ncortho_worklfow.png)
 
 ## Getting Started
 NcOrtho depends on multiple third party applications, some of which are Linux specific.
@@ -48,8 +48,15 @@ For this reason, a few questions need to be answered, before we can start constr
 3. From which species should the core set of miRNA orthologs be extracted, which will be used for training the CMs?
 4. Which miRNAs are going to be used for the ortholog search?
 
-You can (soon) find more information on how to answer these questions in the 
+To identify suitable core species for a given reference species you can calculate an estimate of conserved synteny 
+given a set of pairwise ortholog predictions with:
+```
+ncCheck -p <parameters.yaml> -o <outdir>
+```
+You can find additional information about ncCheck in the
 [WIKI](https://github.com/felixlangschied/ncortho/wiki/Creating-miRNA-covariance-models#choosing-core-species).
+
+
 As soon as you know what your core species are going to be, you will need to collect the following data:
 
 * Genomic sequence in FASTA format (e.g "genomic.fna" from RefSeq)
@@ -59,7 +66,7 @@ As soon as you know what your core species are going to be, you will need to col
 
 Modify the [example parameters](ncOrtho/coreset/example_parameters.yaml) file to contain all 
 relevant paths to your input files. The "name" property of your reference and core species has to merely be a 
-unique identifier. It is however recommended to use the correct species names to increase readability.
+unique identifier. It is however recommended to use whitespace-free species names to increase readability.
 
 Additional to the parameters file, you will need a tab separated file containing the position and sequence of each 
 miRNA for which a model should be constructed (more information 
