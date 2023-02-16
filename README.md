@@ -9,7 +9,7 @@ a set of taxa that are more closely related to the reference species. In contras
 Markov Models but covariance models (CMs) (Eddy & Durbin, 1994) 
 which also model conservation of the miRNA's secondary structure.
 
-![workflow](https://github.com/felixlangschied/ncortho/blob/master/ncOrtho/docs/figure1_ncortho_worklfow.png)
+![workflow](https://github.com/BIONF/ncortho/blob/master/ncOrtho/docs/figure1_ncortho_worklfow.png)
 
 ## Getting Started
 NcOrtho depends on multiple third party applications, some of which are Linux specific.
@@ -54,7 +54,7 @@ given a set of pairwise ortholog predictions with:
 ncCheck -p <parameters.yaml> -o <outdir>
 ```
 You can find additional information about ncCheck in the
-[WIKI](https://github.com/felixlangschied/ncortho/wiki/Creating-miRNA-covariance-models#choosing-core-species).
+[WIKI](https://github.com/BIONF/ncortho/wiki/Creating-miRNA-covariance-models#choosing-core-species).
 
 
 As soon as you know what your core species are going to be, you will need to collect the following data:
@@ -62,7 +62,7 @@ As soon as you know what your core species are going to be, you will need to col
 * Genomic sequence in FASTA format (e.g "genomic.fna" from RefSeq)
 * Genome annotation in GFF3 format (e.g. "genomic.gff" from RefSeq)
 * Pairwise orthologs of all proteins between the reference and each core species (more information 
-[here](https://github.com/felixlangschied/ncortho/wiki/Input-Data#pairwise-orthologs)
+[here](https://github.com/BIONF/ncortho/wiki/Input-Data#pairwise-orthologs)
 
 Modify the [example parameters](ncOrtho/coreset/example_parameters.yaml) file to contain all 
 relevant paths to your input files. The "name" property of your reference and core species has to merely be a 
@@ -70,7 +70,7 @@ unique identifier. It is however recommended to use whitespace-free species name
 
 Additional to the parameters file, you will need a tab separated file containing the position and sequence of each 
 miRNA for which a model should be constructed (more information 
-[here](https://github.com/felixlangschied/ncortho/wiki/Input-Data#reference-mirnas)). 
+[here](https://github.com/BIONF/ncortho/wiki/Input-Data#reference-mirnas)). 
 
 You can then start CM construction with:
 ```
@@ -92,11 +92,11 @@ ncSearch -m <CMs/> -n <mirnas.tsv> -q <query_genome.fa> -r <reference_genome.fa>
 ```
 
 Use `ncSearch -h` to see all available options for the orthology search or have a look at the 
-[WIKI](https://github.com/felixlangschied/ncortho/wiki/Running-the-orthology-search).
+[WIKI](https://github.com/BIONF/ncortho/wiki/Running-the-orthology-search).
 
 ## Support
 
-Please refer to our Wiki Page of [known issues](https://github.com/felixlangschied/ncortho/wiki/Known-Issues) first, 
+Please refer to our Wiki Page of [known issues](https://github.com/BIONF/ncortho/wiki/Known-Issues) first, 
 then consider opening an issue on GitHub or contacting me directly via [mail](langschied@bio.uni-frankfurt.de)
 
 ## Contributors
