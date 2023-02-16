@@ -54,7 +54,7 @@ given a set of pairwise ortholog predictions with:
 ncCheck -p <parameters.yaml> -o <outdir>
 ```
 You can find additional information about ncCheck in the
-[WIKI](https://github.com/BIONF/ncortho/wiki/Creating-miRNA-covariance-models#choosing-core-species).
+[WIKI](https://github.com/BIONF/ncortho/wiki/Choosing-core-species).
 
 
 As soon as you know what your core species are going to be, you will need to collect the following data:
