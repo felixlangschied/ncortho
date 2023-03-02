@@ -94,6 +94,17 @@ ncSearch -m <CMs/> -n <mirnas.tsv> -q <query_genome.fa> -r <reference_genome.fa>
 Use `ncSearch -h` to see all available options for the orthology search or have a look at the 
 [WIKI](https://github.com/BIONF/ncortho/wiki/Running-the-orthology-search).
 
+### Phylogenetic Analysis
+
+To facilitate the downstream analyses of miRNA orthologs, we also supply the `ncAnalyze` function:
+```
+ncAnalzye -r <result directory of ncOrtho> -o <output_dir> -m <mappingfile>
+```
+This will create a phylogenetic Profile ready for visualisation in [PhyloProfile](https://github.com/BIONF/PhyloProfile)
+as well as calculate a supermatrix species tree based on the miRNA orthologs.
+
+More information can be found with `ncAnalyze -h` or the [WIKI](https://github.com/BIONF/ncortho/wiki/Analysis)
+
 ## Support
 
 Please refer to our Wiki Page of [known issues](https://github.com/BIONF/ncortho/wiki/Known-Issues) first, 
