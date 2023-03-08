@@ -1,59 +1,59 @@
 ---
 type: reference
 name: Homo_sapiens
-annotation: GCF_000001405.39/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Gorilla_gorilla
 orthologs: Homo_sapiens_Gorilla_gorilla_gorilla.tsv
-annotation: GCF_008122165.1/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Macaca_mulatta
 orthologs: Homo_sapiens_Macaca_mulatta.tsv
-annotation: GCF_003339765.1/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Nomascus_leucogenys
 orthologs: Homo_sapiens_Nomascus_leucogenys.tsv
-annotation: GCF_006542625.1/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Pongo_abelii
 orthologs: Homo_sapiens_Pongo_abelii.tsv
-annotation: GCF_002880775.1/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Saimiri_boliviensis
 orthologs: Homo_sapiens_Saimiri_boliviensis_boliviensis.tsv
-annotation: GCF_016699345.1/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Mus_musculus
 orthologs: Homo_sapiens_Mus_musculus.tsv
-annotation: GCF_000001635.27/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Cavia_porcellus
 orthologs: Homo_sapiens_Cavia_porcellus.tsv
-annotation: GCF_000151735.1/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Canis_familiaris
 orthologs: Homo_sapiens_Canis_lupus_familiaris.tsv
-annotation: GCF_014441545.1/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa
 ---
 type: core
 name: Gallus_gallus
 orthologs: Homo_sapiens_Gallus_gallus.tsv
-annotation: GCF_016699485.2/genomic.gff
-genome: NaN
+annotation: genomic.gff
+geneset: protein.rep.fa

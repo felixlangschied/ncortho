@@ -4,61 +4,121 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-import ncOrtho.coreset.coreset_utils as cu
-
-
-def neighbors(prot, anno, anchordist):
-    if prot not in anno:  # pseudogenes are not in parsed annotation file but can occur in ortholog file
-        return None
-    chrom, position = anno[prot]
-    anchors = []
-    for index in range(position - anchordist, position + anchordist + 1):
-        if index not in anno[chrom]:  # if gene positioned at end of contig, no more anchors can be considered
-            continue
-        anchor, a_start, a_end, a_strand = anno[chrom][index]
-        anchors.append(anchor)
-    anchors.remove(prot)
-    return anchors
+import yaml
 
 
-def synteny_distance(block, ref_prot, coreanno, orthodict, anchordist, corespecies):
-    """
-    returns: Number of conserved anchors per number of anchors
-    """
-    o = []
+def parse_yaml(path):
+    p_dict = {}  # {<name>: {'orthologs': <path>, 'genome': <path>, 'annotation': <path>}}
+    paths = []
+    refdict = {}
+    with open(path, 'r') as param_handle:
+        params = yaml.load_all(param_handle, Loader=yaml.FullLoader)
+        for entry in params:
+            in_type = entry.pop('type')
+            if in_type == 'reference':
+                refdict['annotation'] = entry['annotation']
+                refdict['geneset'] = entry['geneset']
+            elif in_type == 'core':
+                species = entry.pop('name')
+                p_dict[species] = entry
+            paths.extend([entry['annotation'], entry['geneset']])
 
-    # find position of reference protein orthologs in core species
-    reforthos = orthodict[ref_prot]
-    for refortho in reforthos:
-        if refortho not in coreanno:  # pseudogenes are not in parsed annotation file but can occur in ortholog file
-            continue
-        conserved_anchors = 0
-        chrom, position = coreanno[refortho]
+        return p_dict, refdict, paths
 
-        # find position of anchor protein orthologs in core species
-        for anchor in block:
 
-            # find orthologs of anchor proteins
-            if anchor not in orthodict:  # synteny not fulfilled if no ortholog in core species
-                # c.append(0)
+def read_ortho_tsv(path):
+    orthod = {}
+    allhumanids = set()
+    with open(path) as fh:
+        for line in fh:
+            if line.startswith('#'):
                 continue
-            anchor_ortho_list = orthodict[anchor]
-            for anchor_ortho in anchor_ortho_list:
-                if anchor_ortho not in coreanno:  # e.g. for pseudogenes
-                    # c.append(0)
-                    continue
+            human_protid, core_protid = line.strip().split()
+            if not human_protid in orthod:
+                orthod[human_protid] = []
+            if not core_protid in orthod:
+                orthod[core_protid] = []
+            orthod[human_protid].append(core_protid)
+            orthod[core_protid].append(human_protid)
+            allhumanids.add(human_protid)
+    return orthod, allhumanids
 
-                a_chrom, a_position = coreanno[anchor_ortho]
-                # if distance to reference protein is similar in core species than in reference species, accept
-                if a_chrom == chrom and abs(int(position) - int(a_position)) <= anchordist:
-                    conserved_anchors += 1
-                    break
 
-                # c.append(0)
-        # o.append(sum(c) / len(c))
-        o.append([corespecies, refortho, conserved_anchors])
+def geneorder_from_gff(path, proteinset):
+    """
+    Read gene order from GFF file. Will only collect order of genes for which an ortholog was searched
+
+    returns:
+        orderpercontig = {contig: [gene1, gene2, gene3], ...}
+        contigperid = {gene1: contig, ...}
+    """
+    orderpercontig = {}
+    contigperid = {}
+    lastcontig = ''
+    with open(path) as fh:
+        for line in fh:
+            if line.startswith('#'):
+                continue
+            data = line.strip().split('\t')
+            if data[2] != 'CDS':
+                continue
+            contig = data[0]
+            if contig != lastcontig:
+                orderpercontig[contig] = []
+                lastcontig = contig
+            protid = data[-1].split('-')[1].split('.')[0]
+
+            if orderpercontig[contig] and orderpercontig[contig][-1] == protid:  # do not add duplicates
+                continue
+            if protid in proteinset:
+                orderpercontig[contig].append(protid)
+                contigperid[protid] = contig
+    return orderpercontig, contigperid
+
+
+def geneset_from_file(path):
+    if path.split('.')[-1] in ['fasta', 'fa', 'faa']:
+        o = set()
+        with open(path) as fh:
+            for line in fh:
+                if line.startswith('>'):
+                    o.add(line.split('.')[0].replace('>', ''))
+    else:
+        with open(path) as fh:
+            o = [line.strip() for line in fh if line]
+            o = set(o)
     return o
+
+
+def neighbors(protid, orderpercontig, contigperid, k):
+    contig = contigperid[protid]
+    orderlist = orderpercontig[contig]
+    position = orderlist.index(protid)
+    # print(contig, position)
+    leftflank = orderlist[position - k:position]
+    rightflank = orderlist[position + 1:position + k + 1]
+    # print(leftflank)
+    # print(rightflank)
+
+    return leftflank, rightflank
+
+
+def orthomapper(referencelist, orthodict):
+    o = []
+    for prot in referencelist:
+        if prot not in orthodict:
+            continue
+        o.extend(orthodict[prot])
+    return o
+
+
+def jaccard_similarity(list1, list2):
+    intersection = len(list(set(list1).intersection(list2)))
+    union = (len(set(list1)) + len(set(list2))) - intersection
+    if union == 0:
+        return union
+    else:
+        return float(intersection) / union
 
 
 def main():
@@ -88,18 +148,18 @@ def main():
         help='Path for the output folder'
     )
     optional.add_argument(
-        '-k, --max_anchor_dist', metavar='int', type=int,
+        '-k', '--max_anchor_dist', metavar='int', type=int,
         help='Number of additional genes to the left and right '
              'of the reference miRNA that are to be considered as syntenic anchors. (Default: 3)',
         nargs='?', const=3, default=3
     )
-    optional.add_argument(
-        '--idtype', metavar='str', type=str,
-        help='Choose the ID in the reference gff file that is '
-             'compared to the IDs in the pairwise orthologs file (default:GeneID) '
-             'Options: ID, Name, GeneID, CDS',
-        nargs='?', const='ID=', default='ID'
-    )
+    # optional.add_argument(
+    #     '--idtype', metavar='str', type=str,
+    #     help='Choose the ID in the reference gff file that is '
+    #          'compared to the IDs in the pairwise orthologs file (default:GeneID) '
+    #          'Options: ID, Name, GeneID, CDS',
+    #     nargs='?', const='ID=', default='ID'
+    # )
     optional.add_argument(
         '--outformat', metavar='str', type=str,
         help='Choose format for output figures, as accepted by matplotlib package (Default: png)',
@@ -112,65 +172,71 @@ def main():
     else:
         args = parser.parse_args()
 
-    # parameters
-    add_pos_orthos = args.max_anchor_dist
-    idtype = args.idtype
 
-    core_dict, ref_paths, all_paths = cu.parse_yaml(args.parameters)
-    # check if files exist
-    # for cp in all_paths:
-    #    if not os.path.isfile(cp):
-    #        raise ValueError(f'{cp} does not exist')
-
-    ref_anno_dict = cu.gff_parser(ref_paths['annotation'], 'ID')
-    print('# Reading pairwise orthologs', flush=True)
-    if idtype == 'CDS':
-        ortho_dict = cu.pairwise_orthologs_from_cds(core_dict, ref_paths['annotation'])
-    else:
-        ortho_dict = cu.read_pairwise_orthologs(core_dict)
+    core_paths, ref_paths, all_paths = parse_yaml(args.parameters)
+    ref_protset = geneset_from_file(ref_paths['geneset'])
+    ref_orderpercontig, ref_contigperid = geneorder_from_gff(ref_paths['annotation'], ref_protset)
+    print('# Reading reference annotation done', flush=True)
 
     syn_col = []
     ortho_col = []
-    print('# Checking synteny conservation', flush=True)
-    for corespec, pairwiseorthos in ortho_dict.items():
+    for corespecies, pathdict in core_paths.items():
+        print(corespecies)
+        pairwise_orthos, allrefids = read_ortho_tsv(pathdict['orthologs'])
+        ortho_col.append([corespecies, len(allrefids)])
 
-        core_col = []
-        print(corespec)
-        ortho_col.append([corespec, len(pairwiseorthos.keys())])
+        core_protset = geneset_from_file(pathdict['geneset'])
+        core_orderpercontig, core_contigperid = geneorder_from_gff(pathdict['annotation'], core_protset)
 
-        core_anno_dict = cu.gff_parser(core_dict[corespec]['annotation'], 'ID')
-
-        for refprot in pairwiseorthos.keys():
-            syn_block = neighbors(refprot, ref_anno_dict, add_pos_orthos)
-            if not syn_block:  # in rare case that reference protein from orthology file is not found in annotation
+        for refprot in allrefids:
+            # check if an ortholog was found for the protein in the reference species
+            if not refprot in pairwise_orthos:
+                syn_col.append([corespecies, refprot, None])
                 continue
-            syn_fullfilled_list = synteny_distance(syn_block, refprot, core_anno_dict, pairwiseorthos, add_pos_orthos,
-                                                   corespec)
-            syn_col.extend(syn_fullfilled_list)
 
-    orth = pd.DataFrame(ortho_col, columns=['species', 'Number orthologs'])
-    orth = orth.sort_values(by='Number orthologs', ascending=False)
-    o = orth.species.values
+            # find position and neighbors of reference protein
+            if refprot not in ref_contigperid:  # rare cases of protein.rep.fa and genomic.gff not matching up
+                continue
+            ref_left, ref_right = neighbors(refprot, ref_orderpercontig, ref_contigperid, args.max_anchor_dist)
+
+            # map neighboring genes to orthologs in core species
+            ref_ortho_left = orthomapper(ref_left, pairwise_orthos)
+            ref_ortho_right = orthomapper(ref_right, pairwise_orthos)
+
+            # find position and neighbors of the (co-)ortholog to the reference protein in the core species
+            coreproteins = pairwise_orthos[refprot]
+            for coreprot in coreproteins:
+                core_left, core_right = neighbors(coreprot, core_orderpercontig, core_contigperid, args.max_anchor_dist)
+
+                reflist = ref_ortho_left + ref_ortho_right
+                corelist = core_left + core_right
+
+                ji = jaccard_similarity(reflist, corelist)
+                syn_col.append([corespecies, refprot, ji])
+
+
     sns.set(rc={'figure.figsize': (6, 6), 'ytick.left': True, 'xtick.bottom': True}, font_scale=1.2, style='whitegrid')
-    sns.barplot(data=orth, x='species', y='Number orthologs')
+    orth = pd.DataFrame(ortho_col, columns=['species', 'Number orthologs'])
+    sns.barplot(data=orth, x='species', y='Number orthologs', edgecolor="0.3", linewidth=1.5)
     plt.xticks(rotation=45, ha='right')
     plt.xlabel('')
     plt.tight_layout()
     plt.savefig(f'{args.output}/ortholog_distribution.{args.outformat}')
 
 
-    plt.clf()
-    plt.figure(figsize=(12, 4))
-    df = pd.DataFrame(syn_col, columns=['species', 'reference_protein', 'num_conserved_anchors'])
-    sns.set(rc={'figure.figsize': (12, 4), 'ytick.left': True, 'xtick.bottom': True}, font_scale=1.2, style='whitegrid')
-    ax = sns.histplot(data=df, x='num_conserved_anchors', hue='species', discrete=True, multiple='dodge', hue_order=o,
-                      shrink=0.8)
-    sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
-    plt.xlabel(f'Number of conserved anchors in neighborhood k={add_pos_orthos}')
+    plt.figure(figsize=(6, 6))
+    sns.set(rc={'figure.figsize': (6, 6), 'ytick.left': True, 'xtick.bottom': True}, font_scale=1.2, style='whitegrid')
+    df = pd.DataFrame(syn_col, columns=['species', 'reference_protein', 'jaccard_index'])
+    df.to_csv(f'{args.output}/conserved_synteny.tsv', sep='\t', index=False)
+    sns.boxplot(data=df, x='species', y='jaccard_index', linewidth=1.5)
+    plt.xlabel('')
+    # plt.title(f'Flanking gene window size = {max_anchor_dist}')
+    plt.ylabel(f'Jaccard Similarity (k = {args.max_anchor_dist})')
+    plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
     plt.savefig(f'{args.output}/anchor_conservation.{args.outformat}')
-    print(f'# Finished. Output created at: {args.output}')
 
+    print(f'# Finished. Output created at: {args.output}')
 
 if __name__ == '__main__':
     main()
