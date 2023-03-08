@@ -39,31 +39,32 @@ def no_synteny_possible(mirna, chrom, start, end, reference):
         return False
 
 
-def ortho_search(r_gene, core_dict, v):
-    """
-    Try to find the ortholog for a given reference gene in a core set species
-
-    Parameters
-    ----------
-    r_gene:     Gene of Reference Species
-    ortho_dict: {'corespecies': {r_gene: [ortho1], ...}, ...}
-
-    Returns:    {'corespecies': [coreortho1], ...}
-    -------
-
-    """
-    coreorthologs_per_species = {}
-    for core_taxon, orthodict in core_dict.items():
-        if r_gene in orthodict:
-            core_orthologs = orthodict[r_gene]
-            coreorthologs_per_species[core_taxon] = core_orthologs
-            vprint(f'{" ".join(core_orthologs)} identified as ortholog(s) to {r_gene} in {core_taxon}', v)
-        else:
-            vprint(f'No ortholog found for {r_gene} in {core_taxon}', v)
-    return coreorthologs_per_species
+# def ortho_search(r_gene, core_dict, v):
+#     """
+#     Try to find the ortholog for a given reference gene in a core set species
+#
+#     Parameters
+#     ----------
+#     r_gene:     Gene of Reference Species
+#     ortho_dict: {'corespecies': {r_gene: [ortho1], ...}, ...}
+#
+#     Returns:    {'corespecies': [coreortho1], ...}
+#     -------
+#
+#     """
+#     coreorthologs_per_species = {}
+#     for core_taxon, orthodict in core_dict.items():
+#         if r_gene in orthodict:
+#             core_orthologs = orthodict[r_gene]
+#             coreorthologs_per_species[core_taxon] = core_orthologs
+#             vprint(f'{" ".join(core_orthologs)} identified as ortholog(s) to {r_gene} in {core_taxon}', v)
+#         else:
+#             vprint(f'No ortholog found for {r_gene} in {core_taxon}', v)
+#     return coreorthologs_per_species
 
 
 def neighbor_search(leftgene, rightgene, core_dict, gene_position, chromdict, no_next_orthos, v):
+
     def find_ortho(genename, position, chromd, orthologs, next_orthos, typ, v):
         if genename in orthologs:
             core_orthologs = orthologs[genename]
@@ -131,7 +132,10 @@ def categorize_mirna_position(
                 syntenytype = 'opposite'
                 solved = True
                 vprint(f'{mirna} is located opposite of the gene {gene}', v)
-            core_orthologs = ortho_search(gene, all_orthologs, v)
+            # core_orthologs = ortho_search(gene, all_orthologs, v)
+            core_orthologs = neighbor_search(
+                gene, gene, all_orthologs, position, reference[mirna_chrom], no_add_orthos, v
+            )
 
         # case 4.3): miRNA between genes
         else:

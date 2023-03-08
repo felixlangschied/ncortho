@@ -83,8 +83,12 @@ def analyze_synteny(core_d, mirna_pos, out, idtype, mgi, v):
                 vprint(f'No core orthologs found for {mirid} in {taxon}', v)
                 continue
             core_ortholog_collection = core_ortholog_collection_all_taxa[taxon]
-            if style in ['inside', 'opposite']:
-                for ortholog in core_ortholog_collection:
+
+            leftorthos, rightorthos = core_ortholog_collection
+            #print(style)
+            if leftorthos == rightorthos:  # for genes inside a gene for which an ortholog was found
+                #if style in ['inside', 'opposite']:
+                for ortholog in leftorthos:
                     if ortholog in core_anno_dict:
                         ortholog_chromosome, ortholog_position = core_anno_dict[ortholog]
                         orthostart, orthoend, orthostrand = core_anno_dict[ortholog_chromosome][ortholog_position][1:]
