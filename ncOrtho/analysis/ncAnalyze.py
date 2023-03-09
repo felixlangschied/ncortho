@@ -273,7 +273,7 @@ def main():
                 ):
                     fp.write(f'>{spec}\n{seq}\n')
             fp.seek(0)
-            aln_cmd = f'muscle -in {fp.name} -out {align_out}/{mirna}.aln'
+            aln_cmd = f'muscle -align {fp.name} -output {align_out}/{mirna}.aln'
             res = sp.run(aln_cmd, shell=True, capture_output=True)
             if res.returncode != 0:
                 print(res.stderr.decode('utf8'))

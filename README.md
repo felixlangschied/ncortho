@@ -29,6 +29,7 @@ Tool | Tested version | Anaconda installation
 BLASTn | v2.7.1 | `conda install -c kantorlab blastn`
 Infernal | v1.1.4 | `conda install -c bioconda infernal`
 t_coffee | v13.45 | `conda install -c bioconda t-coffee`
+MUSCLE | v5.1 | `conda install -c bioconda muscle`
 
 ### Installing
 
