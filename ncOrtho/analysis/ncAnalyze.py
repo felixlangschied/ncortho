@@ -267,11 +267,13 @@ def main():
     for mirna in ortho_dict:
         with tempfile.NamedTemporaryFile(mode='w+') as fp:
             for spec, seq in ortho_dict[mirna].items():
-                if (
-                        spec not in spec_to_skip
-                        and spec in spec_include
-                ):
-                    fp.write(f'>{spec}\n{seq}\n')
+                if spec_to_skip:
+                    if (
+                            spec in spec_to_skip
+                            and spec not in spec_include
+                    ):
+                        continue
+                fp.write(f'>{spec}\n{seq}\n')
             fp.seek(0)
             aln_cmd = f'muscle -align {fp.name} -output {align_out}/{mirna}.aln'
             res = sp.run(aln_cmd, shell=True, capture_output=True)

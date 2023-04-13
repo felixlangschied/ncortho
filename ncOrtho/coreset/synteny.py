@@ -25,6 +25,20 @@ def read_genome(path, coretax, outdir):
 
 
 def synteny_check(left: list, right: list, orthodict: dict, mgi: int, v):
+    """
+    TODO: Will extract all syntenic regions using all available anchors. Should only return smallest region per co-ortholog
+    Parameters
+    ----------
+    left
+    right
+    orthodict
+    mgi
+    v
+
+    Returns
+    -------
+
+    """
     seqcol = []
     for left_ortho in left:
         if left_ortho not in orthodict:
