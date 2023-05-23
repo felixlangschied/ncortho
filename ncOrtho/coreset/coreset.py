@@ -141,7 +141,7 @@ def main():
         cpu = args.threads
 
     # parse mandatory arguments
-    output = args.output
+    output = os.path.realpath(args.output)
 
     # parse optional arguments
     # mgi = args.mgi

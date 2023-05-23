@@ -144,7 +144,10 @@ def categorize_mirna_position(
             rightneighborinfo = reference[mirna_chrom][position + 1]
             rightneighbor = rightneighborinfo[0]
             rn_start = rightneighborinfo[1]
-            if gene_end < mirna_start and rn_start > mirna_end:
+            rn_end = rightneighborinfo[2]
+
+            # if gene_end < mirna_start and rn_start > mirna_end:
+            if gene_start <= mirna_start and rn_end >= mirna_end:
                 syntenytype = 'in-between'
                 solved = True
                 vprint(f'{gene} is the left neighbor of {mirna}, {rightneighbor} is the right neighbor', v)

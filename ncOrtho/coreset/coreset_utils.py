@@ -60,7 +60,9 @@ def gff_parser(gff, id_type):
     # with open(inpath) as infile, open(outpath, 'wb') as outfile:
     with open(gff) as infile:
         for line in infile:
-            if line.startswith('#') or not 'gene_biotype=protein_coding' in line:
+            if line.startswith('#'):
+                continue
+            if 'gene_biotype=protein_coding' not in line:
                 continue
             linedata = line.strip().split('\t')
             if linedata[2] != 'gene':

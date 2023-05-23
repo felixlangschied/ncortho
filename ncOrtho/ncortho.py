@@ -23,6 +23,7 @@ import multiprocessing as mp
 import os
 import subprocess as sp
 import sys
+from time import time
 
 # Internal ncOrtho modules
 try:
@@ -323,7 +324,7 @@ def main():
     # mandatory
     mirnas = args.ncrna
     models = args.models
-    output = args.output
+    output = os.path.realpath(args.output)
     query = args.query
     reference = args.reference
 
@@ -412,15 +413,18 @@ def main():
     outpath = '{0}/{1}_orthologs.fa'.format(output, qname)
     log_file = f'{output}/{qname}.log'
     with open(log_file, 'w') as log, open(outpath, 'w') as of:
-        log.write(f'# miRNA\tStatus\n')
+        log.write(f'# miRNA\tSeconds\tStatus\n')
         # Identify ortholog candidates.
         for mirna in mirna_dict:
+            st = time()
             restricted = False
             sys.stdout.flush()
             mirna_data = mirna_dict[mirna]
             # mirna objects for which no CM was found are empty
             if not mirna_data:
-                log.write(f'{mirna}\tNo CM\n')
+                et = time()
+                elapsed_time = str(et - st)
+                log.write(f'{mirna}\t{elapsed_time}\tNo CM\n')
                 continue
             print(f'\n### {mirna}')
 
@@ -440,7 +444,9 @@ def main():
             # Extract sequences for candidate hits (if any were found).
             if not cm_results:
                 print('# {} for {}'.format(exitstatus, mirna))
-                log.write(f'{mirna}\t{exitstatus}\n')
+                et = time()
+                elapsed_time = str(et - st)
+                log.write(f'{mirna}\t{elapsed_time}\t{exitstatus}\n')
                 continue
             elif max_hits:
                 if len(cm_results) > max_hits:
@@ -543,16 +549,20 @@ def main():
                     header = '|'.join(cmres)
                     of.write('>{0}\n{1}\n'.format(header, out_dict[hit]))
 
-                log.write(f'{mirna}\tSUCESS\n')
+                et = time()
+                elapsed_time = str(et - st)
+                log.write(f'{mirna}\t{elapsed_time}\tSUCESS\n')
             else:
+                et = time()
+                elapsed_time = str(et - st)
                 print(
                     '# None of the candidates for {} could be verified.'
                     .format(mirna)
                 )
                 if restricted:
-                    log.write(f'{mirna}\tNo re-BLAST after restricting to {max_hits} CMsearch hits\n')
+                    log.write(f'{mirna}\t{elapsed_time}\tNo re-BLAST after restricting to {max_hits} CMsearch hits\n')
                 else:
-                    log.write(f'{mirna}\tNo re-BLAST\n')
+                    log.write(f'{mirna}\t{elapsed_time}\tNo re-BLAST\n')
         print('\n### ncOrtho is finished!')
 
 
