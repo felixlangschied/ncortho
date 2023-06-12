@@ -72,6 +72,11 @@ def neighbor_search(leftgene, rightgene, core_dict, gene_position, chromdict, no
             return core_orthologs
         else:
             for index in range(1, next_orthos):
+                if position - index < 1:
+                    continue
+                if position + index > len(chromd):
+                    continue
+
                 if typ == 'left':
                     nextgeneinfo = chromd[position - index]
                 else:
@@ -114,7 +119,7 @@ def categorize_mirna_position(
     solved = False
     core_orthologs = []
     if no_synteny_possible(mirna, mirna_chrom, mirna_start, mirna_end, reference):
-        return solved
+        return solved, syntenytype
 
     # case 4): miRNA is located either between two genes or overlapping with (an
     # intron of) a gene, either on the same or the opposite strand

@@ -20,7 +20,9 @@ import subprocess as sp
 from Bio import AlignIO
 from Bio.Phylo.TreeConstruction import DistanceCalculator
 import os
-import sys
+import logging
+
+
 
 
 def calculate_distance_matrix(aln_path):
@@ -58,12 +60,14 @@ class BlastParser(object):
         self.msl = msl
 
     def evaluate_besthit(self,):
+        logger = logging.getLogger('ncortho')
+        logger.setLevel(level=logging.DEBUG)
         # with open(self.blastpath) as blastfile:
         #     blasthits = [line.strip().split() for line in blastfile]
         # If no BLAST hit was found, the search failed by default.
         outbool = False
         if not self.blasthits:
-            print('Rejecting: No reciprocal BLAST hit found')
+            logger.info('Rejecting: No reciprocal BLAST hit found')
             return False
         # Otherwise, check if the best hit and the reference miRNA overlap.
         else:
@@ -85,11 +89,11 @@ class BlastParser(object):
                 # Sequences must be on the same contig, otherwise overlap can be
                 # ruled out instantaneously
                 if not sseqid == self.chromosome:
-                    print(f'Rejecting: Contig/Chromosome does not match. Expected {self.chromosome} but found {sseqid}')
+                    logger.info(f'Rejecting: Contig/Chromosome does not match. Expected {self.chromosome} but found {sseqid}')
                 # Contigs match, so overlap is possible.
                 else:
-                    print(f'Start miRNA: {self.start} End miRNA: {self.end}')
-                    print(f'Start BLAST hit: {sstart} End BLAST hit: {send}')
+                    logger.info(f'Start miRNA: {self.start} End miRNA: {self.end}')
+                    logger.info(f'Start BLAST hit: {sstart} End BLAST hit: {send}')
                     # first within second
                     if (
                         (sstart <= self.start <= send)
@@ -104,10 +108,12 @@ class BlastParser(object):
                         return True
                     # No overlap
                     else:
-                        print('Rejecting: No overlap between miRNA and best BLAST hit')
+                        logger.info('Rejecting: No overlap between miRNA and best BLAST hit')
         return outbool
 
     def check_coortholog_ref(self, candidate_seq, out):
+        logger = logging.getLogger('ncortho')
+        logger.setLevel(level=logging.DEBUG)
         # 1) get query sequence
         # 2) get reference sequence
         # 3) get sequence of best blast hit
@@ -133,13 +139,13 @@ class BlastParser(object):
         distance_ref_hit = dm['best_hit', 'reference']
 
         if distance_ref_hit < distance_hit_query:
-            print(
+            logger.info(
                 "\t Distance query - BLAST hit: %6.4f, Distance blast hit - reference: %6.4f\tAccepting\n"
                 %(distance_hit_query, distance_ref_hit)
             )
             return True
         else:
-            print(
+            logger.info(
                 "\t Distance query - BLAST hit: %6.4f, Distance blast hit - reference: %6.4f\tRejecting\n"
                 %(distance_hit_query, distance_ref_hit)
             )
@@ -153,6 +159,8 @@ class ReBlastParser(object):
         self.best_candidate = list(reblast_dict.keys())[0]
 
     def verify_coorthologs(self, out):
+        logger = logging.getLogger('ncortho')
+        logger.setLevel(level=logging.DEBUG)
         out_dict = {}
         # get process id to ensure that the correct library is used when running ncOrtho in parallel
         pid = os.getpid()
@@ -172,7 +180,7 @@ class ReBlastParser(object):
                 distance_candidates = dm[self.best_candidate, candidate]
                 distance_best_ref = dm[self.best_candidate, 'reference']
                 if distance_candidates < distance_best_ref:
-                    print(
+                    logger.info(
                         f'co-ortholog detected: distance of best candidate to {candidate} {distance_candidates} '
                         f'compared to distance of best candidate to reference of {distance_best_ref}'
                     )

@@ -33,7 +33,7 @@ import sys
 import shutil
 
 try:
-    from createcm import CmConstructor
+    from createcm import create_cm, create_phmm
     from core_reblast import blastsearch
     from locate_position import categorize_mirna_position
     from synteny import analyze_synteny
@@ -102,6 +102,11 @@ def main():
     optional.add_argument(
         '--create_model', metavar='yes/no', type=str,
         help='set to "no" if you only want to create the alignment. (Default: yes)', nargs='?',
+        const='yes', default='yes'
+    )
+    optional.add_argument(
+        '--phmm', metavar='yes/no', type=str,
+        help='set to "yes" if you want to create a pHMM instead of a CM (Default: no)', nargs='?',
         const='yes', default='yes'
     )
     #
@@ -218,18 +223,22 @@ def main():
     for mirna in mirnas:
         mirid = mirna[0]
         sto_path = blastsearch(mirna, ref_paths['genome'], tmpout, cpu, dust, verbose)
-        if create_model == 'yes' and sto_path is not None:
+        if create_model == 'no' or sto_path is None:
+            continue
+        if args.phmm == 'no':
             print(f'# Starting to construct covariance model for {mirid}', flush=True)
             model_out = f'{output}/{mirid}.cm'
             if not os.path.isfile(model_out):
-                # Initiate covariance model construction and calibration.
-                cmc = CmConstructor(sto_path, output, mirid, cpu)
-                # Construct the model.
-                cmc.construct()
-                # Calibrate the model.
-                cmc.calibrate()
+                create_cm(sto_path, output, mirid, cpu)
             else:
                 print(f'Model of {mirid} already found at {output}. Nothing done..', flush=True)
+
+        elif args.phmm == 'yes':
+            print(f'# Starting to construct pHMM for {mirid}', flush=True)
+            create_phmm(sto_path, output, mirid, cpu)
+        else:
+            raise ValueError(f'Unknown value "{args.phmm}" for --phmm')
+
     print('\n### Construction of core set finished')
 
 
