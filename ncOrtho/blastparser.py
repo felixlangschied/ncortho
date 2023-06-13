@@ -54,7 +54,7 @@ class BlastParser(object):
         self.end = mirna.end
         self.chromosome = mirna.chromosome
         self.strand = mirna.strand
-        self.refseq = mirna.pre
+        self.refseq = mirna.seq
         del mirna
         self.blasthits = blasthits
         self.msl = msl
@@ -154,7 +154,7 @@ class BlastParser(object):
 
 class ReBlastParser(object):
     def __init__(self, mirna, reblast_dict):
-        self.refseq = mirna.pre
+        self.refseq = mirna.seq
         self.hits = reblast_dict
         self.best_candidate = list(reblast_dict.keys())[0]
 

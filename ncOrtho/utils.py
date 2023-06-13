@@ -1,5 +1,6 @@
 import glob
 import subprocess as sp
+import argparse
 
 
 def check_blastdb(db_path):
@@ -17,20 +18,23 @@ def make_blastndb(inpath, outpath):
     sp.call(db_command, shell=True)
 
 
-def find_refbit(outstr):
-    for line in outstr.split('\n'):
-        if line.startswith('  '):
-            highest_score = float(line.split()[3])
-            return highest_score
-    # if no results return topscore 0
-    print(
-        '# Warning: Self bit score not applicable, '
-        'setting threshold to 0'
-    )
-    highest_score = 0.0
-    return highest_score
-
-
 def vprint(s, verbose):
     if verbose:
         print(s, flush=True)
+
+
+def write_output(outlist, path):
+    with open(path, 'w') as of:
+        for line in outlist:
+            of.write(line)
+
+
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')

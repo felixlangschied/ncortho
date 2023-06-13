@@ -21,138 +21,19 @@ along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 import argparse
 import multiprocessing as mp
 import os
-import subprocess as sp
 import sys
 from time import time
-import tempfile
 from tqdm import tqdm
 import logging
 
 # Internal ncOrtho modules
-try:
-    from ncOrtho.blastparser import BlastParser
-    from ncOrtho.blastparser import ReBlastParser
-    from ncOrtho.genparser import GenomeParser
-    from ncOrtho.new_cmsearch import cmsearcher
-    from ncOrtho.utils import check_blastdb
-    from ncOrtho.utils import make_blastndb
-    from ncOrtho.utils import find_refbit
-except ModuleNotFoundError:
-    from blastparser import BlastParser
-    from blastparser import ReBlastParser
-    from genparser import GenomeParser
-    from new_cmsearch import cmsearcher
-    from utils import check_blastdb
-    from utils import make_blastndb
-    from utils import find_refbit
-
-###############################################################################
-def write_output(outlist, path):
-    with open(path, 'w') as of:
-        for line in outlist:
-            of.write(line)
-
-# Central class of microRNA objects
-class Mirna(object):
-    def __init__(self, name, chromosome, start, end, strand, pre, mature, bit):
-        # miRNA identifier
-        self.name = name
-        # chromosome that the miRNA is located on
-        if chromosome.startswith('chr'):
-            self.chromosome = chromosome.split('chr')[1]
-        else:
-            self.chromosome = chromosome
-        # start position of the pre-miRNA
-        self.start = int(start)
-        # end position of the pre-miRNA
-        self.end = int(end)
-        # sense (+) or anti-sense (-) strand
-        self.strand = strand
-        # nucleotide sequence of the pre-miRNA
-        self.pre = pre.replace('U', 'T')
-        # nucleotide sequence of the mature miRNA
-        self.mature = mature.replace('U', 'T')
-        # reference bit score that miRNA receives by its own
-        # covariance model
-        self.bit = bit
-
-
-def mirna_maker(mirpath, cmpath, output, msl):
-    """
-    Parses the miRNA data input file and returns a dictionary of Mirna objects.
-
-    Parameters
-    ----------
-    mirpath : STR
-        Path to file with microRNA data.
-    cmpath : STR
-        Path to covariance models.
-    output : STR
-        Path for writing temporary files.
-    msl : FLOAT
-        Length filter.
-
-    Returns
-    -------
-    mmdict : DICT
-        Dictionary with Mirna objects.
-
-    """
-    
-    mmdict = {} # will be the return object
-    
-    with open(mirpath) as mirna_file:
-        mirna_data = [
-            line.strip().split() for line in mirna_file
-            if not line.startswith('#')
-        ]
-
-    for mirna in tqdm(mirna_data, desc='Calculating reference bit scores', file=sys.stdout):
-        mirid = mirna[0]
-        seq = mirna[5]
-        query = '{0}/{1}.fa'.format(output, mirid)
-        model = '{0}/{1}.cm'.format(cmpath, mirid)
-        # Check if the covariance model even exists, otherwise skip to
-        # the next miRNA.
-        if not os.path.isfile(model):
-            print('WARNING: No covariance model found for {}'.format(mirid))
-            mmdict[mirna[0]] = ''
-            continue
-
-        with tempfile.NamedTemporaryFile(mode='w+') as fp:
-            fp.write('>{0}\n{1}'.format(mirid, seq))
-            # Obtain the reference bit score for each miRNA by applying it
-            # to its own covariance model.
-
-            # Create a temporary FASTA file with the miRNA sequence as
-            # query for external search tool cmsearch to calculate the
-            # reference bit score.
-            fp.seek(0)
-            cms_command = f'cmsearch -E 0.01 --noali {model} {fp.name}'
-            res = sp.run(cms_command, shell=True, capture_output=True)
-            if res.returncode == 0:
-                top_score = find_refbit(res.stdout.decode('utf-8'))
-                mirna.append(top_score)
-            else:
-                print(f'ERROR: {res.stderr.decode("utf-8")}')
-                sys.exit()
-
-        # Create output.
-        mmdict[mirna[0]] = Mirna(*mirna)
-
-    return mmdict
-
-
-# Allow boolean argument parsing
-def str2bool(v):
-    if isinstance(v, bool):
-        return v
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
-        return True
-    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
-        return False
-    else:
-        raise argparse.ArgumentTypeError('Boolean value expected.')
+from blastparser import BlastParser
+from blastparser import ReBlastParser
+from genparser import GenomeParser
+from cmsearch import model_search
+from utils import check_blastdb, make_blastndb, write_output, str2bool
+from reblast import perform_reblast
+from rna_object import rna_maker
 
 
 # Main function
@@ -376,10 +257,8 @@ def main():
     if not os.path.isdir(q_data):
         os.makedirs(q_data)
     qlink = f'{q_data}/{qname}.fa'
-    try:
+    if not os.path.islink(qlink):
         os.symlink(query, qlink)
-    except FileExistsError:
-        pass
 
     # check if reference BLASTdb was given as input
     if refblast:
@@ -416,7 +295,7 @@ def main():
     print('# Starting ncOrtho run for {}\n'.format(qname), flush=True)
 
     # Create miRNA objects from the list of input miRNAs.
-    mirna_dict = mirna_maker(mirnas, models, output, msl)
+    mirna_dict = rna_maker(mirnas, models, args.phmm, cpu)
 
     # setup logging
     shortlog = ['# miRNA\tSeconds\tStatus\n']
@@ -428,12 +307,11 @@ def main():
     fh = logging.FileHandler(logout)
     fh.setLevel(logging.DEBUG)
     logger.addHandler(fh)
+    sucess_count = 0
 
     print('\n# Ortholog search', flush=True)
-    pbar = tqdm(total=len(mirna_dict), file=sys.stdout)
     mirna_orthologs = []
-    for mirna in mirna_dict:
-        pbar.update()
+    for mirna in tqdm(mirna_dict, file=sys.stdout):
         st = time()
         restricted = False
         sys.stdout.flush()
@@ -455,8 +333,8 @@ def main():
             os.makedirs(outdir)
 
         # start cmsearch
-        cm_results, exitstatus = cmsearcher(
-            mirna_data, cm_cutoff, cpu, msl, models, qlink, qblast, outdir, cleanup, heuristic
+        cm_results, exitstatus = model_search(
+            mirna_data, cm_cutoff, cpu, msl, models, qlink, qblast, outdir, cleanup, heuristic, args.phmm
         )
 
         # Extract sequences for candidate hits (if any were found).
@@ -474,122 +352,64 @@ def main():
         # get sequences for each CM result
         gp = GenomeParser(qlink, cm_results.values())
         candidates = gp.extract_sequences()
-        nr_candidates = len(candidates)
-        if nr_candidates == 1:
-            logger.info(
-                'Covariance model search successful, found 1 '
-                'ortholog candidate.'
-            )
-        else:
-            logger.info(
-                'Covariance model search successful, found {} '
-                'ortholog candidates.'
-                .format(nr_candidates)
-            )
-        # longlog.append('# Evaluating candidates.')
+        logger.info('Covariance model search successful, found 1 ortholog candidate(s).')
 
         # Perform reverse BLAST test to verify candidates, stored in
-        # a list (accepted_hits).
         reblast_hits = {}
         for candidate in candidates:
             sequence = candidates[candidate]
             # print('# Starting reverse blast for {}'.format(candidate))
-            blast_command = (
-                'blastn -task blastn -db {0} -num_threads {1} -dust {2} -outfmt "6 qseqid sseqid pident '
-                'length mismatch gapopen qstart qend sstart send evalue bitscore sseq"'
-                    .format(refblast, cpu, dust)
+            reblasthit = perform_reblast(
+                sequence, refblast, cpu, outdir, candidate, mirna_data, dust, msl, cleanup, checkCoorthref
             )
-            blast_command = (
-                'blastn -task blastn -db {0} -num_threads {1} -dust {2} -outfmt "6 sseqid '
-                'sstart send sstrand bitscore"'
-                .format(refblast, cpu, dust)
-            )
-            blast_call = sp.Popen(
-                blast_command, shell=True, stdin=sp.PIPE,
-                stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
-            )
-            # run BLAST
-            res, err = blast_call.communicate(sequence)
-            if err:
-                raise sp.CalledProcessError(err)
-                # continue
-            if not cleanup:
-                blast_output = '{0}/reBLAST_{1}.out'.format(outdir, candidate)
-                with open(blast_output, 'w') as bh:
-                    for line in res:
-                        bh.write(line)
-            # parse BLASTn results
-            blast_output = [line.split() for line in res.split('\n')]
-            if not blast_output[0]:
-                logger.info('No re-BLAST hits')
-                continue
+            if reblasthit:
+                reblast_hits[candidate] = reblasthit
 
-            # BlastParser will read the temp_fasta file
-            bp = BlastParser(mirna_data, blast_output, msl)
-            # the parse_blast_output function will return True if the candidate is accepted
-            if bp.evaluate_besthit():
-                logger.info('Found best hit')
-                reblast_hits[candidate] = sequence
-            elif checkCoorthref:
-                logger.info('Best hit differs from reference sequence! Doing further checks\n')
-                # coorth_out = '{0}/{1}_coorth'.format(outdir, candidate)
-                if bp.check_coortholog_ref(sequence, outdir):
-                    reblast_hits[candidate] = sequence
-            else:
-                logger.info('Best hit does not overlap with miRNA location')
-
-        # Write output file if at least one candidate got accepted.
-        if reblast_hits:
-            nr_accepted = len(reblast_hits)
-            if nr_accepted == 1:
-                logger.info('# ncOrtho found 1 verified ortholog.')
-                out_dict = reblast_hits
-            else:
-                logger.info(
-                    '# ncOrtho found {} potential co-orthologs.'
-                    .format(nr_accepted)
-                )
-                logger.info('# Evaluating distance between candidates to verify co-orthologs')
-                rbp = ReBlastParser(mirna_data, reblast_hits)
-                out_dict = rbp.verify_coorthologs(outdir)
-                if len(out_dict) == 1:
-                    logger.info('ncOrtho found 1 verified ortholog')
-                else:
-                    logger.info(
-                        '# ncOrtho found {} verified co-orthologs.'
-                            .format(len(out_dict))
-                    )
-
-            for hit in out_dict:
-                cmres = list(cm_results[hit])
-                cmres.insert(0, qname)
-                cmres = [str(entry) for entry in cmres]
-                header = '|'.join(cmres)
-                mirna_orthologs.append('>{0}\n{1}\n'.format(header, out_dict[hit]))
-
+        # Write output file if no candidate got accepted.
+        if not reblast_hits:
             et = time()
             elapsed_time = str(et - st)
-            shortlog.append(f'{mirna}\t{elapsed_time}\tSUCESS\n')
-        else:
-            et = time()
-            elapsed_time = str(et - st)
-            logger.info(
-                '# None of the candidates for {} could be verified.'
-                .format(mirna)
-            )
+            logger.info(f'# None of the candidates for {mirna} could be verified.')
             if restricted:
                 shortlog.append(f'{mirna}\t{elapsed_time}\tNo re-BLAST after restricting to {max_hits} CMsearch hits\n')
             else:
                 shortlog.append(f'{mirna}\t{elapsed_time}\tNo re-BLAST\n')
-        pbar.clear()
-    pbar.close()
+
+        # Write output file if at least one candidate got accepted.
+        nr_accepted = len(reblast_hits)
+        if nr_accepted == 1:
+            logger.info('# ncOrtho found 1 verified ortholog.')
+            out_dict = reblast_hits
+        else:
+            logger.info(
+                '# ncOrtho found {} potential co-orthologs.'
+                .format(nr_accepted)
+            )
+            logger.info('# Evaluating distance between candidates to verify co-orthologs')
+            rbp = ReBlastParser(mirna_data, reblast_hits)
+            out_dict = rbp.verify_coorthologs(outdir)
+            if len(out_dict) == 1:
+                logger.info('ncOrtho found 1 verified ortholog')
+            else:
+                logger.info(f'# ncOrtho found {len(out_dict)} verified co-orthologs.')
+
+        for hit in out_dict:
+            cmres = list(cm_results[hit])
+            cmres.insert(0, qname)
+            cmres = [str(entry) for entry in cmres]
+            header = '|'.join(cmres)
+            mirna_orthologs.append('>{0}\n{1}\n'.format(header, out_dict[hit]))
+
+        et = time()
+        elapsed_time = str(round(et - st, 3))
+        shortlog.append(f'{mirna}\t{elapsed_time}\tSUCESS\n')
+        sucess_count += 1
 
     write_output(mirna_orthologs, f'{output}/{qname}_orthologs.fa')
-    write_output(shortlog, f'{output}/{qname}_overview.log')
+    write_output(shortlog, f'{output}/{qname}_summary.log')
     # logging.basicConfig(filename=f'{output}/{qname}_extended.log', level=logging.DEBUG)
 
-
-    print('\n### ncOrtho is finished!')
+    print(f'\n### ncOrtho found orthologs for {sucess_count} out of {len(mirna_dict)} ncRNAs')
 
 
 if __name__ == "__main__":
