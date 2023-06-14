@@ -18,7 +18,8 @@ def perform_reblast(sequence, refblast, cpu, outdir, candidate, mirna_data, dust
     # run BLAST
     res, err = blast_call.communicate(sequence)
     if err:
-        raise sp.CalledProcessError(err)
+        logger.warning(err)
+        return ''
         # continue
     if not cleanup:
         blast_output = f'{outdir}/reBLAST_{candidate}.out'

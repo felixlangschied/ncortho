@@ -18,7 +18,7 @@ def heuristic_search(blastdb, rna, query, heuristic, cpu, out):
         )
         res, err = blast_call.communicate(seq)
         if err:
-            raise sp.CalledProcessError(err)
+            raise sp.SubprocessError(err)
 
         result = list(filter(None, res.split('\n')))
         hit_list = [line.split() for line in result if line and float(line.split()[-1]) >= blast_len_cut]
@@ -121,7 +121,7 @@ def perform_model_search(models, rna, candidate_region_fasta, output, cm_cutoff,
         )
         res, err = call.communicate(rna.seq)
         if err:
-            raise sp.CalledProcessError(err)
+            raise sp.SubprocessError(err)
         results = parse_phmm(tblout)
         os.remove(tblout)
     else:
@@ -131,7 +131,7 @@ def perform_model_search(models, rna, candidate_region_fasta, output, cm_cutoff,
         )
         res, err = call.communicate(rna.seq)
         if err:
-            raise sp.CalledProcessError(err)
+            raise sp.SubprocessError(err)
         results = parse_cm(res)
 
     return results

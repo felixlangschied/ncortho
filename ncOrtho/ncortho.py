@@ -25,26 +25,28 @@ import sys
 from time import time
 from tqdm import tqdm
 import logging
+from pyfiglet import Figlet
+from importlib.metadata import version
 
 # Internal ncOrtho modules
-from blastparser import BlastParser
-from blastparser import ReBlastParser
-from genparser import GenomeParser
-from cmsearch import model_search
-from utils import check_blastdb, make_blastndb, write_output, str2bool
-from reblast import perform_reblast
-from rna_object import rna_maker
+try:
+    from blastparser import ReBlastParser
+    from genparser import GenomeParser
+    from cmsearch import model_search
+    from utils import check_blastdb, make_blastndb, write_output, str2bool
+    from reblast import perform_reblast
+    from rna_object import rna_maker
+except ModuleNotFoundError:
+    from ncOrtho.blastparser import ReBlastParser
+    from ncOrtho.genparser import GenomeParser
+    from ncOrtho.cmsearch import model_search
+    from ncOrtho.utils import check_blastdb, make_blastndb, write_output, str2bool
+    from ncOrtho.reblast import perform_reblast
+    from rna_object import rna_maker
 
 
 # Main function
 def main():
-    # Print header
-    print('\n'+'#'*57)
-    print('###'+' '*51+'###')
-    print('###   ncOrtho - ortholog search for non-coding RNAs   ###')
-    print('###'+' '*51+'###')
-    print('#'*57+'\n')
-
     ##########################################################################################
     # Command line arguments
     ##########################################################################################
@@ -177,7 +179,7 @@ def main():
         '--dust', metavar='yes/no', type=str,
         help='Use BLASTn dust filter during re-BLAST. Greatly decreases runtime if reference miRNA(s) '
              'are located in repeat regions. '
-             'However ncOrtho will also not identify orthologs for these miRNAs',
+             'However ncOrtho will also not identify orthologs for these miRNAs (Default: no)',
         nargs='?',
         const='no', default='no'
     )
@@ -190,6 +192,12 @@ def main():
             'hit is likely a co-ortholog of the reference miRNA relative to the search taxon. '
         )
     )
+
+    # print header
+    custom_fig = Figlet(font='stop')
+    print(custom_fig.renderText('ncOrtho')[:-3], flush=True)
+    v = version('ncOrtho')
+    print(f'Version: {v}\n', flush=True)
     ##########################################################################################
     # Parse arguments
     ##########################################################################################
@@ -240,7 +248,7 @@ def main():
         qname = '.'.join(query.split('/')[-1].split('.')[:-1])
     # make folder for query in output dir
     if not os.path.isdir(output):
-        os.makedirs(output)
+        os.mkdir(output)
     if not output.split('/')[-1] == qname:
         output = f'{output}/{qname}'
 
@@ -358,6 +366,8 @@ def main():
         reblast_hits = {}
         for candidate in candidates:
             sequence = candidates[candidate]
+            if list(sequence).count('N') >= 0.9 * len(sequence):
+                continue
             # print('# Starting reverse blast for {}'.format(candidate))
             reblasthit = perform_reblast(
                 sequence, refblast, cpu, outdir, candidate, mirna_data, dust, msl, cleanup, checkCoorthref
@@ -374,6 +384,7 @@ def main():
                 shortlog.append(f'{mirna}\t{elapsed_time}\tNo re-BLAST after restricting to {max_hits} CMsearch hits\n')
             else:
                 shortlog.append(f'{mirna}\t{elapsed_time}\tNo re-BLAST\n')
+            continue
 
         # Write output file if at least one candidate got accepted.
         nr_accepted = len(reblast_hits)

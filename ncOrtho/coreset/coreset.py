@@ -30,7 +30,8 @@ import argparse
 import multiprocessing as mp
 import os
 import sys
-import shutil
+from pyfiglet import Figlet
+from importlib.metadata import version
 
 try:
     from createcm import create_cm, create_phmm
@@ -48,12 +49,12 @@ except ModuleNotFoundError:
 
 ###############################################################################
 def main():
-    # Print header
-    print('\n' + '#' * 43, flush=True)
-    print('###' + ' ' * 37 + '###', flush=True)
-    print('###   ncOrtho - core set construction   ###', flush=True)
-    print('###' + ' ' * 37 + '###', flush=True)
-    print('#' * 43 + '\n', flush=True)
+    # # Print header
+    # print('\n' + '#' * 43, flush=True)
+    # print('###' + ' ' * 37 + '###', flush=True)
+    # print('###   ncOrtho - core set construction   ###', flush=True)
+    # print('###' + ' ' * 37 + '###', flush=True)
+    # print('#' * 43 + '\n', flush=True)
 
     # Parse command-line arguments
     # Define global variables
@@ -109,7 +110,16 @@ def main():
         help='set to "yes" if you want to create a pHMM instead of a CM (Default: no)', nargs='?',
         const='yes', default='yes'
     )
-    #
+    optional.add_argument(
+        '--rcoffee', metavar='yes/no', type=str,
+        help='set to "no" to use default "t_coffee" instead of "r_coffee" (Default: yes)', nargs='?',
+        const='yes', default='yes'
+    )
+    optional.add_argument(
+        '--redo', metavar='yes/no', type=str,
+        help='set to "no" to reuse models found at output destination (Default: yes)', nargs='?',
+        const='yes', default='yes'
+    )
     optional.add_argument(
         '--idtype', metavar='str', type=str,
         help='Choose the ID in the reference gff file that is '
@@ -129,6 +139,12 @@ def main():
         nargs='?', const='no', default='no'
     )
 
+
+    # print header
+    custom_fig = Figlet(font='stop')
+    print(custom_fig.renderText('ncOrtho')[:-3], flush=True)
+    v = version('ncOrtho')
+    print(f'Version: {v}\n', flush=True)
     ###############################################################################
 
     # Show help when no arguments are added.
@@ -174,7 +190,7 @@ def main():
     # create directory for intermediate files
     tmpout = f'{output}/tmp'
     if not os.path.isdir(tmpout):
-        os.makedirs(tmpout)
+        os.mkdir(tmpout)
 
     print('# Reading pairwise orthologs', flush=True)
     if args.idtype == 'CDS':
@@ -222,16 +238,16 @@ def main():
     print('\n### Starting Ortholog search')
     for mirna in mirnas:
         mirid = mirna[0]
-        sto_path = blastsearch(mirna, ref_paths['genome'], tmpout, cpu, dust, verbose)
+        sto_path = blastsearch(mirna, ref_paths['genome'], tmpout, cpu, dust, verbose, args.rcoffee)
         if create_model == 'no' or sto_path is None:
             continue
         if args.phmm == 'no':
             print(f'# Starting to construct covariance model for {mirid}', flush=True)
             model_out = f'{output}/{mirid}.cm'
-            if not os.path.isfile(model_out):
-                create_cm(sto_path, output, mirid, cpu)
-            else:
+            if args.redo == 'no' and not os.path.isfile(model_out):
                 print(f'Model of {mirid} already found at {output}. Nothing done..', flush=True)
+                continue
+            create_cm(sto_path, output, mirid, cpu)
 
         elif args.phmm == 'yes':
             print(f'# Starting to construct pHMM for {mirid}', flush=True)

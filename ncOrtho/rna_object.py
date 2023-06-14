@@ -38,7 +38,7 @@ def find_cm_refbit(mirid, seq, model, cpu):
         cms_command = f'cmsearch --cpu {cpu} -E 0.01 --noali {model} {fp.name}'
         res = sp.run(cms_command, shell=True, capture_output=True)
     if res.returncode != 0:
-        raise sp.CalledProcessError(res.stderr.decode("utf-8"))
+        raise sp.SubprocessError(res.stderr.decode("utf-8"))
 
     for line in res.stdout.decode('utf-8').split('\n'):
         # print(line)
@@ -89,7 +89,8 @@ def rna_maker(mirpath, modeldir, phmm, cpu):
         ]
 
     mmdict = {}  # will be the return object
-    for rna in tqdm(rna_data, desc='Calculating reference bit scores', file=sys.stdout):
+    print('# Calculating reference bit scores')
+    for rna in tqdm(rna_data, file=sys.stdout):
         rnaid = rna[0]
         seq = rna[5]
 

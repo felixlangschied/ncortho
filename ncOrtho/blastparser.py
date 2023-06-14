@@ -22,9 +22,6 @@ from Bio.Phylo.TreeConstruction import DistanceCalculator
 import os
 import logging
 
-
-
-
 def calculate_distance_matrix(aln_path):
     # align reBLAST hits
     aln_cmd = (

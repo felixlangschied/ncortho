@@ -11,16 +11,20 @@ def vprint(s, verbose):
         print(s, flush=True)
 
 
-def make_alignment(out, mirna, cpu, core):
+def make_alignment(out, mirna, cpu, core, rcoffee):
     alignment = '{}/{}.aln'.format(out, mirna)
     stockholm = '{}/{}.sto'.format(out, mirna)
 
     # Call T-Coffee for the sequence alignment.
     # print('Building T-Coffee alignment.')
-    tc_cmd_1 = (
-        f't_coffee -quiet -multi_core={cpu} -special_mode=rcoffee -in {core} '
-        f'-output=clustalw_aln -outfile={alignment}'
-    )
+    if rcoffee == 'yes':
+        tc_cmd_1 = (
+            f't_coffee -quiet -multi_core={cpu} -mode=rcoffee -in {core} -output=clustalw_aln -outfile={alignment}'
+        )
+    else:
+        tc_cmd_1 = (
+            f't_coffee -quiet -multi_core={cpu} -in {core} -output=clustalw_aln -outfile={alignment}'
+        )
     sp.call(tc_cmd_1, shell=True)
 
     # Extend the sequence-based alignment by structural information.
@@ -55,7 +59,7 @@ def maximum_blast_bitscore(mirna, seq, blastdb, c, dust):
 
 
 # Perform reciprocal BLAST search and construct Stockholm alignment
-def blastsearch(mirna, r_path, o_path, c, dust, v):
+def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
     """
 
     Parameters
@@ -87,7 +91,7 @@ def blastsearch(mirna, r_path, o_path, c, dust, v):
         print(f'Warning: No synteny regions found for {mirid}. Training with reference miRNA only.', flush=True)
         with open(synteny_regs, 'w') as fastah:
             fastah.write(f'>{mirid}\n{preseq}\n')
-        stock = make_alignment(miroutdir, mirid, c, synteny_regs)
+        stock = make_alignment(miroutdir, mirid, c, synteny_regs, coffee)
         return stock
 
     # check if blastdb of reference genome exists
@@ -161,5 +165,5 @@ def blastsearch(mirna, r_path, o_path, c, dust, v):
                 outfile.write(f'>{synteny_region}\n{sequence}\n')
         else:
             print(f'Warning: No core orthologs found for {mirid}. Training with reference miRNA only.', flush=True)
-    stock = make_alignment(miroutdir, mirid, c, corefile)
+    stock = make_alignment(miroutdir, mirid, c, corefile, coffee)
     return stock
