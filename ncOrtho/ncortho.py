@@ -42,7 +42,7 @@ except ModuleNotFoundError:
     from ncOrtho.cmsearch import model_search
     from ncOrtho.utils import check_blastdb, make_blastndb, write_output, str2bool
     from ncOrtho.reblast import perform_reblast
-    from rna_object import rna_maker
+    from ncOrtho.rna_object import rna_maker
 
 
 # Main function

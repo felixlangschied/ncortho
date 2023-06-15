@@ -1,6 +1,9 @@
-import subprocess as sp
-import logging
-from blastparser import BlastParser
+try:
+    import subprocess as sp
+    import logging
+    from blastparser import BlastParser
+except ModuleNotFoundError:
+    from ncOrtho.blastparser import BlastParser
 
 
 def perform_reblast(sequence, refblast, cpu, outdir, candidate, mirna_data, dust, msl, cleanup, checkCoorthref):

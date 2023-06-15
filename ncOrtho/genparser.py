@@ -15,11 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import pyfaidx
 
+
 class GenomeParser(object):
-    
     # genpath: path to the genome file to extract from
     # hitlist: list of hits to extract the sequence for
     def __init__(self, genpath, hitlist):
