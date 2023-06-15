@@ -40,10 +40,10 @@ try:
     from synteny import analyze_synteny
     import coreset_utils as cu
 except ModuleNotFoundError:
-    from ncOrtho.coreset.createcm import CmConstructor
+    from ncOrtho.coreset.createcm import create_cm, create_phmm
     from ncOrtho.coreset.core_reblast import blastsearch
-    from ncOrtho.coreset.synteny import analyze_synteny
     from ncOrtho.coreset.locate_position import categorize_mirna_position
+    from ncOrtho.coreset.synteny import analyze_synteny
     import ncOrtho.coreset.coreset_utils as cu
 
 
@@ -227,7 +227,7 @@ def main():
                 of.write(line)
 
     #################################################################################################
-    print('\n### Starting Ortholog search', flush=True)
+    print('\n### Collecting core orthologs and training models', flush=True)
     for mirna in mirnas:
         mirid = mirna[0]
         sto_path = blastsearch(mirna, ref_paths['genome'], tmpout, cpu, dust, verbose, args.rcoffee)
