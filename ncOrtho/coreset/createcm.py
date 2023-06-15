@@ -21,21 +21,21 @@ class CmConstructor(object):
         self.model = '{0}/{1}.cm'.format(outpath, name)
     
     def construct(self):
-        print('# Constructing covariance model for {}.'.format(self.name))
+        # print('# Constructing covariance model for {}.'.format(self.name), '')
         construct_command = (
-            'cmbuild -n {0} {1}/{0}.cm {2}'
+            'cmbuild -F -n {0} {1}/{0}.cm {2}'
             .format(self.name, self.outpath, self.alignment)
         )
-        sp.call(construct_command, shell=True)
-        print('# Finished covariance model construction.')
+        sp.run(construct_command, shell=True, capture_output=True)
+        # print('# Finished covariance model construction.')
     
     def calibrate(self):
-        print('# Calibrating covariance model for {}.'.format(self.name))
+        # print('# Calibrating covariance model for {}.'.format(self.name))
         calibrate_command = (
             'cmcalibrate --cpu {0} {1}'.format(self.cpu, self.model)
         )
-        sp.call(calibrate_command, shell=True)
-        print('# Finished covariance model calibration.')
+        sp.run(calibrate_command, shell=True)
+        # print('# Finished covariance model calibration.')
 
 
 def create_cm(alignment, outpath, name, cpu):

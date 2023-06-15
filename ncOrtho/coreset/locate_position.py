@@ -16,7 +16,7 @@ def no_synteny_possible(mirna, chrom, start, end, reference):
         print(
             f'WARNING: No protein-coding genes found on contig "{chrom}". '
             'Make sure that the contig identifiers of the miRNA input file '
-            'match the ones in the reference annotation file'
+            'match the ones in the reference annotation file', flush=True
         )
         return True
     # case 2): miRNA is located left of the first gene and hence has no left
@@ -25,7 +25,7 @@ def no_synteny_possible(mirna, chrom, start, end, reference):
     elif end < firstgene_start:
         print(
             f'There is no left neighbor of {mirna}, since it is located at the start of contig {chrom}\n'
-            f'{firstgene_info[0]} is the right neighbor of {mirna}'
+            f'{firstgene_info[0]} is the right neighbor of {mirna}', flush=True
         )
         return True
     # case 3): miRNA is located right to the last gene, so the last gene is the
@@ -33,7 +33,7 @@ def no_synteny_possible(mirna, chrom, start, end, reference):
     elif start > lastgene_end:
         print(
             f'There is no right neighbor of {mirna}, since it is located at the end of contig {chrom}\n'
-            f'{lastgene_info[0]} is the left neighbor of {mirna}')
+            f'{lastgene_info[0]} is the left neighbor of {mirna}', flush=True)
         return True
     else:
         return False

@@ -36,7 +36,8 @@ setup(
     install_requires=[
         'PyYAML',
         'biopython',
-        'pyfaidx'
+        'pyfaidx',
+        'pyfiglet'
     ],
     entry_points={
         'console_scripts': ["ncCreate = ncOrtho.coreset.coreset:main",

@@ -25,15 +25,20 @@ def make_alignment(out, mirna, cpu, core, rcoffee):
         tc_cmd_1 = (
             f't_coffee -quiet -multi_core={cpu} -in {core} -output=clustalw_aln -outfile={alignment}'
         )
-    sp.call(tc_cmd_1, shell=True)
+    sp.run(tc_cmd_1, shell=True, capture_output=True)
 
     # Extend the sequence-based alignment by structural information.
     # Create Stockholm alignment.
     # print('Adding secondary structure to Stockholm format.')
-    tc_cmd_2 = (
-        f't_coffee -other_pg seq_reformat -in {alignment} -action +add_alifold -output stockholm_aln -out {stockholm}'
-    )
-    sp.call(tc_cmd_2, shell=True)
+    if rcoffee == 'yes':
+        tc_cmd_2 = (
+            f't_coffee -other_pg seq_reformat -in {alignment} -action +add_alifold -output stockholm_aln -out {stockholm}'
+        )
+    else:
+        tc_cmd_2 = (
+            f't_coffee -other_pg seq_reformat -in {alignment} -output stockholm_aln -out {stockholm}'
+        )
+    sp.run(tc_cmd_2, shell=True, capture_output=True)
     return stockholm
 
 
@@ -49,12 +54,13 @@ def maximum_blast_bitscore(mirna, seq, blastdb, c, dust):
     )
     ref_results, err = ref_bit_cmd.communicate(seq)
     if not ref_results:
-        raise ValueError(f'WARNING: Reference sequence of {mirna} not found in reference Genome. '
-              'Consider turning the dust filter off')
+        print(f'WARNING: Reference sequence of {mirna} not found in reference Genome. Setting maximum bitscore to 0', flush=True)
+        return 0.0
     try:
         ref_bit_score = float(ref_results.split('\n')[0].split('\t')[0])
     except ValueError:  # BLASTn errors are in output not in error
-        raise ValueError(ref_results)
+        print(f'WARNING: Reference sequence of {mirna} not found in reference Genome. Setting maximum bitscore to 0', flush=True)
+        return 0.0
     return ref_bit_score
 
 
@@ -86,7 +92,7 @@ def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
     synteny_regs = f'{miroutdir}/synteny_regions_{mirid}.fa'  # this fasta file is created by the the main() script
     os.chdir(miroutdir)
 
-    print(f'# {mirid}')
+    print(f'# {mirid}', flush=True)
     if not os.path.isfile(synteny_regs):
         print(f'Warning: No synteny regions found for {mirid}. Training with reference miRNA only.', flush=True)
         with open(synteny_regs, 'w') as fastah:
