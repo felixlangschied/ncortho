@@ -71,6 +71,7 @@ def find_phmm_refbit(rnaid, seq, model, cpu):
     logger.info('Self bit score not applicable, setting threshold to 0')
     return 0.0
 
+
 def rna_maker(mirpath, modeldir, phmm, cpu):
     logger = logging.getLogger('ncortho')
     logger.setLevel(level=logging.DEBUG)

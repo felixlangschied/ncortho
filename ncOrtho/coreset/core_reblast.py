@@ -84,7 +84,7 @@ def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
 
     mirid, rawchrom, mstart, mend, mstrand, rawseq = mirna[:6]
     mchr = rawchrom.replace('chr', '')
-    preseq = rawseq.replace('U', 'T')
+    preseq = rawseq.replace('U', 'T').replace('-', '')
 
     miroutdir = f'{o_path}/{mirid}'
     if not os.path.isdir(miroutdir):
@@ -120,7 +120,7 @@ def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
     )
     ortholog_candidates, err = blastn.communicate(preseq)
     if err:
-        raise err
+        raise sp.SubprocessError(err)
 
     # Re-BLAST
     outputcol = {}

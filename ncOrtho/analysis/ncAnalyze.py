@@ -7,6 +7,8 @@ import shutil
 import inspect
 from collections import Counter
 import argparse
+from pyfiglet import Figlet
+from importlib.metadata import version
 
 """
 Species in spec_to_skip will not be part of multiple sequence alignments
@@ -72,13 +74,6 @@ def parse_matseq(path):
     return m2s
 
 def main():
-    # Print header
-    print('\n'+'#'*39)
-    print('###'+' '*33+'###')
-    print('###   Analysis of ncOrtho results   ###')
-    print('###'+' '*33+'###')
-    print('#'*39+'\n')
-    sys.stdout.flush()
 
     # Parse command-line arguments
     # Define global variables
@@ -128,8 +123,8 @@ def main():
     )
     optional.add_argument(
         '--iqtree', metavar='str', type=str, nargs='?',
-        const='iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/species_tree',
-        default='iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/species_tree',
+        const='',
+        default='',
         help=(
             'Call to iqtree. Do not change curly bracket notation '
             '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/{})'
@@ -147,6 +142,12 @@ def main():
         help='Path to tab separated file of reference miRNAs information, as used in ncCreate and ncSearch. '
              'Uses mature sequence column to identify seed conservation.'
     )
+
+    # print header
+    custom_fig = Figlet(font='stop')
+    print(custom_fig.renderText('ncOrtho')[:-3], flush=True)
+    v = version('ncOrtho')
+    print(f'Version: {v}\n', flush=True)
     ##########################################################################################
     # Parse arguments
     ##########################################################################################
@@ -170,7 +171,6 @@ def main():
 
     mirlist = arglistcheck(args.mirnas)
 
-    iqtree_cmd = args.iqtree
     auto_skip = args.auto_skip
 
     if args.ncrna_file:
@@ -265,6 +265,12 @@ def main():
     if not os.path.isdir(align_out):
         os.mkdir(align_out)
     for mirna in ortho_dict:
+        # tmplist = []
+        if len(ortho_dict[mirna]) < 2:  # need at least 2 sequences for alignment
+            with open(f'{align_out}/{mirna}.aln', 'w') as of:
+                for spec, seq in ortho_dict[mirna].items():
+                    of.write(f'>{spec}\n{seq}\n')
+            continue
         with tempfile.NamedTemporaryFile(mode='w+') as fp:
             for spec, seq in ortho_dict[mirna].items():
                 if spec_to_skip:
@@ -274,10 +280,14 @@ def main():
                     ):
                         continue
                 fp.write(f'>{spec}\n{seq}\n')
+                # tmplist.append(f'>{spec}\n{seq}\n')
             fp.seek(0)
             aln_cmd = f'muscle -align {fp.name} -output {align_out}/{mirna}.aln'
             res = sp.run(aln_cmd, shell=True, capture_output=True)
             if res.returncode != 0:
+                # with open(f'{outdir}/faulty_{mirna}.fa', 'w') as of:
+                    # for line in tmplist:
+                    #     of.write(line)
                 print(res.stderr.decode('utf8'))
                 sys.exit()
 
@@ -287,7 +297,11 @@ def main():
     tree_out = f'{outdir}/species_tree'
     if not os.path.isdir(tree_out):
         os.mkdir(tree_out)
-    tree_cmd = iqtree_cmd.format(superm_path, tree_out)
+
+    if not args.iqtree:
+        tree_cmd = f'iqtree -s {superm_path} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {tree_out}/species_tree'
+    else:
+        tree_cmd = args.iqtree
     res = sp.run(tree_cmd, shell=True, capture_output=True)
     print(res.stdout.decode('utf-8'))
     if res.returncode != 0:

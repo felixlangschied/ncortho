@@ -243,7 +243,7 @@ def pairwise_orthologs_from_cds(cd, refanno):
 def read_mirnas(path):
     with open(path) as mirfile:
         mirnas = [
-            line.split() for line in mirfile.readlines()
+            line.split('\t') for line in mirfile.readlines()
             if not line.startswith('#')
         ]
     # print('Done')

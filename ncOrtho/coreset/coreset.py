@@ -99,7 +99,7 @@ def main():
     optional.add_argument(
         '--phmm', metavar='yes/no', type=str,
         help='set to "yes" if you want to create a pHMM instead of a CM (Default: no)', nargs='?',
-        const='yes', default='yes'
+        const='no', default='no'
     )
     optional.add_argument(
         '--rcoffee', metavar='yes/no', type=str,

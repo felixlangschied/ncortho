@@ -137,6 +137,19 @@ def perform_model_search(models, rna, candidate_region_fasta, output, cm_cutoff,
     return results
 
 
+def parse_cmsearch(cm_results):
+    logger = logging.getLogger('ncortho')
+    logger.setLevel(level=logging.DEBUG)
+    return_data = []
+    for data in cm_results:
+        score = float(data[3])
+        chrom = data[5]
+        start, end = map(int, data[6:8])
+        strand = data[8]
+        return_data.append([chrom, start, end, strand, score])
+    return return_data
+
+
 def parse_cmsearch_for_heuristic(cm_results, extraregion=1000):
     logger = logging.getLogger('ncortho')
     logger.setLevel(level=logging.DEBUG)
@@ -153,7 +166,7 @@ def parse_cmsearch_for_heuristic(cm_results, extraregion=1000):
         if cm_strand == '-':
             # reverse hits should not be possible since blasthits were extracted
             # as reverse complement if they were on the minus strand
-            logger.info('Unexpected hit of CMsearch')
+            # logger.info('Unexpected hit of CMsearch')
             continue
         if hit_at_start == 'True':
             # print(f'# cmsearch hit for {rna_id} at the beginning of a chromosome in the query species')
@@ -171,7 +184,7 @@ def parse_cmsearch_for_heuristic(cm_results, extraregion=1000):
     return return_data
 
 
-def cmsearch_parser(cms, cmc, lc, rna):
+def remove_duplicates_apply_cutoffs(cms, cmc, lc, rna):
     """
     Parse the output of cmsearch while eliminating duplicates and filtering
     entries according to the defined cutoff.
@@ -194,6 +207,7 @@ def cmsearch_parser(cms, cmc, lc, rna):
     chromo_dict = {}
 
     for candidate_nr, hit in enumerate(cms, 1):
+        # print(hit)
         h_chrom, h_start, h_end, h_strand, h_score = hit
         # blastparser expects the start to be the smaller number, will extract reverse complement if on - strand
         if h_start > h_end:
@@ -294,11 +308,12 @@ def model_search(rna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup,
             os.remove(candidate_region_fasta)
     else:
         cm_results = perform_model_search(models, rna, query, out, cm_cutoff, cpu, phmm)
+        cm_results = parse_cmsearch(cm_results)
 
     if not cm_results:
         return False, 'No CMsearch results in candidate regions or query genome'
 
-    parsed_cm_results = cmsearch_parser(cm_results, cm_cutoff, msl, rna)
+    parsed_cm_results = remove_duplicates_apply_cutoffs(cm_results, cm_cutoff, msl, rna)
     if not parsed_cm_results:
         return False, 'No CMsearch results above threshold'
     else:

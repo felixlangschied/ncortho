@@ -292,7 +292,7 @@ def main():
         qblast = qlink
         # check if already exists
         if not check_blastdb(qlink):
-            print('# Creating query Database')
+            print('# Creating query Database', flush=True)
             make_blastndb(query, qlink)
 
     ###############################################################################################
@@ -360,7 +360,8 @@ def main():
         # get sequences for each CM result
         gp = GenomeParser(qlink, cm_results.values())
         candidates = gp.extract_sequences()
-        logger.info('Covariance model search successful, found 1 ortholog candidate(s).')
+        # print(candidates)
+        logger.info(f'Covariance model search successful, found {len(candidates)} ortholog candidate(s).')
 
         # Perform reverse BLAST test to verify candidates, stored in
         reblast_hits = {}
@@ -420,7 +421,7 @@ def main():
     write_output(shortlog, f'{output}/{qname}_summary.log')
     # logging.basicConfig(filename=f'{output}/{qname}_extended.log', level=logging.DEBUG)
 
-    print(f'\n### ncOrtho found orthologs for {sucess_count} out of {len(mirna_dict)} ncRNAs')
+    print(f'\n### ncOrtho found orthologs for {sucess_count} out of {len(mirna_dict)} ncRNAs', flush=True)
 
 
 if __name__ == "__main__":
