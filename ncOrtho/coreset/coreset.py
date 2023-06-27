@@ -32,16 +32,17 @@ import os
 import sys
 from pyfiglet import Figlet
 from importlib.metadata import version
+import shutil
 
 try:
     from createcm import create_cm, create_phmm
-    from core_reblast import blastsearch
+    from core_reblast import blastsearch, make_alignment
     from locate_position import categorize_mirna_position
     from synteny import analyze_synteny
     import coreset_utils as cu
 except ModuleNotFoundError:
     from ncOrtho.coreset.createcm import create_cm, create_phmm
-    from ncOrtho.coreset.core_reblast import blastsearch
+    from ncOrtho.coreset.core_reblast import blastsearch, make_alignment
     from ncOrtho.coreset.locate_position import categorize_mirna_position
     from ncOrtho.coreset.synteny import analyze_synteny
     import ncOrtho.coreset.coreset_utils as cu
@@ -225,14 +226,19 @@ def main():
         with open(f'{miroutdir}/synteny_regions_{mirid}.fa', 'w') as of:
             for line in fastalist:
                 of.write(line)
+    del syntenyregion_per_mirna  # free memory
 
     #################################################################################################
     print('\n### Collecting core orthologs and training models', flush=True)
     for mirna in mirnas:
         mirid = mirna[0]
-        sto_path = blastsearch(mirna, ref_paths['genome'], tmpout, cpu, dust, verbose, args.rcoffee)
-        if create_model == 'no' or sto_path is None:
+        miroutdir = f'{tmpout}/{mirid}'
+        corefile = blastsearch(mirna, ref_paths['genome'], tmpout, cpu, dust, verbose, args.rcoffee)
+        if create_model == 'no':
+            shutil.copy(corefile, output)
             continue
+
+        sto_path = make_alignment(miroutdir, mirid, cpu, corefile, args.rcoffee)
         if args.phmm == 'no':
             print(f'# Starting to construct covariance model for {mirid}', flush=True)
             model_out = f'{output}/{mirid}.cm'

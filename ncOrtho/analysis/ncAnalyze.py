@@ -126,8 +126,8 @@ def main():
         const='',
         default='',
         help=(
-            'Call to iqtree. Do not change curly bracket notation '
-            '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/{})'
+            'Call to iqtree. Do not change elements with curly bracket notation '
+            '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/species_tree)'
         )
     )
     optional.add_argument(
@@ -265,23 +265,25 @@ def main():
     if not os.path.isdir(align_out):
         os.mkdir(align_out)
     for mirna in ortho_dict:
-        # tmplist = []
-        if len(ortho_dict[mirna]) < 2:  # need at least 2 sequences for alignment
-            with open(f'{align_out}/{mirna}.aln', 'w') as of:
-                for spec, seq in ortho_dict[mirna].items():
-                    of.write(f'>{spec}\n{seq}\n')
-            continue
+        tmplist = []
+
         with tempfile.NamedTemporaryFile(mode='w+') as fp:
             for spec, seq in ortho_dict[mirna].items():
-                if spec_to_skip:
-                    if (
-                            spec in spec_to_skip
-                            and spec not in spec_include
-                    ):
-                        continue
+                if (
+                        spec in spec_to_skip
+                        or spec not in spec_include
+                ):
+                    continue
                 fp.write(f'>{spec}\n{seq}\n')
-                # tmplist.append(f'>{spec}\n{seq}\n')
+                tmplist.append(f'>{spec}\n{seq}\n')
             fp.seek(0)
+
+            if len(tmplist) < 2:  # need at least 2 sequences for alignment
+                with open(f'{align_out}/{mirna}.aln', 'w') as of:
+                    for line in tmplist:
+                        of.write(line)
+                continue
+
             aln_cmd = f'muscle -align {fp.name} -output {align_out}/{mirna}.aln'
             res = sp.run(aln_cmd, shell=True, capture_output=True)
             if res.returncode != 0:
@@ -302,6 +304,8 @@ def main():
         tree_cmd = f'iqtree -s {superm_path} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {tree_out}/species_tree'
     else:
         tree_cmd = args.iqtree
+        tree_cmd = tree_cmd.format(superm_path, tree_out)
+        print(tree_cmd)
     res = sp.run(tree_cmd, shell=True, capture_output=True)
     print(res.stdout.decode('utf-8'))
     if res.returncode != 0:

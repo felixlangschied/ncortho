@@ -95,10 +95,12 @@ def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
     print(f'# {mirid}', flush=True)
     if not os.path.isfile(synteny_regs):
         print(f'Warning: No synteny regions found for {mirid}. Training with reference miRNA only.', flush=True)
-        with open(synteny_regs, 'w') as fastah:
+        corefile = f'{miroutdir}/core_orthologs_{mirid}.fa'
+        with open(corefile, 'w') as fastah:
             fastah.write(f'>{mirid}\n{preseq}\n')
-        stock = make_alignment(miroutdir, mirid, c, synteny_regs, coffee)
-        return stock
+        return corefile
+        # stock = make_alignment(miroutdir, mirid, c, synteny_regs, coffee)
+        # return stock
 
     # check if blastdb of reference genome exists
     fname = '.'.join(r_path.split("/")[-1].split('.')[0:-1])
@@ -171,5 +173,5 @@ def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
                 outfile.write(f'>{synteny_region}\n{sequence}\n')
         else:
             print(f'Warning: No core orthologs found for {mirid}. Training with reference miRNA only.', flush=True)
-    stock = make_alignment(miroutdir, mirid, c, corefile, coffee)
-    return stock
+
+    return corefile
