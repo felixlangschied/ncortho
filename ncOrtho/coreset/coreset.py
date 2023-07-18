@@ -134,7 +134,7 @@ def main():
     )
     optional.add_argument(
         '--search', metavar='str', type=str,
-        help='Sequence similarity search program. BLASTn or MMseq2 (Default: BLASTn)',
+        help='Sequence similarity search program. BLASTn or MMseq2 (Default: BLASTn, MMseq2 is currently not recommended)',
         nargs='?', const='BLASTn', default='BLASTn'
     )
     optional.add_argument(

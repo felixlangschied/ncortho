@@ -14,9 +14,9 @@ which also model conservation of the miRNA's secondary structure.
 ## How to cite
 
 Langschied F, Leisegang MS, Brandes RP, Ebersberger I. 
-ncOrtho: efficient and reliable identification of miRNA orthologs. 
+[ncOrtho: efficient and reliable identification of miRNA orthologs](https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkad467/7187706). 
 Nucleic Acids Res. 2023 Jun 1:gkad467. 
-doi: [10.1093/nar/gkad467](10.1093/nar/gkad467). 
+doi: 10.1093/nar/gkad467. 
 Epub ahead of print. PMID: 37260093.
 
 ## Getting Started
