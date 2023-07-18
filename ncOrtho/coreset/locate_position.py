@@ -68,6 +68,7 @@ def neighbor_search(leftgene, rightgene, core_dict, gene_position, chromdict, no
     def find_ortho(genename, position, chromd, orthologs, next_orthos, typ, v):
         if genename in orthologs:
             core_orthologs = orthologs[genename]
+
             vprint(f'{" ".join(core_orthologs)} identified as ortholog(s) to {genename} in {core_taxon}', v)
             return core_orthologs
         else:
@@ -144,7 +145,7 @@ def categorize_mirna_position(
 
         # case 4.3): miRNA between genes
         else:
-            if position == len(reference[mirna_chrom]):
+            if position == len(reference[mirna_chrom]):  # reached end of contig
                 continue
             rightneighborinfo = reference[mirna_chrom][position + 1]
             rightneighbor = rightneighborinfo[0]

@@ -41,12 +41,12 @@ def synteny_check(left: list, right: list, orthodict: dict, mgi: int, v):
     """
     seqcol = []
     for left_ortho in left:
-        if left_ortho not in orthodict:
-            continue
+        # if left_ortho not in orthodict:
+        #     continue
         left_chromosome, left_position = orthodict[left_ortho]
         for right_ortho in right:
-            if right_ortho not in orthodict:
-                continue
+            # if right_ortho not in orthodict:
+            #     continue
             right_chromosome, right_position = orthodict[right_ortho]
             distance = abs(left_position - right_position)
             if left_chromosome == right_chromosome and distance <= mgi:
@@ -99,7 +99,7 @@ def analyze_synteny(core_d, mirna_pos, out, idtype, mgi, v):
             core_ortholog_collection = core_ortholog_collection_all_taxa[taxon]
 
             leftorthos, rightorthos = core_ortholog_collection
-            #print(style)
+            # print(leftorthos, rightorthos)
             if leftorthos == rightorthos:  # for genes inside a gene for which an ortholog was found
                 #if style in ['inside', 'opposite']:
                 for ortholog in leftorthos:
@@ -119,6 +119,7 @@ def analyze_synteny(core_d, mirna_pos, out, idtype, mgi, v):
             else:
                 leftorthos, rightorthos = core_ortholog_collection
                 synregs = synteny_check(leftorthos, rightorthos, core_anno_dict, mgi, v)
+                # print(synregs)
                 if not synregs:
                     continue
                 for count, syntenyregion in enumerate(synregs):

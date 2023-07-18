@@ -1,6 +1,9 @@
 import subprocess as sp
 import os
 import shutil
+from time import time
+from datetime import timedelta
+from tqdm import tqdm
 
 from ncOrtho.utils import check_blastdb
 from ncOrtho.utils import make_blastndb
@@ -9,37 +12,6 @@ from ncOrtho.utils import make_blastndb
 def vprint(s, verbose):
     if verbose:
         print(s, flush=True)
-
-
-def make_alignment(out, mirna, cpu, core, rcoffee):
-    alignment = '{}/{}.aln'.format(out, mirna)
-    stockholm = '{}/{}.sto'.format(out, mirna)
-
-    # Call T-Coffee for the sequence alignment.
-    # print('Building T-Coffee alignment.')
-    if rcoffee == 'yes':
-        tc_cmd_1 = (
-            f't_coffee -quiet -multi_core={cpu} -mode=rcoffee -in {core} -output=clustalw_aln -outfile={alignment}'
-        )
-    else:
-        tc_cmd_1 = (
-            f't_coffee -quiet -multi_core={cpu} -in {core} -output=clustalw_aln -outfile={alignment}'
-        )
-    sp.run(tc_cmd_1, shell=True, capture_output=True)
-
-    # Extend the sequence-based alignment by structural information.
-    # Create Stockholm alignment.
-    # print('Adding secondary structure to Stockholm format.')
-    if rcoffee == 'yes':
-        tc_cmd_2 = (
-            f't_coffee -other_pg seq_reformat -in {alignment} -action +add_alifold -output stockholm_aln -out {stockholm}'
-        )
-    else:
-        tc_cmd_2 = (
-            f't_coffee -other_pg seq_reformat -in {alignment} -output stockholm_aln -out {stockholm}'
-        )
-    sp.run(tc_cmd_2, shell=True, capture_output=True)
-    return stockholm
 
 
 def maximum_blast_bitscore(mirna, seq, blastdb, c, dust):
@@ -65,7 +37,7 @@ def maximum_blast_bitscore(mirna, seq, blastdb, c, dust):
 
 
 # Perform reciprocal BLAST search and construct Stockholm alignment
-def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
+def blastsearch(mirna, refdb, r_path, o_path, c, dust, reblastmode, v):
     """
 
     Parameters
@@ -97,20 +69,31 @@ def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
         print(f'Warning: No synteny regions found for {mirid}. Training with reference miRNA only.', flush=True)
         corefile = f'{miroutdir}/core_orthologs_{mirid}.fa'
         with open(corefile, 'w') as fastah:
-            fastah.write(f'>{mirid}\n{preseq}\n')
+            fastah.write(f'>reference\n{preseq}\n')
         return corefile
         # stock = make_alignment(miroutdir, mirid, c, synteny_regs, coffee)
         # return stock
 
     # check if blastdb of reference genome exists
-    fname = '.'.join(r_path.split("/")[-1].split('.')[0:-1])
-    ref_blastdb = f'{o_path}/refBLASTdb/{fname}'
-    if not check_blastdb(ref_blastdb):
-        make_blastndb(r_path, ref_blastdb)
+    if refdb:
+        if check_blastdb(refdb):
+            ref_blastdb = refdb
+        else:
+            raise ValueError(f"Cannot find reference BLAST databse at: {refdb}")
+    else:
+        fname = '.'.join(r_path.split("/")[-1].split('.')[0:-1])
+        ref_blastdb = f'{o_path}/reference_database/{fname}'
+        if not check_blastdb(ref_blastdb):
+            make_blastndb(r_path, ref_blastdb)
 
+    st = time()
     max_bitscore = maximum_blast_bitscore(mirid, preseq, ref_blastdb, c, dust)
+    et = time()
+    td = timedelta(seconds=et - st)
+    print('Time to find maximum bitscore in reference:', td)
 
     # Find pre-miRNA candidates in syntenic region'
+    st = time()
     if not check_blastdb(synteny_regs):
         make_blastndb(synteny_regs, synteny_regs)
     blastn_cmd = (
@@ -123,24 +106,42 @@ def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
     ortholog_candidates, err = blastn.communicate(preseq)
     if err:
         raise sp.SubprocessError(err)
+    et = time()
+    td = timedelta(seconds=et - st)
+    print('Time to find ortholog candidates:', td)
 
     # Re-BLAST
     outputcol = {}
     seq_check = set()
     ortholog_candidates_list = ortholog_candidates.split('\n')
-    vprint(f'Number of ortholog candidates: {len(ortholog_candidates_list)}', v)
-    for hit in ortholog_candidates_list:
+
+    # vprint(f'Number of ortholog candidates: {len(ortholog_candidates_list)}', v)
+    for hit in tqdm(ortholog_candidates_list):
         if not hit:
             continue
         core_region, eval, bitscore, sseq = hit.strip().split()
+        if core_region in seq_check:
+            continue
+
         if float(bitscore) <= max_bitscore * 0.5:
             continue
 
+        vprint(f'{core_region}, length: {len(sseq)} nt', v)
+
         degap_seq = sseq.replace('-', '')  # Eliminate gaps in BLAST output
-        reblastn_cmd = (
-            f'blastn -num_threads {c} -task blastn -dust {dust} -db {ref_blastdb} -outfmt \"6'
-            ' sseqid sstart send\"'
-        )
+
+        if reblastmode == 'blastn':
+            # sensitive mode for miRNAs
+            reblastn_cmd = (
+                f'blastn -num_threads {c} -task blastn -dust {dust} -db {ref_blastdb} -outfmt \"6'
+                ' sseqid sstart send\"'
+            )
+        else:
+            # efficient mode for lincRNAs
+            reblastn_cmd = (
+                f'blastn -num_threads {c} -task megablast -dust {dust} -db {ref_blastdb} -outfmt \"6'
+                ' sseqid sstart send\"'
+            )
         reblastn = sp.Popen(
             reblastn_cmd, shell=True, stdin=sp.PIPE,
             stdout=sp.PIPE, stderr=sp.STDOUT, encoding='utf8'
@@ -149,17 +150,18 @@ def blastsearch(mirna, r_path, o_path, c, dust, v, coffee):
         for reblast_res in reresults.split('\n'):
             if not reblast_res:
                 continue
+            # print(reblast_res)
             refchrom, refstart, refend = reblast_res.split()
 
             if refchrom != mchr:
-                vprint('Hit on chromosome {}, expected {}'.format(refchrom, mchr), v)
+                # vprint('Hit on chromosome {}, expected {}'.format(refchrom, mchr), v)
                 continue
             if (refstart <= mstart <= refend) or (refstart <= mend <= refend):  # first within second
                 vprint('Reciprocity fulfilled.', v)
             elif (mstart <= refstart <= mend) or (mstart <= refend <= mend):  # second within first
                 vprint('Reciprocity fulfilled.', v)
             else:
-                vprint('Reciprocity unfulfilled.', v)
+                # vprint('Reciprocity unfulfilled.', v)
                 continue
             if core_region not in seq_check:  # only train with best hit per syntenic region
                 outputcol[core_region] = degap_seq

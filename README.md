@@ -11,6 +11,14 @@ which also model conservation of the miRNA's secondary structure.
 
 ![workflow](https://github.com/BIONF/ncortho/blob/master/ncOrtho/docs/figure1_ncortho_worklfow.png)
 
+## How to cite
+
+Langschied F, Leisegang MS, Brandes RP, Ebersberger I. 
+ncOrtho: efficient and reliable identification of miRNA orthologs. 
+Nucleic Acids Res. 2023 Jun 1:gkad467. 
+doi: [10.1093/nar/gkad467](10.1093/nar/gkad467). 
+Epub ahead of print. PMID: 37260093.
+
 ## Getting Started
 NcOrtho depends on multiple third party applications, some of which are Linux specific.
 All dependencies can be installed with [Anaconda](https://www.anaconda.com/).

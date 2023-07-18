@@ -1,6 +1,7 @@
 import sys
 import re
 import yaml
+import subprocess as sp
 
 
 def vprint(s, verbose):
@@ -259,6 +260,35 @@ def mirna_position(mirlist):
     return mirid, chromo, int(start), int(end), strand
 
 
+def make_alignment(out, mirna, cpu, core, rcoffee):
+    alignment = '{}/{}.aln'.format(out, mirna)
+    stockholm = '{}/{}.sto'.format(out, mirna)
+
+    # Call T-Coffee for the sequence alignment.
+    # print('Building T-Coffee alignment.')
+    if rcoffee == 'yes':
+        tc_cmd_1 = (
+            f't_coffee -quiet -multi_core={cpu} -mode=rcoffee -in {core} -output=clustalw_aln -outfile={alignment}'
+        )
+    else:
+        tc_cmd_1 = (
+            f't_coffee -quiet -multi_core={cpu} -in {core} -output=clustalw_aln -outfile={alignment}'
+        )
+    sp.run(tc_cmd_1, shell=True, capture_output=True)
+
+    # Extend the sequence-based alignment by structural information.
+    # Create Stockholm alignment.
+    # print('Adding secondary structure to Stockholm format.')
+    if rcoffee == 'yes':
+        tc_cmd_2 = (
+            f't_coffee -other_pg seq_reformat -in {alignment} -action +add_alifold -output stockholm_aln -out {stockholm}'
+        )
+    else:
+        tc_cmd_2 = (
+            f't_coffee -other_pg seq_reformat -in {alignment} -output stockholm_aln -out {stockholm}'
+        )
+    sp.run(tc_cmd_2, shell=True, capture_output=True)
+    return stockholm
 
 
 
