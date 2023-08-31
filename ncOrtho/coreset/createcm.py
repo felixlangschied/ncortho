@@ -26,7 +26,7 @@ class CmConstructor(object):
             'cmbuild -F -n {0} {1}/{0}.cm {2}'
             .format(self.name, self.outpath, self.alignment)
         )
-        sp.run(construct_command, shell=True, capture_output=True)
+        sp.run(construct_command, shell=True, capture_output=True, check=True)
         # print('# Finished covariance model construction.')
     
     def calibrate(self):
@@ -34,7 +34,7 @@ class CmConstructor(object):
         calibrate_command = (
             'cmcalibrate --cpu {0} {1}'.format(self.cpu, self.model)
         )
-        sp.run(calibrate_command, shell=True)
+        sp.run(calibrate_command, shell=True, check=True)
         # print('# Finished covariance model calibration.')
 
 

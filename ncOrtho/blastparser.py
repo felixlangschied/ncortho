@@ -28,7 +28,7 @@ def calculate_distance_matrix(aln_path):
         't_coffee {0} -no_warning -quiet -type=dna '
         ' -output=fasta_aln -outfile={0}'.format(aln_path)
     )
-    sp.run(aln_cmd, shell=True)
+    sp.run(aln_cmd, shell=True, check=True)
     aln = AlignIO.read(open(aln_path), 'fasta')
     calculator = DistanceCalculator('identity')
     dm = calculator.get_distance(aln)

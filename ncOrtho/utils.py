@@ -15,7 +15,7 @@ def check_blastdb(db_path):
 
 def make_blastndb(inpath, outpath):
     db_command = 'makeblastdb -in {} -out {} -dbtype nucl'.format(inpath, outpath)
-    sp.run(db_command, shell=True, capture_output=True)
+    sp.run(db_command, shell=True, capture_output=True, check=True)
 
 
 def vprint(s, verbose):

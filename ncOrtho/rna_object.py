@@ -36,7 +36,7 @@ def find_cm_refbit(mirid, seq, model, cpu):
         fp.write('>{0}\n{1}'.format(mirid, seq))
         fp.seek(0)
         cms_command = f'cmsearch --cpu {cpu} -E 0.01 --noali {model} {fp.name}'
-        res = sp.run(cms_command, shell=True, capture_output=True)
+        res = sp.run(cms_command, shell=True, capture_output=True, check=True)
     if res.returncode != 0:
         raise sp.SubprocessError(res.stderr.decode("utf-8"))
 

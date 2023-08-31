@@ -274,7 +274,7 @@ def make_alignment(out, mirna, cpu, core, rcoffee):
         tc_cmd_1 = (
             f't_coffee -quiet -multi_core={cpu} -in {core} -output=clustalw_aln -outfile={alignment}'
         )
-    sp.run(tc_cmd_1, shell=True, capture_output=True)
+    sp.run(tc_cmd_1, shell=True, capture_output=True, check=True)
 
     # Extend the sequence-based alignment by structural information.
     # Create Stockholm alignment.
@@ -287,7 +287,7 @@ def make_alignment(out, mirna, cpu, core, rcoffee):
         tc_cmd_2 = (
             f't_coffee -other_pg seq_reformat -in {alignment} -output stockholm_aln -out {stockholm}'
         )
-    sp.run(tc_cmd_2, shell=True, capture_output=True)
+    sp.run(tc_cmd_2, shell=True, capture_output=True, check=True)
     return stockholm
 
 

@@ -24,7 +24,7 @@ with open("README.md", "r") as fh:
 setup(
     name="ncOrtho",
     version="0.4.4",
-    python_requires='>=3.7.0',
+    python_requires='>=3.6.0',
     description=" Targeted ortholog search for miRNAs ",
     long_description=long_description,
     long_description_content_type="text/markdown",
