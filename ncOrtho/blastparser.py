@@ -24,18 +24,20 @@ import logging
 
 def calculate_distance_matrix(aln_path):
     # align reBLAST hits
-    aln_cmd = (
-        't_coffee {0} -no_warning -quiet -type=dna '
-        ' -output=fasta_aln -outfile={0}'.format(aln_path)
-    )
-    sp.run(aln_cmd, shell=True, check=True)
+    aln_cmd = f'muscle -align {aln_path} -output {aln_path} -threads 1'
+    # aln_cmd = (
+    #     't_coffee {0} -no_warning -quiet -type=dna '
+    #     ' -output=fasta_aln -outfile={0}'.format(aln_path)
+    # )
+    
+    res = sp.run(aln_cmd, shell=True, check=True, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
     aln = AlignIO.read(open(aln_path), 'fasta')
     calculator = DistanceCalculator('identity')
     dm = calculator.get_distance(aln)
     # delete temporary files
     os.remove(aln_path)
-    curr_path = os.getcwd()
-    os.remove('{}/{}.dnd'.format(curr_path, aln_path.split('/')[-1].split('.fa')[0]))
+    #curr_path = os.getcwd()
+    #os.remove('{}/{}.dnd'.format(curr_path, aln_path.split('/')[-1].split('.fa')[0]))
     return dm
 
 

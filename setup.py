@@ -23,8 +23,8 @@ with open("README.md", "r") as fh:
 
 setup(
     name="ncOrtho",
-    version="0.4.4",
-    python_requires='>=3.6.0',
+    version="0.4.6",
+    python_requires='>=3.9.0',
     description=" Targeted ortholog search for miRNAs ",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -38,7 +38,7 @@ setup(
         'biopython',
         'pyfaidx',
         'pyfiglet',
-        'tqdm'
+        'tqdm',
     ],
     entry_points={
         'console_scripts': ["ncCreate = ncOrtho.coreset.coreset:main",

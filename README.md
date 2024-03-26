@@ -24,13 +24,13 @@ NcOrtho depends on multiple third party applications, some of which are Linux sp
 All dependencies can be installed with [Anaconda](https://www.anaconda.com/).
 It is recommended to create a new Anaconda environment for this. For example:
 ```
-conda create --name ncOrtho python=3.8
+conda create --name ncOrtho python=3.11
 conda activate ncOrtho
 ```
 
 ### Prerequisites
 * **Operating System:** Linux (tested on: Ubuntu 20.04)
-* **Python:** version 3 or higher (tested with v3.8)
+* **Python:** version 3.7 or higher (tested with v3.11)
 
 Tool | Tested version | Anaconda installation
 ------------ | ------------- | -------------

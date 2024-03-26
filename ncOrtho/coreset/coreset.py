@@ -74,11 +74,11 @@ def main():
         help='Path for the output folder'
     )
     # OPTIONAL VARIABLES
-    # cpu, use maximum number of available cpus if not specified otherwise
+    # cpu
     optional.add_argument(
         '--threads', metavar='int', type=int,
-        help='Number of CPU cores to use (Default: All available)', nargs='?',
-        const=mp.cpu_count(), default=mp.cpu_count()
+        help='Number of CPU cores to use (Default: 4)', nargs='?',
+        const=4, default=4
     )
     # Maximum gene insertions
     optional.add_argument(
