@@ -66,7 +66,7 @@ def parse_matseq(path):
             if line.startswith('#'):
                 continue
             mature = line.strip().split('\t')[-1].replace('U', 'T')
-            mirid = line.strip().split('\t')[1].split('_')[0]
+            mirid = line.strip().split('\t')[0].split('_')[0]
             if len(mature) < 7:
                 raise ValueError('No mature sequence found in "ncrna_file"')
             seed = mature[1:8]
@@ -199,12 +199,15 @@ def main():
             taxid, name = line.strip().split('\t')
             name_2_taxid[name] = taxid
 
-    ortho_dict = {}  # ortho_dict = {mirna: {species: seq}}
+    ortho_dict = {}  # ortho_dict = {group: {mirna: {species: seq}}}
     # read all results into one dictionary and write phyloprofile input
     pp_in = f'{outdir}/PhyloProfile.long'
     spec_list = []
     with open(pp_in, 'w') as pp:
-        pp.write('geneID\tncbiID\torthoID\n')
+        if mirid2seed:
+            pp.write('geneID\tncbiID\torthoID\tseed_consvered\n')
+        else:
+            pp.write('geneID\tncbiID\torthoID\n')
         for file in ortholog_files:
             with open(file, 'r') as fh:
                 for line in fh:
@@ -242,8 +245,8 @@ def main():
         del ortho_dict
         ortho_dict = tmpdict
 
-    # count species and skip species with few orthologs before aligning
     if auto_skip:
+        # count species and skip species with few orthologs before aligning
         spec_counter = Counter(spec_list)
         max_spec_count = spec_counter.most_common(1)[0][1]
         count_cutoff = max_spec_count * auto_skip
@@ -254,10 +257,15 @@ def main():
         print('# Skipping these species:')
         for spsk in spec_to_skip:
             print(spsk)
-
+    
     # if no species list is given to include, all species are part of specinclude
     if not spec_include:
-        spec_include = list(ortho_dict.keys())
+        spec_include = set()
+        for group, spec2seq in ortho_dict.items():
+            for spec in spec2seq.keys():
+                spec_include.add(spec)
+
+
 
     # make alignments
     print('# Starting alignments')
@@ -266,9 +274,9 @@ def main():
         os.mkdir(align_out)
     for mirna in ortho_dict:
         tmplist = []
-
         with tempfile.NamedTemporaryFile(mode='w+') as fp:
             for spec, seq in ortho_dict[mirna].items():
+
                 if (
                         spec in spec_to_skip
                         or spec not in spec_include
