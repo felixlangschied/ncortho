@@ -38,7 +38,7 @@ setup(
         'biopython',
         'pyfaidx',
         'pyfiglet',
-        'tqdm
+        'tqdm'
     ],
     entry_points={
         'console_scripts': ["ncCreate = ncOrtho.coreset.coreset:main",
