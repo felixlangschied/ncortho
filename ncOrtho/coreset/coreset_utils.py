@@ -1,264 +1,391 @@
-import sys
+"""
+ncOrtho - Targeted ortholog search for miRNAs
+Copyright (C) 2021 Felix Langschied
+
+ncOrtho is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ncOrtho is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+# Utility functions for the coreset pipeline:
+#   - Annotation parsing (GTF, GFF3, TSV)
+#   - YAML parameter loading
+#   - Pairwise-ortholog I/O
+#   - miRNA data I/O
+
+import logging
+import os
 import re
+import sys
+from typing import Any, Dict, List, Optional, Set, Tuple
+
 import yaml
 
 
-def vprint(s, verbose):
-    if verbose:
-        print(s, flush=True)
-
-# Parse an Ensembl GTF file to store the coordinates for each protein-coding gene in a
-# dictionary
-def gtf_parser(gtf):
-    species_name = gtf.split('/')[-1].split('.')[0]
-    chr_dict = {}
-    chromo = ''
-
-    # with open(inpath) as infile, open(outpath, 'wb') as outfile:
-    with open(gtf) as infile:
-        for line in infile:
-            if (
-                    not line.startswith('#')
-                    and line.split()[2] == 'gene'
-                    and line.split('gene_biotype')[1].split('\"')[1]
-                    == 'protein_coding'
-            ):
-                linedata = line.strip().split('\t')
-                contig = linedata[0]
-                geneid = linedata[-1].split('\"')[1]
-                start = int(linedata[3])
-                end = int(linedata[4])
-                strand = linedata[6]
-                if contig != chromo:
-                    i = 1
-                    chromo = contig
-                chr_dict[geneid] = (contig, i)
-                try:
-                    chr_dict[contig][i] = (geneid, start, end, strand)
-                except:
-                    chr_dict[contig] = {i: (geneid, start, end, strand)}
-                i += 1
-    return chr_dict
+logger = logging.getLogger("ncortho")
 
 
-def gff_parser(gff, id_type):
-    """
+# ---------------------------------------------------------------------------
+# Annotation parsers
+# ---------------------------------------------------------------------------
+# All three parsers return a shared "chr_dict" structure:
+#
+#   chr_dict[gene_id]  = (contig, position_index)
+#   chr_dict[contig]   = {position_index: (gene_id, start, end, strand)}
+#
+# where *position_index* is the 1-based ordinal of the gene on that contig
+# (i.e. the first protein-coding gene on contig "chr1" has index 1, the
+# second has index 2, etc.).
 
-    Parameters
-    ----------
-    gff :   Path to a RefSeq gff3 file
-    id  :   type of identifier in the gff3 file that is to be compared against the IDs in the pairwise ortholgs file
 
-    Returns
-    -------
-    Dictionary containing the location of each gene on a chromosome
-    {'gene_id': ('chromosome': position), 'chromosome': {position: ('gene_id', start, end, strand)} }
+def gtf_parser(gtf: str) -> Dict[str, Any]:
+    """Parse an Ensembl GTF file for protein-coding gene coordinates."""
+    chr_dict: Dict[str, Any] = {}
+    chromo = ""
+    i = 0 
 
-    """
-    chr_dict = {}
-    chromo = ''
-    # with open(inpath) as infile, open(outpath, 'wb') as outfile:
-    with open(gff) as infile:
-        for line in infile:
-            if line.startswith('#'):
+    with open(gtf) as fh:
+        for line in fh:
+            if line.startswith("#"):
                 continue
-            if 'gene_biotype=protein_coding' not in line:
+            fields = line.split()
+            if len(fields) < 3 or fields[2] != "gene":
                 continue
-            linedata = line.strip().split('\t')
-            if linedata[2] != 'gene':
+            if "gene_biotype" not in line:
+                continue
+            biotype = line.split('gene_biotype')[1].split('"')[1]
+            if biotype != "protein_coding":
                 continue
 
-            if id_type == 'GeneID':
-                geneid = re.split('[;,]', linedata[-1].split(f'{id_type}:')[1])[0]
-            elif id_type in ['ID', 'Name', 'CDS']:
-                geneid = linedata[-1].split(f'{id_type}=')[1].split(';')[0]
-                if id_type in ['ID', 'CDS']:
-                    geneid = '-'.join(geneid.split('-')[1:])
-            else:
-                raise ValueError('Unknown identifier type "{}"'.format(id_type))
-
+            linedata = line.strip().split("\t")
             contig = linedata[0]
+            geneid = linedata[-1].split('"')[1]
             start = int(linedata[3])
             end = int(linedata[4])
             strand = linedata[6]
-            if contig != chromo:  # reset counter
+
+            if contig != chromo:
                 i = 1
                 chromo = contig
+            else:
+                i += 1
+
             chr_dict[geneid] = (contig, i)
             if contig not in chr_dict:
                 chr_dict[contig] = {}
             chr_dict[contig][i] = (geneid, start, end, strand)
 
-            i += 1
     return chr_dict
 
 
-def table_parser(path):
-    chromo = ''
-    chr_dict = {}
-    with open(path) as fh:
+def gff_parser(gff: str, id_type: str) -> Dict[str, Any]:
+    """
+    Parse a RefSeq GFF3 file for protein-coding gene coordinates.
+
+    Parameters
+    ----------
+    gff : str
+        Path to the GFF3 file.
+    id_type : str
+        Which attribute field to use as the gene identifier.
+        One of ``"GeneID"``, ``"ID"``, ``"Name"``, ``"CDS"``.
+    """
+    chr_dict: Dict[str, Any] = {}
+    chromo = ""
+    i = 0
+
+    with open(gff) as fh:
         for line in fh:
-            if line.startswith('#'):
+            if line.startswith("#"):
                 continue
-            contig, start, end, strand, geneid = line.strip().split('\t')
+            if "gene_biotype=protein_coding" not in line:
+                continue
+            linedata = line.strip().split("\t")
+            if linedata[2] != "gene":
+                continue
+
+            attributes = linedata[-1]
+            if id_type == "GeneID":
+                geneid = re.split(r"[;,]", attributes.split(f"{id_type}:")[1])[0]
+            elif id_type in ("ID", "Name", "CDS"):
+                geneid = attributes.split(f"{id_type}=")[1].split(";")[0]
+                if id_type in ("ID", "CDS"):
+                    geneid = "-".join(geneid.split("-")[1:])
+            else:
+                raise ValueError(f'Unknown identifier type "{id_type}"')
+
+            contig = linedata[0]
+            start = int(linedata[3])
+            end = int(linedata[4])
+            strand = linedata[6]
+
             if contig != chromo:
                 i = 1
                 chromo = contig
+            else:
+                i += 1
+
             chr_dict[geneid] = (contig, i)
-            try:
-                chr_dict[contig][i] = (geneid, int(start), int(end), strand)
-            except KeyError:
-                chr_dict[contig] = {i: (geneid, int(start), int(end), strand)}
-            i += 1
+            if contig not in chr_dict:
+                chr_dict[contig] = {}
+            chr_dict[contig][i] = (geneid, start, end, strand)
+
     return chr_dict
 
 
-def parse_annotation(path, idtyp):
-    ft = path.split('.')[-1]
-    if ft == 'gtf':
-        rd = gtf_parser(path)
-    elif ft in ['gff3', 'gff']:
-        rd = gff_parser(path, idtyp)
-    elif ft in ['tsv', 'txt']:
-        rd = table_parser(path)
-    else:
-        raise ValueError(f'File type "{idtyp}" not valid as reference annotation. Expecting .gff3, .gff or .gtf')
-    return rd
+def table_parser(path: str) -> Dict[str, Any]:
+    """Parse a simple TSV annotation (contig, start, end, strand, gene_id)."""
+    chr_dict: Dict[str, Any] = {}
+    chromo = ""
+    i = 0
+
+    with open(path) as fh:
+        for line in fh:
+            if line.startswith("#"):
+                continue
+            contig, start, end, strand, geneid = line.strip().split("\t")
+
+            if contig != chromo:
+                i = 1
+                chromo = contig
+            else:
+                i += 1
+
+            chr_dict[geneid] = (contig, i)
+            if contig not in chr_dict:
+                chr_dict[contig] = {}
+            chr_dict[contig][i] = (geneid, int(start), int(end), strand)
+
+    return chr_dict
 
 
-###############################################################################
+def parse_annotation(path: str, idtype: str) -> Dict[str, Any]:
+    """
+    Dispatch to the correct annotation parser based on file extension.
 
-def parse_yaml(path):
-    p_dict = {}  # {<name>: {'orthologs': <path>, 'genome': <path>, 'annotation': <path>}}
-    paths = []
-    refdict = {}
-    with open(path, 'r') as param_handle:
-        params = yaml.load_all(param_handle, Loader=yaml.FullLoader)
-        for entry in params:
-            in_type = entry.pop('type')
-            if in_type == 'reference':
-                refdict['annotation'] = entry['annotation']
-                refdict['genome'] = entry['genome']
-            elif in_type == 'core':
-                species = entry.pop('name')
-                p_dict[species] = entry
-            paths.extend([entry['annotation'], entry['genome']])
-        return p_dict, refdict, paths
+    Supported extensions: ``.gtf``, ``.gff``, ``.gff3``, ``.tsv``, ``.txt``.
+    """
+    ext = os.path.splitext(path)[1].lstrip(".").lower()
+    if ext == "gtf":
+        return gtf_parser(path)
+    if ext in ("gff3", "gff"):
+        return gff_parser(path, idtype)
+    if ext in ("tsv", "txt"):
+        return table_parser(path)
+
+    raise ValueError(
+        f'Unsupported annotation extension ".{ext}". '
+        "Expected .gtf, .gff, .gff3, .tsv, or .txt."
+    )
 
 
-def read_pairwise_orthologs(pathdict):
-    od = {}
+# ---------------------------------------------------------------------------
+# YAML parameter parsing
+# ---------------------------------------------------------------------------
+def parse_yaml(path: str) -> Tuple[Dict, Dict, List[str]]:
+    """
+    Parse the ncOrtho YAML parameter file.
+
+    Returns
+    -------
+    core_dict : dict
+        ``{species_name: {"orthologs": path, "genome": path, "annotation": path}}``.
+    ref_dict : dict
+        ``{"annotation": path, "genome": path}`` for the reference.
+    all_paths : list[str]
+        Every file path mentioned (for existence checks).
+    """
+    core_dict: Dict[str, Any] = {}
+    all_paths: List[str] = []
+    ref_dict: Dict[str, str] = {}
+
+    with open(path) as fh:
+        for entry in yaml.safe_load_all(fh):
+            in_type = entry.pop("type")
+            if in_type == "reference":
+                ref_dict["annotation"] = entry["annotation"]
+                ref_dict["genome"] = entry["genome"]
+            elif in_type == "core":
+                species = entry.pop("name")
+                core_dict[species] = entry
+            else:
+                logger.warning("Unknown entry type '%s' in YAML; skipping.", in_type)
+                continue
+            all_paths.extend([entry.get("annotation", ""), entry.get("genome", "")])
+
+    # Filter out empty strings from paths
+    all_paths = [p for p in all_paths if p]
+
+    return core_dict, ref_dict, all_paths
+
+
+# ---------------------------------------------------------------------------
+# Pairwise ortholog I/O
+# ---------------------------------------------------------------------------
+def read_pairwise_orthologs(pathdict: Dict[str, Dict]) -> Dict[str, Dict[str, List[str]]]:
+    """
+    Read pairwise-ortholog files for each core species.
+
+    Returns
+    -------
+    dict
+        ``{taxon: {ref_gene: [ortho1, ortho2, ...], ...}, ...}``.
+    """
+    od: Dict[str, Dict[str, List[str]]] = {}
     for taxon, pd in pathdict.items():
-        taxd = {}
-        orthofile = pd['orthologs']
-        with open(orthofile) as omafile:
-            for line in omafile:
-                if line.startswith('#'):
+        taxd: Dict[str, List[str]] = {}
+        orthofile = pd["orthologs"]
+        with open(orthofile) as fh:
+            for line in fh:
+                if line.startswith("#"):
                     continue
-                ref, core = line.strip().split()[:2]
-                if not ref in taxd:
-                    taxd[ref] = []
-                taxd[ref].append(core)
+                parts = line.strip().split()
+                if len(parts) < 2:
+                    continue
+                ref, core = parts[:2]
+                taxd.setdefault(ref, []).append(core)
         od[taxon] = taxd
     return od
 
 
-def gene_from_cds(gff):
+def gene_from_cds(gff: str) -> Dict[str, str]:
     """
-    returns:    d = {'WP_23898234': 'CDK'}
-    """
-    # cds2parent = {}
-    cds_mrna_map = {}
+    Map CDS accessions to gene identifiers from a GFF3 file.
 
-    cds2gene = {}
-    orphan = []
+    Returns ``{cds_accession: gene_id}``.
+    """
+    cds2gene: Dict[str, str] = {}
+    cds_mrna_map: Dict[str, str] = {}
+
     with open(gff) as fh:
         for line in fh:
-            if line.startswith('#'):
+            if line.startswith("#"):
                 continue
-            data = line.strip().split('\t')
-            if data[2] != 'CDS':
+            data = line.strip().split("\t")
+            if len(data) < 9:
                 continue
-            cdsid = data[-1].split(';')[0].split('.')[0].replace('ID=cds-', '').replace('ID=id-', '')
+            if data[2] != "CDS":
+                continue
 
-            parent = data[-1].split('Parent=')[1].split(';')[0].split('.')[0]
-            if parent.startswith('gene-') or parent.startswith('id-'):
-                cds2gene[cdsid] = parent.split(';')[0].replace('gene-', '').replace('id-', '')
+            cdsid = (
+                data[-1].split(";")[0]
+                .split(".")[0]
+                .replace("ID=cds-", "")
+                .replace("ID=id-", "")
+            )
+            parent = data[-1].split("Parent=")[1].split(";")[0].split(".")[0]
+
+            if parent.startswith("gene-") or parent.startswith("id-"):
+                cds2gene[cdsid] = parent.replace("gene-", "").replace("id-", "")
             else:
                 cds_mrna_map[cdsid] = parent
                 cds_mrna_map[parent] = cdsid
 
+    # Second pass: resolve CDS→mRNA→gene links
     with open(gff) as fh:
         for line in fh:
-            if line.startswith('#'):
+            if line.startswith("#"):
                 continue
-            data = line.strip().split('\t')
-            if data[2] != 'mRNA':
+            data = line.strip().split("\t")
+            if len(data) < 9:
                 continue
-            mrnaid = data[-1].split('ID=')[1].split('.')[0]
-            parent = data[-1].split('Parent=')[1].split('.')[0]
+            if data[2] != "mRNA":
+                continue
+
+            mrnaid = data[-1].split("ID=")[1].split(".")[0]
+            parent = data[-1].split("Parent=")[1].split(".")[0]
+
             if mrnaid not in cds_mrna_map:
                 continue
             cdsid = cds_mrna_map[mrnaid]
-            if parent.startswith('gene-'):
-                cds2gene[cdsid] = parent.split(';')[0].replace('gene-', '')
-            else:
-                orphan.append(parent)
+            if parent.startswith("gene-"):
+                cds2gene[cdsid] = parent.split(";")[0].replace("gene-", "")
+
     return cds2gene
 
 
-def pairwise_orthologs_from_cds(cd, refanno):
+def pairwise_orthologs_from_cds(
+    cd: Dict[str, Dict], refanno: str
+) -> Dict[str, Dict[str, List[str]]]:
     """
-    returns    d = {corespec: {refprot: [ortho1, ortho2, ...], ...}, ...}
+    Build pairwise-ortholog mappings when ortholog files use CDS
+    accessions rather than gene IDs.
+
+    Returns ``{core_species: {ref_gene: [ortho_gene1, ...], ...}, ...}``.
     """
     ref_cds2gene = gene_from_cds(refanno)
-    od = {}
-    for cspec in cd:
-        cds2gene = gene_from_cds(cd[cspec]['annotation'])
+    od: Dict[str, Dict[str, List[str]]] = {}
 
+    for cspec, spec_data in cd.items():
+        cds2gene = gene_from_cds(spec_data["annotation"])
         od[cspec] = {}
-        orthopath = cd[cspec]['orthologs']
+        orthopath = spec_data["orthologs"]
+
         with open(orthopath) as fh:
             for line in fh:
-                cds_refprot, cds_orthoprot = line.strip().split()
-                try:
-                    refprot = ref_cds2gene[cds_refprot]
-                except KeyError as e:
-                    # print('reference', e)
-                    # IDs of "longest proteins" that were removed in later versions of the RefSeq annotation.
-                    # Discrepency possibly due to versioning problems
+                parts = line.strip().split()
+                if len(parts) < 2:
                     continue
-                try:
-                    orthoprot = cds2gene[cds_orthoprot]
-                except KeyError as e:
-                    print(cspec, e)
+                cds_refprot, cds_orthoprot = parts[:2]
+
+                refprot = ref_cds2gene.get(cds_refprot)
+                if refprot is None:
+                    # CDS may have been removed in a later annotation version
                     continue
 
-                if not refprot in od[cspec]:
-                    od[cspec][refprot] = []
-                od[cspec][refprot].append(orthoprot)
+                orthoprot = cds2gene.get(cds_orthoprot)
+                if orthoprot is None:
+                    logger.warning(
+                        "CDS '%s' not found in %s annotation; skipping.",
+                        cds_orthoprot, cspec,
+                    )
+                    continue
+
+                od[cspec].setdefault(refprot, []).append(orthoprot)
+
     return od
 
 
-def read_mirnas(path):
-    with open(path) as mirfile:
-        mirnas = [
-            line.split('\t') for line in mirfile.readlines()
-            if not line.startswith('#')
-        ]
-    # print('Done')
+# ---------------------------------------------------------------------------
+# miRNA I/O
+# ---------------------------------------------------------------------------
+def read_mirnas(path: str) -> List[List[str]]:
+    """
+    Read a tab-separated miRNA information file.
+
+    Lines starting with ``#`` are ignored. Returns a list of rows, each
+    row being a list of tab-separated fields.
+    """
+    mirnas: List[List[str]] = []
+    with open(path) as fh:
+        for line in fh:
+            line = line.rstrip("\n")
+            if not line or line.startswith("#"):
+                continue
+            mirnas.append(line.split("\t"))
+
+    if not mirnas:
+        logger.warning("No miRNAs loaded from %s", path)
+
     return mirnas
 
 
-def mirna_position(mirlist):
+def mirna_position(mirlist: List[str]) -> Tuple[str, str, int, int, str]:
+    """
+    Extract miRNA positional data from a row of the miRNA info file.
+
+    Returns ``(mirid, chromosome, start, end, strand)`` with
+    coordinates as integers and the ``chr`` prefix stripped.
+    """
     mirid, rawchrom, start, end, strand = mirlist[:5]
-    if 'chr' in rawchrom:
-        chromo = rawchrom.split('chr')[1]
-    else:
-        chromo = rawchrom
+    chromo = rawchrom.replace("chr", "")
     return mirid, chromo, int(start), int(end), strand
-
-
-
-
-

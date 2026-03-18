@@ -1,117 +1,129 @@
-# Construct and calibrate a covariance model for a given ncRNA core set
-# alignment in Stockholm format.
-# The calibration step is computationally very expensive and should be
-# performed on multiple CPU cores.
-# TODO: Include license, author etc.
+"""
+ncOrtho - Targeted ortholog search for miRNAs
+Copyright (C) 2021 Felix Langschied
 
-import argparse
-import multiprocessing as mp
+ncOrtho is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ncOrtho is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+# Construct and calibrate covariance models (CMs) or profile HMMs
+# for ncRNA core-set alignments in Stockholm format.
+
+import logging
 import os
 import subprocess as sp
-import sys
+from typing import Optional
 
 
-class CmConstructor(object):
-    
-    def __init__(self, alignment, outpath, name, cpu):
-        self.alignment = alignment
-        self.outpath = outpath
-        self.name = name
-        self.cpu = cpu
-        self.model = '{0}/{1}.cm'.format(outpath, name)
-    
-    def construct(self):
-        # print('# Constructing covariance model for {}.'.format(self.name), '')
-        construct_command = (
-            'cmbuild -F -n {0} {1}/{0}.cm {2}'
-            .format(self.name, self.outpath, self.alignment)
+logger = logging.getLogger("ncortho")
+
+
+# ---------------------------------------------------------------------------
+# CM construction and calibration
+# ---------------------------------------------------------------------------
+def _run_cmd(cmd: list, description: str) -> sp.CompletedProcess:
+    """Run a command, raising on failure with a clear message."""
+    result = sp.run(cmd, capture_output=True, text=True, check=False)
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"{description} failed (exit {result.returncode}): "
+            f"{result.stderr.strip()}"
         )
-        sp.run(construct_command, shell=True, capture_output=True)
-        # print('# Finished covariance model construction.')
-    
-    def calibrate(self):
-        # print('# Calibrating covariance model for {}.'.format(self.name))
-        calibrate_command = (
-            'cmcalibrate --cpu {0} {1}'.format(self.cpu, self.model)
-        )
-        sp.run(calibrate_command, shell=True)
-        # print('# Finished covariance model calibration.')
+    return result
 
 
-def create_cm(alignment, outpath, name, cpu):
-    # Initiate covariance model construction and calibration.
-    cmc = CmConstructor(alignment, outpath, name, cpu)
-    # Construct the model.
-    cmc.construct()
-    # Calibrate the model.
-    cmc.calibrate()
+def create_cm(
+    alignment: str,
+    outpath: str,
+    name: str,
+    cpu: int,
+) -> str:
+    """
+    Build and calibrate a covariance model from a Stockholm alignment.
+
+    Parameters
+    ----------
+    alignment : str
+        Path to the input alignment (``.sto``).
+    outpath : str
+        Directory for the output model.
+    name : str
+        Model name (used for ``-n`` and the output filename).
+    cpu : int
+        Number of CPU cores for calibration.
+
+    Returns
+    -------
+    str
+        Path to the calibrated ``.cm`` file.
+    """
+    model = os.path.join(outpath, f"{name}.cm")
+
+    build_cmd = [
+        "cmbuild",
+        "-F",
+        "-n", name,
+        model,
+        alignment,
+    ]
+    _run_cmd(build_cmd, f"cmbuild for {name}")
+
+    calibrate_cmd = [
+        "cmcalibrate",
+        "--cpu", str(cpu),
+        model,
+    ]
+    _run_cmd(calibrate_cmd, f"cmcalibrate for {name}")
+
+    return model
 
 
-def create_phmm(alignment, outpath, name, cpu):
-    model = f'{outpath}/{name}.phmm'
-    cmd = f'hmmbuild -n {name} --informat stockholm --dna {model} {alignment}'
-    res = sp.run(cmd, shell=True, capture_output=True)
-    res.check_returncode()
+def create_phmm(
+    alignment: str,
+    outpath: str,
+    name: str,
+    cpu: int,
+) -> str:
+    """
+    Build a profile HMM from a Stockholm alignment.
 
+    Parameters
+    ----------
+    alignment : str
+        Path to the input alignment (``.sto``).
+    outpath : str
+        Directory for the output model.
+    name : str
+        Model name.
+    cpu : int
+        Number of CPU cores (currently unused by hmmbuild but kept
+        for API consistency with ``create_cm``).
 
-# def main():
-#
-#     # Parse command-line arguments.
-#     parser = argparse.ArgumentParser(
-#         prog='python createcm.py', description='covariance model construction'
-#     )
-#     # "cpu", use maximum number of available CPUs unless specified otherwise.
-#     parser.add_argument(
-#         '-c', '--cpu', metavar='int', type=int,
-#         help='number of CPU cores to use', nargs='?',
-#         const=mp.cpu_count(), default=mp.cpu_count()
-#     )
-#     # Path to the desired output folder.
-#     parser.add_argument(
-#         '-o', '--output', metavar='<path>', type=str,
-#         help='path to the output folder'
-#     )
-#     # Path to the input alignment
-#     parser.add_argument(
-#         '-a', '--alignment', metavar='<.sto>', type=str,
-#         help='path to input alignment'
-#     )
-#
-#     # Show help when no arguments are added.
-#     if len(sys.argv) == 1:
-#         parser.print_help()
-#         sys.exit(1)
-#     else:
-#         args = parser.parse_args()
-#
-#     # Check if computer provides the desired number of cores.
-#     available_cpu = mp.cpu_count()
-#     if args.cpu > available_cpu:
-#         raise ValueError('The provided number of CPU cores is higher than the number available on this system')
-#     else:
-#         cpu = args.cpu
-#
-#     # Check if alignment file exists.
-#     if not os.path.isfile(args.alignment):
-#         raise ValueError('Invalid path to alignment file')
-#     else:
-#         alignment = args.alignment
-#
-#     output = args.output
-#     name = alignment.split('/')[-1].split('.')[0]
-#
-#     # Check if the output folder exists.
-#     if not os.path.isdir(output):
-#         mkdir_cmd = 'mkdir -p {}'.format(output)
-#         sp.call(mkdir_cmd, shell=True)
-#
-#     # Initiate covariance model construction and calibration.
-#     cmc = CmConstructor(alignment, output, name, cpu)
-#     # Construct the model.
-#     cmc.construct()
-#     # Calibrate the model.
-#     cmc.calibrate()
-#
-#
-# if __name__ == '__main__':
-#     main()
+    Returns
+    -------
+    str
+        Path to the ``.phmm`` file.
+    """
+    model = os.path.join(outpath, f"{name}.phmm")
+
+    cmd = [
+        "hmmbuild",
+        "-n", name,
+        "--informat", "stockholm",
+        "--dna",
+        model,
+        alignment,
+    ]
+    _run_cmd(cmd, f"hmmbuild for {name}")
+
+    return model

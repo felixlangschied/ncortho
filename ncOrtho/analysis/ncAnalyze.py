@@ -1,322 +1,566 @@
+"""
+ncOrtho - Targeted ortholog search for miRNAs
+Copyright (C) 2021 Felix Langschied
+
+ncOrtho is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ncOrtho is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+# Analyse ncOrtho results:
+#   - Write PhyloProfile input
+#   - Build per-miRNA alignments (MUSCLE 5)
+#   - Construct a supermatrix and infer a species tree (IQ-TREE)
+
+import argparse
 import glob
+import inspect
+import logging
 import os
-import tempfile
+import re
+import shutil
 import subprocess as sp
 import sys
-import shutil
-import inspect
+import tempfile
 from collections import Counter
-import argparse
+from typing import Dict, List, Optional, Set, Tuple
+
 from pyfiglet import Figlet
 from importlib.metadata import version
 
-"""
-Species in spec_to_skip will not be part of multiple sequence alignments
-"""
+
+logger = logging.getLogger("ncortho")
 
 
-def make_supermatrix(out):
-    align_out = '{}/alignments'.format(out)
-    tree_out = '{}/supermatrix'.format(out)
-    # curr_dir = sys.path[0]
-    curr_dir = '/'.join(inspect.getfile(inspect.currentframe()).split('/')[:-1])
-    if not os.path.isdir(tree_out):
-        os.mkdir(tree_out)
-    print('# Creating supermatrix alignment')
-    cmd = (
-        'perl {}/concat_alignments_dmp.pl -in {} -out supermatrix.aln'
-            .format(curr_dir, align_out)
+# ---------------------------------------------------------------------------
+# Custom argparse types
+# ---------------------------------------------------------------------------
+def _ratio_float(value: str) -> float:
+    """Argparse type: float in [0.0, 1.0]."""
+    try:
+        fval = float(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"'{value}' is not a number")
+    if not 0.0 <= fval <= 1.0:
+        raise argparse.ArgumentTypeError(
+            f"'{value}' must be between 0.0 and 1.0"
+        )
+    return fval
+
+
+def _existing_dir(value: str) -> str:
+    """Argparse type: directory must exist."""
+    path = os.path.realpath(value)
+    if not os.path.isdir(path):
+        raise argparse.ArgumentTypeError(f"Directory not found: {path}")
+    return path
+
+
+def _existing_file(value: str) -> str:
+    """Argparse type: file must exist."""
+    path = os.path.realpath(value)
+    if not os.path.isfile(path):
+        raise argparse.ArgumentTypeError(f"File not found: {path}")
+    return path
+
+
+# ---------------------------------------------------------------------------
+# MUSCLE version check
+# ---------------------------------------------------------------------------
+def _check_muscle_version() -> str:
+    """
+    Verify that MUSCLE >= 5.0 is available. Returns the version string.
+
+    Raises SystemExit with an informative message if MUSCLE is missing
+    or is version 3.x (commonly shipped with Biopython).
+    """
+    try:
+        result = sp.run(
+            ["muscle", "-version"],
+            capture_output=True, text=True, check=False,
+        )
+        # MUSCLE 5 prints e.g. "muscle 5.1.linux64 ..."
+        # MUSCLE 3.8 prints e.g. "MUSCLE v3.8.31 by Robert C. Edgar"
+        output = (result.stdout + result.stderr).strip()
+    except FileNotFoundError:
+        raise SystemExit(
+            "Error: 'muscle' not found on PATH.\n"
+            "ncOrtho requires MUSCLE 5 (https://github.com/rcedgar/muscle).\n"
+            "The MUSCLE 3.8 bundled with some Biopython installations is "
+            "not compatible."
+        )
+
+    # Try to extract a major version number
+    match = re.search(r"v?(\d+)\.\d+", output)
+    if match:
+        major = int(match.group(1))
+        if major < 5:
+            raise SystemExit(
+                f"Error: MUSCLE {output.splitlines()[0]} detected, but "
+                f"ncOrtho requires MUSCLE >= 5.0.\n"
+                f"The '-align' flag used by ncOrtho was introduced in "
+                f"MUSCLE 5. MUSCLE 3.8 (often shipped with Biopython) "
+                f"uses different command-line syntax and is not compatible.\n"
+                f"Please install MUSCLE 5: "
+                f"https://github.com/rcedgar/muscle"
+            )
+        return output.splitlines()[0]
+
+    # Could not parse — warn but continue
+    logger.warning(
+        "Could not determine MUSCLE version from: %s. "
+        "Proceeding, but MUSCLE 5+ is required.",
+        output,
     )
-    res = sp.run(cmd, shell=True, capture_output=True)
-    if res.returncode != 0:
-        print('ERROR:')
-        print(res.stderr.decode('utf-8'))
-        sys.exit()
-    # print('# Done')
-
-    print('# De-gapping alignment')
-    cmd = (
-        'perl {}/degapper.pl -in {}/supermatrix.aln'.format(curr_dir, out)
-    )
-    sp.run(cmd, shell=True)
-    # move files to output dir
-    shutil.move(f'{out}/supermatrix.aln', f'{tree_out}/supermatrix.aln')
-    shutil.move(f'{out}/subalignment_positions.txt', f'{tree_out}/subalignment_positions.txt')
-    shutil.move(f'{out}/supermatrix.aln.proc', f'{tree_out}/supermatrix.aln.proc')
-    # print('# Done')
-    # return f'{tree_out}/supermatrix.aln'
-    return f'{tree_out}/supermatrix.aln.proc'
+    return output
 
 
-def arglistcheck(arg):
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+def _arglistcheck(arg: str) -> List[str]:
+    """
+    Parse a user-supplied argument that is either a comma-separated
+    string or a path to a newline-separated file.  Returns a list of
+    stripped, non-empty strings, or an empty list.
+    """
     if not arg:
-        return ''
+        return []
     if os.path.isfile(arg):
         with open(arg) as fh:
-            arglist = [element.strip() for element in fh.read().split('\n') if element]
-    else:
-        arglist = [element.strip() for element in arg.split(',') if element]
-    return arglist
+            return [el.strip() for el in fh.read().split("\n") if el.strip()]
+    return [el.strip() for el in arg.split(",") if el.strip()]
 
 
-def parse_matseq(path):
-    m2s = {}
+def _parse_matseq(path: str) -> Dict[str, str]:
+    """
+    Read a miRNA info file and extract the 7-nt seed (positions 2–8)
+    from the mature sequence column.
+
+    Returns ``{mirid: seed_sequence}``.
+    """
+    m2s: Dict[str, str] = {}
     with open(path) as fh:
         for line in fh:
-            if line.startswith('#'):
+            if line.startswith("#"):
                 continue
-            mature = line.strip().split('\t')[-1].replace('U', 'T')
-            mirid = line.strip().split('\t')[1].split('_')[0]
-            if len(mature) < 7:
-                raise ValueError('No mature sequence found in "ncrna_file"')
-            seed = mature[1:8]
-            m2s[mirid] = seed
+            fields = line.strip().split("\t")
+            if len(fields) < 2:
+                continue
+            mature = fields[-1].replace("U", "T")
+            mirid = fields[1].split("_")[0]
+            if len(mature) < 8:
+                raise ValueError(
+                    f"Mature sequence too short for {mirid} in ncrna_file "
+                    f"(need >= 8 nt, got {len(mature)})"
+                )
+            m2s[mirid] = mature[1:8]
     return m2s
 
-def main():
 
-    # Parse command-line arguments
-    # Define global variables
+def _make_supermatrix(out: str) -> str:
+    """
+    Concatenate per-miRNA alignments into a supermatrix, de-gap, and
+    return the path to the processed alignment.
+    """
+    align_out = os.path.join(out, "alignments")
+    tree_out = os.path.join(out, "supermatrix")
+    curr_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    os.makedirs(tree_out, exist_ok=True)
+
+    print("# Creating supermatrix alignment", flush=True)
+    concat_script = os.path.join(curr_dir, "concat_alignments_dmp.pl")
+    cmd = ["perl", concat_script, "-in", align_out, "-out", "supermatrix.aln"]
+    res = sp.run(cmd, capture_output=True, text=True, check=False)
+    if res.returncode != 0:
+        raise RuntimeError(f"Supermatrix concatenation failed:\n{res.stderr}")
+
+    print("# De-gapping alignment", flush=True)
+    degap_script = os.path.join(curr_dir, "degapper.pl")
+    supermatrix_aln = os.path.join(out, "supermatrix.aln")
+    cmd = ["perl", degap_script, "-in", supermatrix_aln]
+    sp.run(cmd, capture_output=True, text=True, check=False)
+
+    # Move outputs into the supermatrix directory
+    for fname in ("supermatrix.aln", "subalignment_positions.txt", "supermatrix.aln.proc"):
+        src = os.path.join(out, fname)
+        if os.path.isfile(src):
+            shutil.move(src, os.path.join(tree_out, fname))
+
+    return os.path.join(tree_out, "supermatrix.aln.proc")
+
+
+# ---------------------------------------------------------------------------
+# Argument parser
+# ---------------------------------------------------------------------------
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description='Analzye ncOrtho results. Gives: PhyloProfile input, supermatrix alignment, species tree.'
+        prog="ncOrtho-analyze",
+        description=(
+            "Analyse ncOrtho results: PhyloProfile input, supermatrix "
+            "alignment, and species tree."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser._action_groups.pop()
-    required = parser.add_argument_group('Required Arguments')
-    optional = parser.add_argument_group('Optional Arguments')
+    required = parser.add_argument_group("Required arguments")
+    optional = parser.add_argument_group("Optional arguments")
+
     required.add_argument(
-        '-r', '--results', metavar='<path>', type=str,
-        help='Path to ncOrtho output directory that is to be analyzed'
+        "-r", "--results",
+        metavar="<path>",
+        type=_existing_dir,
+        required=True,
+        help="Path to ncOrtho output directory to analyse.",
     )
     required.add_argument(
-        '-o', '--output', metavar='<path>', type=str,
-        help='Path to location where output of analysis should be stored. '
-             'Assumes that result files end with "_orthologs.fa"'
+        "-o", "--output",
+        metavar="<path>",
+        type=str,
+        required=True,
+        help="Path to analysis output directory.",
     )
     required.add_argument(
-        '-m', '--mapping', metavar='<path>', type=str,
-        help='Tab seperated mapping file between NCBI taxonomy id and name of the query species '
-             'or more generally the name of the directory that contains the ncOrtho results of each species'
-             '(e.g "9606\tHomo_sapiens")'
-    )
-    ##########################################################################################
-    optional.add_argument(
-        '--skip', metavar='str', type=str, nargs='?', const='', default='',
+        "-m", "--mapping",
+        metavar="<path>",
+        type=_existing_file,
+        required=True,
         help=(
-            'Comma separated list or path to newline seperated list of species for which analyses should be skipped'
-        )
-    )
-    optional.add_argument(
-        '--include', metavar='str', type=str, nargs='?', const='', default='',
-        help=(
-            'Comma separated list or path to newline seperated list of species for which analyses should be performed. '
-            'Will skip every species not in list.'
-        )
-    )
-    optional.add_argument(
-        '--auto_skip', metavar='float', type=float, nargs='?', const=0.0, default=0.0,
-        help=(
-            'Exclude species for which less than a fraction of the reference '
-            'miRNAs were detected from species tree calculation. '
-            '(e.g. --auto_skip 0.5 means that only species in which at least 50%% '
-            'of the reference miRNAs were found are used for species tree calculation) (Default: Off)'
-        )
-    )
-    optional.add_argument(
-        '--iqtree', metavar='str', type=str, nargs='?',
-        const='',
-        default='',
-        help=(
-            'Call to iqtree. Do not change curly bracket notation '
-            '(Default: iqtree -s {} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {}/{})'
-        )
-    )
-    optional.add_argument(
-        '--mirnas', metavar='<path>', type=str, nargs='?', const='', default='',
-        help=(
-            'Comma separated list or path to newline seperated file with miRNAs that should be used for reconstruction'
-        )
-    )
-    # mirna data
-    optional.add_argument(
-        '--ncrna_file', metavar='<path>', nargs='?', const='', default='',
-        help='Path to tab separated file of reference miRNAs information, as used in ncCreate and ncSearch. '
-             'Uses mature sequence column to identify seed conservation.'
+            "Tab-separated mapping: NCBI taxonomy ID <TAB> species/directory name "
+            '(e.g. "9606\\tHomo_sapiens").'
+        ),
     )
 
-    # print header
-    custom_fig = Figlet(font='stop')
-    print(custom_fig.renderText('ncOrtho')[:-3], flush=True)
-    v = version('ncOrtho')
-    print(f'Version: {v}\n', flush=True)
-    ##########################################################################################
-    # Parse arguments
-    ##########################################################################################
+    optional.add_argument(
+        "--skip",
+        metavar="STR",
+        type=str,
+        default="",
+        help="Comma-separated list or path to file of species to skip.",
+    )
+    optional.add_argument(
+        "--include",
+        metavar="STR",
+        type=str,
+        default="",
+        help=(
+            "Comma-separated list or path to file of species to include "
+            "(all others are skipped)."
+        ),
+    )
+    optional.add_argument(
+        "--auto_skip",
+        metavar="FLOAT",
+        type=_ratio_float,
+        default=0.0,
+        help=(
+            "Exclude species with fewer than this fraction of reference "
+            "miRNAs detected (e.g. 0.5 = at least 50%%). Default: off."
+        ),
+    )
+    optional.add_argument(
+        "--iqtree",
+        metavar="STR",
+        type=str,
+        default="",
+        help=(
+            "Custom iqtree command string. Default: "
+            '"iqtree -s <supermatrix> -bb 1000 -alrt 1000 -nt AUTO -redo '
+            '-pre <tree_out>/species_tree".'
+        ),
+    )
+    optional.add_argument(
+        "--mirnas",
+        metavar="STR",
+        type=str,
+        default="",
+        help=(
+            "Comma-separated list or path to file of miRNAs to include "
+            "in the reconstruction."
+        ),
+    )
+    optional.add_argument(
+        "--ncrna_file",
+        metavar="<path>",
+        type=str,
+        default="",
+        help=(
+            "Path to reference miRNA info file (as used in ncCreate / "
+            "ncSearch). Enables seed-conservation annotation in "
+            "PhyloProfile output."
+        ),
+    )
+
+    return parser
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+def main() -> None:
+    # Banner
+    custom_fig = Figlet(font="stop")
+    print(custom_fig.renderText("ncOrtho")[:-3], flush=True)
+    v = version("ncOrtho")
+    print(f"Version: {v}\n", flush=True)
+
+    parser = build_parser()
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
-    else:
-        args = parser.parse_args()
 
-    res_dict = args.results
-    taxmap = args.mapping
-    outdir = args.output
+    args = parser.parse_args()
 
-    spec_to_skip = arglistcheck(args.skip)
-    spec_include = arglistcheck(args.include)
+    # Check MUSCLE version early
+    muscle_version = _check_muscle_version()
+    print(f"# Using MUSCLE: {muscle_version}", flush=True)
 
-    overlap = set(spec_to_skip).intersection(set(spec_include))
+    # Parse list arguments
+    spec_to_skip: List[str] = _arglistcheck(args.skip)
+    spec_include: List[str] = _arglistcheck(args.include)
+
+    overlap = set(spec_to_skip) & set(spec_include)
     if overlap:
-        raise ValueError(f'"{overlap}" present in species to skip as well as species to include')
+        raise SystemExit(
+            f"Error: Species present in both --skip and --include: "
+            f"{', '.join(sorted(overlap))}"
+        )
 
-
-    mirlist = arglistcheck(args.mirnas)
-
-    auto_skip = args.auto_skip
-
+    mirlist: List[str] = _arglistcheck(args.mirnas)
+    mirid2seed: Dict[str, str] = {}
     if args.ncrna_file:
-        mirid2seed = parse_matseq(args.ncrna_file)
-    else:
-        mirid2seed = {}
-    ##########################################################################################
-    # Argument checks
-    ##########################################################################################
-    if not os.path.isdir(outdir):
-        os.mkdir(outdir)
-    if auto_skip < 0 or auto_skip > 1:
-        raise ValueError(f'--auto_skip must be a value between 0 and 1, not {auto_skip}')
+        if not os.path.isfile(args.ncrna_file):
+            raise SystemExit(f"Error: --ncrna_file not found: {args.ncrna_file}")
+        mirid2seed = _parse_matseq(args.ncrna_file)
 
-    ###############################################################################################
-    # Main
-    ###############################################################################################
-    # find results
-    ortholog_files = glob.glob(f'{res_dict}/*/*_orthologs.fa')
+    # Paths
+    res_dir = args.results
+    outdir = os.path.realpath(args.output)
+    os.makedirs(outdir, exist_ok=True)
+
+    # -----------------------------------------------------------------------
+    # Read results
+    # -----------------------------------------------------------------------
+    ortholog_files = glob.glob(os.path.join(res_dir, "*", "*_orthologs.fa"))
     if not ortholog_files:
-        ortholog_files = glob.glob(f'{res_dict}/*.fa')
-    # read mapping file
-    name_2_taxid = {}
-    with open(taxmap, 'r') as mp:
-        for line in mp:
-            taxid, name = line.strip().split('\t')
+        ortholog_files = glob.glob(os.path.join(res_dir, "*.fa"))
+    if not ortholog_files:
+        raise SystemExit(
+            f"Error: No ortholog result files found in {res_dir}"
+        )
+
+    # Read mapping
+    name_2_taxid: Dict[str, str] = {}
+    with open(args.mapping) as fh:
+        for lineno, line in enumerate(fh, 1):
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split("\t")
+            if len(parts) < 2:
+                logger.warning(
+                    "Skipping malformed line %d in mapping file.", lineno
+                )
+                continue
+            taxid, name = parts[0], parts[1]
             name_2_taxid[name] = taxid
 
-    ortho_dict = {}  # ortho_dict = {mirna: {species: seq}}
-    # read all results into one dictionary and write phyloprofile input
-    pp_in = f'{outdir}/PhyloProfile.long'
-    spec_list = []
-    with open(pp_in, 'w') as pp:
-        pp.write('geneID\tncbiID\torthoID\n')
-        for file in ortholog_files:
-            with open(file, 'r') as fh:
+    # -----------------------------------------------------------------------
+    # Build ortholog dict and write PhyloProfile input
+    # -----------------------------------------------------------------------
+    ortho_dict: Dict[str, Dict[str, str]] = {}
+    spec_list: List[str] = []
+    pp_path = os.path.join(outdir, "PhyloProfile.long")
+
+    with open(pp_path, "w") as pp:
+        header = "geneID\tncbiID\torthoID"
+        if mirid2seed:
+            header += "\tseedConservation"
+        pp.write(header + "\n")
+
+        for filepath in ortholog_files:
+            current_spec = ""
+            current_mirna = ""
+            current_seq_parts: List[str] = []
+
+            def _flush_record():
+                """Write the current record to PhyloProfile and ortho_dict."""
+                if not current_spec or not current_mirna:
+                    return
+                seq = "".join(current_seq_parts)
+                if not seq:
+                    return
+                group_str = current_mirna.split("_")[0]
+                taxid = name_2_taxid.get(current_spec)
+                if taxid is None:
+                    logger.warning(
+                        "Species '%s' not in mapping file; skipping.",
+                        current_spec,
+                    )
+                    return
+                taxstr = f"ncbi{taxid}"
+                line_parts = [group_str, taxstr, current_mirna]
+                if mirid2seed:
+                    seed = mirid2seed.get(group_str, "")
+                    seedcon = 1 if seed and seed in seq else 0
+                    line_parts.append(str(seedcon))
+                pp.write("\t".join(line_parts) + "\n")
+
+                if group_str not in ortho_dict:
+                    ortho_dict[group_str] = {}
+                if current_spec not in ortho_dict[group_str]:
+                    ortho_dict[group_str][current_spec] = seq
+                    spec_list.append(current_spec)
+
+            with open(filepath) as fh:
                 for line in fh:
-                    if line.startswith('>'):
-                        spec, mirna = line.strip().replace('>', '').split('|')[:2]
-                    else:
-                        seq = line.strip()
-                        # write phyloprofile input
-                        taxstr = f'ncbi{name_2_taxid[spec]}'
-                        group_str = mirna.split('_')[0]
-                        if mirid2seed:
-                            seed = mirid2seed[group_str]
-                            if seed in seq:
-                                seedcon = 1
-                            else:
-                                seedcon = 0
-                            pp.write(f'{group_str}\t{taxstr}\t{mirna}\t{seedcon}\n')
-                        else:
-                            pp.write(f'{group_str}\t{taxstr}\t{mirna}\n')
-                        # initialize dictionary
-                        if group_str not in ortho_dict:
-                            ortho_dict[group_str] = {}
-                        # only save representative (first) hit
-                        if spec not in ortho_dict[group_str]:
-                            ortho_dict[group_str][spec] = seq
-                            spec_list.append(spec)
-    print('# Finished writing PhyloProfile input')
-
-    # if miRNAfile option is chosen, prune dictionary
-    if mirlist:
-        tmpdict = {}
-        for mirnaid, value in ortho_dict.items():
-            if mirnaid in mirlist:
-                tmpdict[mirnaid] = value
-        del ortho_dict
-        ortho_dict = tmpdict
-
-    # count species and skip species with few orthologs before aligning
-    if auto_skip:
-        spec_counter = Counter(spec_list)
-        max_spec_count = spec_counter.most_common(1)[0][1]
-        count_cutoff = max_spec_count * auto_skip
-        print(f'# Only species with at least {round(count_cutoff)} identified orthologs are used for tree calculation')
-        for species, count in dict(spec_counter).items():
-            if count < count_cutoff:
-                spec_to_skip.append(species)
-        print('# Skipping these species:')
-        for spsk in spec_to_skip:
-            print(spsk)
-
-    # if no species list is given to include, all species are part of specinclude
-    if not spec_include:
-        spec_include = list(ortho_dict.keys())
-
-    # make alignments
-    print('# Starting alignments')
-    align_out = f'{outdir}/alignments'
-    if not os.path.isdir(align_out):
-        os.mkdir(align_out)
-    for mirna in ortho_dict:
-        # tmplist = []
-        if len(ortho_dict[mirna]) < 2:  # need at least 2 sequences for alignment
-            with open(f'{align_out}/{mirna}.aln', 'w') as of:
-                for spec, seq in ortho_dict[mirna].items():
-                    of.write(f'>{spec}\n{seq}\n')
-            continue
-        with tempfile.NamedTemporaryFile(mode='w+') as fp:
-            for spec, seq in ortho_dict[mirna].items():
-                if spec_to_skip:
-                    if (
-                            spec in spec_to_skip
-                            and spec not in spec_include
-                    ):
+                    line = line.strip()
+                    if not line:
                         continue
-                fp.write(f'>{spec}\n{seq}\n')
-                # tmplist.append(f'>{spec}\n{seq}\n')
-            fp.seek(0)
-            aln_cmd = f'muscle -align {fp.name} -output {align_out}/{mirna}.aln'
-            res = sp.run(aln_cmd, shell=True, capture_output=True)
+                    if line.startswith(">"):
+                        _flush_record()
+                        parts = line.lstrip(">").split("|")
+                        current_spec = parts[0] if len(parts) > 0 else ""
+                        current_mirna = parts[1] if len(parts) > 1 else ""
+                        current_seq_parts = []
+                    else:
+                        current_seq_parts.append(line)
+                _flush_record()
+
+    print("# Finished writing PhyloProfile input", flush=True)
+
+    # Optional miRNA filter
+    if mirlist:
+        ortho_dict = {
+            mid: seqs for mid, seqs in ortho_dict.items() if mid in mirlist
+        }
+
+    # -----------------------------------------------------------------------
+    # Auto-skip species with few orthologs
+    # -----------------------------------------------------------------------
+    if args.auto_skip > 0:
+        spec_counter = Counter(spec_list)
+        max_count = spec_counter.most_common(1)[0][1]
+        cutoff = max_count * args.auto_skip
+        print(
+            f"# Only species with >= {round(cutoff)} identified orthologs "
+            "are used for tree calculation",
+            flush=True,
+        )
+        for species, count in spec_counter.items():
+            if count < cutoff and species not in spec_to_skip:
+                spec_to_skip.append(species)
+        if spec_to_skip:
+            print("# Skipping:", flush=True)
+            for sp_name in spec_to_skip:
+                print(f"  {sp_name}", flush=True)
+
+    if not spec_include:
+        spec_include = list(set(spec_list))
+
+    # -----------------------------------------------------------------------
+    # Per-miRNA alignments (MUSCLE 5)
+    # -----------------------------------------------------------------------
+    print("# Starting alignments", flush=True)
+    align_out = os.path.join(outdir, "alignments")
+    os.makedirs(align_out, exist_ok=True)
+
+    skip_set: Set[str] = set(spec_to_skip)
+    include_set: Set[str] = set(spec_include)
+
+    for mirna, spec_seqs in ortho_dict.items():
+        aln_path = os.path.join(align_out, f"{mirna}.aln")
+
+        # Filter species
+        filtered = {
+            sp_name: seq
+            for sp_name, seq in spec_seqs.items()
+            if sp_name not in skip_set or sp_name in include_set
+        }
+
+        if len(filtered) < 2:
+            # Cannot align fewer than 2 sequences; write as-is
+            with open(aln_path, "w") as fh:
+                for sp_name, seq in filtered.items():
+                    fh.write(f">{sp_name}\n{seq}\n")
+            continue
+
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".fa", delete=False) as tmp:
+            tmp_path = tmp.name
+            for sp_name, seq in filtered.items():
+                tmp.write(f">{sp_name}\n{seq}\n")
+
+        try:
+            muscle_cmd = ["muscle", "-align", tmp_path, "-output", aln_path]
+            res = sp.run(muscle_cmd, capture_output=True, text=True, check=False)
             if res.returncode != 0:
-                # with open(f'{outdir}/faulty_{mirna}.fa', 'w') as of:
-                    # for line in tmplist:
-                    #     of.write(line)
-                print(res.stderr.decode('utf8'))
-                sys.exit()
+                raise RuntimeError(
+                    f"MUSCLE alignment failed for {mirna}:\n{res.stderr}"
+                )
+        finally:
+            os.remove(tmp_path)
 
     sys.stdout.flush()
-    superm_path = make_supermatrix(outdir)
-    print('# Starting tree calculation')
-    tree_out = f'{outdir}/species_tree'
-    if not os.path.isdir(tree_out):
-        os.mkdir(tree_out)
 
-    if not args.iqtree:
-        tree_cmd = f'iqtree -s {superm_path} -bb 1000 -alrt 1000 -nt AUTO -redo -pre {tree_out}/species_tree'
-    else:
+    # -----------------------------------------------------------------------
+    # Supermatrix and species tree
+    # -----------------------------------------------------------------------
+    superm_path = _make_supermatrix(outdir)
+
+    print("# Starting tree calculation", flush=True)
+    tree_out = os.path.join(outdir, "species_tree")
+    os.makedirs(tree_out, exist_ok=True)
+
+    if args.iqtree:
         tree_cmd = args.iqtree
-    res = sp.run(tree_cmd, shell=True, capture_output=True)
-    print(res.stdout.decode('utf-8'))
-    if res.returncode != 0:
-        print(res.stderr.decode('utf-8'))
+        # Still use shell=True for custom commands since the user controls the string
+        res = sp.run(tree_cmd, shell=True, capture_output=True, text=True, check=False)
+    else:
+        tree_prefix = os.path.join(tree_out, "species_tree")
+        tree_cmd_list = [
+            "iqtree",
+            "-s", superm_path,
+            "-bb", "1000",
+            "-alrt", "1000",
+            "-nt", "AUTO",
+            "-redo",
+            "-pre", tree_prefix,
+        ]
+        res = sp.run(tree_cmd_list, capture_output=True, text=True, check=False)
 
-    # write tree that can be used as optional phyloprofile input
-    treepath = f'{tree_out}/species_tree.contree'
-    pptree = f'{outdir}/PhyloProfile_tree.contree'
-    with open(treepath, 'r') as th:
-        treestr = th.read().strip()
-        for name in name_2_taxid:
-            ppid = f'ncbi{name_2_taxid[name]}'
-            treestr = treestr.replace(name, ppid)
-    with open(pptree, 'w') as otfh:
-        otfh.write(treestr)
+    if res.stdout:
+        print(res.stdout, flush=True)
+    if res.returncode != 0:
+        logger.error("IQ-TREE failed:\n%s", res.stderr)
+
+    # -----------------------------------------------------------------------
+    # Write PhyloProfile-compatible tree
+    # -----------------------------------------------------------------------
+    treepath = os.path.join(tree_out, "species_tree.contree")
+    if os.path.isfile(treepath):
+        with open(treepath) as fh:
+            treestr = fh.read().strip()
+        for name, taxid in name_2_taxid.items():
+            treestr = treestr.replace(name, f"ncbi{taxid}")
+        pptree = os.path.join(outdir, "PhyloProfile_tree.contree")
+        with open(pptree, "w") as fh:
+            fh.write(treestr)
+        print("# PhyloProfile tree written", flush=True)
+    else:
+        logger.warning(
+            "IQ-TREE consensus tree not found at %s; "
+            "PhyloProfile tree not written.",
+            treepath,
+        )
 
 
 if __name__ == "__main__":

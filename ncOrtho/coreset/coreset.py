@@ -21,15 +21,13 @@ along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 # Search for core orthologs by reciprocal BLAST search
 # Create Stockholm structural alignment
 
-# required:
-# reference microRNA data (sequence, coordinates)
-# reference taxon: genome, blastdb, gtf file with gene coordinates
-# core set taxa: genome, gtf file, pairwise orthologs
-
 import argparse
+import logging
 import multiprocessing as mp
 import os
 import sys
+from typing import Dict, List, Optional, Tuple
+
 from pyfiglet import Figlet
 from importlib.metadata import version
 
@@ -47,208 +45,376 @@ except ModuleNotFoundError:
     import ncOrtho.coreset.coreset_utils as cu
 
 
-###############################################################################
-def main():
-    parser = argparse.ArgumentParser(
-        description=(
-            'Build Covariance models of reference miRNAs from core set of orthologs.'
+# ---------------------------------------------------------------------------
+# Logging setup
+# ---------------------------------------------------------------------------
+logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# Custom argparse helpers
+# ---------------------------------------------------------------------------
+VALID_ID_TYPES = ("ID", "Name", "GeneID", "gene_id", "CDS")
+
+
+def _positive_int(value: str) -> int:
+    """Argparse type: strictly positive integer."""
+    try:
+        ivalue = int(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"'{value}' is not an integer")
+    if ivalue < 1:
+        raise argparse.ArgumentTypeError(f"'{value}' must be a positive integer (>= 1)")
+    return ivalue
+
+
+def _yes_no(value: str) -> bool:
+    """Argparse type: convert 'yes'/'no' strings to bool."""
+    lower = value.strip().lower()
+    if lower == "yes":
+        return True
+    if lower == "no":
+        return False
+    raise argparse.ArgumentTypeError(
+        f"Invalid value '{value}'. Expected 'yes' or 'no'."
+    )
+
+
+def _valid_id_type(value: str) -> str:
+    """Argparse type: validate --idtype against allowed values."""
+    if value not in VALID_ID_TYPES:
+        raise argparse.ArgumentTypeError(
+            f"Invalid ID type '{value}'. Must be one of: {', '.join(VALID_ID_TYPES)}"
         )
+    return value
+
+
+def _existing_file(value: str) -> str:
+    """Argparse type: validate that a file exists."""
+    path = os.path.realpath(value)
+    if not os.path.isfile(path):
+        raise argparse.ArgumentTypeError(f"File not found: {path}")
+    return path
+
+
+# ---------------------------------------------------------------------------
+# Argument parser
+# ---------------------------------------------------------------------------
+def build_parser() -> argparse.ArgumentParser:
+    """Build and return the argument parser for the coreset pipeline."""
+    parser = argparse.ArgumentParser(
+        prog="ncOrtho-coreset",
+        description="Build covariance models of reference miRNAs from a core set of orthologs.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser._action_groups.pop()
-    required = parser.add_argument_group('Required Arguments')
-    optional = parser.add_argument_group('Optional Arguments')
-    # input file path
-    required.add_argument('-p', '--parameters', metavar='<path>', type=str, required=True,
-                          help='Path to the parameters file in yaml format')
-    # mirna data
+    required = parser.add_argument_group("Required arguments")
+    optional = parser.add_argument_group("Optional arguments")
+
+    # --- Required -----------------------------------------------------------
     required.add_argument(
-        '-n', '--ncrna', metavar='<path>', type=str, required=True,
-        help='Path to tab separated file of reference miRNAs information '
+        "-p", "--parameters",
+        metavar="<path>",
+        type=_existing_file,
+        required=True,
+        help="Path to the parameters file in YAML format.",
     )
-    # output folder
     required.add_argument(
-        '-o', '--output', metavar='<path>', type=str, required=True,
-        help='Path for the output folder'
+        "-n", "--ncrna",
+        metavar="<path>",
+        type=_existing_file,
+        required=True,
+        help="Path to tab-separated file of reference miRNA information.",
     )
-    # OPTIONAL VARIABLES
-    # cpu, use maximum number of available cpus if not specified otherwise
-    optional.add_argument(
-        '--threads', metavar='int', type=int,
-        help='Number of CPU cores to use (Default: All available)', nargs='?',
-        const=mp.cpu_count(), default=mp.cpu_count()
-    )
-    # Maximum gene insertions
-    optional.add_argument(
-        '--mgi', metavar='int', type=int,
-        help='Maximum number of gene insertions in the core species (Default: 3)', nargs='?',
-        const=3, default=3
-    )
-    # use dust filter?
-    optional.add_argument(
-        '--dust', metavar='yes/no', type=str,
-        help='Use BLASTn dust filter. '
-             'Will not build models from repeat regions if "yes". (Default: no)',
-        nargs='?',
-        const='no', default='no'
-    )
-    optional.add_argument(
-        '--create_model', metavar='yes/no', type=str,
-        help='set to "no" if you only want to create the alignment. (Default: yes)', nargs='?',
-        const='yes', default='yes'
-    )
-    optional.add_argument(
-        '--phmm', metavar='yes/no', type=str,
-        help='set to "yes" if you want to create a pHMM instead of a CM (Default: no)', nargs='?',
-        const='no', default='no'
-    )
-    optional.add_argument(
-        '--rcoffee', metavar='yes/no', type=str,
-        help='set to "no" to use default "t_coffee" instead of "r_coffee" (Default: yes)', nargs='?',
-        const='yes', default='yes'
-    )
-    optional.add_argument(
-        '--redo', metavar='yes/no', type=str,
-        help='set to "no" to reuse models found at output destination (Default: yes)', nargs='?',
-        const='yes', default='yes'
-    )
-    optional.add_argument(
-        '--idtype', metavar='str', type=str,
-        help='Choose the ID in the reference gff file that is '
-             'compared to the IDs in the pairwise orthologs file (default:GeneID) '
-             'Options: ID, Name, GeneID, gene_id, CDS',
-        nargs='?', const='ID=', default='ID'
-    )
-    optional.add_argument(
-        '--max_anchor_dist', metavar='int', type=int,
-        help='Number of additional genes to the left and right '
-             'of the reference miRNA that are to be considered as syntenic anchors. (Default: 3)',
-        nargs='?', const=3, default=3
-    )
-    optional.add_argument(
-        '--verbose', metavar='yes/no', type=str,
-        help='Print additional information (Default: no)',
-        nargs='?', const='no', default='no'
+    required.add_argument(
+        "-o", "--output",
+        metavar="<path>",
+        type=str,
+        required=True,
+        help="Path for the output folder.",
     )
 
-    # print header
-    custom_fig = Figlet(font='stop')
-    print(custom_fig.renderText('ncOrtho')[:-3], flush=True)
-    v = version('ncOrtho')
-    print(f'Version: {v}\n', flush=True)
-    ###############################################################################
+    # --- Optional -----------------------------------------------------------
+    max_cpu = mp.cpu_count()
+    optional.add_argument(
+        "--threads",
+        metavar="N",
+        type=_positive_int,
+        default=max_cpu,
+        help=f"Number of CPU cores to use (default: all available = {max_cpu}).",
+    )
+    optional.add_argument(
+        "--mgi",
+        metavar="N",
+        type=_positive_int,
+        default=3,
+        help="Maximum number of gene insertions in the core species (default: 3).",
+    )
+    optional.add_argument(
+        "--dust",
+        metavar="yes/no",
+        type=_yes_no,
+        default=False,
+        help='Use BLASTn dust filter; skips repeat regions when enabled (default: no).',
+    )
+    optional.add_argument(
+        "--create_model",
+        metavar="yes/no",
+        type=_yes_no,
+        default=True,
+        help='Set to "no" to only create the alignment without building a model (default: yes).',
+    )
+    optional.add_argument(
+        "--phmm",
+        metavar="yes/no",
+        type=_yes_no,
+        default=False,
+        help='Create a profile HMM instead of a covariance model (default: no).',
+    )
+    optional.add_argument(
+        "--rcoffee",
+        metavar="yes/no",
+        type=_yes_no,
+        default=True,
+        help='Use r_coffee for alignment; set to "no" for default t_coffee (default: yes).',
+    )
+    optional.add_argument(
+        "--redo",
+        metavar="yes/no",
+        type=_yes_no,
+        default=True,
+        help='Rebuild models even if they already exist at the output destination (default: yes).',
+    )
+    optional.add_argument(
+        "--idtype",
+        metavar="TYPE",
+        type=_valid_id_type,
+        default="ID",
+        choices=VALID_ID_TYPES,
+        help=(
+            "ID field in the reference GFF to match against the pairwise-orthologs file. "
+            f"Options: {', '.join(VALID_ID_TYPES)} (default: ID)."
+        ),
+    )
+    optional.add_argument(
+        "--max_anchor_dist",
+        metavar="N",
+        type=_positive_int,
+        default=3,
+        help=(
+            "Number of additional genes left and right of the reference miRNA "
+            "to consider as syntenic anchors (default: 3)."
+        ),
+    )
+    optional.add_argument(
+        "--verbose",
+        action="store_true",
+        default=False,
+        help="Print additional diagnostic information.",
+    )
 
-    # Show help when no arguments are added.
-    if len(sys.argv) == 1:
-        parser.print_help()
-        sys.exit(1)
-    else:
-        args = parser.parse_args()
+    return parser
 
-    # Check if computer provides the desired number of cores.
+
+# ---------------------------------------------------------------------------
+# Validation helpers
+# ---------------------------------------------------------------------------
+def validate_args(args: argparse.Namespace) -> None:
+    """Run cross-field validation that argparse types alone cannot cover."""
     available_cpu = mp.cpu_count()
     if args.threads > available_cpu:
-        raise ValueError('The provided number of CPU cores is higher than the number available on this system')
-    else:
-        cpu = args.threads
+        raise SystemExit(
+            f"Error: Requested {args.threads} threads, but only {available_cpu} are available."
+        )
 
-    # parse mandatory arguments
-    output = os.path.realpath(args.output)
-    if not os.path.isdir(output):
-        os.mkdir(output)
 
-    # parse optional arguments
-    # mgi = args.mgi
-    dust = args.dust
-    create_model = args.create_model
-    if args.verbose == 'yes':
-        verbose = True
-    elif args.verbose == 'no':
-        verbose = False
-    else:
-        raise ValueError(f'Unknown value for "verbose": {args.verbose}')
-    add_pos_orthos = args.max_anchor_dist
+# ---------------------------------------------------------------------------
+# Pipeline steps (thin wrappers for clarity)
+# ---------------------------------------------------------------------------
+def setup_output_dirs(output: str) -> str:
+    """Create the output and tmp directories. Return the tmp path."""
+    os.makedirs(output, exist_ok=True)
+    tmpout = os.path.join(output, "tmp")
+    os.makedirs(tmpout, exist_ok=True)
+    return tmpout
 
-    # parameters
-    core_dict, ref_paths, all_paths = cu.parse_yaml(args.parameters)
-    # check if files exist
-    for cp in all_paths:
-        if not os.path.isfile(cp):
-            raise ValueError(f'{cp} does not exist')
 
-    ###############################################################################
-    neighbor_dict = {}
-    mirna_dict = {}
+def load_pairwise_orthologs(
+    core_dict: dict, ref_annotation: str, idtype: str
+) -> dict:
+    """Load pairwise orthologs, dispatching on idtype."""
+    logger.info("Reading pairwise orthologs")
+    if idtype == "CDS":
+        return cu.pairwise_orthologs_from_cds(core_dict, ref_annotation)
+    return cu.read_pairwise_orthologs(core_dict)
 
-    # create directory for intermediate files
-    tmpout = f'{output}/tmp'
-    if not os.path.isdir(tmpout):
-        os.mkdir(tmpout)
 
-    print('# Reading pairwise orthologs', flush=True)
-    if args.idtype == 'CDS':
-        ortho_dict = cu.pairwise_orthologs_from_cds(core_dict, ref_paths['annotation'])
-    else:
-        ortho_dict = cu.read_pairwise_orthologs(core_dict)
-
-    print('# Reading miRNA data', flush=True)
-    mirnas = cu.read_mirnas(args.ncrna)
-
-    print('# Reading reference annotation', flush=True)
-    ref_dict = cu.parse_annotation(ref_paths['annotation'], args.idtype)
-
-    print('# Determining the position of each miRNA and its neighboring gene(s)', flush=True)
-    mirna_positions = {}
+def locate_mirna_positions(
+    mirnas: list,
+    ref_dict: dict,
+    ortho_dict: dict,
+    max_anchor_dist: int,
+    verbose: bool,
+) -> Dict[str, Tuple]:
+    """Determine the genomic position category and core orthologs for each miRNA."""
+    logger.info("Determining the position of each miRNA and its neighboring gene(s)")
+    mirna_positions: Dict[str, Tuple] = {}
     for mirna in mirnas:
         mirid, chromo, start, end, strand = cu.mirna_position(mirna)
         syntype, core_orthos = categorize_mirna_position(
-            mirid, chromo, start, end, strand, ref_dict, ortho_dict, add_pos_orthos, verbose
+            mirid, chromo, start, end, strand,
+            ref_dict, ortho_dict, max_anchor_dist, verbose,
         )
         if not syntype:
-            print(f'Warning: Could not localize {mirid}', flush=True)
+            logger.warning("Could not localize %s", mirid)
             continue
         mirna_positions[mirid] = (syntype, core_orthos)
+    return mirna_positions
 
-    print('\n### Identifying syntenic regions in core species', flush=True)
-    syntenyregion_per_mirna = analyze_synteny(core_dict, mirna_positions, tmpout, args.idtype, args.mgi, verbose)
 
-    if not syntenyregion_per_mirna:
-        raise ValueError('No regions of conserved synteny found in any core species')
-
+def write_synteny_fastas(
+    syntenyregion_per_mirna: dict, tmpout: str
+) -> None:
+    """Write per-miRNA FASTA files for syntenic regions."""
     for mirid, fastalist in syntenyregion_per_mirna.items():
         if not fastalist:
-            print(f'Warning: No syntenic region found in any core species for {mirid}. '
-                  f'Make sure that the IDs in the annotation file match the ones in the orthologs file', flush=True)
+            logger.warning(
+                "No syntenic region found in any core species for %s. "
+                "Verify that annotation IDs match the orthologs file.",
+                mirid,
+            )
             continue
-        miroutdir = f'{tmpout}/{mirid}'
-        if not os.path.isdir(miroutdir):
-            os.mkdir(miroutdir)
-        with open(f'{miroutdir}/synteny_regions_{mirid}.fa', 'w') as of:
+        miroutdir = os.path.join(tmpout, mirid)
+        os.makedirs(miroutdir, exist_ok=True)
+        fasta_path = os.path.join(miroutdir, f"synteny_regions_{mirid}.fa")
+        with open(fasta_path, "w") as fh:
             for line in fastalist:
-                of.write(line)
+                fh.write(line)
 
-    #################################################################################################
-    print('\n### Collecting core orthologs and training models', flush=True)
+
+def build_models(
+    mirnas: list,
+    ref_genome: str,
+    tmpout: str,
+    output: str,
+    cpu: int,
+    dust: bool,
+    verbose: bool,
+    rcoffee: bool,
+    create_model: bool,
+    phmm: bool,
+    redo: bool,
+) -> None:
+    """Run reciprocal BLAST, alignment, and model construction for each miRNA."""
+    logger.info("Collecting core orthologs and training models")
+
+    # Map bool back to the string expected by downstream functions that
+    # have not yet been refactored.
+    dust_str = "yes" if dust else "no"
+    rcoffee_str = "yes" if rcoffee else "no"
+
     for mirna in mirnas:
         mirid = mirna[0]
-        sto_path = blastsearch(mirna, ref_paths['genome'], tmpout, cpu, dust, verbose, args.rcoffee)
-        if create_model == 'no' or sto_path is None:
-            continue
-        if args.phmm == 'no':
-            print(f'# Starting to construct covariance model for {mirid}', flush=True)
-            model_out = f'{output}/{mirid}.cm'
-            if args.redo == 'no' and not os.path.isfile(model_out):
-                print(f'Model of {mirid} already found at {output}. Nothing done..', flush=True)
-                continue
-            create_cm(sto_path, output, mirid, cpu)
+        sto_path = blastsearch(mirna, ref_genome, tmpout, cpu, dust_str, verbose, rcoffee_str)
 
-        elif args.phmm == 'yes':
-            print(f'# Starting to construct pHMM for {mirid}', flush=True)
+        if not create_model or sto_path is None:
+            continue
+
+        if phmm:
+            logger.info("Constructing pHMM for %s", mirid)
             create_phmm(sto_path, output, mirid, cpu)
         else:
-            raise ValueError(f'Unknown value "{args.phmm}" for --phmm')
+            model_out = os.path.join(output, f"{mirid}.cm")
+            if not redo and os.path.isfile(model_out):
+                logger.info(
+                    "Model for %s already exists at %s — skipping (--redo is off).",
+                    mirid, model_out,
+                )
+                continue
+            logger.info("Constructing covariance model for %s", mirid)
+            create_cm(sto_path, output, mirid, cpu)
 
-    print('\n### Construction of core set finished', flush=True)
+
+# ---------------------------------------------------------------------------
+# Main entry point
+# ---------------------------------------------------------------------------
+def main() -> None:
+    """Entry point for the ncOrtho coreset pipeline."""
+    # Print banner
+    custom_fig = Figlet(font="stop")
+    print(custom_fig.renderText("ncOrtho")[:-3], flush=True)
+    v = version("ncOrtho")
+    print(f"Version: {v}\n", flush=True)
+
+    parser = build_parser()
+
+    # Show help when called without arguments.
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+
+    args = parser.parse_args()
+
+    # Configure logging
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(levelname)s: %(message)s",
+    )
+
+    validate_args(args)
+
+    # Resolve paths
+    output = os.path.realpath(args.output)
+    tmpout = setup_output_dirs(output)
+
+    # Load parameters
+    core_dict, ref_paths, all_paths = cu.parse_yaml(args.parameters)
+    missing = [p for p in all_paths if not os.path.isfile(p)]
+    if missing:
+        raise FileNotFoundError(
+            "The following required files are missing:\n  " + "\n  ".join(missing)
+        )
+
+    # Pipeline
+    ortho_dict = load_pairwise_orthologs(core_dict, ref_paths["annotation"], args.idtype)
+
+    logger.info("Reading miRNA data")
+    mirnas = cu.read_mirnas(args.ncrna)
+    if not mirnas:
+        raise SystemExit("Error: No miRNAs loaded from the input file.")
+
+    logger.info("Reading reference annotation")
+    ref_dict = cu.parse_annotation(ref_paths["annotation"], args.idtype)
+
+    mirna_positions = locate_mirna_positions(
+        mirnas, ref_dict, ortho_dict, args.max_anchor_dist, args.verbose,
+    )
+
+    logger.info("Identifying syntenic regions in core species")
+    syntenyregion_per_mirna = analyze_synteny(
+        core_dict, mirna_positions, tmpout, args.idtype, args.mgi, args.verbose,
+    )
+    if not syntenyregion_per_mirna:
+        raise SystemExit("Error: No regions of conserved synteny found in any core species.")
+
+    write_synteny_fastas(syntenyregion_per_mirna, tmpout)
+
+    build_models(
+        mirnas=mirnas,
+        ref_genome=ref_paths["genome"],
+        tmpout=tmpout,
+        output=output,
+        cpu=args.threads,
+        dust=args.dust,
+        verbose=args.verbose,
+        rcoffee=args.rcoffee,
+        create_model=args.create_model,
+        phmm=args.phmm,
+        redo=args.redo,
+    )
+
+    logger.info("Construction of core set finished")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

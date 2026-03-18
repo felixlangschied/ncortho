@@ -1,330 +1,504 @@
-import pyfaidx
-import subprocess as sp
-import os
+"""
+ncOrtho - Targeted ortholog search for miRNAs
+Copyright (C) 2021 Felix Langschied
+
+ncOrtho is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ncOrtho is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+# CM / pHMM search pipeline:
+#   heuristic BLAST -> candidate region extraction -> model search -> parsing -> deduplication
+
 import logging
+import os
+import subprocess as sp
+from typing import Dict, List, Optional, Tuple
+
+import pyfaidx
 
 
-def heuristic_search(blastdb, rna, query, heuristic, cpu, out):
+logger = logging.getLogger("ncortho")
 
-    def candidate_blast(db, c, evalue, seq, task):
-        # extract candidate regions
-        blast_command = (
-            'blastn -task {0} -db {1} '
-            '-num_threads {2} -evalue {3} '
-            '-outfmt "6 sseqid sstart send sstrand length"'.format(task, db, c, evalue)
+# Default flanking region (bp) added around BLAST hits when extracting
+# candidate sequences for the CM/pHMM search.
+DEFAULT_EXTRA_REGION = 1000
+
+
+# ---------------------------------------------------------------------------
+# BLAST-based heuristic candidate search
+# ---------------------------------------------------------------------------
+def _run_candidate_blast(
+    blastdb: str,
+    cpu: int,
+    evalue: float,
+    sequence: str,
+    min_hit_length: float,
+    task: str = "blastn",
+) -> List[List[str]]:
+    """
+    BLAST *sequence* against *blastdb* and return hits whose alignment
+    length is at least *min_hit_length*.
+
+    Returns a list of hits, each being ``[sseqid, sstart, send, sstrand, length]``.
+    """
+    blast_cmd = [
+        "blastn",
+        "-task", task,
+        "-db", blastdb,
+        "-num_threads", str(cpu),
+        "-evalue", str(evalue),
+        "-outfmt", "6 sseqid sstart send sstrand length",
+    ]
+    result = sp.run(
+        blast_cmd,
+        input=sequence,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise sp.SubprocessError(
+            f"BLASTn failed (exit {result.returncode}): {result.stderr.strip()}"
         )
-        blast_call = sp.Popen(
-            blast_command, shell=True, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
-        )
-        res, err = blast_call.communicate(seq)
-        if err:
-            raise sp.SubprocessError(err)
 
-        result = list(filter(None, res.split('\n')))
-        hit_list = [line.split() for line in result if line and float(line.split()[-1]) >= blast_len_cut]
+    hit_list = []
+    for line in result.stdout.strip().split("\n"):
+        if not line:
+            continue
+        fields = line.split()
+        hit_length = float(fields[-1])
+        if hit_length >= min_hit_length:
+            hit_list.append(fields)
+    return hit_list
 
-        return hit_list
 
-    def extract_candidate_regions(candidate_list, query, extraregion=1000):
+def _extract_candidate_regions(
+    candidate_list: List[List[str]],
+    query: str,
+    extra_region: int = DEFAULT_EXTRA_REGION,
+) -> List[str]:
+    """
+    For each BLAST hit, extract the surrounding genomic region (hit ±
+    *extra_region* bp) and return a list of FASTA-formatted strings.
+
+    The FASTA header encodes the original coordinates so that CM hits
+    can later be mapped back to the genome.
+    """
+    genome = pyfaidx.Fasta(query)
+    regions: List[str] = []
+
+    for hit in candidate_list:
+        chrom, start_s, end_s, strand, _length = hit
+        strand = strand.replace("plus", "+").replace("minus", "-")
+
+        start = int(start_s)
+        end = int(end_s)
+        if strand == "-":
+            start, end = end, start
+
         hit_at_start = False
         hit_at_end = False
-        genome = pyfaidx.Fasta(query)
 
-        regions = []
-        for hit in candidate_list:
-            chrom, start, end, strand, length = hit
-            strand = strand.replace('plus', '+').replace('minus', '-')
-            if strand == '-':
-                start, end = end, start
-            start = int(start)
-            end = int(end)
+        chrom_length = genome[chrom][-1].end
 
-            if start > extraregion:
-                n_start = start - extraregion
-            else:
-                # hit starts at the beginning of the chromosome
-                n_start = 0
-                hit_at_start = True
-            n_end = end + extraregion
-            if n_end > genome[chrom][-1].end:
-                # hit is at the end of the chromosome
-                n_end = genome[chrom][-1].end
-                hit_at_end = True
-            if strand == '+':
-                sequence = genome[chrom][n_start:n_end].seq
-            elif strand == '-':
-                sequence = genome[chrom][n_start:n_end].reverse.complement.seq
-            else:
-                raise ValueError(f'Unknown strand {strand}')
-            regions.append(f">{chrom}|{str(start)}|{str(end)}|{strand}|{hit_at_start}|{hit_at_end}\n{sequence}\n")
+        if start > extra_region:
+            n_start = start - extra_region
+        else:
+            n_start = 0
+            hit_at_start = True
 
-        return regions
+        n_end = end + extra_region
+        if n_end > chrom_length:
+            n_end = chrom_length
+            hit_at_end = True
+
+        if strand == "+":
+            sequence = genome[chrom][n_start:n_end].seq
+        elif strand == "-":
+            sequence = genome[chrom][n_start:n_end].reverse.complement.seq
+        else:
+            raise ValueError(f"Unknown strand: {strand}")
+
+        header = f">{chrom}|{start}|{end}|{strand}|{hit_at_start}|{hit_at_end}"
+        regions.append(f"{header}\n{sequence}\n")
+
+    return regions
 
 
-    ################################################################################################
+def heuristic_search(
+    blastdb: str,
+    rna,
+    query: str,
+    heuristic: Tuple,
+    cpu: int,
+    out: str,
+) -> str:
+    """
+    Run a preliminary BLAST search of the reference miRNA against the
+    query genome to find candidate regions for the downstream CM search.
+
+    Returns the path to a FASTA file with candidate regions, or an empty
+    string if no candidates pass the length cutoff.
+    """
     blast_len_cut = len(rna.seq) * heuristic[2]
-    candidate_list = candidate_blast(blastdb, cpu, heuristic[1], rna.seq, 'blastn')
-    if not candidate_list:
-        return ''
 
-    candidate_regions = extract_candidate_regions(candidate_list, query)
-    fasta = f'{out}/candidate_regions_{rna.name}.fa'
-    with open(fasta, 'w') as of:
+    candidate_list = _run_candidate_blast(
+        blastdb, cpu, heuristic[1], rna.seq, blast_len_cut,
+    )
+    if not candidate_list:
+        return ""
+
+    candidate_regions = _extract_candidate_regions(candidate_list, query)
+    fasta = os.path.join(out, f"candidate_regions_{rna.name}.fa")
+    with open(fasta, "w") as fh:
         for line in candidate_regions:
-            of.write(line)
+            fh.write(line)
 
     return fasta
 
 
-#[
-# ['(1)', '!', '3.7e-23', '94.0', '0.0', 'NW_020173731.1|9158415|9158472|+|False|False', '1000', '1057', '+', 'cm', 'no', '0.41', '-'],
-# ['(2)', '!', '3.7e-23', '94.0', '0.0', 'NW_020173731.1|9274958|9275015|+|False|False', '1000', '1057', '+', 'cm', 'no', '0.41', '-'],
-# ['(3)', '!', '8.3e-15', '62.1', '0.0', 'NW_020172457.1|4920040|4920099|+|False|False', '1000', '1059', '+', 'cm', 'no', '0.33', '-']
-# ]
+# ---------------------------------------------------------------------------
+# CM / pHMM model search
+# ---------------------------------------------------------------------------
+def _parse_phmm_output(tblout: str) -> List[List[str]]:
+    """
+    Parse nhmmer ``--tblout`` output into the same column layout that
+    ``_parse_cm_output`` returns so downstream code can be agnostic.
+    """
+    results = []
+    with open(tblout) as fh:
+        for line in fh:
+            if line.startswith("#"):
+                continue
+            data = line.strip().split()
+            info = data[0]
+            start, end = data[6:8]
+            strand, evalue, score = data[11:14]
+            # Pad with placeholder columns to match CM output layout:
+            # [rank, type, evalue, score, bias, info, start, end, strand,
+            #  trunc, gc, noncannuc, ...]
+            results.append(
+                ["_", "_", evalue, score, "_", info, start, end, strand, "_", "_", "_", "_"]
+            )
+    return results
 
-def perform_model_search(models, rna, candidate_region_fasta, output, cm_cutoff, cpu, phmm):
 
-    def parse_phmm(tblout):
-        phmm_results = []
-        with open(tblout) as fh:
-            for line in fh:
-                if line.startswith('#'):
-                    continue
-                data = line.strip().split()
-                # print(data)
-                info = data[0]
-                start, end = data[6:8]
-                strand, evalue, score = data[11:14]
-                phmm_results.append(['a', 'b', evalue, score, 'c', info, start, end, strand, 'd', 'e', 'f', 'g'])
-        return phmm_results
+def _parse_cm_output(stdout: str) -> List[List[str]]:
+    """Parse cmsearch stdout (hit table) into a list of hit rows."""
+    results = []
+    for line in stdout.split("\n"):
+        if line.startswith("  ("):
+            if "No hits detected that satisfy reporting thresholds" in line:
+                return []
+            results.append(line.strip().split())
+    return results
 
-    def parse_cm(res):
-        cm_results = []
-        for line in res.split('\n'):
-            # print(line)
-            if line.startswith('  ('):
-                if 'No hits detected that satisfy reporting thresholds' in line:
-                    return []
-                else:
-                    data = line.strip().split()
-                    cm_results.append(data)
-        return cm_results
 
-    ################################################################################
-    cut_off = rna.bit * cm_cutoff
+def perform_model_search(
+    models: str,
+    rna,
+    target_fasta: str,
+    output: str,
+    cm_cutoff: float,
+    cpu: int,
+    phmm: bool,
+) -> List[List[str]]:
+    """
+    Run cmsearch (or nhmmer for pHMM) and return the raw parsed hit list.
+    """
+    cutoff = rna.bit * cm_cutoff
 
     if phmm:
-        tblout = f'{output}/{rna.name}_phmm.out'
-        call = sp.Popen(
-            f'nhmmer --cpu {cpu} --tblout {tblout} -T {cut_off} --incT {cut_off} {models}/{rna.name}.phmm {candidate_region_fasta}',
-            shell=True, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
-        )
-        res, err = call.communicate(rna.seq)
-        if err:
-            raise sp.SubprocessError(err)
-        results = parse_phmm(tblout)
+        model_file = os.path.join(models, f"{rna.name}.phmm")
+        tblout = os.path.join(output, f"{rna.name}_phmm.out")
+        cmd = [
+            "nhmmer",
+            "--cpu", str(cpu),
+            "--tblout", tblout,
+            "-T", str(cutoff),
+            "--incT", str(cutoff),
+            model_file,
+            target_fasta,
+        ]
+        result = sp.run(cmd, capture_output=True, text=True, check=False)
+        if result.returncode != 0:
+            raise sp.SubprocessError(
+                f"nhmmer failed (exit {result.returncode}): {result.stderr.strip()}"
+            )
+        results = _parse_phmm_output(tblout)
         os.remove(tblout)
     else:
-        call = sp.Popen(
-            f'cmsearch --cpu {cpu} --noali -T {cut_off} --incT {cut_off} {models}/{rna.name}.cm {candidate_region_fasta}',
-            shell=True, stdout=sp.PIPE, stderr=sp.PIPE, encoding='utf8'
-        )
-        res, err = call.communicate(rna.seq)
-        if err:
-            raise sp.SubprocessError(err)
-        results = parse_cm(res)
+        model_file = os.path.join(models, f"{rna.name}.cm")
+        cmd = [
+            "cmsearch",
+            "--cpu", str(cpu),
+            "--noali",
+            "-T", str(cutoff),
+            "--incT", str(cutoff),
+            model_file,
+            target_fasta,
+        ]
+        result = sp.run(cmd, capture_output=True, text=True, check=False)
+        if result.returncode != 0:
+            raise sp.SubprocessError(
+                f"cmsearch failed (exit {result.returncode}): {result.stderr.strip()}"
+            )
+        results = _parse_cm_output(result.stdout)
 
     return results
 
 
-def parse_cmsearch(cm_results):
-    logger = logging.getLogger('ncortho')
-    logger.setLevel(level=logging.DEBUG)
-    return_data = []
+# ---------------------------------------------------------------------------
+# CM result coordinate parsing
+# ---------------------------------------------------------------------------
+def parse_cmsearch(cm_results: List[List[str]]) -> List[List]:
+    """
+    Parse CM results from a direct (non-heuristic) search into
+    ``[chrom, start, end, strand, score]`` rows.
+    """
+    parsed = []
     for data in cm_results:
         score = float(data[3])
         chrom = data[5]
-        start, end = map(int, data[6:8])
+        start, end = int(data[6]), int(data[7])
         strand = data[8]
-        return_data.append([chrom, start, end, strand, score])
-    return return_data
+        parsed.append([chrom, start, end, strand, score])
+    return parsed
 
 
-def parse_cmsearch_for_heuristic(cm_results, extraregion=1000):
-    logger = logging.getLogger('ncortho')
-    logger.setLevel(level=logging.DEBUG)
-    return_data = []
+def parse_cmsearch_for_heuristic(
+    cm_results: List[List[str]],
+    extra_region: int = DEFAULT_EXTRA_REGION,
+) -> List[List]:
+    """
+    Map CM hits from candidate-region-local coordinates back to
+    genome-global coordinates.
+
+    The FASTA header of each candidate region encodes the original BLAST
+    hit position, boundary flags, and strand as:
+    ``chrom|blast_start|blast_end|strand|hit_at_start|hit_at_end``
+    """
+    parsed = []
+
     for data in cm_results:
-        # parse CMsearch output of candidate regions to acutal genomic regions
-        blast_chrom = data[5].split('|')[0]
-        blast_start, blast_end = map(int, data[5].split('|')[1:3])
-        hit_at_start, hit_at_end = data[5].split('|')[4:6]
-        blast_strand = data[5].split('|')[3]
-        cm_start, cm_end = map(int, data[6:8])
-        # cm_start, cm_end = map(int, data[5:7])
+        # Decode the encoded FASTA header
+        header_parts = data[5].split("|")
+        blast_chrom = header_parts[0]
+        blast_start = int(header_parts[1])
+        blast_end = int(header_parts[2])
+        blast_strand = header_parts[3]
+        hit_at_start = header_parts[4] == "True"
+        hit_at_end = header_parts[5] == "True"
+
+        cm_start = int(data[6])
+        cm_end = int(data[7])
         cm_strand = data[8]
-        if cm_strand == '-':
-            # reverse hits should not be possible since blasthits were extracted
-            # as reverse complement if they were on the minus strand
-            # logger.info('Unexpected hit of CMsearch')
+
+        # Reverse CM hits should not occur since BLAST hits on the minus
+        # strand were already reverse-complemented before the CM search.
+        if cm_strand == "-":
             continue
-        if hit_at_start == 'True':
-            # print(f'# cmsearch hit for {rna_id} at the beginning of a chromosome in the query species')
+
+        # Convert candidate-region-local coordinates to genome-global.
+        if hit_at_start:
+            # Region started at position 0 (no left flank), so CM coords
+            # are already genome-global relative to the BLAST hit start.
             hit_start = cm_start
             hit_end = cm_end
-        elif hit_at_end == 'True':
-            # print(f'# cmsearch hit for {rna_id} at the end of a chromosome in the query species')
-            hit_start = blast_start + (cm_start - extraregion) - 1
-            hit_end = hit_start + (cm_end - cm_start) - 1
         else:
-            hit_start = blast_start + (cm_start - extraregion) - 1
-            hit_end = hit_start + (cm_end - extraregion) - 1
-        # fill output variable
-        return_data.append([blast_chrom, hit_start, hit_end, blast_strand, float(data[3])])
-    return return_data
+            # Normal case: the region starts at (blast_start - extra_region),
+            # so offset the CM positions accordingly.
+            region_origin = blast_start - extra_region
+            hit_start = region_origin + cm_start - 1
+            hit_end = region_origin + cm_end - 1
+
+        # NOTE: When hit_at_end is True, the right flank was truncated,
+        # but the origin calculation is the same as the normal case —
+        # only the left boundary matters for the offset.
+
+        parsed.append([blast_chrom, hit_start, hit_end, blast_strand, float(data[3])])
+
+    return parsed
 
 
-def remove_duplicates_apply_cutoffs(cms, cmc, lc, rna):
+# ---------------------------------------------------------------------------
+# Deduplication and cutoff filtering
+# ---------------------------------------------------------------------------
+def _ranges_overlap(s1: int, e1: int, s2: int, e2: int) -> bool:
+    """Return True if [s1, e1] and [s2, e2] overlap (inclusive)."""
+    return s1 <= e2 and s2 <= e1
+
+
+def remove_duplicates_apply_cutoffs(
+    cms: List[List],
+    cm_cutoff: float,
+    length_cutoff: float,
+    rna,
+) -> Dict[str, Tuple]:
     """
-    Parse the output of cmsearch while eliminating duplicates and filtering
-    entries according to the defined cutoff.
+    Filter CM hits by score and length, then remove overlapping
+    duplicates on opposite strands (keeping the higher-scoring one).
 
     Parameters
     ----------
-    cms     :   List with CMsearch hits [chrom, start, end, strand, score]
-    cmc     :   Cutoff to decide which candidate hits should be included for the reverse BLAST search
-    lc      :   Length cutoff
-    rna     :   rna class
+    cms : list
+        CM hits as ``[chrom, start, end, strand, score]``.
+    cm_cutoff : float
+        Minimum bitscore ratio relative to the reference score.
+    length_cutoff : float
+        Minimum hit length as a fraction of the reference miRNA length.
+    rna : RNA object
+        Must have ``.bit`` (reference bitscore) and ``.seq`` attributes.
 
     Returns
     -------
-    hits_dict : Dictionary containing hits of the cmsearch
-
+    dict
+        ``{candidate_id: (candidate_id, chrom, start, end, strand, score)}``
     """
-    # Output
-    hits_dict = {}
-    # Required for finding duplicates, stores hits per chromosome
-    chromo_dict = {}
+    min_score = rna.bit * cm_cutoff
+    min_length = len(rna.seq) * length_cutoff
+
+    hits_dict: Dict[str, Tuple] = {}
+    # Group hits by chromosome for overlap detection
+    chromo_dict: Dict[str, List[Tuple]] = {}
 
     for candidate_nr, hit in enumerate(cms, 1):
-        # print(hit)
         h_chrom, h_start, h_end, h_strand, h_score = hit
-        # blastparser expects the start to be the smaller number, will extract reverse complement if on - strand
+
+        # Ensure start <= end (blastparser expects this)
         if h_start > h_end:
             h_start, h_end = h_end, h_start
         length = h_end - h_start
 
-        if length <= length * lc:
+        # BUG-FIX: Compare against the *reference* miRNA length, not
+        # against the hit's own length (which was always True before).
+        if length < min_length:
             continue
-        if h_score <= rna.bit * cmc:
+        if h_score < min_score:
             continue
 
-        candidate = f'{rna.name}_c{candidate_nr}'
-        data = candidate, h_chrom, h_start, h_end, h_strand, h_score
-        hits_dict[candidate] = data
+        candidate = f"{rna.name}_c{candidate_nr}"
+        entry = (candidate, h_chrom, h_start, h_end, h_strand, h_score)
+        hits_dict[candidate] = entry
 
-        # Store the hits that satisfy the bit score cutoff to filter
-        # duplicates.
-        if h_chrom in chromo_dict:
+        # BUG-FIX: Append to the per-chromosome list instead of
+        # overwriting it. The original code always reset the list to a
+        # single element, so duplicate detection across multiple hits on
+        # the same chromosome never worked.
+        if h_chrom not in chromo_dict:
             chromo_dict[h_chrom] = []
-        chromo_dict[h_chrom] = [data]
-    # print(hits_dict)
+        chromo_dict[h_chrom].append(entry)
 
-    # Loop over the candidate hits to eliminate duplicates.
-    for chromo in chromo_dict:
-        nrhits = len(chromo_dict[chromo])
-        if nrhits > 1:
-            for hitnr in range(nrhits):
-                start = int(chromo_dict[chromo][hitnr][2])
-                stop = int(chromo_dict[chromo][hitnr][3])
-                strand = chromo_dict[chromo][hitnr][4]
-                score = float(chromo_dict[chromo][hitnr][5])
-                for chitnr in range(hitnr +1, nrhits):
-                    if strand != chromo_dict[chromo][chitnr][4]:
-                        cstart = int(chromo_dict[chromo][chitnr][2])
-                        cstop = int(chromo_dict[chromo][chitnr][3])
-                        cscore = float(chromo_dict[chromo][chitnr][5])
-                        # Test if the two hits from opposite strands
-                        # overlap, which means one of them is
-                        # (probably) a false positive.
-                        # Out of two conflicting hits, the one with the
-                        # highest cmsearch bit score is retained.
-                        if (
-                                start in range(cstart, cstop +1)
-                                or stop in range(cstart, cstop +1)
-                                or cstart in range(start, stop +1)
-                                or cstop in range(start, stop +1)
-                        ):
-                            if score > cscore:
-                                del hits_dict[chromo_dict[chromo][chitnr][0]]
+    # Remove overlapping hits on opposite strands, keeping the higher score.
+    to_remove = set()
+    for chrom, chrom_hits in chromo_dict.items():
+        n = len(chrom_hits)
+        for i in range(n):
+            cand_i = chrom_hits[i]
+            _, _, start_i, end_i, strand_i, score_i = cand_i
+            for j in range(i + 1, n):
+                cand_j = chrom_hits[j]
+                _, _, start_j, end_j, strand_j, score_j = cand_j
+                # Only check opposite-strand overlaps
+                if strand_i == strand_j:
+                    continue
+                if _ranges_overlap(start_i, end_i, start_j, end_j):
+                    if score_i >= score_j:
+                        to_remove.add(cand_j[0])
+                    else:
+                        to_remove.add(cand_i[0])
 
-                            else:
-                                del hits_dict[chromo_dict[chromo][hitnr][0]]
+    for cand_id in to_remove:
+        hits_dict.pop(cand_id, None)
 
     return hits_dict
 
 
-def model_search(rna, cm_cutoff, cpu, msl, models, query, blastdb, out, cleanup, heuristic_col, phmm):
+# ---------------------------------------------------------------------------
+# Top-level search dispatcher
+# ---------------------------------------------------------------------------
+def model_search(
+    rna,
+    cm_cutoff: float,
+    cpu: int,
+    msl: float,
+    models: str,
+    query: str,
+    blastdb: str,
+    out: str,
+    cleanup: bool,
+    heuristic_col: Tuple,
+    phmm: bool,
+) -> Tuple[Optional[Dict], str]:
     """
-    Parameters
-    ----------
-    rna       :   rna object
-    cm_cutoff   :   Minimum bit score of the CMsearch hit relative to the
-                    bit score that results from searching in the reference genome with the same model
-    cpu         :   Number of cores to use
-    msl         :   Minimum length of CMsearch hit relative to the reference pre-rna length
-    models      :   Path to the directory that contains the CMs
-    query       :   Path to the query genome
-    blastdb     :   Optional Path to a BLASTdb of the query genome
-    out         :   Path to the output directory
-    cleanup     :   Delete intermediate files True/False
-    heuristic   :   Should heuristic mode be used and if yes, set parameters (True/False, evalue, minlength)
+    Run the full model-search pipeline for a single miRNA.
+
+    Steps:
+      1. (Optional) Heuristic BLAST to narrow candidate regions.
+      2. CM or pHMM search in candidate regions (or full genome).
+      3. Parse and remap coordinates.
+      4. Deduplicate and apply cutoffs.
 
     Returns
     -------
-    cm_results : Dictionary containing hits of the cmsearch
-
+    (hits_dict, status_message) where *hits_dict* is ``None`` on failure.
     """
-    # print(os.path.isfile(f'{models}/{rna.name}.phmm'))
-    if (
-            not phmm and not os.path.isfile(f'{models}/{rna.name}.cm') or
-            phmm and not os.path.isfile(f'{models}/{rna.name}.phmm')
-    ):
-        return False, 'No model found'
-    heuristic, heuristic_evalue, heuristic_length, sensitive_heuristic = heuristic_col
+    # Check that the model file exists
+    if phmm:
+        model_file = os.path.join(models, f"{rna.name}.phmm")
+    else:
+        model_file = os.path.join(models, f"{rna.name}.cm")
+
+    if not os.path.isfile(model_file):
+        return None, "No model found"
+
+    heuristic, _heur_eval, _heur_len, sensitive_heuristic = heuristic_col
+    candidate_region_fasta = ""
+
     if heuristic:
-        candidate_region_fasta = heuristic_search(blastdb, rna, query, heuristic_col, cpu, out)
+        candidate_region_fasta = heuristic_search(
+            blastdb, rna, query, heuristic_col, cpu, out,
+        )
 
         if not candidate_region_fasta and sensitive_heuristic:
-            # No candidate regions above length cutoff found with BLASTn. Trying again without heuristic.
-            cm_results = perform_model_search(models, rna, query, out, cm_cutoff, cpu, phmm)
+            # No candidates above cutoff; fall back to full-genome search.
+            cm_results = perform_model_search(
+                models, rna, query, out, cm_cutoff, cpu, phmm,
+            )
+            cm_results = parse_cmsearch(cm_results)
         elif not candidate_region_fasta:
-            return False, 'No candidate region found with BLASTn'
+            return None, "No candidate region found with BLASTn"
         else:
-            cm_results = perform_model_search(models, rna, candidate_region_fasta, out, cm_cutoff, cpu, phmm)
+            cm_results = perform_model_search(
+                models, rna, candidate_region_fasta, out, cm_cutoff, cpu, phmm,
+            )
             cm_results = parse_cmsearch_for_heuristic(cm_results)
 
-        if cleanup:
+        # BUG-FIX: Only remove the file if it actually exists (it is an
+        # empty string when the sensitive_heuristic fallback was used).
+        if cleanup and candidate_region_fasta and os.path.isfile(candidate_region_fasta):
             os.remove(candidate_region_fasta)
     else:
-        cm_results = perform_model_search(models, rna, query, out, cm_cutoff, cpu, phmm)
+        cm_results = perform_model_search(
+            models, rna, query, out, cm_cutoff, cpu, phmm,
+        )
         cm_results = parse_cmsearch(cm_results)
 
     if not cm_results:
-        return False, 'No CMsearch results in candidate regions or query genome'
+        return None, "No CMsearch results in candidate regions or query genome"
 
-    parsed_cm_results = remove_duplicates_apply_cutoffs(cm_results, cm_cutoff, msl, rna)
-    if not parsed_cm_results:
-        return False, 'No CMsearch results above threshold'
-    else:
-        return parsed_cm_results, 'Sucess'
+    parsed = remove_duplicates_apply_cutoffs(cm_results, cm_cutoff, msl, rna)
+    if not parsed:
+        return None, "No CMsearch results above threshold"
 
-
-
-
-
-
-
-
-
-
+    return parsed, "Success"
