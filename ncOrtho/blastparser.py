@@ -68,18 +68,29 @@ def calculate_distance_matrix(aln_path: str):
     # It can also drop it into the cwd — cover both.
     dnd_path_cwd = os.path.join(os.getcwd(), dnd_name)
 
-    cmd = [
-        "t_coffee",
-        aln_path,
-        "-no_warning",
-        "-quiet",
-        "-type=dna",
-        "-output=fasta_aln",
-        f"-outfile={aln_path}",
-    ]
+    # t_coffee's wrapper script uses bash-specific syntax (e.g. [[).
+    # Running it without a shell (the default for list-based sp.run)
+    # can cause "[[: not found" errors on systems where /bin/sh is dash.
+    # We therefore invoke t_coffee through a shell string, matching the
+    # original working invocation, but with proper quoting via shlex.
+    #
+    # The = syntax (-type=dna, -output=fasta_aln) must be preserved as
+    # single tokens — t_coffee does not accept "-type dna" as two
+    # separate arguments.
+    import shlex
+    cmd_str = (
+        "t_coffee {infile} -no_warning -quiet -type=dna "
+        "-output=fasta_aln -outfile={outfile}"
+    ).format(
+        infile=shlex.quote(aln_path),
+        outfile=shlex.quote(aln_path),
+    )
 
     try:
-        sp.run(cmd, env=env, check=True, capture_output=True, text=True)
+        sp.run(
+            cmd_str, shell=True, env=env, check=True,
+            capture_output=True, text=True,
+        )
         with open(aln_path) as fh:
             aln = AlignIO.read(fh, "fasta")
         calculator = DistanceCalculator("identity")
@@ -91,7 +102,7 @@ def calculate_distance_matrix(aln_path: str):
             f"{exc.stderr.strip()}"
         ) from exc
     finally:
-        _safe_remove(aln_path)
+        # _safe_remove(aln_path)
         _safe_remove(dnd_path)
         _safe_remove(dnd_path_cwd)
 
@@ -215,7 +226,6 @@ class BlastParser:
 
         best_hit_seq = self.blasthits[0][12].replace("-", "")
 
-        # Write all three sequences to a temp FASTA.
         with open(tmp_out, "w") as fh:
             fh.write(f">candidate\n{candidate_seq}\n")
             fh.write(f">reference\n{self.refseq}\n")

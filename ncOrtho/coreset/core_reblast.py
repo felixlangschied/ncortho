@@ -22,6 +22,7 @@ along with ncOrtho.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
 import os
+import shlex
 import subprocess as sp
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -64,32 +65,36 @@ def make_alignment(
 
     Returns the path to the Stockholm file.
     """
+    import shlex
     alignment = os.path.join(out, f"{mirna}.aln")
     stockholm = os.path.join(out, f"{mirna}.sto")
 
-    # Step 1: sequence alignment
-    tc_cmd = [
-        "t_coffee",
-        "-quiet",
-        f"-multi_core={cpu}",
-    ]
-    if rcoffee == "yes":
-        tc_cmd.append("-mode=rcoffee")
-    tc_cmd += ["-in", core_fasta, "-output=clustalw_aln", f"-outfile={alignment}"]
+    # t_coffee's wrapper script uses bash-specific syntax (e.g. [[).
+    # Running it without a shell can cause "[[: not found" errors on
+    # systems where /bin/sh is dash.  We therefore use shell=True with
+    # shlex.quote() for safety.
+    #
+    # The = syntax (-multi_core=N, -mode=rcoffee, etc.) must be
+    # preserved — t_coffee does not accept these as space-separated
+    # flag/value pairs.
 
-    sp.run(tc_cmd, capture_output=True, check=False)
+    # Step 1: sequence alignment
+    mode_flag = " -mode=rcoffee" if rcoffee == "yes" else ""
+    tc_cmd = (
+        f"t_coffee -quiet -multi_core={cpu} {mode_flag}"
+        f" -in {shlex.quote(core_fasta)}"
+        f" -output=clustalw_aln -outfile={shlex.quote(alignment)}"
+    )
+    sp.run(tc_cmd, shell=True, capture_output=True, check=False)
 
     # Step 2: add structure and convert to Stockholm
-    reformat_cmd = [
-        "t_coffee",
-        "-other_pg", "seq_reformat",
-        "-in", alignment,
-    ]
-    if rcoffee == "yes":
-        reformat_cmd += ["-action", "+add_alifold"]
-    reformat_cmd += ["-output", "stockholm_aln", "-out", stockholm]
-
-    sp.run(reformat_cmd, capture_output=True, check=False)
+    action_flag = " -action +add_alifold" if rcoffee == "yes" else ""
+    reformat_cmd = (
+        f"t_coffee -other_pg seq_reformat"
+        f" -in {shlex.quote(alignment)}{action_flag}"
+        f" -output stockholm_aln -out {shlex.quote(stockholm)}"
+    )
+    sp.run(reformat_cmd, shell=True, capture_output=True, check=False)
 
     return stockholm
 
@@ -202,6 +207,9 @@ def _reblast_candidate(
         if not line:
             continue
         fields = line.split()
+        # BUG-FIX: Compare coordinates as integers, not strings.
+        # The original code compared string values (e.g. "900" <= "1000"
+        # is False in lexicographic order).
         reblast_hits.append((fields[0], int(fields[1]), int(fields[2])))
     return reblast_hits
 
@@ -246,6 +254,7 @@ def blastsearch(
     """
     mirid, rawchrom, mstart, mend, mstrand, rawseq = mirna[:6]
     mchr = rawchrom.replace("chr", "")
+    # BUG-FIX: Convert to int for numeric comparison downstream.
     mstart = int(mstart)
     mend = int(mend)
     preseq = rawseq.replace("U", "T").replace("-", "")
@@ -253,6 +262,10 @@ def blastsearch(
     miroutdir = os.path.join(o_path, mirid)
     os.makedirs(miroutdir, exist_ok=True)
     synteny_regs = os.path.join(miroutdir, f"synteny_regions_{mirid}.fa")
+
+    # BUG-FIX: Avoid os.chdir() — it mutates global process state and
+    # breaks parallel execution. T-Coffee outputs are directed via
+    # explicit -outfile paths, so chdir is unnecessary.
 
     print(f"# {mirid}", flush=True)
 

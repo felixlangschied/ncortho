@@ -184,8 +184,8 @@ def build_parser() -> argparse.ArgumentParser:
         "--cpu",
         metavar="N",
         type=_positive_int,
-        default=max_cpu,
-        help=f"Number of CPU cores to use (default: all available = {max_cpu}).",
+        default=3,
+        help=f"Number of CPU cores to use (default: 3).",
     )
     optional.add_argument(
         "--cm_cutoff",
